@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글꼴 관련 스타일</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poor+Story&display=swap');
+        /* 크기 단위: %(제한없음?), em, px, rem 등등 */
+        /* 200%=2em=36px */
+        #fontsize p:nth-child(1) {
+            font-style: normal; /* 글꼴 해제시 많이 사용 */
+            color: red;
+            font-family: "Poor Story", system-ui;/* 두개 지정시 앞에 걸 적용하는데 없으면 뒤에 것 적용 */
+            font-weight: 500; 
+            /* 시스템 폰트 웹 폰트 */
+        }
+        #fontsize p:nth-child(2) {
+            /*font-size: 100%;*/
+            font-size: 1em;
+            font-style: italic;
+            font-weight: bold;
+            color: rgba(22, 133, 55, 0.452);
+        }
+        #fontsize p:nth-child(3) {
+            /*font-size: 150%;*/
+            font-size: 1.5em;
+            font-style: oblique;
+            font-weight: bolder;
+            background-color: rgba(255, 0, 0, 0.452);
+        }
+        #fontsize p:nth-child(4) {
+            /*font-size: 200%;*/
+            /*font-size: 2em;*/
+            font-size: 32px;
+            font-weight: 500; /* 굴기 100-900 설정 가능*/
+            background-color: #ffaa00;/* 16진코드값 color picker 검색시 원하는 색상 찾기 가능 */
+            text-align: center; /* end 끝에 정렬 */
+        }
+        /* 공간분할
+        block : 줄단위 공간, width,height 속성이 있음
+        inline : 열단위 공간, width,height 속성이 없음
+        */
+        #box p {
+            width: 300px; height: 100px;
+            /*border: 1px solid gray;*/
+            background-color: rgb(69, 69, 247);
+            color: white;
+            text-align: center;
+            line-height: 50px; /* 줄 높이 설정(기본은 글자 크기 기준) */
+            text-decoration: underline;
+            text-decoration: overline; /* 명령 중복시 마지막거 적용 */
+            text-decoration: none; /* 기본 상태 */
+            text-decoration: line-through; /* 중간에 라인 넣음 */
+            font-weight: 900;
+            /* 텍스트 그림자 */
+            text-shadow: 5px 5px black; /* x,y color */
+            text-shadow: 5px 5px 5px black; /* x,y,z(번짐 정도 없어도됨) color */
+            /* 대소문자 */
+            text-transform: capitalize; /* 각 단어 전체 앞에만 대문자로 바꿈 */
+            text-transform: uppercase; /* 전체 대문자로 바꿈 */
+            text-transform: lowercase; /* 전체 소문자로 바꿈 */
+            /* 자간 */
+            letter-spacing: 0.2em; /* em글자 크기 기준 */
+        }
+        #box i {
+            width: 300px; height: 100px;
+            border: 1px solid gray;
+        }
+        #box a {
+            text-decoration: none;
+        }
+        table {
+            width: 300px;
+            border: 1px solid blue;
+
+            /* border-collapse: collapse; border값 없엠*/
+        }
+        th, td {
+            border: 1px dashed red;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <caption>선물용 상품 구성</caption>
+        <tr>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+    </table>
+    <div id="box">
+        <p>HTML5/css</p><!-- 박스크기 초과시 글자가 튀어나감-->
+        <p>Ex cillum dolore laboris labore ipsum laborum laborum ea ullamco voluptate.</p>
+        <i>inline</i> <i>Irure aliqua non ad incididunt veniam proident dolore aliqua officia anim.</i><br>
+        <a href="https://www.naver.com">네이버</a>
+    </div>
+    <div id="fontsize">
+        <p>글꼴:바탕체Deserunt ea pariatur consectetur exercitation.</p>
+        <p>Aliquip tempor deserunt velit dolore exercitation commodo occaecat pariatur labore ad.</p>
+        <p>Enim aliqua Lorem est reprehenderit laboris mollit Lorem.</p>
+        <p>Deserunt eiusmod aute amet pariatur.</p>
+    </div>
+</body>
+</html>

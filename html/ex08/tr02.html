@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>transition</title>
+    <style>
+        .box{
+            /* 원형 : 변형되기 전 스타일 */
+            width: 100px; height: 100px;
+            border: 1px solid black;
+            background-color: skyblue;
+            margin: 20px auto;
+            /* 1초 후 동작 */
+            /* transition-delay: 1s; */
+            /* transition-timing-function: cubic-bezier(.47,1.51,.53,-0.28); */
+            /* transition-property: width, height; */
+            /* transition-duration: 1s, 1s; */
+            transition: all 3s cubic-bezier(.02,1.2,.96,-0.24);
+        }
+        .box:hover {
+            /* 변형 후 스타일 */
+            width: 300px; height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">1</div>
+</body>
+</html>

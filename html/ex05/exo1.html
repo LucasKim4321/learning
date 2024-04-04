@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스타일 연습</title>
+    <style>
+        #x {color: red;}
+        #y {color: blue;}
+        .sel1 {color: blueviolet;}
+        .sel2 {background-color: blanchedalmond;}
+        .sel3 {font-size: 30px;}
+        input[type="text"]{background-color: green;}
+        input[type="password"]{background-color: darkturquoise;}
+        #section > h1 {color: blue;}
+        #header h1 {color: purple;}
+        #header > h1 {color: red;}
+        .title {color: aqua;}
+        table > tbody > tr > th{color: blue;}
+        table th:hover {color: pink;}
+        table th:active {color: yellow;}
+
+    </style>
+</head>
+<body>
+    <table border="1" width="100">
+        <tr>
+            <th>1</th>
+            <th>2</th>
+        </tr>
+        <tr>
+            <td align="center">3</td>
+            <td align="center">4</td>
+        </tr>
+    </table>
+    <div id="header">
+        <h1 class="title">lorem ipsum</h1>
+        <div class="nav">
+            <h1>Navigation</h1>
+        </div>
+    </div>
+    <div id="section">
+        <h1 class="title">lorem ipsum</h1>
+        <p>Sit reprehenderit nostrud enim culpa amet reprehenderit.</p>
+    </div>
+    <input type="text" name="name"><br>
+    <input type="password" name="password"><hr>
+    <h1 id="x">css3 선택자</h1>
+    <h2>css3 선택자</h2>
+    <h3 id="y">css3 선택자</h3>
+    <hr>
+    <ul>
+        <li class="sel1 sel2 sel3">1</li>
+        <li>2</li>
+        <li class="sel1 sel3">3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</body>
+</html>
+<!--적용범위 (우선 순위순으로 적용)
+    !important -> 인라인 스타일 -> id스타일 -> 클래스 스타일 -> 타입 스타일
+    같은거 끼린 위에것 적용 후 아랫것 적용 덮어 씌워짐
+-->

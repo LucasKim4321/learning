@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>테이블 태그</title>
+<!--<style>
+        table, tr, th, td {
+            border: 1px dashed red;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+    </style>-->
+    <!-- style 지정 개채들 전체 적용 -->
+</head>
+<body>
+    <h3>테이블 만들기</h3>
+    <hr>
+    <!-- border선굵기, cellpadding좌측여백 -->
+    <table border="5" width="600" height="100" cellspacing="5" cellpadding="10"><!-- width에 50% 넣기 가능 -->
+        <thead>
+        <tr> <!-- th기본값 중간정렬 -->
+            <th>출발</th>
+            <th>도착</th>
+            <th>객실</th>
+            <th>요금</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr> <!-- td기본값 좌측정렬 -->
+            <td>서울</td>
+            <td>부산</td>
+            <td>일반실</td>
+            <td>50,800원</td>
+        </tr>
+        <tr>
+            <td align="center">서울</td><!-- align좌우 -->
+            <td align="right">부산</td>
+            <td align="center" valign="middle">일반실</td><!-- valign위아래 -->
+            <td align="right" valign="bottom">50,800원</td>
+        </tr>
+        <tr align="center"> <!-- 상위에 속성을 적용하면 하위에 일괄 적용 -->
+            <td>서울</td>
+            <td>부산</td>
+            <td>일반실</td>
+            <td>50,800원</td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- 실제 실행시 table 밑에 tbody 존재 (스타일시트에서 필요) -->
+</body>
+</html>

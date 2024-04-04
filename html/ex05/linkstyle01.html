@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>링크 스타일</title>
+    <style>
+        /* :link :visited :hover :active :focus */
+        .navi {
+            width: 800px;
+            margin: 0 auto;
+        }
+        .navi ul li {
+            list-style: none;
+            float:left; /* 수직 -> 수평 */
+            width: 150px;
+            margin: 0 10px;
+            border: 5px solid gray;
+        }
+        .navi a:link, :visited {
+            display: block;
+            font-size: 14px;
+            color: black;
+
+            padding: 10px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .navi a:hover {
+            background-color: black;
+            color: white;
+        }
+        .navi a:active {
+            background-color: red;
+        }
+        /*.navi a:focus {
+            background-color: rgb(25, 179, 38);
+        }*/
+        section {clear: both;} /* float 해제 */
+        .contents {
+            width: 400px;
+            margin: 30px auto;
+            padding: 20px;
+            border: 1px solid red;
+            border-radius: 5px;
+        }
+        /* target 가상 클래스 -> 앵커의 목적지가 되는 부분의 스타일 적용*/
+        #intro:target {
+            background-color: skyblue;
+            color: white;
+        }
+        #room:target {
+            background-color: orange;
+        }
+        #reservation:target {
+            background: navajowhite;
+        }
+        /* 선택 상태에 따른 스타일 적용 */
+        input:checked + label {
+            color: red;
+            font-weight: bold;
+        }
+        /* radio요소가 아니면 요소에 마우스가 호버이면 스타일 적용 */
+        input:not([type=radio]) {
+            color: blue;
+            border-color: red;
+        }
+        /* 가상요소: 문서안에 특정 부분에 스타일 지정하기 위해 가상요소를 
+        추가 => "::"(콜론) 2개를 붙여서 표시 */
+        #first { 
+        border: 1px dotted black;
+        /* 가로폭 범위 */
+        min-width: 400px;
+        max-width: 800px;
+        }
+        #first::first-line {
+            color: blue;
+        }
+        #first::first-letter {
+            color: red;
+        }
+        #after li.new::after {
+            content: "NEW!!";
+            background-color: red;
+            color: white;
+            font-size: x-small;
+            margin: 0 10px;
+            padding: 2px 4px;
+        }
+        #after li.sale::after {
+            content: "SALE!!";
+            background-color: green;
+            color: white;
+            font-size: x-small;
+            margin: 0 10px;
+            padding: 2px 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="after">
+        <h2>제품 목록</h2>
+        <hr>
+        <ul>
+            <li class="new">제품A</li>
+            <li class="sale">제품B</li>
+            <li class="sale">제품C</li>
+            <li class="new">제품D</li>
+        </ul>
+    </div>
+    <div id="first">
+        <p>Ut tempor consequat cillum exercitation sunt sunt enim commodo proident magna enim duis reprehenderit. Non minim eu cupidatat mollit excepteur. Commodo nulla et labore proident do in ut. Mollit enim in velit minim ut adipisicing deserunt ut in aliqua nostrud laborum. Laborum fugiat mollit do ipsum ut ullamco labore dolor eiusmod. Do mollit ex Lorem ea incididunt in minim consectetur magna.</p>
+    </div>
+    <div id="check">
+        <fieldset>
+            <legend>객실 형태</legend>
+            <ul>
+                <li>
+                    <input type="radio" name="room" id="basic">
+                    <label for="basic">기본형(최대2인)</label>
+                </li>
+                <li>
+                    <input type="radio" name="room" id="family">
+                    <label for="family">가족형(최대8인)</label>
+                </li>
+                <li>
+                    <label for="family">dd</label>
+                    <input type="text" name="room" id="family">
+                </li>
+            </ul>
+        </fieldset>
+    </div>
+    <div class="container">
+        <nav class="navi">
+            <ul>
+                <li><a href="#intro">이용 안내</a></li>
+                <li><a href="#room">객실 소개</a></li>
+                <li><a href="#reservation">예약 방법 및 요금</a></li>
+                <li><a href="formstyle01.html">예약하기</a></li>
+            </ul>
+        </nav>
+    </div>
+    <section>
+        <div id="intro" class="contents">
+            <h2>이용 안내</h2>
+            <p>Eiusmod commodo ut ad aute aute adipisicing aliqua consequat consequat. Elit deserunt fugiat exercitation labore consectetur do fugiat mollit ipsum consectetur incididunt. Consectetur veniam sit officia ea ex dolore ipsum. Voluptate mollit dolore do sint officia amet enim nulla amet elit non occaecat.</p>
+        </div>
+        <div id="room" class="contents">
+            <h2>객실 소개</h2>
+            <p>Exercitation cupidatat consequat excepteur quis. Reprehenderit ad aliquip veniam fugiat do minim Lorem. Amet esse do ex qui. Aute magna deserunt veniam do.</p>
+        </div>
+        <div id="reservation" class="contents">
+            <h2>예약 방법 및 요금</h2>
+            <p>Ullamco est elit non ullamco aliquip qui ut magna. In consequat officia proident commodo ad nisi quis dolore cupidatat. Enim ullamco reprehenderit mollit cillum ipsum esse magna ea dolor dolor est ullamco sunt voluptate. Labore dolore ipsum eu laboris nisi cupidatat et commodo laborum ullamco ut labore. Elit laboris nulla id et adipisicing minim ut tempor.</p>
+        </div>
+    </section>
+</body>
+</html>

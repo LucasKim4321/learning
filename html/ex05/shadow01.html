@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글자자 효과 학습</title>
+    <style>
+        /* text-shadow, box-shadow : x거리,yrjfl, 흐림정도, 그림자색상 */
+        div.box1 {
+            border: 3px solid black;
+            width: 500px;
+            box-shadow: 10px 10px 10px gray,
+                        10px 10px 20px orange,
+                        10px 10px 40px red;
+            border-radius: 20px;
+        }
+        .box1 > h1 {
+            text-shadow: 5px 5px 5px gray,
+                         5px 5px 10px orange;
+        }
+        .box2 {
+            font-family: 'Times New Roman', Times, serif;
+            height: 60px;
+            line-height: 60px; text-align: center;
+            background-color: red;
+            /* linear-gradient(방향,시작색상,마지막색상) */
+            background: linear-gradient(to right bottom, blue, white);
+            background: linear-gradient(45deg, red, white);
+            background: linear-gradient(135deg, rgb(208,228,247) 0%,rgb(115,177,231) 24%,rgb(10,119,213) 50%,rgb(83,159,225) 79%,rgb(135,188,234) 100%);
+        }
+        /* 하위 선택자 : 자손 => ">" , 후손 => "공백" */
+        .box3 > h1 {
+            color: red;
+        }
+        /* 인접 형제 선택자 : "+" 아래에 있는거 중에 하나*/
+        .box3 > h1 + p {
+            background-color: black;
+            color: white;
+        }
+        /* 형제 선택자 (같은 부모 요소를 가지는 요소): "~" */
+        .box3 > h1 ~ p {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="box3">
+        <h1>예약 방법 및 이용 요금</h1>
+        <p>Anim anim nulla minim fugiat proident voluptate duis nostrud adipisicing proident.</p>
+        <P>Duis qui enim eiusmod qui duis commodo minim ex.</P>
+        <p>Ullamco non nulla ea duis aute magna sint non fugiat fugiat veniam eu.</p>
+    </div>
+    <div class="box2">
+        <h1>CSS3 그레이디언트</h1>
+    </div>
+    <div class="box1">
+        <h1>Laboris excepteur ad labore nulla nostrud velit quis do deserunt in est occaecat dolor duis.</h1>
+    </div>
+</body>
+</html>

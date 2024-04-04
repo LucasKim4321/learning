@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 태그</title>
+</head>
+<body>
+    <h3>이미지 태그 학습하기</h3>
+    <!-- jpg, gif, png, svg -->
+    <hr>
+    <h3>반려동물이란?</h3>
+    <p>Duis magna voluptate mollit fugiat excepteur elit excepteur. Occaecat officia cupidatat ad esse sint et eiusmod minim id ea voluptate velit eu fugiat. Proident voluptate aute officia ullamco ea mollit. Laboris adipisicing tempor labore amet.</p>
+    
+    <img src="images/dog.jpg" alt=""><!-- 원본 크기 그대로 -->
+    <img src="images/dog.jpg" width="200"><!-- width만 설정시 높이 자동비율 적용 -->
+    <img src="images/dog.jpg" width="200" height="200">
+    <img src="images/dog.jpg" height="200"><!-- 높이 -->
+    <img src="./dog2.jpg"><!-- ./ 현재위치에서 불러옴 -->
+    <img src="../notice.jpg" ><!-- ../ 현재위치의 상위폴더에서 불러옴-->
+    <img src="../notice2.jpg" alt="노트이미지"><!-- 불러오기 실패시 alt표시 -->
+    <img src="../notice.jpg" alt="노트이미지" title="노트이미지">
+</body>
+</html>

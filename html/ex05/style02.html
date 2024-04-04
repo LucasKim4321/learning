@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스타일</title>
+    <style>
+        /* 아이디 선택자 */
+        #rint {color: red;}/* #에 해당하는 id값에 스타일 적용 */
+        #lld {color: blue;}
+        /* 클래스 선택자 */
+        .sel1 {color: rgb(3, 136, 136);} /* .에 해당하는 class값에 스타일 적용*/
+        .sel2 {background-color: blueviolet;}
+        .sel3 { font-size: 30px;}
+        /* 속성 선택자 */
+        input[type="text"] {background-color: rgb(131, 209, 30);} /* input에 해당하는 값에 스타일 적용 */
+        input[type="password"] {background-color: rgb(30, 203, 209);}
+        /* 후손 선택자 : 선택자A   선택자B */
+        #header h1 {color: blueviolet;}
+        #section h1 {color: chocolate;}
+        /* 자손 선택자 : 선택자A > 선택자B */
+        #header > h1 {color: red;}
+        #section > h1 {color: green;}
+        .title {color: aquamarine;}
+        table > tbody > tr > th {color: blue;} /* tbody가 생략 되있기 때문에 없으면 적용안됨 */
+        /* 반응 선택자 */
+        table th:hover {color: deeppink;} /* hover 해당 태그 블럭 위에 마우스 위치시 적용 */
+        table th:active {color: gold;} /* active 태그 블럭 위에 마우스 클릭시 적용 */
+    </style>
+</head>
+<body>
+    <table border="1" width="100">
+        <tr>
+            <th>1</th>
+            <th>2</th>
+        </tr>
+        <tr>
+            <td align="center">3</td>
+            <td align="center">4</td>
+        </tr>
+    </table>
+    <div id="header">
+        <h1 class="title">lorem ipsum</h1>
+        <div class="nav">
+            <h1>Navigation</h1>
+        </div>
+    </div>
+    <div id="section">
+        <h1 class="title">lorem ipsum</h1>
+        <p>Sit reprehenderit nostrud enim culpa amet reprehenderit.</p>
+    </div>
+    <input type="text"/><br>
+    <input type="password"/>
+    <hr>
+    <h1 id="rint">css3 선택자</h1>
+    <h2>css3 선택자</h2>
+    <h3 id="lld">css3 선택자</h3>
+    <hr>
+    <ul>
+        <li class="sel1 sel2 sel3">1</li><!-- class는 스타일을 여러개 골라서 적용 가능 -->
+        <li>2</li>
+        <li class="sel1 sel3">3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</body>
+</html>
+<!--적용범위 (우선 순위순으로 적용)
+    !important -> 인라인 스타일 -> id스타일 -> 클래스 스타일 -> 타입 스타일
+    자손>후손
+-->

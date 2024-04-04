@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스타일 학습하기</title>
+    <!-- 외부 스타일 연결 --><!--외부 스타일을 공통으로 적용. 관리 편리-->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- 내부 스타일 -->
+    <style>
+        /* 태그 선택자 */ /*스타일 태그내에서 사용 가능한 주석*/
+        h1{
+            color: red;
+            background-color: rgb(217, 255, 0);
+        }
+        /* *{}전체 선택자 */
+        *{
+            margin: 0; /*margin 브라우저가 가지고 있는 자체 스타일 값 제거*/
+        }
+        /* 스타일 상속 */ /* 상위 값을 하위에도 적용 */
+        ul{ color: rgb(9, 224, 9);}
+        body { font-size: 24px; color: rebeccapurple}
+    </style>
+</head>
+<body>
+    <h1>제목1</h1>
+    <!-- 인라인 스타일 -->
+    <h2 style="color: blue;">제목2</h2>
+    <h3>제목3</h3>
+    <h1>제목4</h1>
+    <ul>
+        <li>12</li>
+        <li>12</li>
+        <li>12</li>
+        <li style="color: red;">12</li><!-- 상위 스타일이 있어도 하위에 따로 적용 가능 !important적용시 우선순위를 강제로 높임(무조건 적용)-->
+        <li>12</li>
+    </ul>
+    <p>Commodo incididunt nostrud ex sint aliquip ullamco dolor.</p>
+    <p>Sint Lorem excepteur sit ut velit dolor.</p>
+</body>
+</html>
+<!--
+    스타일 : 글꼴, 색상, 정렬, 각 요소의 배치 방법과 같이 문서의 모습을 결정짓는 역할
+    인라인 스타일, 내부 스타일, 외부 스타일
+
+    형식
+    선택자 : 스타일을 적용할 영역을 선택
+    선택자 { 스타일 속성 : 스타일 값; } (;값이 두개이상일 시 반드시 존재)
+
+    적용범위 (우선 순위순으로 적용)
+    !important -> 인라인 스타일 -> id스타일 -> 클래스 스타일 -> 타입 스타일
+-->

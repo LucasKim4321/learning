@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메뉴 연습2</title>
+    <style>
+        .box {
+            box-sizing: border-box;/* 패딩, 선두께 설정해도 width,height 설정 값 그대로 유지 */
+            border: 1px solid black;
+            padding: 10px;
+            width: 100px;
+            height: 100px;
+        }
+        #menu .top-menu{
+            list-style: none;
+            width: 605px; height: 35px;
+            box-shadow: 5px 5px 5px gray;
+            background-color: lightgrey;
+            margin: 50px auto;
+            padding: 0;
+            border: 0px solid red;
+        }
+        /* 메뉴 항목에 대한 스타일 */
+        #menu li{
+            float: left; /* 수직 -> 수평 */
+            border-right: 1px solid black;
+        }
+        #menu a:link, a:visited {
+            text-decoration: none;
+            color: black;
+            display: block;
+            width: 100px;  height: 35px;
+            text-align: center;
+            line-height: 35px;
+        }
+        #menu li a:hover {
+            background-color: red;
+            color: white;
+        }
+        #menu li:last-child { /* 부모 요소안에 있는 요소 중 마지막 요소 */
+            border-right: none;
+        }
+        #menu li:not(:last-child) a:hover {
+            background-color: gray;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        box
+    </div>
+    <div id="menu">
+        <ul class="top-menu">
+            <li><a href="#"> 메뉴1</a></li>
+            <li><a href="#"> 메뉴2</a></li>
+            <li><a href="#"> 메뉴3</a></li>
+            <li><a href="#"> 메뉴4</a></li>
+            <li><a href="#"> 메뉴5</a></li>
+            <li><a href="#"> 메뉴6</a></li>
+        </ul>
+    </div>
+</body>
+</html>

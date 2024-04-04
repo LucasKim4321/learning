@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>폼 양식 학습하기</title>
+</head>
+<body>
+    <h3>폼 양식 01</h3>
+    <hr>
+    이름 <input type="text" placeholder="이름을 입력해주세요"/><!--form태그 없으면 그냥 장식-->
+    <hr>
+    <!--action 지정 장소에 데이터를 보냄 method get 단순보냄 데이터 노출 method post 노출x-->
+    <form action="table01.html" method="get"><!--어디론가 보낼때는 form태그 필요--><!--4kbite 제약-->
+        <!--name,id 서버 식별용 name단순 데이터 구분용 id 스타일시트 등의 프로그램상의 데이터 구분용-->
+        <label>아이디 : </label><!--label스타일시트 작업용. 단순글자 출력. 태그 적용.-->
+        <input type="text" size="18" maxlength="10" name="id" id="id" placeholder="아이디를 입력해주세요"><br>
+        비밀번호 : <input type="password" maxlength="15" name="password" id="password" placeholder="비밀번호를 입력해주세요"><br>
+        이름 <input type="text"name="name" id="name" placeholder="이름을 입력해주세요" value="김태진"/> <!--value 디폴드 값-->
+        <br><br>
+        숨김 태그 <input type="hidden" name="hidden" value="aaaa"><!--hidden데이터상 존재하지만 화면에 나타나지 않음-->
+        <input type="submit" value="전송하기">
+        <input type="reset" value="초기화">
+    </form>
+    <hr>
+    <form>
+        정보 공개 : <input type="radio" checked name="ra" value="1">공개 <!--name을 같은 이름으로 하면 그룹이 됨-->
+                  <input type="radio" name="ra" value="0">비공개 <!--채크시 value 값을 전송 -->
+                  <input type="radio" name="ra">?
+                  <br>
+        성별 :    <input type="radio" checked name="ra1">남
+                  <input type="radio" name="ra1">여
+                  <br>
+        취미 :    <input type="checkbox" name="chk1" value="1"/> 탁구 <!--채크시 value값 name값에 저장-->
+                  <input type="checkbox" name="chk2" value="2" checked/> 배드민턴
+                  <input type="checkbox" name="chk3" value="3"/> 음악감상
+                  <input type="checkbox" name="chk4" value="4" checked/> 악기연주
+                  <br>
+                  이메일 : <select name="sel"><!--size사이즈 조정 multiple 여러개 선택가능-->
+                    <option value="1">네이버</option>
+                    <option value="2">다음</option>
+                    <option value="3" selected>구글</option>
+                    <option value="4">카카오</option>
+                    <option value="5">직접</option>  
+                  </select>
+                  <br>
+                  <input type="file" name="filename"/><!--파일선택시 이름값 저장 보내려면 별도로 프로그램 짜야함-->
+                  <br>후기<br>
+                  <textarea rows="7" cols="50" name="content"></textarea>
+                  <br><br>
+                  <input type="submit" value="전송하기">
+                  <input type="reset" value="초기화">
+    </form>
+    <hr>
+</body>
+</html>

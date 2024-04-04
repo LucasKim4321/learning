@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>폼태그02</title>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <Legend>구매</Legend>
+            <h1>시간 지정하기</h1>
+            <input type="time"><input type="datetime"><input type="datetime-local">
+            <h1>날짜 지정하기</h1>
+            <input type="date"><input type="month"><input type="week">
+                <ul>
+                    <li>
+                        <label>
+                            <input type="checkbox" value="s_3" name="1">
+                            <input type="number" min="1" max="10" value="0">개 (최대 5개)<!--지정 범위내 입력 가능 초과시 오류-->
+                            선물용 3kg
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" value="s_5" name="2">
+                            <input type="range" min="1" max="10" step="1" value="0">개 (최대 5개)<!--step추가 단위 range바 형태-->
+                            선물용 5kg
+                        </label>
+                    </li>
+                </ul>
+            <input type="submit" value="전송하기"/>
+            <input type="reset" value="초기화"/>
+        </fieldset>
+    </form>
+</form><br>
+<form action="" autocomplete="on"><!--자동 완성 (작성 기록이 남아있음)(name지정해줘야함)-->
+    <fieldset>
+        <legend>주문하기</legend>
+        <label>이름 : </label><!--readonly 읽기전용(수정불가) disabled 비활성(보이지만 데이터가 존재하지 않음)-->
+        <input type="text" readonly disabled value="김태진" placeholder="입력해주세요" name="name" id="name"/><br>
+        <label>배송주소 : </label>
+        <input type="text" name="address" id="address"/><br>
+        <label>연락처 : </label>
+        <input type="text" autofocus required name="contact" id="contact"/><br><!--autofocus커서 시작 위치 지정 required값을 반드시 넣게 만듬-->
+        <label>검색 : </label>
+        <input type="seaerch"><br>
+        <label>이메일 : </label>
+        <input type="email"><br><!--이메일 형식만 입력가능-->
+        <br>
+        <input type="submit" value="전송하기"/>
+        <input type="button" value="일반버튼"/><!--그냥 버튼-->
+        <button>버튼태그</button><!--submit이랑 똑같이 작동-->
+        <input type="reset" value="초기화"/>
+    </fieldset>
+</form>
+</body>
+</html>

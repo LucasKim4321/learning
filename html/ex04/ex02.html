@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>폼 태그 연습</title>
+</head>
+<body>
+    <h2>개인 신상 정보 입력</h2>
+    <form>
+        <label>- 이름 : </label>
+        <input type="text" name="name" id="name"><br><br>
+        <label>- 비밀번호 : </label>
+        <input type="password" name="password" id="password"><br><br>
+        <label>- 성별 : </label>
+        <input type="radio" name="ra" id="ra">남성
+        <input type="radio" name="ra" id="ra" checked>여성<br><br>
+        <label>- 취미 : </label>
+        <input type="checkbox" name="chk1" id="chk1">영화감상
+        <input type="checkbox" name="chk2" id="chk2" checked>게임
+        <input type="checkbox" name="chk3" id="chk3" checked>음악듣기<br><br>
+        <label>- 파일첨부 : </label>
+        <input type="file" name="filename"><br><br>
+        <label>- 이메일 : </label>
+        <input type="text" name="email" id="email">
+        @<select name="email">
+            <option value="아직모름" selected>직접</option>
+            <option value="naver.com">naver.com</option>
+            <option value="gmail.com">gmail.com</option>
+            <option value="hanmail.net">hanmail.net</option>
+        </select><br><br>
+        - 자기소개 : 
+        <textarea rows="7" cols="50"></textarea><br><br>
+        <input type="submit" value="확인">
+        <input type="reset" value="초기화">
+        <hr>
+    </form>
+</body>
+</html>

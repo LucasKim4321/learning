@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid 레이아웃</title>
+    <style>
+        #wrapper {
+            display: grid;
+            /* 고정폭 열 추가 */
+            grid-template-columns: 200px 200px 200px;
+            grid-template-columns: 1fr 1fr 1fr; /* 1:1:1*/
+            grid-template-columns: 1fr 2fr 1fr; /* 1:2:1*/
+            grid-template-columns: repeat(3,1fr); /* 1:1:1 */ /* repeat(횟수,비율) */
+            grid-template-columns: repeat(3,1fr 2fr); /* 1:2:1:2:1:2 */
+            /* 고정폭 행 추가 */
+            /* 줄 높이는 최소 100px : minmax(최소값 최대값) */
+            grid-template-rows: 100px 100px 100px;
+            grid-template-rows: minmax(100px, auto);
+        }
+        .items {
+            padding: 10px; background-color: lightgray;
+            overflow: hidden;
+        }
+        /* :nth-child(odd) 홀수 */
+        .items:nth-child(odd) {
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div class="items">Velit deserunt nostrud labore consequat eu quis elit cupidatat anim do velit est laboris exercitation. Consectetur ex non culpa Lorem est pariatur ex proident minim velit pariatur ipsum duis. Ea id ipsum esse eu cupidatat ea. Incididunt duis elit reprehenderit sunt anim nostrud consectetur proident id nulla. Reprehenderit minim nulla nulla non proident incididunt nulla laboris laborum consequat enim aute. Voluptate qui incididunt dolor voluptate anim ipsum ullamco eu cupidatat ea.</div>
+        <div class="items">Voluptate mollit velit ipsum exercitation do eiusmod proident reprehenderit duis nisi. Sunt in id sint irure eu ipsum fugiat cupidatat deserunt aliqua exercitation sint velit consequat. Duis excepteur qui voluptate amet ullamco pariatur cillum cillum. Lorem aute irure occaecat enim mollit Lorem deserunt labore commodo cupidatat commodo qui irure officia. Sunt adipisicing commodo do consectetur qui aliqua est voluptate id.</div>
+        <div class="items">Eu quis qui occaecat labore laborum enim anim quis. Irure nulla voluptate pariatur dolor do nulla ut. Culpa veniam enim Lorem id velit. Excepteur aliqua adipisicing occaecat anim anim magna fugiat reprehenderit ex amet. Laborum veniam adipisicing esse quis deserunt id ad qui dolore.</div>
+        <div class="items">Incididunt irure in cillum ea reprehenderit. Ex duis ipsum in exercitation velit officia occaecat nostrud voluptate non quis voluptate. Occaecat anim duis dolore cupidatat. Sunt nisi Lorem labore veniam incididunt commodo reprehenderit consequat ea proident mollit. Nulla consectetur aute aliquip proident ut aliqua eu.</div>
+        <div class="items">Do deserunt consectetur qui commodo velit qui cillum qui qui Lorem quis sint minim excepteur.</div>
+    </div>
+</body>
+</html>

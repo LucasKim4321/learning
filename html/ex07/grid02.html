@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid 레이아웃2</title>
+    <style>
+        #wrapper1 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            /* 열 사이 간격 */
+            grid-column-gap: 20px;
+            /* 행 사이 간격 */
+            grid-row-gap: 10px;
+            margin-bottom: 20px;
+        }
+        #wrapper2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-gap: 10px 20px; /* grid-gap: 행 열 */
+            margin-bottom: 20px;
+        }
+        h1 { font-size: 24px;}
+        .items {
+            padding: 15px; background-color: lightgray;
+        }
+        .items:nth-child(odd) {background-color: gray;}
+    </style>
+</head>
+<body>
+    <h1>auto-fit</h1>
+    <div id="wrapper1">
+        <div class="items">In voluptate duis laborum in tempor exercitation minim officia duis elit. Voluptate fugiat qui cupidatat occaecat ut nisi deserunt mollit velit cupidatat magna veniam. Sunt esse labore cupidatat ipsum amet deserunt voluptate sunt incididunt. Dolor ad incididunt tempor dolor adipisicing ut in. Duis reprehenderit irure labore magna ut duis fugiat. Mollit in laboris elit fugiat reprehenderit incididunt deserunt qui.</div>
+        <div class="items">Id incididunt magna aliqua occaecat sit culpa eiusmod. Ad aliqua irure ullamco commodo duis anim est anim mollit duis id sit. Sint sunt culpa anim Lorem. Exercitation nostrud id adipisicing voluptate. Mollit nulla sit elit commodo consequat tempor eiusmod qui. Sunt aliquip velit in do aliquip exercitation irure nostrud cillum.</div>
+        <div class="items">Veniam consequat commodo cupidatat pariatur qui id eiusmod proident ex aliquip tempor. Lorem cillum anim consequat cupidatat non veniam quis quis ad quis dolor dolor aliquip nulla. Deserunt cillum adipisicing labore ullamco sint ipsum ad excepteur sint. Proident nisi nostrud amet amet anim aute culpa exercitation voluptate non velit cupidatat veniam. Reprehenderit dolore et exercitation nisi eu. Consectetur dolor ex sint enim laboris dolor.</div>
+        <div class="items">Ut aliqua dolore adipisicing proident sit aliquip dolor do est pariatur eu culpa non culpa. Nisi dolore elit et non aliquip cupidatat non esse proident veniam. Elit incididunt et tempor eiusmod cupidatat aute ea non. Eu aute consequat laborum mollit enim. Cupidatat proident velit commodo cupidatat id ullamco magna. Eu veniam quis aliqua sunt nisi cupidatat reprehenderit. Reprehenderit dolor culpa labore id sint.</div>
+        <div class="items">Non excepteur est exercitation labore non. Aliqua aliquip nisi nulla commodo sunt voluptate. Do duis aliqua tempor anim eu mollit tempor nulla mollit eu non cupidatat anim veniam. Ex nulla cillum consequat laborum proident eiusmod et elit.</div>
+    </div>
+    <h1>auto-fill</h1>
+    <div id="wrapper2">
+        <div class="items">In voluptate duis laborum in tempor exercitation minim officia duis elit. Voluptate fugiat qui cupidatat occaecat ut nisi deserunt mollit velit cupidatat magna veniam. Sunt esse labore cupidatat ipsum amet deserunt voluptate sunt incididunt. Dolor ad incididunt tempor dolor adipisicing ut in. Duis reprehenderit irure labore magna ut duis fugiat. Mollit in laboris elit fugiat reprehenderit incididunt deserunt qui.</div>
+        <div class="items">Id incididunt magna aliqua occaecat sit culpa eiusmod. Ad aliqua irure ullamco commodo duis anim est anim mollit duis id sit. Sint sunt culpa anim Lorem. Exercitation nostrud id adipisicing voluptate. Mollit nulla sit elit commodo consequat tempor eiusmod qui. Sunt aliquip velit in do aliquip exercitation irure nostrud cillum.</div>
+        <div class="items">Veniam consequat commodo cupidatat pariatur qui id eiusmod proident ex aliquip tempor. Lorem cillum anim consequat cupidatat non veniam quis quis ad quis dolor dolor aliquip nulla. Deserunt cillum adipisicing labore ullamco sint ipsum ad excepteur sint. Proident nisi nostrud amet amet anim aute culpa exercitation voluptate non velit cupidatat veniam. Reprehenderit dolore et exercitation nisi eu. Consectetur dolor ex sint enim laboris dolor.</div>
+        <div class="items">Ut aliqua dolore adipisicing proident sit aliquip dolor do est pariatur eu culpa non culpa. Nisi dolore elit et non aliquip cupidatat non esse proident veniam. Elit incididunt et tempor eiusmod cupidatat aute ea non. Eu aute consequat laborum mollit enim. Cupidatat proident velit commodo cupidatat id ullamco magna. Eu veniam quis aliqua sunt nisi cupidatat reprehenderit. Reprehenderit dolor culpa labore id sint.</div>
+        <div class="items">Non excepteur est exercitation labore non. Aliqua aliquip nisi nulla commodo sunt voluptate. Do duis aliqua tempor anim eu mollit tempor nulla mollit eu non cupidatat anim veniam. Ex nulla cillum consequat laborum proident eiusmod et elit.</div>
+    </div>
+</body>
+</html>

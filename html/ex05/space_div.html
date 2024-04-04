@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공간 분할 학습하기</title>
+    <style>
+        #box1 div {
+            /* 글자 padding border margin 순으로 공간 분할 */
+            width: 100px; height: 100px;
+            padding: 10px;/* 양쪽으로 들어가기 때문에 가로 세로 20px이 늘어남 */
+            margin: 10px; /* 마주보는 margin 겹쳐짐 */
+            border: 5px dashed black;
+        }
+        #box1 div:nth-child(1) {
+            background-color: green;
+            border: 10px solid red;
+            border-top-width: 5px;
+            border-left-width: 5px;
+            border-right: 5px dashed;
+            border-width: 10px 5px 5px 10px; /* 위에서 부터 시계 방향  위 우측 아래 좌측 */
+            border-width: 5px 10px; /* 위아래, 좌우 */
+            border-width: 5px 10px 15px;  /* 위, 좌우, 아래 */
+            width: 50%; /* 현재 요소의 부모요소가 기준 */
+        }
+        #box1 div:nth-child(2) {
+            background-color: orange;
+            border-style: dotted;
+            border-style: dashed;
+            /*border-style: none;*/
+            border-color: blue;
+            border-left-color: yellow;
+        }
+        #box1 div:nth-child(3) {
+            background-color: red;
+            border-radius: 5px;
+            border-radius: 5px 10px 15px 20px;
+            margin: 0px; padding: 0px; border: 0px;
+            border-radius: 50px;/* 블록 크기의 절반이상이면 원이 됨 %도 가능 */
+        }
+        #box1-1 {
+            width: 30% !important;
+            border: 30px solid black !important;
+            color: purple;
+        }
+        #round {border-radius: 50%;}
+        #box2 {
+            width: 100px; height: 50px;
+            border: 1px solid black;
+        }
+        #box2 div {
+            width: 40%; height: 20px;
+            background-color: red;
+            display: inline-block; /* none 존재하지 않는것처럼 만듬 */
+        }
+        #box2 span {
+            width: 40%; height: 20px;
+            background-color: blue;
+            display: inline-block; /*inline,block,inline-block 표시*/
+        }
+        #menu1 nav ul { 
+            list-style: none;
+            margin: 0; padding: 0; /* 값이 0이면 단위 안적어도됨 */
+            clear: both; /*float시 생기는 속성 해제, 줄안넘어옴*/
+        }
+        #menu1 nav li { 
+            display: inline-block;
+            border: 1px solid black;
+            padding: 20px;
+            margin: 0 20px;
+        }
+        #menu2 nav ul {
+            list-style: none;
+            margin: 0; padding: 0;
+            width: 300px;
+        }
+        #menu2 ul li {
+            float: left;
+            margin-left: 10px;
+            padding: 3px;
+            border: 1px solid black;
+        }
+        .font_big {font-size: 2em;}
+        .font_italic {font-style: italic;}
+        .font_bold {font-weight: bold;}
+        .font_center { text-align: center;}
+        .button {
+            width: 150px; height: 70px;
+            background: red;
+            border: 10px solid white;
+            box-shadow: 5px 5px 5px gray;
+            border-radius: 30px;
+        }
+        .button > a {
+            display: block;
+            line-height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="button">
+        <a href="#" class="font_center font_big font-bold">Click</a>
+    </div>
+    <div class="font_center">text</div>
+    <hr>
+    <div id="menu2">
+        <nav>
+            <ul>
+                <li>menu-1</li>
+                <li>menu-2</li>
+                <li>menu-3</li>
+                <li>menu-4</li>
+            </ul>
+        </nav>
+    </div>
+    <div id="menu1">
+        <nav>
+            <ul>
+                <li>menu-1</li>
+                <li>menu-2</li>
+                <li>menu-3</li>
+                <li>menu-4</li>
+            </ul>
+        </nav>
+    </div>
+    <hr>
+    <div id="box2">
+        <div>box2</div>
+        <span>box3</span>
+    </div>
+    <img src="img/cat.jpg" >
+    <img src="img/cat.jpg" id="round">
+    <img src="img/photo.jpg" id="round">
+    <hr>
+    <div id="box1">
+        <div>1
+            <div id="box1-1">
+                1-1
+            </div>
+        </div>
+        <div>2</div>
+        <div>3</div>
+    </div>
+    <hr>
+    <h3>블럭</h3>
+    <div>block-1</div><!--전체가 공간-->
+    <div>block-2</div>
+    <div>block-3</div>
+    <hr>
+    <h3>인라인</h3>
+    <span>inline-1</span><!--글자만 공간-->
+    <span>inline-2</span>
+    <span>inline-3</span>
+    <hr>
+    <h4>1</h4><!--전체가 공간-->
+    <h4>2</h4>
+    <h4>3</h4>
+    <i>1</i><i>2</i><i>3</i><!--글자만 공간-->
+</body>
+</html>
