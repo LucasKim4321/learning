@@ -158,7 +158,7 @@ body {
 .conC .photo {
     min-height: 300px;
     background-image: url(../img/note.jpg);
-    background-size: cover;
+    background-size: cover; 
     background-position: center;
 }
 .conC .text {
@@ -186,7 +186,7 @@ body {
 }
 .conC a:hover {
     /* linear-gradient(시작색상,끝색상) */
-    background-image: linear-gradient(rgba(206, 255, 72, 0.329),rgba(73, 200, 250, 0.315));
+    background-image: linear-gradient(rgba(206, 255, 72, 0.3),rgba(73, 200, 250, 0.3));
 }
 @media (min-width: 768px) {
     .conC .container {
@@ -200,5 +200,56 @@ body {
     .conC .text {
         flex: 2;
         padding: 50px;
+    }
+}
+.conD .container {
+    border: 1px solid black;
+    margin-bottom: 50px;
+}
+.conD .photo {
+    min-height: 300px;
+    background-image: url(../img/life.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.conD .text {
+    padding: 20px;
+}
+.conD h2 {
+    padding-bottom: 20px;
+    font-size: 20px;
+}
+.conD p {
+    padding-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.8;
+    opacity: 0.8;
+}
+.conD a {
+    display: inline-block;
+    color: var(--text-bright-color);
+    background-color: var(--accent-color);
+    /* currentColor 폰트 색상과 동일 */
+    border: 3px solid currentColor;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px gray;
+    padding: 10px 15px;
+    font-size: 14px;
+}
+.conD a:hover {
+    background-image: linear-gradient(135deg, #b5ccff 0%,#b2fff0 50%,#edb0fc 100%);
+}
+@media (min-width: 768px) {
+    .conD .container {  
+        display: flex;
+        max-width: var(--large-width);
+        margin-left: auto;  margin-right: auto;
+    }
+    .conD .photo {
+        flex: 3;    
+    }
+    .conD .text {
+        flex: 2;
+        padding: 50px;  
     }
 }
