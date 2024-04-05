@@ -149,14 +149,16 @@ body {
         display: block;
     }
 }
-.conC .container{
-    margin-bottom: 50px;
-    border: 1px solid black;
+.conC {
     background-color: var(--main-color);
     color: var(--text-bright-color);
 }
+.conC .container{
+    margin-bottom: 50px;
+    border: 1px solid black;
+}
 .conC .photo {
-    min-height: 300px;
+    min-height: 250px;
     background-image: url(../img/note.jpg);
     background-size: cover; 
     background-position: center;
@@ -207,7 +209,7 @@ body {
     margin-bottom: 50px;
 }
 .conD .photo {
-    min-height: 300px;
+    min-height: 250px;
     background-image: url(../img/life.jpg);
     background-size: cover;
     background-position: center;
@@ -232,7 +234,7 @@ body {
     /* currentColor 폰트 색상과 동일 */
     border: 3px solid currentColor;
     border-radius: 10px;
-    box-shadow: 0px 0px 5px gray;
+    box-shadow: 0 0 5px 2px gray;
     padding: 10px 15px;
     font-size: 14px;
 }
@@ -242,14 +244,80 @@ body {
 @media (min-width: 768px) {
     .conD .container {  
         display: flex;
+        flex-direction: row-reverse;
         max-width: var(--large-width);
         margin-left: auto;  margin-right: auto;
     }
     .conD .photo {
-        flex: 3;    
+        /* flex: 확대,축소 고정크기; */
+        flex: 0 0 500px;
     }
     .conD .text {
-        flex: 2;
-        padding: 50px;  
+        /* 고정크기를 뺀 나머지 중의 비율 */
+        flex: 1;
+        padding: 50px;
+    }
+}
+/* 푸터 */
+footer {
+    color: var(--text-bright-color);
+    background-color: var(--dark-main-color);
+}
+footer .container {
+    padding: 40px 20px;
+}
+.footA {
+    margin-bottom: 30px;
+}
+.footA h2 {
+    margin-bottom: 10px;
+    font-size: 30px;
+    letter-spacing: 0.2em;
+}
+.footA p {
+    font-size: 14px;
+}
+.footA a {
+    color: inherit; /* 부모요소의 색을 상속받음 */
+}
+.footB > div {
+    margin-bottom: 20px;
+}
+.footB h3 {
+    padding-left: 3px; padding-bottom: 5px;
+    border-bottom : 1px solid currentColor;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+.footB a {
+    display: block;
+    padding: 5px;
+    color: inherit; /* 부모요소의 색을 상속받음 */
+    font-size: 12px;
+}
+.footB a:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.footC {
+    font-size: 12px;
+    text-align: center;
+}
+@media (min-width: 768px) {
+    footer .container {
+        max-width: var(--large-width);
+        border: 1px solid black;
+        margin-left: auto; margin-right: auto;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .footA {
+        flex: 0 0 40%;
+    }
+    .footB {
+        flex: 0 0 60%;
+        /* display: flex; */
+    }
+    .footC {
+        flex: 100%;
     }
 }

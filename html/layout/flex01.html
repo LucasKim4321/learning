@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레이아웃 연습</title>
+    <style>
+        .box {
+            border: 1px solid lightcoral;
+            width: 200px; height: 500px;
+            /* block 방식에서 상위 요소 기준 수평 가운데 정렬 */
+            margin-right: auto; margin-left: auto;
+            /* 배치 방식을 flex box layout 방식으로 전환 */
+            /* 기본 레이아웃이랑 똑같은데 배치방식 마음데로 적용가능 */
+            display: flex;
+            /* flex기본값 flex-direction: row; flex-flow: nowrap; */
+            /* flex-direction: column; */
+            /* flex-direction: row-reverse; */
+            /* 한줄(기본값) */
+            /* flex-flow: row nowrap; */
+            /* 여러줄 */
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .box1-1 {
+            /* flex 비율 설정 */
+            flex: 1;
+            /* flex에서 너비 고정 */
+            flex: 0 0 100px;
+            width: 100px;
+            height: 100px;
+            background-color: lightblue;
+        }
+        .box1-2 {
+            flex: 2;
+            flex: 0 0 100px;
+            width: 200px;
+            height: 100px;
+            background-color: lightpink;
+            /* margin-right: auto; margin-left: auto; */
+        }
+        
+        .box1-3 {
+            flex: 1;
+            flex: 0 0 200px;
+            width: 200px;
+            height: 100px;
+            background-color: lightgreen;
+            /* margin-right: auto; margin-left: auto; */
+        }
+        ul {
+            list-style: none;
+            margin: 0; padding: 0;
+        }
+        ul a {
+            text-decoration: none;
+            color: gray;
+        }
+        .nav ul {
+            display: flex;
+        }
+        .nav ul li {
+            flex: 0 0 50px;
+            border: 1px solid black;
+        }
+        .nav ul a {
+            display: block;
+            text-align: center;
+        }
+        .nav ul a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>flex를 이용한 메뉴</h1>
+    <div class="nav">
+        <!-- ul에 flex 적용시 li만 적용 li하위요소는 정상 -->
+        <ul>
+            <li><a href="#">메일</a></li>
+            <li><a href="#">카페</a></li>
+            <li><a href="#">블로그</a></li>
+            <li><a href="#">쇼핑</a></li>
+            <li><a href="#">뉴스</a></li>
+        </ul>
+    </div>
+    <h1>기본 레이아웃</h1>
+    <div class="box">box1
+        <!-- block 요소는 무조건 한줄씩 차지 -->
+        <div class="box1-1">box1-1</div>
+        <!-- sadsa<br>sdfds<br>ddsadd -->
+        <div class="box1-2">box1-2</div>
+        <div class="box1-3">box1-3</div>
+    </div>
+    <section>box3</section>
+</body>
+</html>
