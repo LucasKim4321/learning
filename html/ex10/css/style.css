@@ -315,7 +315,14 @@ footer .container {
     }
     .footB {
         flex: 0 0 60%;
-        /* display: flex; */
+        display: flex;
+    }
+    .footB div {
+        flex: 1;
+        /* padding: 10px; */
+    }
+    .footB div:not(:first-child) {
+        margin-left: 20px;
     }
     .footC {
         flex: 100%;
