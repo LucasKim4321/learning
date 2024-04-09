@@ -1,0 +1,67 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+/* 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    ul, li { list-style: none;}
+    a { text-decoration: none;}
+}
+/* 속성에 대한 변수 활용 */
+/* 기본 색상 */
+:root {
+    --main-color: #5d9ab2;
+    --accent-color: #bf6a7a;
+    --dark-main-color: #2b5566;
+    --text-bright-color: #fff;
+    --icon-color: #fff;
+    --icon-bk-color: #ddd;
+    --large-width: 1000px;
+}
+body {
+    font-family: '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
+}
+.contianer, .box {
+    border: 1px solid black;
+}
+.conA {
+    height: 100vh; min-height: 450px;
+    background-image: 
+        linear-gradient(rgba(255,0,0,0.1), rgba(0,0,255,0.1)),
+        url(../img/fruits.jpg);
+    background-size: cover;
+    background-position: center; /* 가로 세로 가운데 */
+    border: 1px solid gray;
+    align-items: center;
+}
+.conB .icon {
+    /* inline -> inline-block으로 전환 */
+    display: inline-block;
+    margin-bottom: 20px;
+    font-size: 40px;
+    /* 폰트 크기 기준 */
+    width: 2em; /*2배*/
+    /* height: 2em; line-height를 똑같이 높이면 height랑 똑같아짐*/
+    text-align: center;
+    line-height: 2em;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color: var(--icon-bk-color);
+    color: var(--icon-color);
+}
+.conC .photo {
+    min-height: 250px;
+    background-image: url(../img/note.jpg);
+    background-size: cover; 
+    background-position: center;
+}
+.conD .photo {
+    min-height: 250px;
+    background-image: url(../img/life.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.conD button {
+    box-shadow: 0 0 5px 2px gray;
+    border-radius: 10px;
+}
