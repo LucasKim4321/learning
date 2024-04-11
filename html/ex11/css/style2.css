@@ -12,11 +12,11 @@
 body {
     font-family: '맑은 고딕', 'Apple SD Gothic Neo', sans-serif;
 }
-/* .container, .container>div {
+/* .container, .box, .container>div {
     border: 1px solid black;
 } */
 .conA {
-    height: 100vh; min-height: 450px;
+    height: 100vh; min-height: 450px;   
     background-image: 
         linear-gradient(rgba(255,0,0,0.1), rgba(0,0,255,0.1)),
         url(../img/fruits.jpg);
@@ -34,6 +34,9 @@ body {
 }
 /* 미디어 쿼리 : 해상도별로 조건 처리 */
 @media (min-width: 768px) {
+    .conA {
+        height: 600px;
+    }
     .conA h1 {
         font-size: 115px;
     }

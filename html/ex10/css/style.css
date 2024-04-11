@@ -68,6 +68,9 @@ body {
 }
 /* 미디어 쿼리 : 해상도별로 조건 처리 */
 @media (min-width: 768px) {
+    .conA {
+        height: 600px;
+    }
     .conA h1 {
         font-size: 115px;
     }
