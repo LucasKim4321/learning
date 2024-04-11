@@ -73,3 +73,9 @@ body {
 .conD p {
     line-height: 1.8;
 }
+.footB a {
+    display: block;
+}
+.footB a:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
