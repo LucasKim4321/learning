@@ -29,7 +29,6 @@ body {
         url(../img/fruits.jpg);
     background-size: cover;
     background-position: center; /* 가로 세로 가운데 */
-    border: 1px solid gray;
     text-align: center;
     /* color: white; */
     color: var(--text-bright-color);
@@ -37,9 +36,9 @@ body {
     justify-content: center;
     align-items: center;
 }
-.container {
+/* .container {
     border: 1px solid black;
-}
+} */
 .conA h1 {
     margin-bottom: 10px;
     /* font-size: 48px; */
@@ -83,12 +82,11 @@ body {
 .conB .container {
     padding-top: 80px;
     padding-bottom: 50px;
-    border: 1px solid black;
 }
 .conB .text {
     text-align: center;
     padding-bottom: 60px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     padding-left: 20px; padding-right: 20px;
 }
 .conB h2 {
@@ -118,7 +116,7 @@ body {
     /* height: 2em; line-height를 똑같이 높이면 height랑 똑같아짐*/
     text-align: center;
     line-height: 2em;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 50%;
     background-color: var(--icon-bk-color);
     color: var(--icon-color);
@@ -158,7 +156,6 @@ body {
 }
 .conC .container{
     margin-bottom: 50px;
-    border: 1px solid black;
 }
 .conC .photo {
     min-height: 250px;
@@ -208,7 +205,6 @@ body {
     }
 }
 .conD .container {
-    border: 1px solid black;
     margin-bottom: 50px;
 }
 .conD .photo {
@@ -308,7 +304,6 @@ footer .container {
 @media (min-width: 768px) {
     footer .container {
         max-width: var(--large-width);
-        border: 1px solid black;
         margin-left: auto; margin-right: auto;
         display: flex;
         flex-wrap: wrap;

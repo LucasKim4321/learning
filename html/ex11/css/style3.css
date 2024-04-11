@@ -5,21 +5,61 @@
     ul, li { list-style: none;}
     a { text-decoration: none;}
 }
+:root {
+    --naver-color: #03C75A;
+}
+.f-naver {
+    color: var(--naver-color);
+}
+.bg-naver {
+    background-color: var(--naver-color);
+    color: white;
+}
 .con2 .container {
     width: 460px;
 }
 .con2 a {
-    border: 1px solid black;
+    border: 1px solid lightgray;
     border-radius: 6px;
 }
-.con2 ul {
-    border: 1px solid black;
+.con2 a:active {
+    background-color: rgba(0, 140, 255, 0.5);
 }
+/* .con2 a:focus {
+    border-bottom: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+} */
 .con3 .container {
     width: 460px;
 }
-.con3 table {
-    border: 1px solid black;
+#login input[type=text] {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+#login input[type=password] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+#login input:checked {
+    background-color: var(--naver-color);
+}
+.con3 button {
+    display: block;
+    border: 0;
+    width: 384px;
+}
+.con3 > .container > div {
+    display: none;
+} 
+#login:target {
+    display: block;
+}
+#number:target {
+    display: block;
+}
+#QRcode:target {
+    display: block;
 }
 .con4 .container {
     width: 460px;
@@ -33,4 +73,12 @@
 .foot1 li {
     font-size: 12px;
     padding: 0;
+}
+.foot1 h5 {
+    color: var(--naver-color);
+    font-size: 17px;
+    line-height: 16px;
+}
+.foot1 p {
+    font-size: 12px;
 }
