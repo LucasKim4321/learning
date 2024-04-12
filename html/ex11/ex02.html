@@ -24,69 +24,70 @@
             </div>
         </section>
         <section class="con2">
-            <div class="container row text-center mx-auto p-0">
-                <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+            <div class="container text-center mx-auto p-0">
+                <ul class="nav nav-pills  justify-content-center mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active text-black py-3" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">ID 로그인</button>
+                      <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">ID 로그인</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link text-black py-3" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">일회용 번호</button>
+                      <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">일회용 번호</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link text-black py-3" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">QR코드</button>
+                      <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">QR코드</button>
                     </li>
                 </ul>
             </div>
         </section>
         <section class="con3">
             <div class="container border rounded-bottom border-top-0 mx-auto mb-3">
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                        <div class="pt-4 pb-2 px-4">
-                            <input type="text" placeholder="아이디" autofocus class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                            <input type="password" placeholder="비밀번호" class="form-control" id="exampleInputPassword1">
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
+                        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                            <div class="pt-4 pb-2 px-4">
+                                <input type="text" placeholder="아이디" autofocus class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                <input type="password" placeholder="비밀번호" class="form-control" id="exampleInputPassword1">
+                            </div>
+                            <div class="row pb-4">
+                                <div class="col-8 form-check">
+                                    <input class="form-check-input ms-3 rounded-circle" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1">
+                                    <label class="form-check-label ps-2 text-black-50" for="flexRadioDefault1">
+                                    로그인 상태 유지
+                                    </label>
+                                </div>
+                                <div class="col-2">
+                                    <a href="#" class="text-black-50">IP보안</a>
+                                </div>
+                                <div class="col-2 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                </div>
+                            </div>
+                            <div class="button">
+                                <button type="button" class="mx-auto mb-4 py-3 fs-5 rounded-3 bg-naver">로그인</button>
+                            </div>
                         </div>
-                        <div class="row pb-4">
-                            <div class="col-8 form-check">
-                                <input class="form-check-input ms-3 rounded-circle" type="checkbox" name="flexRadioDefault" id="flexRadioDefault1">
-                                <label class="form-check-label ps-2 text-black-50" for="flexRadioDefault1">
-                                로그인 상태 유지
-                                </label>
-                            </div>
-                            <div class="col-2">
-                                <a href="#" class="text-black-50">IP보안</a>
-                            </div>
-                            <div class="col-2 form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                            </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
+                        <div>
+                            <p class="py-4 text-center">네이버앱의 <b>메뉴>설정>로그인 아이디 관리><br>더보기>일회용 로그인번호</b>에 보이는 번호를
+                                입력해 주세요.</p>
+                        </div>
+                        <div class="px-4 pb-2">
+                            <input type="text" placeholder="번호를 입력하세요" autofocus class="form-control text-center py-3" id="exampleInputEmail1" aria-describedby="emailHelp">
                         </div>
                         <div class="button">
                             <button type="button" class="mx-auto mb-4 py-3 fs-5 rounded-3 bg-naver">로그인</button>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                    <div>
-                        <p class="py-4 text-center">네이버앱의 <b>메뉴>설정>로그인 아이디 관리><br>더보기>일회용 로그인번호</b>에 보이는 번호를
-                            입력해 주세요.</p>
-                    </div>
-                    <div class="px-4 pb-2">
-                        <input type="text" placeholder="번호를 입력하세요" autofocus class="form-control text-center py-3" id="exampleInputEmail1" aria-describedby="emailHelp">
-                    </div>
-                    <div class="button">
-                        <button type="button" class="mx-auto mb-4 py-3 fs-5 rounded-3 bg-naver">로그인</button>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-                    <div class="py-4">
-                        <img src="img/qr.svg" class="w-25">
-                    </div>
-                        <div>
-                            <p>공용 네트워크, 공용 PC라면 안전을 위해 QR코드로 로그인해주세요</p>
-                            <p>네이버 앱>렌즈를 눌러 QR코드를 스캔하여 보이는 숫자를 선택하면 로그인 됩니다.</p>
+                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
+                        <div class="py-4">
+                            <img src="img/qr.svg" class="w-25">
+                        </div>
+                            <div>
+                                <p>공용 네트워크, 공용 PC라면 안전을 위해 QR코드로 로그인해주세요</p>
+                                <p>네이버 앱>렌즈를 눌러 QR코드를 스캔하여 보이는 숫자를 선택하면 로그인 됩니다.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
         </section>
         <section class="con4">
@@ -119,44 +120,8 @@
                 </div>
             </div>
         </footer>
-        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Home</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Profile</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="pills-disabled-tab" data-bs-toggle="pill" data-bs-target="#pills-disabled" type="button" role="tab" aria-controls="pills-disabled" aria-selected="false" disabled>Disabled</button>
-            </li>
-          </ul>
-          <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" tabindex="0">
-                <p>Duis elit laborum esse ipsum ea esse eu minim voluptate. Sunt mollit proident enim incididunt incididunt fugiat excepteur sunt incididunt est incididunt sunt pariatur amet. Elit ipsum irure ullamco cupidatat aliqua amet anim culpa adipisicing excepteur aliquip culpa.
-
-Anim officia velit non consequat elit adipisicing Lorem. Aute laboris enim incididunt quis anim ad fugiat. Ad incididunt non nisi nisi. Laborum cupidatat consectetur in eu. Officia mollit labore culpa labore in qui nisi ipsum minim laborum.
-
-Dolore dolor do occaecat occaecat non nostrud excepteur ipsum quis veniam excepteur. Non ea quis ex officia elit. Ad labore laborum eiusmod exercitation velit magna duis fugiat sit. Minim fugiat sit ex ea tempor Lorem ipsum proident in non ea adipisicing qui.</p>
-            </div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
-                <p>Officia pariatur et officia tempor ea laboris consequat commodo anim sunt. Ut amet esse nisi eu id cupidatat fugiat nulla duis non occaecat esse aliqua aliquip. Ut in labore qui elit est aliquip commodo laboris. Lorem cupidatat aute anim laboris ullamco. Commodo do cillum eiusmod nisi enim mollit non dolore laboris duis minim ea. Aute mollit amet eu nisi quis ut adipisicing ut quis tempor laborum. Mollit veniam anim aliqua elit.
-
-Eu culpa ullamco laboris sint enim duis laborum pariatur sunt culpa sunt aliquip mollit. Tempor labore laborum aute qui ipsum officia exercitation. Ut enim pariatur sunt proident tempor velit minim magna est.
-
-Dolor fugiat consequat duis ad et cillum ex dolore Lorem enim anim ullamco magna. Dolore minim occaecat ipsum ea adipisicing amet. Excepteur amet consequat officia deserunt irure.</p>
-            </div>
-            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
-                <p>Irure anim deserunt laborum deserunt. Adipisicing nisi minim tempor ut incididunt esse. Ut duis duis tempor consequat non magna commodo aliqua occaecat dolor et. Id anim enim cillum ipsum. Exercitation voluptate duis laboris minim deserunt fugiat. Cupidatat qui mollit ut qui exercitation incididunt cillum duis adipisicing esse sunt adipisicing. Nisi est occaecat magna veniam.
-
-Laboris duis in non commodo. Veniam Lorem voluptate ea quis aute Lorem mollit consectetur adipisicing eu et. Aliquip irure est aliquip culpa minim. Enim ut enim elit in sint magna sunt consequat esse. Sunt consectetur dolore proident minim. Nulla eu aliqua dolore tempor ut cupidatat veniam do duis minim consectetur nostrud fugiat laboris. Aute excepteur non culpa tempor laboris eiusmod mollit laboris ea deserunt laborum eiusmod.
-
-Proident aute cillum amet irure amet quis. Aliqua veniam do anim pariatur nostrud labore aliquip magna ipsum est. Voluptate officia culpa aliqua non excepteur quis qui deserunt eiusmod tempor est ad. Sit cillum sit reprehenderit tempor quis consectetur id. Occaecat exercitation excepteur dolor minim sit voluptate qui commodo tempor. Ex ipsum veniam reprehenderit id quis proident minim non. Deserunt non anim ex anim voluptate laboris incididunt.</p>
-            </div>
-            <div class="tab-pane fade" id="pills-disabled" role="tabpanel" aria-labelledby="pills-disabled-tab" tabindex="0">...</div>
-          </div>
+        
+          
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
