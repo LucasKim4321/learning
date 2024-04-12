@@ -33,33 +33,13 @@
 .con3 .container {
     width: 460px;
 }
-#login input[type=text] {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-}
-#login input[type=password] {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-#login input:checked {
+.con3 input:checked {
     background-color: var(--naver-color);
 }
 .con3 button {
     display: block;
     border: 0;
     width: 384px;
-}
-.con3 > .container > div {
-    display: none;
-} 
-#login:target {
-    display: block;
-}
-#number:target {
-    display: block;
-}
-#QRcode:target {
-    display: block;
 }
 .con4 .container {
     width: 460px;
