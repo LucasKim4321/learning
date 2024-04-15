@@ -1,0 +1,13 @@
+
+1. jdk 다운 -> 압축해제 -> 폴더설정
+2. 환경변수 -> JAVA_HOME
+3. path에 '%JAVA_HOME%\bin;'추가
+4. 통합편집툴 eclipse.org 에서 JEE버전 다운
+5. 압축해제
+6. eclipse폴더에 eclipse.exe 실행
+7. workspace 폴더 선택
+8. file -> project -> java project ->선택
+
+preferences -> encoding 검색
+UTF-8 설정 : content types -> text, java properties file
+		workspace, css, html, jsp
