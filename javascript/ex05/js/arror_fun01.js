@@ -14,6 +14,8 @@ const fun02 = ()=> {
         console.log(i)
     }
 }
+// console.log(fun01())
+// console.log(fun02())
 
 
 // 2. 인자가 있고, 반환 값이 없는 함수
@@ -33,6 +35,7 @@ let fun06 = (num1, num2) => {
     return num1+num2
 }
 console.log(fun05(11,6))
+console.log(fun06(10,15))
 
 let result= fun05(11,6)
 let result2= fun06(100,60)

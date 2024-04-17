@@ -6,8 +6,8 @@
 // numberPrint()
 // numberPrint2(10,15)
 // numberPrint2(100,105)
-let result=sum(100,200)
-console.log(result)
+// let result=sum(100,200)
+// console.log(result)
 
 // 함수 정의  //독립된 기억 장소 사용 //함수 종료시 데이터 사라짐
 
@@ -18,6 +18,7 @@ function numberPrint() {
         console.log(i)
     }
 }
+// numberPrint()
 
 
 // 2. 인자가 있는 함수
@@ -30,6 +31,7 @@ function numberPrint2(start, end) {
         document.write(`${i}<br>`)
     }
 }
+// numberPrint2(100,105)
 
 
 // 3. 인자가 있고, 반환 값이 있는 함수
@@ -40,6 +42,9 @@ function numberPrint2(start, end) {
 function sum(num1,num2) {
     return (num1+num2)
 }
+let result=sum(100,200)
+console.log(result)
+// console.log(sum(100,200))
 
 
 // 4. 가변 인자   ...values 인자 갯수 무제한

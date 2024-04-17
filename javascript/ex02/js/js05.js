@@ -28,10 +28,8 @@ console.log(myObj['id'])
 console.log(myObj['name'])
 console.log(myObj.id, myObj.name2)
 
-// console.log('홍길동',typeof('홍길동'))
-// 홍길동은 string 속성 출력
-// console.log('100',typeof('100'))
-// console.log(100,typeof(100))
-// 숫자100은 string 속성 출력
-// console.log (5>2, typeof(5>2))
-// true 'boolean'
+
+console.log('홍길동',typeof('홍길동')) // '홍길동'은 string 속성 출력
+console.log('100',typeof('100')) // '100'은 string 속성 출력
+console.log(100,typeof(100)) // 그냥 100은 number 속성
+console.log (5>2, typeof(5>2)) // 5>2는 boolean 속성 출력

@@ -8,7 +8,7 @@
 논리연산 : !(NOT) &&(AND) ||(OR)
 &&(AND) : 모든 조건이 ture면 true
 ||(OR) : 모든 조건이 false => false
-^(XOR) : 모든 조건이 true 이거나 false면 false
+^(XOR) : 모든 조건이 true 이거나 false면 false 1,0으로 표시
 NOT -> AND -> OR 순으로 계산
 
 삼항 연산자 : 조건식 ? true경우 처리 : false인 경우 처리
@@ -43,8 +43,8 @@ console.log("5<2", 5<2) //false
 console.log("5!=2", 5!=2) //true
 console.log("5==2", 5==2) //false
 console.log("5==5", 5==5) //true
-console.log("5=='5'", 5=="5") //true ==숫자 문자 관계없이 결과 출력
-console.log("5==='5'", 5==="5") //false ===만 숫자 문자 다르면 무조건 false
+console.log("5=='5'", 5=="5") //true ==숫자 문자 속성 관계없이 결과 출력
+console.log("5==='5'", 5==="5") //false ===만 속성 다르면 무조건 false
 console.log("문자==='문자'", "문자"==="문자") //true ===,== 글자도 비교됨 true
 console.log("5>'2'", 5>"2") //true 숫자 문자 관계없이 결과 출력
 

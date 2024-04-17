@@ -45,8 +45,7 @@ else
 // 60이상 : D학점
 // 60미만 : F학점
 
-let score
-score = prompt ("당신의 점수:",0)
+let score = prompt ("당신의 점수:",0)
 // console.log("당신의 점수:",score)
 document.write("당신의 점수는:",score,"<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.")
 if (score==100)
@@ -66,15 +65,17 @@ document.write("<h1>F학점!</h1>")
 let num2
 num2=prompt("숫자1:",0)
 console.log(`입력한 숫자는 ${num2}`)
-if (num2%2==0)
-// console.log(`입력한 숫자 ${num2}는 짝수`)
+if (num2%2==0){
 // alert(`입력한 숫자 ${num2}는 짝수`)
+console.log(`입력한 숫자 ${num2}는 짝수`)
 document.write(`<h1>입력한 숫자 ${num2}는 짝수</h1>`)
-
-else
-// console.log (`입력한 숫자 ${num2}는 홀수`)
+}
+else {
 // alert(`입력한 숫자 ${num2}는 홀수`)
+console.log (`입력한 숫자 ${num2}는 홀수`)
 document.write(`<h1>입력한 숫자 ${num2}는 홀수</h1>`)
+}
+
 
 const num1 = 10
 if (num1>0)

@@ -1,4 +1,4 @@
-// 특정 구간을 반복처리 : for -> 일정한 횟수만 반복,  while -> 조건이 참일때까지 무한 반복
+// 특정 구간을 반복처리 : for -> 일정한 횟수만 반복,  while -> 조건을 만족하는 동안 계속 무한 반복
 
 // while(조건식) {
 //     참인 동안
@@ -17,7 +17,7 @@ console.log("while() outer")
 
 
 // 최소 1번을 반복 수행
-let loop_cnt2 = -10
+let loop_cnt2 =-10
 do {
     console.log("반복 처리")
 }
