@@ -21,12 +21,12 @@ switch(site) {
     }
 }
 
-// var win = window.open("about:blank")
-// if(url) {
-// // window
-// // .open("about:blank")
-// // .location
-// // .href="http://"+url
+var win = window.open("about:blank")
+if(url) {
+window
+.open("about:blank")
+.location
+.href="http://"+url
 // win.location.href = "http://"+url
 // win.location.target = _blank //새창 띄우기
-// }
+}
