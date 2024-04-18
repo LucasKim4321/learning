@@ -3,7 +3,7 @@
 
 1개 선택
 document.getElementById(아이디)  아이디만
-document.getSelector(선택자)  아이디 클래스 태그 다 찾아짐
+document.querySelector(선택자)  아이디 클래스 태그 다 찾아짐
 
 여러 개 선택
 document.getElementByClassName(클래스)
@@ -23,7 +23,7 @@ document.getElementById('header').style.color = 'skyblue'
 document.getElementById('header').style.backgroundColor = 'black' // 변수로 대신해서 간단해짐
 
 
-header3.style.backgroundColor = 'lightgray'  //HTML id 바로 불러와짐?
+header4.style.backgroundColor = 'lightgray'  //HTML id 바로 불러와짐?
 
 /*
 // 태그요소 선택시 여러개일 경우는 배열구조형식으로 전환 됨.

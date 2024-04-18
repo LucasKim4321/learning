@@ -8,7 +8,7 @@
 // // 문자열 => 숫자열로 전환 필요
 
 // jumsu=prompt("점수를 입력하세요", 0)
-// jumsu=Number(jumsu)
+// jumsu=Number(jumsu)  // Number(입력받은 값)을 숫자열로 전환
 // tot = tot + jumsu
 // console.log(tot)
 // n++
@@ -44,9 +44,9 @@ var jumsu = 0, n = 0
 var tot =0, avg =0, 
 
 n=prompt("인원 수 입력", 0)
-for (i=1; i<=count; i++) {
+for (i=1; i<=n; i++) {
     jumsu=prompt("점수를 입력하세요", 0)
-    jumsu=Number(jumsu)
+    jumsu=Number(jumsu)  // Number(입력받은 값)을 숫자열로 전환
     tot = tot + jumsu
     console.log(tot)
 }
