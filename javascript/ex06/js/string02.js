@@ -25,7 +25,7 @@ var name2 = name.replaceAll(' ',',')
 console.log(name, name1, name2)
 var tel = '010-1111-2222'
 var tel_number = tel.replace(/-/g,'')  // 정규식 표현  (/대상/g(전체), '교체값')
-console.log(tel_number)  // 변수 tel 값 010-1234-5678에서 값-를 전부 다 뺀 결과 출력
+console.log(tel_number)  // 변수 tel 값 010-1111-2222에서 값-를 전부 다 뺀 결과 출력
 
 
 // ex1) 텍스트 영역에 입력한 전화번호의 하이픈(-)을 제거한 내용을 표시하기

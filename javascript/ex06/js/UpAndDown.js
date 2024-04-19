@@ -35,7 +35,7 @@ _check.addEventListener('click', ()=> {
 _try.addEventListener('keypress', (e)=> {  // 대상.keyCode == 키 코드 값 누를 때 이벤트가 발생하는 함수  13=enter
     // e: 이벤트가 발생한 객체의 정보가 전달됨.
     // 여기서는 key의 기본정보중 keycode값이 키를 구분해줌
-    if (e.keyCode == 13) {
+    if (e.keyCode == 13) {  // 대상의 키코드 값이 13일때 true
         // var userNum = _try.value
         // alert(`사용자가 입력한 수: ${userNum}`)
         finding()

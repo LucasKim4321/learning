@@ -75,7 +75,7 @@ console.log('javascript'.charAt(4))  // 해당 index번호 위치에 있는 글�
 // 검색어
 const searchWordText = document.querySelector('#search-word-input')  // 변수 값에 함수 대입
 // 지역리스트 : button 요소만 그룹핑(배열구조)
-// const prefectureList = document.querySelector('#prefecture-list button')
+// const prefectureList = document.querySelector('#prefecture-list button')  // all 없이 그냥 부르면 첫번째 것만 찾음
 const prefectureList = document.querySelectorAll('#prefecture-list button')  //#prefecture-list > button  html이랑 똑같이 씀
 
 
@@ -109,7 +109,8 @@ searchWordText.addEventListener('keyup', ()=> {
         // console.log(btn,prefectureName,phonetic)  // 변수 값 체크
 
         // 검색어와 첫 번째 글자 일치 여부에 따라 hide클래스 사용
-        if ( searchWord.charAt(0) == prefectureName.charAt(0) ||  // dataset.name 값 식별 (data-name) 
+        // 대상.charAt(0) 대상의 0번째 글자가 일치하는지 다른 숫자도 넣어짐
+        if ( searchWord.charAt(0) == prefectureName.charAt(0) ||  // dataset.name 값 식별 (data-name)
             searchWord.charAt(0) == phonetic.charAt(0)) {  // dataset.phonetic 값 식별 (data-phonetic) 
             btn.classList.remove('hide')  // 버튼 표시
         }

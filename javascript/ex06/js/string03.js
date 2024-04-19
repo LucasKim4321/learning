@@ -2,7 +2,7 @@
 
 
 const myUrl = "http://example.com/?id=12345&name=Lion&age=28"
-// 대상.split('&')  // ('기준값') 대상의 특정 문자를 기준으로 분리하여 배열 구조
+// 대상.split('&')  // ('기준값') 대상의 특정 문자를 기준으로 분리하여 배열 구조로 저장
 console.log(myUrl.split('&'))
 
 const url_arr = myUrl.split('&')
@@ -15,6 +15,7 @@ console.log("-- 확장 for...of")
 for (var value of url_arr) {
     console.log(value)
 }
+console.log(value)  //변수 value의 마지막 값 출력  var 선언시만 가능
 
 console.log("-- forEach()")
 url_arr.forEach( (value)=> {console.log(value) })
@@ -51,8 +52,8 @@ console.log( (9.2323232).toPrecision(4))  // 소수점 이하 포함 4자리 숫
 
 // 문자열 URI 이스케이프(escape)처리
 var url3 = 'http://example.com/?name=길순&age=3&홍길동페이지.html'
-var url3_ecode1 = encodeURI(url3)  // '/?&=+:@$;,#'  처리하지않음
-var url3_ecode2 = encodeURIComponent(url3)  //
+var url3_ecode1 = encodeURI(url3)  // '/?&=+:@$;,#' 처리하지않음 영어는 그대로 나옴
+var url3_ecode2 = encodeURIComponent(url3)  // 영어는 그대로 나옴
 console.log(url3)
 console.log(url3_ecode1)  // 인코딩된 문자
 console.log(url3_ecode2)
@@ -61,3 +62,5 @@ var decode1 = decodeURI(url3_ecode1)  // 디코딩
 var decode2 = decodeURIComponent(url3_ecode2)
 console.log(decode1)  // 원상 복구된걸 출력
 console.log(decode2)
+
+// var 중복 선언, 수정 가능  let 중복 선언x, 수정가능  const 중복x 수정x
