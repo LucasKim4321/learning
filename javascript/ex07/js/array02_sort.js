@@ -1,19 +1,19 @@
 const arr = [2,1,3,10]
 const arr2 = arr.concat()  // 복사
 const arr3 = [2,5,1]
-console.log(arr)
-console.log(arr2)
-console.log(arr[0],arr[1],arr[2],arr[3])
-console.log(arr2[0],arr2[1],arr2[2],arr2[3])
 
 // // 숫자일 경우
 arr.sort(function(a,b) {
     return a - b  // 오름 차순
 })
+console.log(arr)
+console.log(arr[0],arr[1],arr[2],arr[3])
 
 arr2.sort(function(a,b) {
     return b - a  // 내림 차순
 })
+console.log(arr2)
+console.log(arr2[0],arr2[1],arr2[2],arr2[3])
 
 arr3.sort()  // 오름차순
 console.log(arr3)
@@ -31,12 +31,12 @@ const arr_str = ['김길순', '홍길동', '여우']
 // console.log (arr_str)
 
 // 내림차순
-console.log (arr_str)
 arr_str.sort(function (a,b) {
     if (a>b) return -1
     if (a<b) return 1
     if (a==b) return 0
 })
+console.log (arr_str)
 
 //데이터
 const userDataList = [
@@ -61,7 +61,7 @@ function updataList() {
 function sortByAsc() {
     userDataList.sort ( (a,b)=> a.id - b.id)
     // for ( const data of userDataList) {
-    //     console.log(data)
+        // console.log(data)
     // }
     updataList()
 }

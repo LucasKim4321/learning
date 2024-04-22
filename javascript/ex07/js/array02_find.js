@@ -30,7 +30,7 @@ const searchResult = document.querySelector ('#search-result')
 searchIdInput.addEventListener('keyup', ()=> {
     // 키보드로 입력한 숫자는 문자열
     // 문자열 -> 숫자 변환 : Number()
-    const searchId = Number(event.target.value)
+    const searchId = Number(event.target.value)  // 이렇게 써도 되고 링크 시킨거 연결해도 되고
     console.log('키워드', searchId)
     findUser(searchId)
 })
@@ -39,6 +39,7 @@ searchIdInput.addEventListener('keyup', ()=> {
 function findUser(searchId) {
     //해당 데이터 가져오기
     const targetData = userDataList.find( (data)=> data.id == searchId)
+    // console.log(targetData)
 
     if (targetData == null) {  // 해당 데이터가 없으면
         // searchResult.innerHTML = '<h1>유저 검색 결과 없음</h1>'  //태그 가능
