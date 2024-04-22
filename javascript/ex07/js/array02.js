@@ -20,9 +20,9 @@ console.log ('삭제후 배열', arr1)
 // 대상.splice (위치, 삭제할 개수, 요소추가(무한대?가능))
 const arr2_splice = ['홍길동', '홍길순', '동길이']
 console.log ('arr1_splice', arr2_splice)
-arr2_splice.splice (1, 0, '동길이홍')
+arr2_splice.splice (1, 0, '동길이홍')  // 인덱스 1위치에 추가 후 뒤에 0개 삭제
 console.log (arr2_splice)
-arr2_splice.splice (1, 2, '동길이홍','dd','aa')  // 인덱스 1위치에서 2개 삭제
+arr2_splice.splice (1, 2, '동길이홍','dd','aa')  // 인덱스 1위치에 추가 후 뒤에 2개 삭제
 console.log (arr2_splice)
 
 // 배열 결합
@@ -41,7 +41,7 @@ console.log (arr7)
 
 // 배열 요소를 결합해서 문자열 출력
 const arr8 = [2,4,8]
-console.log ('arr7:', arr8, typeof(arr8))
+console.log ('arr8:', arr8, typeof(arr8))
 console.log ('join():', arr8.join(), typeof(arr8.join()))
 
 const arr9 = ['a', 'b', 'c']
