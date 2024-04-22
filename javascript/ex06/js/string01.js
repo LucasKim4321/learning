@@ -50,6 +50,7 @@ console.log('----')
 // 대상.search(/해당 글자열/)의 첫번째 자리를 대상과 비교해  index 번호 표시  없으면 -1  
 console.log(str1.search(/Javascript/))  // 일치하는 글자 인덱스번호 찾음   없으면 -1  
 console.log(str1.search(/html/))  // 검색 실패  -1 출력     index는 0부터
+console.log(str1.search(/script/)) // 4
 
 console.log(str1.includes('Javascript'))  // 검색성공여부 : true/false
 console.log(str1.includes('html'))  // false 출력

@@ -49,33 +49,15 @@ function reset() {
 }
 
 
-
-// var cNum = 0, uNum = 0
-// var cNum = Math.ceil(Math.random()*100)  //100가지 숫자 발생
-// console.log('컴퓨터가 생성한 숫자',cNum)
-
-// // document.querySelector('#reset').addEventListener('click', ()=> {
-// // var cNum = Math.ceil(Math.random()*100)  //100가지 숫자 발생
-// // console.log('컴퓨터가 생성한 숫자',cNum)
-// // // return cNum
-// // })
-
-
-// document.querySelector('#check').addEventListener('click', ()=> {
-//     var uNum = document.querySelector('#try').value
-//     var result = document.querySelector('#result')
-//     console.log(result)
-//     console.log(uNum)
-//     if (uNum==cNum){
-//         result.innerHTML = '<h1>정답!!!</h1>'
-//     }
-//     else if (uNum>cNum) {
-//         result.innerHTML = '<h1>UP!!!</h1>'
-//     }
-//     else {
-//         result.innerHTML = '<h1>DOWN!!!</h1>'
-//     }
-// })
-
-
 // var 중복 선언, 수정 가능  let 중복 선언x, 수정가능  const 중복x 수정x
+
+var a = 1
+var a = 2
+let b = 1
+// let b = 2
+const c = 1
+// const c = 2
+// a = a+1
+// b = b+1
+// c = c+1
+console.log(a,b,c)

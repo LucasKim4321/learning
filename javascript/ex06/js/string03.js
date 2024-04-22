@@ -3,21 +3,24 @@
 
 const myUrl = "http://example.com/?id=12345&name=Lion&age=28"
 // 대상.split('&')  // ('기준값') 대상의 특정 문자를 기준으로 분리하여 배열 구조로 저장
-console.log(myUrl.split('&'))
+console.log(myUrl.split('&')) //&는 나오지 않음
 
 const url_arr = myUrl.split('&')
 
+
+// 변수 = 데이터
+// 배열 참조형 변수 = 주소
 console.log(url_arr[0])
 console.log(url_arr[1])
 console.log(url_arr[2])
 
-console.log("-- 확장 for...of")
+console.log("-- 확장 for...of 배열 : 배열객체(구조)")
 for (var value of url_arr) {
     console.log(value)
 }
 console.log(value)  //변수 value의 마지막 값 출력  var 선언시만 가능
 
-console.log("-- forEach()")
+console.log("-- 배열객체.forEach(함수식) 화살표 함수 표현 가능")
 url_arr.forEach( (value)=> {console.log(value) })
 
 console.log("--for")
@@ -27,7 +30,7 @@ for (i=0; i<url_arr.length; i++) {
 
 console.log("-------")
 var url_arr2 = myUrl.split(/&|\?|\./)  //  /정규식 표현/  |or  \?,\.특수문자
-url_arr2.forEach(v=>console.log(v))
+url_arr2.forEach(v=>console.log(v))  // 화살표 함수 ()생략 가능
 
 // 인수에 공백('')을 지정하면 한 글자식 분리하여 배열로 반환
 console.log('javascript'.split(''))
