@@ -49,4 +49,4 @@ var flattenedArray3 = []
 for (i=0; i<array.length; i++) {
     flattenedArray3 = flattenedArray3.concat(array[i])
 }
-console.log ('flattenedArray3', flattenedArray3)
+console.log ('flattenedArray3', flattenedArray3) 

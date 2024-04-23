@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트</title>
+    <style>
+        .btn { padding: 10px 20px;}
+    </style>
+</head>
+<body>
+    <div>
+        <button class="btn btn1">버튼1</button>
+        <button class="btn btn2" id="'id_btn2" data-num="200">버튼2</button>
+        <button class="btn btn3" onClick="document.querySelector('.btn_mess').textContent = 'butten3 클릭 이벤트가 발생했습니다.'">버튼3</button>  <!-- 태그 속성에 이벤트 함수 호출 -->
+        <button class="btn btn4" id="'id_btn4" data-num="400">버튼4</button>
+        <div class="btn_mess"></div>
+    </div>
+
+
+    <script>
+        const button1 = document.querySelector('.btn1')
+        const button2 = document.querySelector('.btn2')
+        const button4 = document.querySelector('.btn4')
+        // console.log(button)
+
+        // 이벤트 등록 : js소스 처리하는 방법
+        // 이벤트 타킷.addEventListener('이벤트종류', 수행할 함수, 옵션(없어도됨))
+        button1.addEventListener('click', ()=> {
+            document.querySelector('.btn_mess').textContent = 'butten1 클릭 이벤트가 발생했습니다.'
+        })
+
+        button2.addEventListener('click', onClickButton)  // 함수의 인자값에 함수를 쓸때 () 제외
+        button4.addEventListener('click', onClickButton)
+
+        function onClickButton(e) {  // e.targer: 이벤트가 발생한 요소 정보
+            console.log(e)  // 실제 이벤트 발생 객체 정보가 넘어옴
+            if (e.target.className == "btn2") {
+            document.querySelector('.btn_mess').textContent = 'butten2 클릭 이벤트가 발생했습니다.'
+            }
+            else {
+            document.querySelector('.btn_mess').textContent = 'butten4 클릭 이벤트가 발생했습니다.'
+            }
+        }
+    </script>
+</body>
+</html>
