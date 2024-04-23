@@ -10,7 +10,7 @@ const userDataList = [
 // console.log (userDataList)
 
 // 버튼 요소에 이벤트 등록
-document.querySelectorAll('.button').forEach( (btn)=> {
+document.querySelectorAll('.button').forEach( (btn)=> {  // 여러개 불러오면 배열로 저장
     // console.log(btn)
     // btn.classList.add('abcd')  // 클래스 추가
     btn.addEventListener('click', (e)=> {
@@ -59,19 +59,19 @@ console.log (allDiv[0])
 
 // 스프레드연산(...): 유사배열 -> 배열 전환
 const filter_arr = [...allDiv]
-console.log(filter_arr)
+console.log('filter_arr',filter_arr)
 const filter_ex = filter_arr.filter( (element)=> element.classList.contains('on'))
-console.log(filter_ex)
+console.log('filter_ex',filter_ex)
 
 const myString = '안녕하세요'
 console.log([...myString])  // 일시적으로 배열로바꿈
 console.log (myString)  
 
 const newString = [...myString].map( (ch)=> `${ch}!!`)
-console.log(newString)
+console.log('newString',newString)
 
 const newString2 = newString.reduce( (a,b)=> a+b)
-console.log(newString2)
+console.log('newString2',newString2)
 
 console.log('---')  // 유사배열 -> 배열 -> map() -> reduce() -> 최종 배열
 const str1= [...myString].map( (ch)=> `${ch}!`).reduce ( (a,b)=> a+b)

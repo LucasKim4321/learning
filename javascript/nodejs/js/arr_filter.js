@@ -8,7 +8,8 @@ const newArr2 = num.filter (function(data) {return data<=30})
 console.log ('30이하:',newArr2)
 
 
-let a = Number(prompt('입력',''))
+// let a = Number(prompt('입력',''))
+let a = 10
 const newArr11 = [10,20,30,40].filter( (data)=> data >= 20+a )
 console.log (newArr11)
 

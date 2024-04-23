@@ -23,13 +23,13 @@ priceSum = priceList.reduce( (pre, curr)=> pre+curr , 1000 )  // 배열.reduce( 
 console.log ('sum:', priceSum)
 
 priceSum = 0
-priceSum = priceList.reduce( (pre, curr, idx)=> {
-    console.log ('idx'+ idx + 'pre:'+ pre + 'curr:'+ curr + 'pre+curr' + (pre+curr))
+priceSum = priceList.reduce( (pre, curr, idx)=> {  //대상.reduce( ())
+    console.log ('idx:'+ idx + ' pre:'+ pre + ' curr:'+ curr + ' pre+curr:' + (pre+curr))
     return pre+curr
 },0 )
 console.log ('sum:', priceSum)
 
-let fac = [1,2,3,4,5].reduce( (a,b)=> a*b , 1)
+let fac = [1,2,3,4,5].reduce( (a,b)=> a*b, 1)
 console.log ('fac:', fac)
 
 // 2차원 배열 -> 1차 배열 전환 => 플래트닝(Flattening)
@@ -45,7 +45,7 @@ console.log ('flattenedArray', flattenedArray)
 const flattenedArray2 = array[0].concat(array[1],array[2],array[3],[1,2,3])
 console.log ('flattenedArray2', flattenedArray2)
 
-var flattenedArray3 = []
+var flattenedArray3 = [1,2,3]
 for (i=0; i<array.length; i++) {
     flattenedArray3 = flattenedArray3.concat(array[i])
 }

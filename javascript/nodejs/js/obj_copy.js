@@ -50,7 +50,7 @@ console.log(abc)  // 변수만 선언하고 출력하면 undefined 출력
 
 const arr = [10,20,30]
 const arr_isNull = arr.filter ( (data)=> data>100 )
-console.log(arr_isNull, arr_isNull != null)
+console.log(arr_isNull, arr_isNull != null)  // 공백은 null이 아님
 
 // 객체 요소 값 확인
 console.log(Object.keys(userData))  // key 나열
