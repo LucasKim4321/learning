@@ -82,3 +82,17 @@ document.querySelector('.asc').addEventListener('click', ()=> {
 document.querySelector('.desc').addEventListener('click', ()=> {
     sortByDesc()
 })
+
+
+console.log('--sort(), resverse() : 유니코드 기준으로 정렬')
+const sort_test = [10,9,20,1]
+
+sort_test.sort()  // 유니코드 기준으로 정렬해서 숫자는 이걸로 정렬안됨
+console.log(sort_test)
+console.log(sort_test[0],sort_test[1],sort_test[2],sort_test[3])
+
+sort_test.sort(function(a,b) {  // 정렬하는 과정을 대신해주는 식
+    return a-b // 오름차순
+})
+console.log(sort_test)
+console.log(sort_test[0],sort_test[1],sort_test[2],sort_test[3])
