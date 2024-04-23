@@ -35,7 +35,7 @@
 
         function onClickButton(e) {  // e.targer: 이벤트가 발생한 요소 정보
             console.log(e)  // 실제 이벤트 발생 객체 정보가 넘어옴
-            if (e.target.className == "btn2") {
+            if (e.target.className == "btn btn2") {  //className값 전체가 일치하게 써야함
             document.querySelector('.btn_mess').textContent = 'butten2 클릭 이벤트가 발생했습니다.'
             }
             else {
