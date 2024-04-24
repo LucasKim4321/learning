@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMContentLoaded</title>
+    <style>
+        * {
+            margin: 5px; padding: 0;
+        }
+        .container {
+            border: 1px solid gray;
+            width: 600px; height: 200px;
+            margin-left: auto; margin-right: auto;
+            margin-top: 50px; padding: 10px;
+            text-align: center;
+        }
+        .innerContainer {
+            height: 150px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        .box {
+            width: 100px; height: 100px;
+            border: 1px solid red;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .result {display: inline;}
+    </style>
+    <!-- script 그냥 위에서 불러오면 html값을 못 불러옴  defer넣으면 가능(구버전에서 안될가능성있음) DOM관련 설정시에도 가능 -->
+    <script src="js/loaded.js" defer></script>
+</head>
+<body>
+    <div class="container">
+            <div class="innerContainer">
+            <div class="box box1">박스1</div>
+            <div class="box box2">박스2</div>
+            <div class="box box3">박스3</div>
+        </div>
+        <hr>
+        <button class="btn">박수 개수는?</button>
+        <div class="result"></div>
+    </div>
+
+    <!-- 자바스크립트 태그 요소 맨 마지막에 실행시에는 DOM 호출 정상 처리 -->
+    <!-- <script src="js/loaded.js" defer></script> -->
+</body>
+</html>

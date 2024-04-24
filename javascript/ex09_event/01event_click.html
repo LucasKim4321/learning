@@ -14,6 +14,11 @@
         <button class="btn btn2" id="id_btn2" data-num="200">버튼2</button>
         <button class="btn btn3" onClick="document.querySelector('.btn_mess').textContent = 'butten3 클릭 이벤트가 발생했습니다.'">버튼3</button>  <!-- 태그 속성에 이벤트 함수 호출 -->
         <button class="btn btn4" id="id_btn4" data-num="400">버튼4</button>
+        <hr>
+        <button class="btn5">이벤트 1회 실행하기</button>
+        <hr>
+        <button class="btn6">버튼6</button>
+        <button class="btn7">버튼7(버튼6 이벤트 삭제하기)</button>
         <div class="btn_mess"></div>
     </div>
 
@@ -22,7 +27,28 @@
         const button1 = document.querySelector('.btn1')
         const button2 = document.querySelector('.btn2')
         const button4 = document.querySelector('.btn4')
-        // console.log(button)
+        const button5 = document.querySelector('.btn5')
+        const button6 = document.querySelector('.btn6')
+        const button7 = document.querySelector('.btn7')
+
+        //이벤트 삭제하기
+        button6.addEventListener('click', onClickBtn6)
+        button7.addEventListener('click', ()=> {
+        // button 이벤트 해제
+        button6.removeEventListener('click', onClickBtn6)
+        alert('버튼6 이벤트가 삭제 되었습니다.')
+        })
+
+        function onClickBtn6() {
+            alert('버튼6')
+        }
+
+        // 이벤트 1회 실행
+        // 옵션 지정
+        const option = { once: true}
+        button5.addEventListener('click', ()=> {
+            alert('버튼클릭')
+        }, option)  // 한번만 됨
 
         // 이벤트 등록 : js소스 처리하는 방법
         // 이벤트 타킷.addEventListener('이벤트종류', 수행할 함수, 옵션(없어도됨))
@@ -33,9 +59,9 @@
         button2.addEventListener('click', onClickButton)  // 함수의 인자값에 함수를 쓸때 () 제외
         button4.addEventListener('click', onClickButton)
 
-        function onClickButton(e) {  // e.targer: 이벤트가 발생한 요소 정보
-            console.log(e)  // 실제 이벤트 발생 객체 정보가 넘어옴
-            if (e.target.id == "id_btn2") {  //className값 전체가 일치하게 써야함   target data 보고 일치하게 적용(다른거도 다 적용됨)
+        function onClickButton(e) {  // e 값에 이벤트가 발생한 요소의 정보가 들어옴
+            console.log(e)  // 실제 이벤트 발생 객체 정보 출력
+            if (e.srcElement.id == "id_btn2") {  //className값 전체가 일치하게 써야함   target data 보고 일치하게 적용(다른거도 다 적용됨)
             document.querySelector('.btn_mess').textContent = 'butten2 클릭 이벤트가 발생했습니다.'
             }
             else {

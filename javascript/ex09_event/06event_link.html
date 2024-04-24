@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 작동 설정하기</title>
+</head>
+<body>
+    <h3> 링크</h3>
+    <hr>
+    <ul>
+        <li><a href="http://www.naver.com" class="link1">네이버</a></li>
+        <li><a href="http://www.daum.net" class="link2">다음</a></li>
+    </ul><br>
+
+    <script>
+        // 기본 이벤트 작동 해지
+        document.querySelector('.link1').addEventListener('click', (e)=> {
+            e.preventDefault()  // 기본 이벤트 작동 해제
+            alert('링크1 테스트')
+        })
+    </script>
+
+
+    <h3>이벤트 작동 설정하기</h3>
+    <hr>
+    <div class="box3">
+        <button class="btn10">버튼작동하기</button>
+        <button class="btn11">버튼Event</button>
+    </div>
+
+    <script>
+        // 버튼 작동하기
+        const btn10 = document.querySelector('.btn10')
+        const btn11 = document.querySelector('.btn11')
+        console.log(btn10,btn11)
+        btn10.addEventListener('click', ()=> {
+            alert('버튼작동하기')
+            // btn11.dispatchEvent(new Event('click'))  //btn10클릭시 btn11도 클릭되게 설정
+            btn11.click()  // 위에거랑 같음 ()안에 함수 넣기 가능
+        })
+        btn11.addEventListener('click', ()=> {
+            alert('버튼Event')})
+    </script>
+</body>
+</html>

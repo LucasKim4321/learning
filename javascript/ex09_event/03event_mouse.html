@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마우스 이벤트 처리</title>
+    <style>
+        .log2 {
+            width: 300px; height: 300px;
+            background-color: yellow;
+            margin-left:auto; margin-right:auto;
+        }
+        .log2_box {
+            width: 100px; height: 100px;
+            /* 선이랑 색 구분 */
+            /* border: 1px solid black; */
+            background-color: red; 
+        }
+    </style>
+</head>
+<body>
+    <h3>mousedown/mouseup/mousemove</h3>
+    <hr>
+    <div class="box1">
+        <div class="log2">
+            <div class="log2_box"></div>
+        </div>
+    </div>
+    <script>
+        const logArea = document.querySelector('.log2')
+        // console.log(logArea)
+        logArea.addEventListener('mousedown', ()=> { logArea.innerHTML='mousedown 마우스 버튼을 눌렀을 때'})
+        logArea.addEventListener('mouseup', ()=> { logArea.innerHTML='mouseup 마우스 버튼을 놓았을 때'})
+        // logArea.addEventListener('mousemove', ()=> { logArea.innerHTML='mousemove 마우스 이동 할 때'})
+        // logArea.addEventListener('mousemove', ()=> { console.log('mousemove 마우스 이동 할 때')})  // 이동할때마다 찍힘
+
+        // mouseenter,mouseleave 해당 영역 위에 들어가거나 나갈때
+        logArea.addEventListener('mouseenter', ()=> { console.log ('mouseenter 마우스 진입 할 때')})
+        logArea.addEventListener('mouseleave', ()=> { console.log ('mouseleave 마우스 진출 할 때')})
+
+        // mouseover,mouseout 아무 영역 위에 올라가거나 나갈때
+        logArea.addEventListener('mouseover', ()=> { console.log ('mouseover!!!')})
+        logArea.addEventListener('mouseout', ()=> { console.log ('mouseout')})
+    </script>
+</body>
+</html>

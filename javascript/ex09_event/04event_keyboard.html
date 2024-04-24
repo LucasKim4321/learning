@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>키보드 입력 이벤트 처리</title>
+    <style>
+    </style>
+</head>
+<body>
+    <h3>키보드 입력 이벤트</h3>
+    <div>
+        <textarea class="textarea" name="" id="" cols="30" rows="10"></textarea>  <!-- 태그 안에 공백, 글자 다 초기값 -->
+        <p>현재 <span class="string_num"></span>문자를 입력 중입니다.</p>
+    </div>
+
+    <script>
+        const textarea = document.querySelector('.textarea')
+        const string_num = document.querySelector('.string_num')
+        // textarea.addEventListener('keydown', ()=> { console.log ('키가 눌러졌습니다.')})
+        // textarea.addEventListener('keyup', ()=> { console.log ('키가 눌림 해제')})
+        // textarea.addEventListener('keypress', ()=> { console.log ('문자가 입력되었습니다.')})
+        textarea.addEventListener('keyup', (e)=> {
+            const inputText = textarea.value
+            string_num.innerHTML = inputText.length;
+
+            // 키 정보
+            // console.log (e)
+            // console.log (e.key)  // 문자
+            // console.log (e.code)  // 키코드
+            // console.log (e.keyCode)  // 문자 코드 번호
+            // console.log ('altKey', e.altKey)  // altKey 누르고 입력하면 true 아니면 false
+        })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>윈도우 리사이징 이벤트</title>
+</head>
+<body>
+    <h3>윈도우 리사이징 이벤트</h3>
+    <hr>
+    <div class="box2">
+        <p>윈도우 가로 길이: <span id="widthLog">0</span></p>
+        <p>윈도우 세로 길이: <span id="heightLog">0</span></p>
+    </div>
+    
+    <script>
+        // 윈도우 이벤트 (리사이징)
+        const widthLog = document.querySelector('#widthLog')
+        const heightLog = document.querySelector('#heightLog')
+        console.log(widthLog, heightLog)
+        // 현재 브라우저 창 가로/세로 값 추출: window.innerWidth, window.innerHeight
+        widthLog.innerHTML = window.innerWidth + 'px'  // 창 폭 출력
+        heightLog.innerHTML = window.innerHeight + 'px'  // 창 높이 출력
+
+        window.addEventListener('resize', ()=> {  // 창 resizing시 함수 처리
+        widthLog.innerHTML = window.innerWidth + 'px'
+        heightLog.innerHTML = window.innerHeight + 'px'
+        })
+    </script>
+</body>
+</html>
