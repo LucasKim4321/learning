@@ -55,7 +55,7 @@
         document.querySelector('#log3').innerHTML = `오늘은 ${dayList[day]} 입니다.`
 
         // 날짜 수정해서 출력
-        var date2 = new Date(2023,4,1)
+        var date2 = new Date(2023,4,1)  //  월은 출력시 +1함
         var year1 = date2.getFullYear()  // 연도 정보, .getXXXX() : 추출
         var month1 = date2.getMonth()+1  // 달 월이 0부터 시작  0~11
         var date_day1 = date2.getDate()  // 날짜 1~31
@@ -77,9 +77,10 @@
         // getTime(): 1970.01.01일부터 경과한 시간을 밀리초로 표시
         var theDate = new Date(nowYear, 3,25)
         var diffDate = theDate.getTime() - date3.getTime()
-        // console.log('getTime():', date3.getTime())
+        console.log('theDate.getTime():', theDate.getTime())
+        console.log('date3.getTime():', date3.getTime())
         console.log(diffDate)
-        var result = Math.ceil(diffDate/(60*1000*60*24))
+        var result = Math.ceil(diffDate/(60*1000*60*24))  // 남은 날을 날로 계산  남은시간(밀리초)/하루값(1000밀리초*60초*60분*24시간))=남은 날짜
         document.querySelector('.date_calc').innerHTML = `크리스마스는 ${result}일 남았습니다.`
 
         
