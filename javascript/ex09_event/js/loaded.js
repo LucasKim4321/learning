@@ -19,7 +19,8 @@ const result = document.querySelector('.result')
 console.log (boxes, boxes.length)
 
 btn.addEventListener('click', ()=> {
-    result.textContent = `${boxes.length}개 입니다!`
+    // result.textContent = `${boxes.length}개 입니다!`
+    result.innerHTML = `${boxes.length}개 입니다!`
 })
 
 
