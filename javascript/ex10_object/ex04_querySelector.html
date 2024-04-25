@@ -19,6 +19,13 @@
     <div id="foo"></div>
 
     <script>
+        // '<script>' 객체 생성
+        const scriptElement = document.createElement('script')
+        // <script src ="import01.js> 생성
+        scriptElement.src = 'js/import01.js'
+        // scriptElement.type = 'text/javascript'  // 구번전에서 오류나면 사용
+        // <head> 자식요소로 <script>를 추가
+        document.head.appendChild(scriptElement)
 
         // foo 요소
         document.querySelector('#foo').innerText = 'foo선택하기'
@@ -51,9 +58,9 @@
 
             var list_cnt = items.length;
             console.log('items total:', list_cnt)
-            var list_href = ["http://www.google.com","http://www.naver.com","http://www.duam.net"]
-            // var list_href = [["http://www.google.com","http://www.naver.com","http://www.duam.net"],['구글','네이버','다음']]
-            // location.href = 'list_href[idx]'  // 배열에 있는 문자열
+            var list_href = [
+                ["http://www.google.com","http://www.naver.com","https://www.daum.net","https://getbootstrap.com","https://www.w3schools.com"],
+                ['구글','네이버','다음','부트스트랩','W3school']]
 
             value.style.border = '1px solid red'
             value.style.padding = '5px'
@@ -63,8 +70,11 @@
 
             // 이벤트 등록
             value.addEventListener('click', ()=> {  // 대상의 영역 클릭시 작동
-                alert(value.innerText)  // interText 값을 안넣으면 대상의 값이 불러와짐
+                // alert(value.innerText)  // interText 값을 안넣으면 대상의 값이 불러와짐
                 // location.href = 'http://www.google.com'
+                alert(list_href[1][idx])
+                location.href = list_href[0][idx]  // 배열에 있는 문자열
+
             })
             value.addEventListener('mouseover', ()=> {
                 value.style.cursor = 'pointer'
