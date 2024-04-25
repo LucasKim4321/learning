@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>focus()/blur()</title>
+</head>
+<body>
+    <h3>focus()/blur()</h3>
+    <hr>
+    <div class="box2">
+        <input type="text" id="name" placeholder="이름"><br>
+        <input type="text" id="email" placeholder="이메일"><br>
+    </div>
+    <script>
+        const name = document.querySelector('#name')
+        const email = document.querySelector('#email')
+
+        // 포커스 설정
+        name.focus()
+        name.addEventListener('keyup', (e)=> {
+            console.log('keycode', e.keyCode)  // Enter 누르면 키코드값 13확인가능
+
+            let maxLen = name.value.length
+            console.log('name length:', maxLen)
+
+            if (e.keyCode == 13 || maxLen >= 7) {
+                email.focus()
+            }
+        })
+        name.addEventListener('focus', (e)=> {console.log('이름을 입력해주세요!') })
+        name.addEventListener('blur', (e)=> {console.log('이름을 입력완료!')})
+        email.addEventListener('focus', (e)=> {console.log('이메일을 입력해주세요!') })
+        email.addEventListener('blur', (e)=> {console.log('이메일을 입력완료!')})
+    </script>
+</body>
+</html>

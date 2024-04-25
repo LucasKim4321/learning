@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>3페이지</h1>
+    <button class="prev">이전</button>
+    <button class="next">다음</button>
+    <a href="ex02_browser_objects.html">첫페이지 이동</a>
+    <button>?</button>
+    <button>!</button>
+
+    <script>
+        document.querySelector('.prev').addEventListener('click', ()=> {
+            history.back()  // 이전
+        })
+        document.querySelector('.next').addEventListener('click', ()=> {
+            history.forward()  // 다음
+        })
+    </script>
+</body>
+</html>

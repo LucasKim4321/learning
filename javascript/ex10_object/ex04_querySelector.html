@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>셀렉터</title>
+</head>
+<body>
+    <div class="box1">
+        <h3>셀렉터 사용하기</h3>
+    </div>
+    <ul class="list">
+        <li class="item">홍길동</li>
+        <li class="item">이순신</li>
+        <li class="item">강감찬</li>
+        <li class="item">동길이</li>
+        <li class="item">홍길순</li>
+    </ul>
+    <div id="foo"></div>
+
+    <script>
+
+        // foo 요소
+        document.querySelector('#foo').innerText = 'foo선택하기'
+        // item 요소
+        document.querySelector('.list >.item').innerText = 'item선택하기'  // ('대상')안에 스타일 시트에서 쓰듯이 써도 됨
+        document.querySelector('.list .item:nth-child(2)').innerText = "<a href='www.google.com'>구글</a>"  // '' "" 번갈아 가면서 써야함
+        document.querySelectorAll('.item,#foo')[3].innerText = '나의 선택!'
+
+        const foo = document.getElementById('foo')  // 해당 id 값을 불러옴
+        console.log(foo)
+
+        const items = document.querySelectorAll('.item')
+        // const items = document.getElementsByClassName('item')  // 위에 거랑 똑같이 나옴  forEach()랑 호환 안됨
+        console.log('item class:',items)
+
+
+        for ( let item of items) {  // 배열구조의 데이터를 하나씩 꺼집어내어 처리
+            console.log(item)
+        }
+
+
+        console.log('---for')
+        for (let idx=0; idx<items.length; idx++)
+        console.log(items[idx])
+
+
+        console.log('---forEach(콜백함수)')  // getElementsByClassName 이랑 호환 안됨
+        items.forEach( (value, idx)=> {  // items 배열을
+            console.log(value, idx)
+
+            var list_cnt = items.length;
+            console.log('items total:', list_cnt)
+            var list_href = ["http://www.google.com","http://www.naver.com","http://www.duam.net"]
+            // var list_href = [["http://www.google.com","http://www.naver.com","http://www.duam.net"],['구글','네이버','다음']]
+            // location.href = 'list_href[idx]'  // 배열에 있는 문자열
+
+            value.style.border = '1px solid red'
+            value.style.padding = '5px'
+            value.style.margin = '5px'
+            // console.log(value)
+
+
+            // 이벤트 등록
+            value.addEventListener('click', ()=> {  // 대상의 영역 클릭시 작동
+                alert(value.innerText)  // interText 값을 안넣으면 대상의 값이 불러와짐
+                // location.href = 'http://www.google.com'
+            })
+            value.addEventListener('mouseover', ()=> {
+                value.style.cursor = 'pointer'
+                // value.style.color = 'skyblue'
+                value.style.color = 'rgb(49, 163, 197)'
+            })
+            value.addEventListener('mouseout', ()=> {
+                value.style.cursor = ''  // 공백 기본값
+                value.style.color = ''
+            })
+        })
+
+        // document 요소 선택자
+        console.log ('---- html 요소 읽기')
+        console.log(document.documentElement)
+        console.log ('---- head 요소 읽기')
+        console.log(document.head)
+        console.log ('---- html 요소 읽기')
+        console.log(document.body)
+
+    </script>
+</body>
+</html>
