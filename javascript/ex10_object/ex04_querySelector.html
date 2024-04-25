@@ -31,8 +31,8 @@
         document.querySelector('#foo').innerText = 'foo선택하기'
         // item 요소
         document.querySelector('.list >.item').innerText = 'item선택하기'  // ('대상')안에 스타일 시트에서 쓰듯이 써도 됨
-        document.querySelector('.list .item:nth-child(2)').innerText = "<a href='www.google.com'>구글</a>"  // '' "" 번갈아 가면서 써야함
-        document.querySelectorAll('.item,#foo')[3].innerText = '나의 선택!'
+        document.querySelector('.list .item:nth-child(2)').innerHTML = "<a href='http://www.google.com'>구글</a>"  // '' "" 번갈아 가면서 써야함
+        document.querySelectorAll('.item,#foo')[3].innerText = '나의 선택!'  // innerText HTML태그 인식 불가  innerHTML HTML태그 인식 가능
 
         const foo = document.getElementById('foo')  // 해당 id 값을 불러옴
         console.log(foo)

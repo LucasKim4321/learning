@@ -5,44 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>요소(노드)추가</title>
     <style>
-        .container, .container2 {
+        .container1, .container2 {
             display: flex; justify-content: center;
             padding: 30px; margin-left: auto; margin-right: auto;
-            width: 300px;
+            width: 500px;
             border: 1px dotted red;
         }
-        .container div, .container2 div{
+        .container1 div, .container2 div{
             border: 1px solid skyblue;
+            width:90px;
             padding: 10px;
             margin: 3px 5px;
         }
-        #myBox, #myBox2, #myBox3 {
+        #myBox1, #myBox2, #myBox3 {
             /* display: inline-block; */
             margin: 10px auto; padding: 10px 5px;
-            width: 150px;
+            width: 100px;
             border: 1px solid yellowgreen;
         }
     </style>
 </head>
 <body>
-    <div id="myBox3">요소추가3</div>
-    <div id="myBox2">요소추가2</div>
-    <div class="container2">container2
+    <div class="time">0초 경과</div>
+    <div id="myBox3">요소myBox3</div>
+    <div id="myBox2">요소myBox2</div>
+    <div class="container2">부모 요소container2
         <div>자식 요소3</div>
-        <div id="box2">자식 요소4</div>
+        <div id="box2">자식요소box2</div>
     </div>
     <hr>
-    <div id="myBox">요소추가1</div>
-    <div class="container">container
+    <div id="myBox1">요소myBox1</div>
+    <div class="container1">부모 요소container1
         <div>자식 요소1</div>
         <div>자식 요소2</div>
     </div>
 
     <script>
+        const container1 = document.querySelector('.container1')
+        const myBox1 = document.querySelector('#myBox1')
+        console.log(container1)
+        console.log(myBox1)
+
         const container2 = document.querySelector('.container2')
         const myBox2 = document.querySelector('#myBox2')
         const myBox3 = document.querySelector('#myBox3')
         const box2 = document.querySelector('#box2')
+
+        setTimeout( ()=> {  // 좌>우  위>아래
+            // 부모노드.appendchild(자식노드)
+            // container1.appendChild(myBox1)  //  부모.appendChild(자식)  부모노드에 자식을 덧붙인다
+
+            // 부모노드.insertBefore (자식노드, 희망위치의 노드)
+            // container2.insertBefore(myBox2, container2.firstElementChild)  // 부모
+            // container2.before(container1) // 대상1.before(대상2)  대상1 전에 대상2로 재배치
+            // container2.insertBefore(myBox3, box2)  //  부모노드에 자식을 해당위치 전에 넣는다  p.insertBefore(c, l) insert c before l in p
+            // container2.after(myBox3)  // 대상1.after(대상2)  대상1 다음에 대상2로 재배치
+            
+            // 특정 자식요소 삭제(단일요소)
+            // container.removeChild(document.querySelector('.container div:nth-child(1)'))
+            // container.remove()  // 현재 요소 삭제
+        },2000)
 
         setTimeout( ()=> {
             // 부모노드.insertBefore (자식노드, 희망위치의 노드)
@@ -52,28 +74,32 @@
 
         setTimeout( ()=> {
             // container2.insertBefore(myBox3, box2)
-            container2.after(myBox3)
+            // container2.after(myBox3)
         },6000)
 
         setTimeout( ()=> {
             // 특정 자식요소 삭제(단일요소)
-            container.removeChild(document.querySelector('.container div:nth-child(1)'))
+            // container.removeChild(document.querySelector('.container div:nth-child(1)'))
         },7000)
         
         setTimeout( ()=> {
-            container.remove()  // 현재 요소 삭제
-        },8000)
+            // container.remove()  // 현재 요소 삭제
+        },9000)
 
 
-        const container = document.querySelector('.container')
-        const myBox = document.querySelector('#myBox')
-        console.log(container)
-        console.log(myBox)
+        // 경과 시간 확인하기
+        const oldTime = Date.now()  // 현재 날짜를 타임스탬프로(밀리초로 계산) 표시
 
-        setTimeout( ()=> {
-            // 부모노드.appendchild(자식노드)
-            container.appendChild(myBox)
-        },3000)
+        // setInterval(수행할 함수, 밀리초)
+        setInterval (()=> {
+            const currentTime = Date.now()
+            // 경과한 밀리초
+            const diff = currentTime - oldTime
+
+            // 밀리초 -> 초로 환산
+            const sec = Math.floor(diff/1000)
+            document.querySelector('.time').innerHTML=`${sec}초 경과`
+        },1000)
     </script>
 </body>
 </html>

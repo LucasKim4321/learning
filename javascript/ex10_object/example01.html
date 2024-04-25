@@ -7,62 +7,52 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         * {margin: 0; padding: 0;}
+        h3 { margin-top: 70px}
         .containter {
-            width: 600px; margin-left: auto; margin-right: auto; margin-top: 100px;
+            width: 600px; margin-left: auto; margin-right: auto; margin-top: 20px;
         }
-        #cf1,#cf2 {
-            width: 40px;
+        #cf1,#cf2,#cf3,#cf4 {
+            width: 35px;
         }
 
     </style>
 </head>
 <body>
+    <h3 class="text-center">일반버전</h3>
     <div class="containter border p-4">
         <h2 class="title text-center pb-3">섭씨 ↔ 화씨 온도 변환기</h2>
         <div class="border p-5 row justify-content-center">
-            <input type="text" class="box1 col" id="input1">
-            <div class="box1 border col-1" id="cf1">C</div>
+            <input type="text" class="col" id="input1">
+            <div class="border col-1" id="cf1">C</div>
             <div class="col-1" id="change">↔</div>
-            <input type="text" class="box2 col" id="input2">
-            <div class="box2 border col-1" id="cf2">F</div>
+            <input type="text" class="col" id="input2">
+            <div class="border col-1" id="cf2">F</div>
         </div>
     </div>
+    <h3 class="text-center">요소 이동</h3>
     <div class="containter border p-4">
-        <h2 class="text-center pb-3">화씨 ↔ 섭씨 온도 변환기</h2>
+        <h2 class="title text-center pb-3">
+            <span id="idc">섭씨</span><span id="arror"> ↔ </span><span id="idf">화씨</span> 온도 변환기</h2>
         <div class="border p-5 row justify-content-center">
-            <input type="text" class="box2 col" id="input3">
-            <div class="box2 border col-1" id="cf2">F</div>
-            <div class="col-1" id="change">↔</div>
-            <input type="text" class="box1 col" id="input4">
-            <div class="box1 border col-1" id="cf1">C</div>
+            <input type="text" class="col" id="input3">
+            <div class="border col-1" id="cf3">C</div>
+            <div class="col-1" id="change2">↔</div>
+            <input type="text" class="col" id="input4">
+            <div class="border col-1" id="cf4">F</div>
         </div>
     </div>
+    <h3></h3>
     <div class="containter border p-4">
-        <h2 class="text-center pb-3">cm ↔ 화씨 온도 변환기</h2>
+        <h2 class="text-center pb-3">cm ↔ inch ↔ ft 변환기</h2>
         <div class="border p-5 row justify-content-center">
-            <input type="text" class="box1 col" id="input5">
-            <div class="box1 border col-1" id="cf1">cm</div>
-            <input type="text" class="box2 col" id="input6">
-            <div class="box2 border col-1" id="cf2">in</div>
-            <input type="text" class="box2 col" id="input7">
-            <div class="box2 border col-1" id="cf2">ft</div>
+            <input type="text" class="col" id="input5">
+            <div class="border col-1" id="cf1">cm</div>
+            <input type="text" class="col" id="input6">
+            <div class="border col-1" id="cf2">in</div>
+            <input type="text" class="col" id="input7">
+            <div class="border col-1" id="cf3">ft</div>
         </div>
     </div>
-    <!-- <div class="containter border p-4">
-        <h2 class="text-center pb-3">섭씨 ↔ 화씨 온도 변환기</h2>
-        <div class="border p-5 row justify-content-center">
-            <div class="col row" id="box1">
-                <input type="text" class="box2 col" id="input1">
-                <div class="border col-1" id="cf1">C</div>
-            </div>
-            <div class="col-1" id="change">↔</div>
-            <div class="col row" id="box2">
-                <input type="text" class="box2 col" id="input2">
-                <div class="border col-1" id="cf2">F</div>
-            </div>
-        </div>
-    </div> -->
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="js/example01.js"></script>
