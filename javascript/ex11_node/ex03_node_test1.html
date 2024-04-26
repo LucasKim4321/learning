@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>요소(node) 가져오기</title>
+    <style>
+        .nodes { width: 300px;}
+        .numbers{
+            display:flex;
+            list-style: none; /* li요소 기호문자 제거 */
+            border: 1px solid skyblue;
+            padding: 3px;
+        }
+        .numbers > li {
+            flex: 1;
+            margin: 3px; padding: 5px;
+            border: 1px solid lightcoral;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h3>Node read</h3>
+    <hr>
+    <div class="buttons">
+        <button id="btn1">첫번째 자식노드</button>
+        <button id="btn2">마지막 자식노드</button>
+        <button id="btn3">다음 노드</button>
+        <button id="btn4">이전 노드</button>
+        <button id="btn5">부모 노드</button>
+    </div>
+    <hr>
+    <div class="nodes">
+        <ul class="numbers">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+    </div>
+
+    <script>
+        const parentNumber = document.querySelector('.numbers')  // 부모노드
+        const buttons = document.querySelectorAll('.buttons button')
+        // const btnArray = [...buttons]  // 유사배열 -> 배열 forEach호환
+        console.log(buttons)
+
+        // for(제어문), for(변수 of 배열), 배열.forEach(함수식)
+        for (let button of buttons) {
+            console.log(button)
+
+            // 버튼 클릭시 처리할 내용 연결 (이벤트 핸들러)
+            button.addEventListener('click', (e)=> {
+                console.log(e)
+                console.log(e.target.id)
+                // console.log(button.id)  // 위에거랑 같음
+                let btn_gubun = e.target.id
+                switch(btn_gubun) {  // btn_gubun의 값이 해당하는 값일때 처리
+                    case "btn1":
+                        // 첫번째 자식노드 가져오기
+                        const first = parentNumber.firstElementChild
+                        console.log(first)
+                        alert(first.innerText)
+                        break;
+                    case "btn2":
+                        // 마지막 자식노드 가져오기
+                        const last = parentNumber.lastElementChild
+                        alert(last.innerText)
+                        break;
+                    case "btn3":
+                        // 다음 노드 가져오기
+                        // const next = first.nextElementSibling  // case끼리 변수 호환 안됨
+                        const next = parentNumber.firstElementChild.nextElementSibling  // 부모요소 첫번재 노드의 다음노드
+                        alert(next.innerText)
+                        break;
+                    case "btn4":
+                        // 이전 노드 가져오기
+                        const prev = parentNumber.lastElementChild.previousElementSibling  // 부모요소 마지막 노드의 전 노드
+                        alert(prev.innerText)
+                        break;
+                    case "btn5":
+                        console.log(parentNumber)
+                        // 현재 노드의 부모노드 가져오기
+                        const parentNode = parentNumber.firstElementChild.parentNode
+                        alert(parentNode)
+                        break;
+                }
+            })
+        }
+    </script>
+</body>
+</html>

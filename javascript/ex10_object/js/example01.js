@@ -8,6 +8,8 @@ const title = document.querySelector('.title')
 var a = 0
 change.addEventListener('click', ()=> {
     a++
+    input1.value = ''
+    input2.value = ''
     if (a==2) {a=0}
     console.log('a:',a)
     if (a==1) {
@@ -16,7 +18,6 @@ change.addEventListener('click', ()=> {
         cf2.innerHTML = 'F'
         title.innerHTML = '섭씨 ↔ 화씨 온도 변환기'
         input1.addEventListener('keyup', (e)=> {
-            // console.log(e.key)
             // console.log(e.keyCode)
             var f = (input1.value*1.8)+32
             if (e.keyCode == 13) {
@@ -116,6 +117,8 @@ input4.addEventListener('keyup', (e)=> {
 var b=0
 change2.addEventListener('click', ()=> {
     b ++
+    input3.value = ''
+    input4.value = ''
     if (b==2){b=0}
     console.log('b:',b)
     if (b==1) {

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노드 추가/삽입</title>
+</head>
+<body>
+    <h3>부모노드에 자식노드 추가,삽입</h3>
+    <hr>
+    <div class="form">
+        <label for="">항목 내용
+            <input type="text" id="name" value="딸기" placeholder="과일명입력">
+        </label>
+        <button id="add">추가</button>
+        <button id="remove">삭제</button>
+        <button id="remove2">전체 삭제</button>
+        <button id="remove3">특정한 대상 전체 삭제</button>
+    </div>
+    <hr>
+    <h3>내가 좋아하는 과일 List!</h3>
+    <div>
+        <ul id="list">
+            <li id="list_item1">사과</li>
+            <li id="list_item2">메론</li>
+            <li id="list_item3">수박</li>
+        </ul>
+    </div>
+
+    <script>
+        const name = document.querySelector('#name')
+        const ul_list = document.querySelector('#list')
+        const ul_list_items = document.querySelectorAll('#list li')
+        const addBtn = document.querySelector('#add')
+        const removeBtn = document.querySelector('#remove')
+        const removeBtn2 = document.querySelector('#remove2')
+        const removeBtn3 = document.querySelector('#remove3')
+        // console.log(name, name.value)
+        // console.log(addBtn)
+
+        // 항목에서 클릭하여 직접 삭제
+        itemsView()
+        function itemsView() {
+            ul_list_items.forEach( (item)=> {  // 배열만 불러와짐
+                console.log(item)
+                item.addEventListener('click', ()=> {
+                    // alert(item.innerText)
+                    ul_list.removeChild(item)
+                })
+            })
+        }
+
+
+        // 삭제버튼 이벤트 핸들러
+        removeBtn.addEventListener('click', ()=> {
+            const item_list = document.querySelectorAll('#list li')
+            const isZero = item_list.length
+            const test = document.querySelectorAll('#list_item1')
+            // console.log(isZero,test)
+
+
+            // 부모요소 안에 있는 특정 자식요소 삭제:
+            // 부모노드.removeChild(삭제할 자식노드)
+            if (isZero>0) {  // !isZero랑 같음
+                // ul_list.removeChild(ul_list.lastChild)
+                // 키워드를 입력한 항목이 list항목에 있으면 가져오기
+                item_list.forEach( (item)=> {
+                    // ul_list.removeChild(item)  // 전체삭제됨
+                    // console.log(item)
+                    // console.log(name.value)
+
+                    // 삭제할 내용과 list item 내용이 동일한 경우 삭제
+                    let itemName = item.innerText
+                    // console.log(itemName)
+                    if (itemName == name.value.trim()) {
+                        console.log(item)
+                        ul_list.removeChild(item)
+                    }
+                })
+            }
+            else {
+                alert('삭제할 항목이 없습니다.')
+            }
+
+        })
+
+
+        // 추가버튼 이벤트 핸들러
+        addBtn.addEventListener('click', ()=> {
+            let value = name.value.trim()
+            // console.log(value,value.length)  // 공백 그대로 나옴
+            // console.log(value.trim(),value.trim().length)  // 양쪽 공백 제거
+
+            // li요소 생성
+            const liElement = document.createElement('li')
+            // li요소의 내용
+            liElement.innerHTML = value
+            console.log(liElement)
+
+            // 추가하는 작업 마지막만 적용됨
+            // 부모요소에 자식요소 추가하기: appendChild()  기존 자식요소 뒤에 추가됨
+            ul_list.appendChild(liElement)  // 대상(부모요소).appendChild(자식요소)
+
+            // 지정 위치에 요소 추가하기
+            // ul_list.insertBefore(liElement, ul_list.firstElementChild)
+
+            // 첫째 요소 앞(위)
+            // ul_list.firstElementChild.before(liElement)
+            // 두번째 요소 뒤(아래)
+            // ul_list.firstElementChild.after(liElement)
+        })
+
+        // input text에 키누름 이벤트 핸들러
+        name.addEventListener('keyup', (e)=> {
+            console.log(e.keyCode)
+            if (e.keyCode == '13') {
+            name.value = name.value.trim()
+            addBtn.focus()
+            }
+        })
+
+        
+        // 삭제버튼 이벤트 핸들러
+        removeBtn2.addEventListener('click', ()=> {
+            const item_list = document.querySelectorAll('#list li')
+            const isZero = item_list.length
+            const test = document.querySelectorAll('#list_item1')
+            // console.log(isZero,test)
+            if (isZero>0) {  // !isZero랑 같음
+                item_list.forEach( (item)=> {
+                    ul_list.removeChild(item)  // 전체삭제됨
+                })
+            }
+            else {
+                alert('삭제할 항목이 없습니다.')
+            }
+
+        })
+
+        
+        // 삭제버튼 이벤트 핸들러
+        removeBtn3.addEventListener('click', ()=> {
+            const item_list = document.querySelectorAll('#list li')
+            const isZero = item_list.length
+            const test = document.querySelectorAll('#list_item1')
+            // console.log(isZero,test)
+
+
+            // 부모요소 안에 있는 특정 자식요소 삭제:
+            // 부모노드.removeChild(삭제할 자식노드)
+            if (isZero>0) {  // !isZero랑 같음
+                // ul_list.removeChild(ul_list.lastChild)
+                // 키워드를 입력한 항목이 list항목에 있으면 가져오기
+                item_list.forEach( (item)=> {
+                    // ul_list.removeChild(item)  // 전체삭제됨
+                    // console.log(item)
+                    // console.log(name.value)
+
+                    // 삭제할 내용과 list item 내용이 동일한 경우 삭제
+                    let itemName = item.innerText
+                    // console.log(itemName)
+                    if (itemName == name.value.trim()) {
+                        console.log(item)
+                        ul_list.removeChild(item)
+                    }
+                })
+            }
+            else {
+                alert('삭제할 항목이 없습니다.')
+            }
+
+        })
+
+        
+        // dd.addEventListener('click', ()=> {
+        //     // 부모노드.haschildNodes(: 자식노드 존재여부 확인) ?? 안됨
+        //     console.log(ul_list.hasChildNodes)
+        // })
+    </script>
+</body>
+</html>
