@@ -56,65 +56,75 @@
         // console.log(name, name.value)
         // console.log(addBtn)
 
+        // 추가버튼 이벤트 핸들러
+        let list_items = document.querySelectorAll('#list li')
+        addBtn.addEventListener('click', ()=> {
+            let value = name.value.trim()
+            // console.log(value,value.length)  // 공백 그대로 나옴
+            // console.log(value.trim(),value.trim().length)  // 양쪽 공백 제거
 
-        // 항목 클릭
-        // itemView()
-        // function itemView() {
-        //     for (let list_item of ul_list.children){ 
-        //         list_item.addEventListener('click', (e)=> {
-        //             // console.log(e)
-        //             name.value = e.target.innerHTML
-        //         })
-        //     }
-        // }
-        // let list_item = []
-        itemView()
-        function itemView() {
-            // for (list_item of ul_list.children){ 
-            //     list_item.addEventListener('click', click)
+            // li요소 생성
+            const liElement = document.createElement('li')
+            // li요소의 내용
+            liElement.innerHTML = value
+            console.log(liElement)
+
+            // 추가하는 작업 마지막만 적용됨
+            // 부모요소에 자식요소 추가하기: appendChild()  기존 자식요소 뒤에 추가됨
+            ul_list.appendChild(liElement)  // 대상(부모요소).appendChild(자식요소)
+
+            // 지정 위치에 요소 추가하기
+            // ul_list.insertBefore(liElement, ul_list.firstElementChild)
+
+            // 첫째 요소 앞(위)
+            // ul_list.firstElementChild.before(liElement)
+            // 두번째 요소 뒤(아래)
+            // ul_list.firstElementChild.after(liElement)
+            list_items = document.querySelectorAll('#list li')
+            itemClick()
+            if (a==1) {
+                itemRemove()
+            }
+
+        })
+
+        itemClick()
+        function itemClick() {
+            // for (list_item of ul_list.children) {
+            //     list_item.removeEventListener('click', click)
             // }
-            for (list_item of ul_list.children) {
-                list_item.removeEventListener('click', click)
-            }
-            for (let list_item of ul_list.children){ 
+            for (let list_item of list_items){ 
                 list_item.addEventListener('click', function click(e) {
-                    console.log(e.target.id)
-                    // console.log(e.target.value)
-                    // console.log(list_item)
+                    // console.log(e)
                     name.value = e.target.innerHTML
                     for (let list_item of ul_list.children){
-                        list_item.style.color = 'black'
-                        list_item.style.backgroundColor = 'white'
+                        list_item.style.color = ''
+                        list_item.style.backgroundColor = ''
                     }
                     list_item.style.color = 'skyblue'
                     list_item.style.backgroundColor = 'lightcoral'
-                })
+                    itemitem(list_item)
+                    console.log(list_item)
+                },
+                    // { once : true }
+                )
             }
         }
 
+        // 클릭 대상 삭제2
+        function itemitem(list_item) {
+            // console.log(list_item)
+                removeBtn.addEventListener('click', ()=> {
+                    console.log(list_item)
+                    list_item.remove()
+                },{ once : true })  //once:true설정을 하지않으면 이벤트가 죽지않고 무한히 중복됨!!
+            }
         
-        function click () {
-            for (let list_item of ul_list.children){ 
-                list_item.addEventListener('click', (e)=> {
-                    console.log(e.target.id)
-                    // console.log(e.target.value)
-                    // console.log(list_item)
-                    name.value = e.target.innerHTML
-                    for (let list_item of ul_list.children){
-                        list_item.style.color = 'black'
-                        list_item.style.backgroundColor = 'white'
-                    }
-                    list_item.style.color = 'skyblue'
-                    list_item.style.backgroundColor = 'lightcoral'
-                })
-            }
-        }
-
 
         // 위로가기
         prev.addEventListener('click', ()=> {
-            const item_list = document.querySelectorAll('#list li')
-            item_list.forEach( (item)=> {
+            // const item_list = document.querySelectorAll('#list li')
+            list_items.forEach( (item)=> {
                 if (item.innerText == name.value.trim()) {
                     item.previousElementSibling.before(item)
                 }
@@ -123,8 +133,8 @@
 
         // 아래로가기
         next.addEventListener('click', ()=> {
-            const item_list = document.querySelectorAll('#list li')
-            item_list.forEach( (item)=> {
+            // const item_list = document.querySelectorAll('#list li')
+            list_items.forEach( (item)=> {
                 if (item.innerText == name.value.trim()) {
                 item.nextElementSibling.after(item)
                 }
@@ -132,7 +142,7 @@
         })
         
 
-        //on off 버튼
+        // 클릭 대상 삭제 on off 버튼
         var a = 0
         removeOnOff.addEventListener('click', ()=> {
             a++
@@ -142,52 +152,28 @@
                 removeOnOff.style.backgroundColor = 'lightgrey'
                 removeOnOff.style.border = '1px solid grey'
                 console.log("item list len: ",ul_list.children.length)
-                for (let list_item of ul_list.children){
-                    console.log(list_item)
-                    list_item.addEventListener('click', (item)=> {
-                        // alert(item.innerText)
-                        list_item.remove(item)  // 클릭하면 현재 노드 삭제
-                    })
-                }
+                itemRemove()
             }
             else {
                 removeOnOff.style.backgroundColor = 'rgb(240,240,240)'
                 removeOnOff.style.border = '1px solid grey'
             }
         })
-
-
-        // 항목에서 클릭하여 직접 삭제
-        // itemView()
-        // function itemView() {
-        //     console.log("item list len: ",ul_list.children.length)
-        //     for (let list_item of ul_list.children){
-        //         console.log(list_item)
-        //         list_item.addEventListener('click', (item)=> {
-        //             // alert(item.innerText)
-        //             list_item.remove(item)  // 클릭하면 현재 노드 삭제
-        //         })
-        //     }
-        // }
-
-        // 항목에서 클릭하여 직접 이동 뭔가 문제있음
-        // itemView()
-        // function itemView() {
-        //     console.log("item list len: ",ul_list.children.length)
-        //     for (let list_item of ul_list.children){  // 배열만 불러와짐
-        //         console.log(list_item)
-        //         list_item.addEventListener('click', ()=> {
-        //             console.log(list_item)
-        //             list_item.nextElementSibling.after(list_item)
-        //         })
-        //     }
-        // }
+        function itemRemove() {
+            for (let list_item of list_items){
+                // console.log(list_item)
+                list_item.addEventListener('click', (item)=> {
+                    // alert(item.innerText)
+                    list_item.remove()  // 클릭하면 현재 노드 삭제
+                },{once:true})
+            }
+        }
 
 
         // 전체 삭제버튼 이벤트 핸들러
         removeBtn2.addEventListener('click', ()=> {
-            const item_list = document.querySelectorAll('#list li')
-            item_list.forEach( (item)=> {
+            // const item_list = document.querySelectorAll('#list li')
+            list_items.forEach( (item)=> {
                 ul_list.removeChild(item)  // 전체삭제됨
             })
         })
@@ -195,15 +181,25 @@
         
         // 특정대상 전체 삭제버튼 이벤트 핸들러
         removeBtn3.addEventListener('click', ()=> {
-            const item_list = document.querySelectorAll('#list li')
-            item_list.forEach( (item)=> {
+            // const item_list = document.querySelectorAll('#list li')
+            list_items.forEach( (item)=> {
                 let itemName = item.innerText
                 if (itemName == name.value.trim()) {
-                    ul_list.removeChild(item)
+                    item.remove()
                 }
             })
         })
 
+        // input text에 키누름 이벤트 핸들러
+        name.addEventListener('keyup', (e)=> {
+            console.log(e.keyCode)
+            if (e.keyCode == '13') {
+            name.value = name.value.trim()
+            addBtn.focus()
+            }
+        })
+
+        /*
         // 삭제버튼 이벤트 핸들러
         removeBtn.addEventListener('click', ()=> {
             const item_list = document.querySelectorAll('#list li')
@@ -236,46 +232,33 @@
             }
 
         })
+        */
+       
+        // 항목에서 클릭하여 직접 삭제
+        // itemView()
+        // function itemView() {
+        //     console.log("item list len: ",ul_list.children.length)
+        //     for (let list_item of ul_list.children){
+        //         console.log(list_item)
+        //         list_item.addEventListener('click', (item)=> {
+        //             // alert(item.innerText)
+        //             list_item.remove(item)  // 클릭하면 현재 노드 삭제
+        //         })
+        //     }
+        // }
 
-
-        // 추가버튼 이벤트 핸들러
-        addBtn.addEventListener('click', ()=> {
-            let value = name.value.trim()
-            // console.log(value,value.length)  // 공백 그대로 나옴
-            // console.log(value.trim(),value.trim().length)  // 양쪽 공백 제거
-
-            // li요소 생성
-            const liElement = document.createElement('li')
-            // li요소의 내용
-            liElement.innerHTML = value
-            console.log(liElement)
-
-            // 추가하는 작업 마지막만 적용됨
-            // 부모요소에 자식요소 추가하기: appendChild()  기존 자식요소 뒤에 추가됨
-            ul_list.appendChild(liElement)  // 대상(부모요소).appendChild(자식요소)
-
-            // 지정 위치에 요소 추가하기
-            // ul_list.insertBefore(liElement, ul_list.firstElementChild)
-
-            // 첫째 요소 앞(위)
-            // ul_list.firstElementChild.before(liElement)
-            // 두번째 요소 뒤(아래)
-            // ul_list.firstElementChild.after(liElement)
-            itemView()
-
-        })
-
-        
-
-        // input text에 키누름 이벤트 핸들러
-        name.addEventListener('keyup', (e)=> {
-            console.log(e.keyCode)
-            if (e.keyCode == '13') {
-            name.value = name.value.trim()
-            addBtn.focus()
-            }
-        })
-
+        // 항목에서 클릭하여 직접 이동 뭔가 문제있음
+        // itemView()
+        // function itemView() {
+        //     console.log("item list len: ",ul_list.children.length)
+        //     for (let list_item of ul_list.children){  // 배열만 불러와짐
+        //         console.log(list_item)
+        //         list_item.addEventListener('click', ()=> {
+        //             console.log(list_item)
+        //             list_item.nextElementSibling.after(list_item)
+        //         })
+        //     }
+        // }
 
         
         // dd.addEventListener('click', ()=> {
