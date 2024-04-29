@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행 준비!</title>
+    <style>
+        * { list-style: none; }
+        ul { padding: 0px;}
+        #container {
+            width: 700px; height: 600px; overflow: hidden;
+            margin-left: auto;  margin-right: auto;
+            border: 3px solid lightblue;
+            text-align: center;
+        }
+        #box {
+            margin-left: auto; margin-right: auto;
+            width: 500px;}
+        #box1 {
+            padding: 30px;
+            background-color: lightblue;
+        }
+        #textBox { width:350px; padding: 6px 10px; border: none; }
+        #btnAdd { padding: 5px 10px; border: none; }
+        li { text-align: left; display: flex; padding: 3px; padding-left: 35px;}
+        .btnX {margin-left: auto; margin-right: 10px; border: none; background-color: white;}
+        .x0 { background-color: rgb(233, 233, 233);}
+        .x1 { background-color: rgb(199, 199, 199);}
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="box">
+            <h3 id="title">여행 준비물 점검 목록</h3>
+            <div id="box1">
+                <input id="textBox" type="text">
+                <button id="btnAdd">추가</button>
+            </div>
+            <div id="box2">
+                <ul id="list">
+                    <li class="x0">필기 도구 <button class="btnX x0">x</button></li>
+                    <li class="x1">노트북 <button class="btnX x1">x</button></li>
+                    <li class="x0">충전 케이블 <button class="btnX x0">x</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const textBox = document.querySelector('#textBox')
+        const btnAdd = document.querySelector('#btnAdd')
+        var list = document.querySelector('#list')
+
+        var a = 0
+        btnAdd.addEventListener('click', (e)=> {
+            // console.log(e)
+            a++
+            if (a==2) a=0
+            const li = document.createElement('li')
+            li.className = `x${a}`
+            li.innerHTML = `${textBox.value} <button class="btnX x${a}">x</button>`
+            list.appendChild(li)
+            li.lastElementChild.addEventListener('click', ()=> { 
+                li.remove()
+            })
+        })
+
+        for (let list_item of list.children) {
+            // console.log(list_item)
+            list_item.lastElementChild.addEventListener('click', (item)=> {
+                list_item.remove(item)
+            })
+        }
+
+        textBox.addEventListener('keyup', (e)=> {
+            if (e.keyCode==13)
+            btnAdd.focus()
+        })
+        
+    </script>
+</body>
+</html>
