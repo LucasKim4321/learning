@@ -67,16 +67,38 @@
         //         })
         //     }
         // }
-        
+        // let list_item = []
         itemView()
         function itemView() {
-            for (let list_item of ul_list.children) {
-                // 이벤트 리스너 초기화 삽입
+            // for (list_item of ul_list.children){ 
+            //     list_item.addEventListener('click', click)
+            // }
+            for (list_item of ul_list.children) {
+                list_item.removeEventListener('click', click)
             }
             for (let list_item of ul_list.children){ 
+                list_item.addEventListener('click', function click(e) {
+                    console.log(e.target.id)
+                    // console.log(e.target.value)
+                    // console.log(list_item)
+                    name.value = e.target.innerHTML
+                    for (let list_item of ul_list.children){
+                        list_item.style.color = 'black'
+                        list_item.style.backgroundColor = 'white'
+                    }
+                    list_item.style.color = 'skyblue'
+                    list_item.style.backgroundColor = 'lightcoral'
+                })
+            }
+        }
+
+        
+        function click () {
+            for (let list_item of ul_list.children){ 
                 list_item.addEventListener('click', (e)=> {
-                    // console.log(e)
-                    console.log(list_item)
+                    console.log(e.target.id)
+                    // console.log(e.target.value)
+                    // console.log(list_item)
                     name.value = e.target.innerHTML
                     for (let list_item of ul_list.children){
                         list_item.style.color = 'black'
@@ -128,8 +150,7 @@
                     })
                 }
             }
-            
-            if (a==0) {
+            else {
                 removeOnOff.style.backgroundColor = 'rgb(240,240,240)'
                 removeOnOff.style.border = '1px solid grey'
             }

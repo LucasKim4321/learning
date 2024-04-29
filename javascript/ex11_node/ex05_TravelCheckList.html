@@ -23,7 +23,8 @@
         #textBox { width:350px; padding: 6px 10px; border: none; }
         #btnAdd { padding: 5px 10px; border: none; }
         li { text-align: left; display: flex; padding: 3px; padding-left: 35px;}
-        .btnX {margin-left: auto; margin-right: 10px; border: none; background-color: white;}
+        .btnX { margin-right: 10px; border: none; background-color: white;}
+        .btnR {margin-left: auto; margin-right: 5px; border: none; background-color: white; font-size: 12px;}
         .x0 { background-color: rgb(233, 233, 233);}
         .x1 { background-color: rgb(199, 199, 199);}
     </style>
@@ -38,9 +39,9 @@
             </div>
             <div id="box2">
                 <ul id="list">
-                    <li class="x0">필기 도구 <button class="btnX x0">x</button></li>
-                    <li class="x1">노트북 <button class="btnX x1">x</button></li>
-                    <li class="x0">충전 케이블 <button class="btnX x0">x</button></li>
+                    <li class="x0"><div>필기 도구</div><button class="btnR x0">수정</button><button class="btnX x0">x</button></li>
+                    <li class="x1"><div>노트북</div><button class="btnR x1">수정</button> <button class="btnX x1">x</button></li>
+                    <li class="x0"><div>충전 케이블</div><button class="btnR x0">수정</button> <button class="btnX x0">x</button></li>
                 </ul>
             </div>
         </div>
@@ -51,6 +52,7 @@
         const textBox = document.querySelector('#textBox')
         const btnAdd = document.querySelector('#btnAdd')
         var list = document.querySelector('#list')
+        console.log(list.children)
 
         var a = 0
         btnAdd.addEventListener('click', (e)=> {
@@ -59,17 +61,42 @@
             if (a==2) a=0
             const li = document.createElement('li')
             li.className = `x${a}`
-            li.innerHTML = `${textBox.value} <button class="btnX x${a}">x</button>`
-            list.appendChild(li)
-            li.lastElementChild.addEventListener('click', ()=> { 
+            li.innerHTML = `<div>${textBox.value}</div><button class="btnR x${a}">수정</button><button class="btnX x${a}">x</button>`
+            if (list.children.length==0) {
+                list.appendChild(li)
+            }
+            else {
+                list.firstElementChild.before(li)
+            }
+            li.lastElementChild.addEventListener('click', ()=> {
                 li.remove()
+            })
+            li.children[1].addEventListener('click', ()=> {
+                let name = prompt('교체할 내용을 입력하세요.')
+                if (name) {
+                    var new_li = document.createElement('div')
+                    new_li.innerText = name
+                    li.firstElementChild.replaceWith(new_li)
+                }
             })
         })
 
         for (let list_item of list.children) {
             // console.log(list_item)
-            list_item.lastElementChild.addEventListener('click', (item)=> {
-                list_item.remove(item)
+            list_item.lastElementChild.addEventListener('click', ()=> {
+                list_item.remove()
+            })
+        }
+
+        for (let list_item of list.children) {
+            // console.log(list_item)
+            list_item.children[1].addEventListener('click', ()=> {
+                let name = prompt('교체할 내용을 입력하세요.')
+                if (name) {
+                    var new_li = document.createElement('div')
+                    new_li.innerText = name
+                    list_item.firstElementChild.replaceWith(new_li)
+                }
             })
         }
 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노드 교체</title>
+    <style>
+        .containter {
+            padding: 40px; margin: 20px;
+            border: 1px solid skyblue;
+        }
+        .oldBox, .newBox {
+            border: 1px dotted red;
+        }
+    </style>
+</head>
+<body>
+    <div class="containter">
+        <button id="repBtn">교체하기</button>
+        <div class="oldBox">교체 전 박스</div>
+    </div>
+
+    <script>
+        const repBtn = document.querySelector('#repBtn')
+        const oldBox = document.querySelector('.oldBox')
+        repBtn.addEventListener('click', ()=> {
+            var newBox = document.createElement('div')
+            newBox.textContent = '새로생성된 박스'
+            newBox.classList.add('newBox')
+            console.log(newBox)
+            oldBox.replaceWith(newBox)
+        })
+    </script>
+</body>
+</html>
