@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클래스 속성 다루기</title>
+    <style>
+        .box {
+            border: 1px solid lightcoral;
+            margin: 20px; padding: 20px;
+        }
+        .smallBox{
+            border: 1px dotted lightseagreen;
+            margin: 10px; padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h3>클래스 속성 추가, 삭제, 유무</h3>
+    <hr>
+    <div class="classBox">
+        <button id="addBtn">클래스 추가</button>
+        <button id="removeBtn">클래스 삭제</button>
+        <button id="toggleBtn">클래스 토글</button>
+        <hr>
+        부모 박스
+        <div id="redBox" class="red blue">자식 박스1</div>
+        <div id="blueBox" class="blue">자식 박스2</div>
+        <hr>
+    </div>
+
+
+    <script>
+        const classBox = document.querySelector('.classBox')
+        const redBox = document.querySelector('#redBox')
+        const blueBox = document.querySelector('#blueBox')
+        const addBtn = document.querySelector('#addBtn')
+        const removeBtn = document.querySelector('#removeBtn')
+        const toggleBtn = document.querySelector('#toggleBtn')
+        const buttons = document.querySelectorAll('.classBox button')
+
+        console.log('-- classBox 속성 값 --')
+        console.log(classBox.getAttribute('class'))  // 대상.getAttribute('속성') 대상의 속성 값을 읽음
+        console.log(classBox.getAttribute('redBox'))
+        console.log(classBox.getAttribute('blueBox'))
+
+        console.log('-- classBox 속성 추가 --')
+        classBox.classList.add('blue','red')
+        redBox.classList.remove('blue','red')
+
+        console.log(blueBox.classList.contains('blue'))  // true 해당 속성에 포함하고 있는 클래스를 판별
+        console.log(blueBox.classList.contains('cyan'))  // false
+
+
+        // addBtn.addEventListener('click', (e)=> {  // 대상.classList.add(클래스) 대상에 해당 클래스 추가
+        //     classBox.classList.add('box')
+        //     redBox.classList.add('smallBox')
+        //     blueBox.classList.add('smallBox')
+        // })
+        // removeBtn.addEventListener('click', (e)=> {  // 대상.classList.remove(클래스) 대상에 해당 클래스 제거
+        //     redBox.classList.remove('smallBox')
+        //     blueBox.classList.remove('smallBox')
+        // })
+        // toggleBtn.addEventListener('click', ()=> {  // 대상.classList.toggle(클래스) 대상에 해당 클래스 없으면 추가 있으면 제거
+        //     classBox.classList.toggle('box')
+        //     redBox.classList.toggle('smallBox')
+        //     blueBox.classList.toggle('smallBox')
+        // })
+
+        console.log(buttons)
+        buttons.forEach( (button)=> {
+            // console.log(button.getAttribute('id'))
+            // 3개의 버튼에 대해 이벤트 일괄 등록
+            button.addEventListener('click', ()=> {
+            // console.log(button.getAttribute('id'))
+            let buttonId = button.getAttribute('id')
+            if (buttonId=='addBtn') {addClassFun()}
+            else if (buttonId=='removeBtn') {removeClassFun()}
+            else {toggleClassFun()}
+            })
+        })
+        function addClassFun() {
+            button.addEventListener('click', ()=> {
+            console.log('add func')
+            classBox.classList.add('box')
+            redBox.classList.add('smallBox')
+            blueBox.classList.add('smallBox')
+            
+        })
+        }
+        function removeClassFun() {
+            console.log('remove func')
+            redBox.classList.remove('smallBox')
+            blueBox.classList.remove('smallBox')
+        }
+        function toggleClassFun() {
+            console.log('toggle func')
+            classBox.classList.toggle('box')
+            redBox.classList.toggle('smallBox')
+            blueBox.classList.toggle('smallBox')
+        }
+
+
+    </script>
+</body>
+</html>

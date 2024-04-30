@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>속성 다루기</title>
+    <style>
+        /* img { width: 200px; height: 200px; } */
+    </style>
+</head>
+<body>
+    <h3>텍스트 요소</h3>
+    <hr>
+    <h4>오늘의 날씨</h4>
+    <p id="weatherInfo">흐림<span class="temperature">(23도)</span></p>
+    <hr>
+    <h3>요소 속성 다루기</h3>
+    <div>
+        <button id="change">속성 변경하기</button><br>
+        <a href="https://www.google.com" id="anchor">구글</a><br>
+        <img src="https://cdn-icons-png.flaticon.com/512/7105/7105071.png" id="img" alt="">
+    </div>
+    <hr>
+    <ul id="link">
+        <li><a href="../ex11_node/ex03_node_test1.html" target="_self">1</a></li>
+        <li><a href="../ex11_node/ex04_node_test2.html" target="_blank">2</a></li>
+        <li><a href="../ex11_node/ex05_TravelCheckList.html">3</a></li>
+        <li><a href="../ex11_node/ex06.node_replace.html" target="_top">4</a></li>
+    </ul>
+
+
+    <script>
+        const weatherInfo = document.querySelector('#weatherInfo')
+        const anchor = document.querySelector('#anchor')
+        const img = document.querySelector('#img')
+        const change = document.querySelector('#change')
+        const arr_linkA = document.querySelectorAll('#link a')
+        // console.log(anchor,img,change)
+
+        // 텍스트 요소 읽기, 변경
+        // 노드.textContent => 노드 내 텍스트(문자열)
+        console.log(weatherInfo.textContent)
+        // 노드.textcontent = '문자열',  노드,innerHTML = '태그,문자열'
+        weatherInfo.textContent = '기온은<string>-3도</string>가 예상'  // 전부 문자로 나옴
+        weatherInfo.innerHTML = '기온은<string>-3도</string>가 예상'  // 태그 적용됨
+        // outerHTMl 자신 포함 HTML 요소를 가져오거나 변경
+        // 노드.outerHTMl = '문자열'
+        console.log(weatherInfo.outerHTML)
+        weatherInfo.outerHTML = '<div>Hello<div>Hello</div></div>'  // 통째로 바뀜
+        
+        document.querySelector('#img').addEventListener('click', (e)=> {
+            console.log(e)
+        })
+
+
+        console.log('href:', anchor.href)
+        console.log('a id:', anchor.id)
+        console.log('src:', img.src)
+        console.log('src:', img.currentSrc)
+        console.log('src:', img.width)
+
+        change.addEventListener('click', ()=> {
+            anchor.href = 'https://www.naver.com'
+            anchor.textContent = '네이버'
+            // img.src = 'https://climateaction.re.kr/files/attach/images/87/337/023/crown%20fish.jpg'
+            img.setAttribute('src','https://climateaction.re.kr/files/attach/images/87/337/023/crown%20fish.jpg')
+            img.setAttribute('width','300px')
+            console.log(img.getAttribute('src'))  // 대상.getAttribute('속성') 대상의 속성 값을 읽음
+            console.log(img.hasAttribute('width'))  // 대상.hasAttribute('속성') 대상의 속성 값이 있는지 판별
+        })
+
+        
+        arr_linkA.forEach( (data)=> {
+            console.log('반복처리 시작')
+            // console.log(data.hasAttribute('target'))
+            if (data.hasAttribute('target') == false){
+                console.log(data.getAttribute('target'))  // 값이 없어서 null 나옴
+            }
+            if (data.getAttribute('target') !== '_blank'){
+                console.log(data.getAttribute('target'))
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스타일 변경하기</title>
+    <style>
+        /* * { color: lightcoral} */
+        .container {
+            width: 300px; height: 100px; margin-left: auto; margin-right: auto;
+        }
+        .red { background-color: lightsalmon;}
+        #info { padding: 10px; padding-left: 20px;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <p id="info">Seoul Han River</p>
+    </div>
+
+    <script>
+        const info = document.querySelector('#info')
+        console.log(info)
+        info.style.color = 'lightcoral'
+        info.style.backgroundColor = 'skyblue'
+        info.style.fontSize = '70px'  // font-size : size
+        info.style.fontWeight = '600'
+
+        const strokeColor = '#FA2F5C'
+        const strokeType = 'dotted'
+        const strokeLineWeight = '10px'
+        info.style.border = `${strokeLineWeight} ${strokeType} ${strokeColor}`
+
+        // 계산된 스타일값 확인  getComputedStyle(대상).속성
+        console.log(getComputedStyle(info).width)
+        console.log(getComputedStyle(info).color)
+        console.log(getComputedStyle(info).fontSize)
+
+    </script>
+</body>
+</html>

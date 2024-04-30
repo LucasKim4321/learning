@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>노드 교체</title>
     <style>
-        .containter {
+        .container {
             padding: 40px; margin: 20px;
             border: 1px solid skyblue;
         }
@@ -15,20 +15,48 @@
     </style>
 </head>
 <body>
-    <div class="containter">
+    <div class="container">
         <button id="repBtn">교체하기</button>
+        <button id="copyBtn">복사하기</button>
         <div class="oldBox">교체 전 박스</div>
     </div>
 
     <script>
         const repBtn = document.querySelector('#repBtn')
+        const copyBtn = document.querySelector('#copyBtn')
         const oldBox = document.querySelector('.oldBox')
+        const container = document.querySelector('.container')
+
+        copyBtn.addEventListener('click', (e)=> {
+            // console.log(e)
+            var clonedBox = oldBox.cloneNode(true)  // 대상.cloneNode(true) 트루일때 대상을 복사
+            console.log(oldBox,clonedBox)
+            container.appendChild(clonedBox)
+        })
+
+        //교체하기전 이벤트 등록
+        let a = 0
         repBtn.addEventListener('click', ()=> {
-            var newBox = document.createElement('div')
+            a++
+            if (a==2) a=0
+
+            let newBox = document.createElement('div')
+            let newBox2 = document.createElement('div')
+            if (a==1) {
             newBox.textContent = '새로생성된 박스'
             newBox.classList.add('newBox')
             console.log(newBox)
+            // 객체 교체
             oldBox.replaceWith(newBox)
+            }
+            else {
+            newBox2.textContent = '박스2'
+            newBox2.classList.add('newBox2')
+            console.log(newBox2)
+            // 객체 교체
+            newBox.replaceWith(newBox2)
+            }
+
         })
     </script>
 </body>
