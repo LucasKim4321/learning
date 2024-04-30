@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>체크박스</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="checkbox">
+            <label for="chA">
+                <input type="checkbox" id="chA" value="A" checked>체크박스A  <!-- checked  true상태로 만듬 -->
+            </label>
+            <label for="chB">
+                <input type="checkbox" id="chB" value="B">체크박스B
+            </label>
+            <label for="chC">
+                <input type="checkbox" id="chC" value="C">체크박스C
+            </label>
+            <hr>
+            <div class="alert alert-warning" id="result" role="alert">
+                A simple warning alert—check it out!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chA = document.querySelector('#chA')
+        const chB = document.querySelector('#chB')
+        const chC = document.querySelector('#chC')
+        // console.log(chA, chA.checked)
+
+        // 체크상태를 true로 변경
+        chB.checked = true
+
+        const arr_ch = document.querySelectorAll('.checkbox input')
+        const result = document.querySelector('#result')
+        checkBoxAll()
+
+        //체크 박스가 변경될 때 저리하는 이벤트 => 'change'
+        arr_ch.forEach( (ch) => {
+            ch.addEventListener('change', ()=> {
+                console.log('change', ch.id)
+                checkBoxAll()
+            })
+        })
+
+        function checkBoxAll() {
+            let check_str = ''
+            arr_ch.forEach( (ch)=> {
+                // console.log(ch.value, ch.checked)
+                if (ch.checked) {
+                    console.log(ch.value, ch.checked)
+                    check_str += ch.value+','
+                }
+            })
+        console.log(check_str.lastIndexOf(','))
+        // substr(start,indes) => 0부터 index-1까지 추출
+        check_str = check_str.substr(0, check_str.lastIndexOf(','))
+        result.innerHTML = check_str
+        }
+        
+
+
+        // // checkBox 이벤트 -> change
+        // chA.addEventListener('change', (e)=> {
+        //     console.log(e.target.checked)
+        //     if(e.target.checked == true) {
+        //         console.log('체크된 값은:',e.target.value)
+        //     }
+        // })
+    </script>
+</body>
+</html>

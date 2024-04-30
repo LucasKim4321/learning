@@ -94,21 +94,20 @@
             //     list_item.removeEventListener('click', click)
             // }
             for (let list_item of list_items){ 
-                list_item.addEventListener('click', function click(e) {
-                    // console.log(e)
-                    name.value = e.target.innerHTML
-                    for (let list_item of ul_list.children){
-                        list_item.style.color = ''
-                        list_item.style.backgroundColor = ''
-                    }
-                    list_item.style.color = 'skyblue'
-                    list_item.style.backgroundColor = 'lightcoral'
-                    itemitem(list_item)
-                    console.log(list_item)
-                },
-                    // { once : true }
-                )
+                list_item.addEventListener('click', click)
             }
+        }
+        function click(e) {  // e.target == list_item
+            // console.log(e)
+            name.value = e.target.innerHTML
+            for (let list_item of ul_list.children){
+                list_item.style.color = ''
+                list_item.style.backgroundColor = ''
+            }
+            e.target.style.color = 'skyblue'
+            e.target.style.backgroundColor = 'lightcoral'
+            itemitem(e)
+            console.log(e)
         }
 
         // 클릭 대상 삭제2
