@@ -8,6 +8,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <style>
         /* *{color:lightsalmon} */
+        .myBorder {border:2px solid lightsalmon;}
+        .myBackgroundColor {background-color: lightblue;}
+        .myColor { color: red;}
+        #result2 { color: black;}
     </style>
 </head>
 <body>
@@ -37,33 +41,27 @@
         const result2 = document.querySelector('#result2')
         const ch_list = document.querySelectorAll('.checkbox input')
 
-        chA.addEventListener('change', ()=> {
-            if(chA.checked==true) result.style.border='2px solid lightsalmon'
-            else result.style.border=''
+        ch_list.forEach( (ch)=> {
+            // console.log(ch)
+            ch.addEventListener('change', (e)=> {
+                // console.log(e.target.id)
+                if(ch.id=='chA') {result.classList.toggle('myBorder')}
+                else if(ch.id=='chB') {result.classList.toggle('myBackgroundColor')}
+                else {result.classList.toggle('myColor')}
+                checkedBoxes()
+            })
         })
-        chB.addEventListener('change', ()=> {
-            if(chB.checked==true) result.style.backgroundColor='lightblue'
-            else result.style.backgroundColor=''
-        })
-        chC.addEventListener('change', ()=> {
-            if(chC.checked==true) result.style.color='red'
-            else result.style.color=''
-        })
-
-        ch_list.addEventListener('change', ()=> {
-            
-            ch.forEach( (ch)=> {
-            if(chA.checked==true) result.style.border='2px solid lightsalmon'
-            else result.style.border=''
-            if(chB.checked==true) result.style.backgroundColor='lightblue'
-            else result.style.backgroundColor=''
-            if(chC.checked==true) result.style.color='red'
-            else result.style.color=''
-                console.log(ch.value)
-                // result2.innerHTML += ch.value
-        })
-
-        })
+        
+        checkedBoxes()
+        function checkedBoxes() {
+            let checked = ''
+            ch_list.forEach( (ch)=> {
+                if(ch.checked) {
+                    checked += ch.value+','
+                }
+            })
+            result2.innerHTML = checked.substr(0, checked.lastIndexOf(','))
+        }
 
     </script>
     

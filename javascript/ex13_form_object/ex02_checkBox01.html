@@ -56,8 +56,8 @@
                     check_str += ch.value+','
                 }
             })
-        console.log(check_str.lastIndexOf(','))
-        // substr(start,indes) => 0부터 index-1까지 추출
+        console.log(check_str.lastIndexOf(','))  // 배열.lastIndexOf() 대상 배열의 마지막 해당 데이터의 인덱스  배열.indexOf() 배열의 해당 데이터의 인덱스
+        // substr(start,index) => 0부터 index-1까지 추출
         check_str = check_str.substr(0, check_str.lastIndexOf(','))
         result.innerHTML = check_str
         }
