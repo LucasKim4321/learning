@@ -7,9 +7,9 @@ const userName="홍길동"
 if (userName) {  //값이 존재하면 true
     console.log("값 여부 판별", userName, Boolean(userName))
 }
-console.log("0=>", Boolean(0))
-console.log("1=>", Boolean(1))
-console.log("-1=>", Boolean(-1))
+console.log("0=>", Boolean(0))  // false
+console.log("1=>", Boolean(1))  // true
+console.log("-1=>", Boolean(-1))  // true
 console.log("!0=>", !Boolean(0))  // false -> true
 console.log("!!0=>", !!Boolean(0))  // false -> true -> false
 console.log("!!...0=>", !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Boolean(0)) //결과 출력 가능
@@ -25,9 +25,9 @@ if(flg)
 
 
 var userName2 //기억장소만 확보, 값이 없는 상태
-console.log("userName2 판별", Boolean(userName2))
+console.log("userName2 판별", Boolean(userName2))  // false
 userName2="길순이"
-console.log("userName2 판별", Boolean(userName2))
+console.log("userName2 판별", Boolean(userName2))  // true
 
 
 console.log("==비교연산자 결과 : true/false")

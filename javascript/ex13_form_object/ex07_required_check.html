@@ -20,11 +20,11 @@
             </div>
             <hr>
             <div class="form-check" id="box1">
-                <input class="form-check-input" type="checkbox" id="check11">
+                <input class="form-check-input required" type="checkbox" id="check11">
                 <label class="form-check-label" for="check11">필수 선택1</label><br>
-                <input class="form-check-input" type="checkbox" id="check12">
+                <input class="form-check-input required" type="checkbox" id="check12">
                 <label class="form-check-label" for="check12">필수 선택2</label><br>
-                <input class="form-check-input" type="checkbox" id="check13">
+                <input class="form-check-input required" type="checkbox" id="check13">
                 <label class="form-check-label" for="check13">필수 선택3</label>
             </div>
             <div class="form-check" id="box2">
@@ -54,13 +54,11 @@
 
         allChk.addEventListener('click', (e)=> {
             // console.log(e)
-            if (allChk.checked) {
-                for(let chk of AllinputGroup) {
+            for(let chk of AllinputGroup) {
+                if (allChk.checked) {
                     chk.checked=true
                 }
-            }
-            else {
-                for(let chk of AllinputGroup) {
+                else {
                     chk.checked=false
                 }
             }
@@ -73,25 +71,24 @@
         next.addEventListener('click', ()=> {
             let result = ''
             let a = 0
-            for(let chk of inputGroup1) {
-                if(chk.checked==false) {
+            for(let chk of AllinputGroup) {
+                if(chk.classList.contains('required')&&chk.checked==false) {
                     alert('필수 항목을 체크하세요!')
+                    resultBox.textContent = '선택한 값 :'
                     return
                 }
                 else {
                     a++
                 }
-            }
-            if(a==3) {
-                alert('정상 처리 되었습니다~')
-                for(let chk of AllinputGroup) {
-                    if (chk.checked==true) {
-                        result += chk.labels[0].innerHTML+', '
-                    }
+                if(a==3) {
+                    alert('정상 처리 되었습니다~')
                 }
-                resultBox.textContent = `선택한 값 : ${result.substr(0, result.lastIndexOf(', '))}`
-                console.log(result)
+                if (chk.checked==true) {
+                    result += chk.labels[0].innerHTML+', '
+                }
             }
+            resultBox.textContent = `선택한 값 : ${result.substr(0, result.lastIndexOf(', '))}`
+            console.log(result)
         })
 
         // console.log(check23.labels[0].innerHTML)
