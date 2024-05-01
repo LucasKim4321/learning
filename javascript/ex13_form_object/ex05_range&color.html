@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>range&color</title>
+    <style>
+        * {margin-top: 5px;}
+        /* div { border: 1px solid lightblue; margin: 20px; padding: 10px;} */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <input type="range" id="myRange" min="0" max="100" value="100">
+            <div id="log"></div>
+        </div>
+        <div>
+            <input type="color" id="myColor" value="#0000ff">
+            <div id="log2"></div>
+        <div>
+        <div>
+            <label>red<input type="range" id="red" min="0" max="255" value="0"></label>
+            <label>green<input type="range" id="green" min="0" max="255" value="0"></label>
+            <label>blue<input type="range" id="blue" min="0" max="255" value="0"></label>
+            <div id="log3">1</div>
+        </div>
+    </div>
+
+    <script>
+
+        // range
+        const myRange = document.querySelector('#myRange')
+        const log = document.querySelector('#log')
+
+        myRange.addEventListener('change', handleChange)
+        function handleChange(e) {
+            log.innerHTML = e.target.value
+        }
+        myRange.value = 50 
+        log.innerHTML = myRange.value // 숫자는 문자열 아니어도 됨
+
+
+        // color
+        const log2 = document.querySelector('#log2')
+        const log3 = document.querySelector('#log3')
+        const red = document.querySelector('#red')
+        const green = document.querySelector('#green')
+        const blue = document.querySelector('#blue')
+        // console.log(red,green,blue)
+
+        log2.innerHTML = myColor.value
+        log2.style.backgroundColor = myColor.value
+        // myColor.value = '#00ff00'
+
+        log2.style.backgroundColor = myColor.value
+
+        myColor.addEventListener('change', (e)=> {
+            log2.style.backgroundColor = e.target.value
+            log2.innerHTML = e.target.value
+        })
+
+
+        let redValue = greenValue = blueValue = 0
+        red.addEventListener('change', (e)=> {
+            redValue = e.target.value
+            rgbFun()
+        })
+        green.addEventListener('change', (e)=> {
+            greenValue = e.target.value
+            rgbFun()
+        })
+        blue.addEventListener('change', (e)=> {
+            blueValue = e.target.value
+            rgbFun()
+        })
+
+        rgbFun()
+        function rgbFun () {
+            console.log(redValue,greenValue,blueValue)
+            log3.style.backgroundColor = `rgb(${redValue},${greenValue},${blueValue})`
+            log3.innerHTML = log3.style.backgroundColor
+        }
+
+    </script>
+</body>
+</html>

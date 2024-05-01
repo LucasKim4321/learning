@@ -12,7 +12,7 @@
             border: 1px solid lightgray;
             margin: 20px; padding: 10px;
         }
-        .box2 { width: 200px;}
+        .box2 { width: 400px;}
     </style>
 </head>
 <body>
@@ -38,40 +38,67 @@
                 </label>
             </div>
         </form>
-        <div class="box2">
-            <div class="box2 p-3">
-                <select class="form-select" id="selection1">
-                    <!-- <option selected>Choose fruit</option> -->
-                    <option value="apple">Apple</option>
-                    <option value="orange" selected>Orange</option>
-                    <option value="grape">Grape</option>
-                </select>
-                <select class="form-select mt-2" id="selection2" size="3" multiple>  <!-- size 3줄 표시 multiple 여러개 선택가능 -->
-                </select>
-                <div class="alert alert-warning mt-2" id="log" role="alert">
-                    A simple warning alert—check it out!
-                </div>
+        <div class="box2 p-3">
+            <select class="form-select" id="selection1">
+                <!-- <option selected>Choose fruit</option> -->
+                <option value="apple">Apple</option>
+                <option value="orange" selected>Orange</option>
+                <option value="grape">Grape</option>
+            </select>
+            <div class="alert alert-warning mt-2" id="log" role="alert">
+                맛있는 과일!
+            </div>
+            <select class="form-select mt-2" id="selection2" size="3" multiple>  <!-- size 3줄 표시 multiple 여러개 선택가능 -->
+            </select>
+            <div class="alert alert-warning mt-2" id="log2" role="alert">
+                단일 선택!
+            </div>
+            <div class="alert alert-warning mt-2" id="log3" role="alert">
+                다중 선택!
             </div>
         </div>
     </div>
 
     <script>
+        // 1. Radio check
+        // form태그 안에 있는 것들은 하나의 태그처럼 인식
+        const radioForm = document.querySelector('form#radioForm')  // form중에 id가 radioForm인걸 불러옴
+        // console.log(radioForm.fruit.value)  //폼태그에 name이 fruit인것중 채크된 것의 value값을 불러옴
+        // console.log(radioForm.drink.value)
+
+        const g1 = document.getElementsByName('fruit')
+        // console.log(g1)
+        g1.forEach( (ra)=> {
+            // console.log(ra.name, ra.value, ra.checked)
+            if (ra.checked) console.log(ra.value)
+        })
+
+        // 이벤트 등록하기 : change -> form
+        radioForm.addEventListener('change', handleChange)
+        function handleChange(e) {
+            // console.log('event object =>', e)
+            console.log('---- form 태그를 이용한 radio객체 확인 ----')
+            console.log(radioForm.fruit.value)  // 변경 된 값 다시 출력
+            console.log(radioForm.drink.value)
+        }
+        
+
         // 2. Select check
         // select태그 안에 있는 것들도 하나의 태그처럼 인식
 
         // selection1
         const selection1 = document.querySelector('#selection1')
         const log = document.querySelector('#log')
+        const log2 = document.querySelector('#log2')
+        const log3 = document.querySelector('#log3')
         console.log('select object =>', selection1)
         console.log('선택된 초기값:',selection1.value)
-
-        var value = `선택된 초기값은 ${selection1.value} 입니다.`
-        log.innerHTML = value
+        // log.innerHTML = `선택된 초기값은 ${selection1.value} 입니다.`
 
         // select 요소 이벤트 처리
         selection1.addEventListener('change', (e)=> {
             console.log('선택한 값:', selection1.value)
-            var value = selection1.value
+            log.innerHTML = `${selection1.value} 맛있어!`
         })
 
         // selection2
@@ -82,8 +109,10 @@
         for (let i=1; i<=31; i++) {
             option_str += `<option value="${i}">${i}</option>`
         }
-        var value = `선택된 초기값은 ${selection2.value} 입니다.`
-        log.innerHTML = value
+        selection2.addEventListener('change', (e)=>{
+            //console.log(selection2.value)
+            log2.innerHTML = `선택된 값은 ${selection2.value} 입니다.`
+        })
         console.log(option_str)
         selection2.innerHTML = option_str
 
@@ -109,32 +138,7 @@
                                 .filter(option => option.selected)  // filter 선택된 option만 반환
                                 .map(option => option.value)
             console.log(select_value)
-            log.innerHTML = select_value.join(',')
-        }
-
-
-
-
-        // 1. Radio check
-        // form태그 안에 있는 것들은 하나의 태그처럼 인식
-        const radioForm = document.querySelector('form#radioForm')  // form중에 id가 radioForm인걸 불러옴
-        // console.log(radioForm.fruit.value)  //폼태그에 name이 fruit인것중 채크된 것의 value값을 불러옴
-        // console.log(radioForm.drink.value)
-
-        const g1 = document.getElementsByName('fruit')
-        // console.log(g1)
-        g1.forEach( (ra)=> {
-            // console.log(ra.name, ra.value, ra.checked)
-            if (ra.checked) console.log(ra.value)
-        })
-
-        // 이벤트 등록하기 : change -> form
-        radioForm.addEventListener('change', handleChange)
-        function handleChange(e) {
-            // console.log('event object =>', e)
-            console.log('---- form 태그를 이용한 radio객체 확인 ----')
-            console.log(radioForm.fruit.value)  // 변경 된 값 다시 출력
-            console.log(radioForm.drink.value)
+            log3.innerHTML = select_value  // 태그안에 배열을 불러오면 배열 제거후 그대로 씀 
         }
 
 
