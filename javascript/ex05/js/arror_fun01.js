@@ -14,8 +14,8 @@ const fun02 = ()=> {
         console.log(i)
     }
 }
-// console.log(fun01())
-// console.log(fun02())
+fun01()
+fun02()
 
 
 // 2. 인자가 있고, 반환 값이 없는 함수
@@ -25,8 +25,8 @@ const fun04 = (start, end) => {
         console.log(i)
     }
 }
-// fun03('홍길동',12)
-// fun04(3,6)
+fun03('홍길동',12)
+fun04(3,6)
 
 
 // 3. 인자가 있고, 반환 값이 있는 함수
@@ -43,7 +43,7 @@ console.log(result, result2)
 
 
 // 4. 가변 인자
-let fun07 = (...values) => console.log(values)
+let fun07 = (...values) => console.log(values)  // 받아온 인자 배열로 저장
 let fun08 = (...values) => {
     for ( const value of values) {
         console.log(value)

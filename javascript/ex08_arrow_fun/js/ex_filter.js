@@ -65,7 +65,7 @@ console.log('filter_ex',filter_ex)
 
 const myString = '안녕하세요'
 console.log([...myString])  // 일시적으로 배열로바꿈
-console.log (myString)  
+console.log (myString)
 
 const newString = [...myString].map( (ch)=> `${ch}!!`)
 console.log('newString',newString)
