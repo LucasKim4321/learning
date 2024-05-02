@@ -309,5 +309,111 @@ data.forEach ( (item)=> {  // 변수data에 있는 값을 순서대로 출력  /
 
 console.log('javascript'.slice(3,8))  // '문자열'.slice(n,n2) 문자열 n번째에서 시작해서 n2번째까지 자름
 console.log('javascript'.slice(4))  // 4번째부터 나옴
+console.log('javascript'.slice(3,-1))  // 음수 허용 3 ~ 끝에서-1
+console.log('javascript'.substring(3,8))  // .slice랑 똑같음  다른 기능도 있을 듯?
+console.log('javascript'.substring(3,-1))  // 0 ~ 3
+console.log('javascript'.substr(3,4))  // (시작번호, 개수) 편함
 
+console.log ('image1.png'.replace('1.png','2.png'))  // image2.png 출력
+var name1 = name.replaceAll(' ','')
+var tel_number = tel.replace(/-/g,'')  // 정규식 표현  (/대상/g(전체), '교체값')
+
+// 대상.split('&')  // ('기준값') 대상의 특정 문자를 기준으로 분리하여 배열 구조로 저장
+console.log(myUrl.split('&')) //&는 나오지 않음
+// 인수에 공백('')을 지정하면 한 글자식 분리하여 배열로 반환
+console.log('javascript'.split(''))
+
+// 정규식 표현 => /패턴/.test(문자열) => true/false
+// 전화번호 패턴 형식
+console.log('--정규식 표현')
+console.log(/\d{3}-\d{4}-\d{4}/.test('010-1234-1234'))
+console.log(/\d{3}-\d{4}-\d{4}/.test('010-1234-1234'))
+console.log(/j/, /j/.test('javascript'))
+console.log(/^ja/, /^ja/.test('javascript'))  //true  첫자가 맞는지
+console.log(/^ip/, /^ip/.test('javascript'))  //false
+console.log(/\d/, /\d/.test('javascript'))  // false 숫자가 있는지
+console.log(/java*/, /java*/.test('javascript'))  // 해당 글자가 있는지 없는지
+
+// 소수점 자리수 지정
+console.log( 0.333333333.toFixed(4))  //  대상.toFixed(자리수)  대상의 소수점이하 자리수까지 자름
+var num1 = (0.21321312).toFixed(2)
+console.log( num1, typeof(num1))  // string 속성
+console.log( (2.4).toFixed(4))  // 자리에 값이 없으면 0 대입   2.4000
+console.log( (9.2323232).toPrecision(4))  // 소수점 이하 포함 4자리 숫자
+
+// 문자열 URI 이스케이프(escape)처리
+var url3 = 'http://example.com/?name=길순&age=3&홍길동페이지.html'
+var url3_ecode1 = encodeURI(url3)  // '/?&=+:@$;,#' 처리하지않음 영어는 그대로 나옴
+var url3_ecode2 = encodeURIComponent(url3)  // 영어는 그대로 나옴
+var decode1 = decodeURI(url3_ecode1)  // 디코딩
+var decode2 = decodeURIComponent(url3_ecode2)
+
+
+// 배열 요소 추가, 삭제하기
+arr1.unshift ('바나나')  // 대상.unshift 배열안 앞에 추가
+arr1.push ('딸기')  // 대상.push 배열안 뒤에 추가 *
+
+// 배열 요소 삭제하기
+const shifteValue = arr1.shift()  // 대상.shift() 배열 첫번째 요소 삭제
+console.log ('삭제된 요소', popValue)  // 대상.pop() 배열 마지막 요소 삭제
+
+// 대상.splice (위치, 삭제할 개수, 요소추가(무한대?가능))
+arr2_splice.splice (1, 2, '동길이홍','dd','aa')  // 인덱스 1위치에 추가 후 뒤에 2개 삭제
+
+// 배열 결합
+const arr5 = arr3.concat(arr4)
+
+// 스프레드 연산자 : (...)
+console.log(...arr6)
+console.log ('스프레드 연산,', ([...arr3,...arr4]))
+
+// 배열 요소를 결합해서 문자열 출력
+console.log('join():', arr9.join())  // 기본값 ','
+console.log('join():', arr9.join(''))  //공백으로 대체
+console.log('join():', arr9.join('-'))
+
+// 배열 요소 검색
+console.log ('indexOf():', arr10.indexOf('동길이'))  //있으면 인덱스 번호 2출력
+console.log ('indexOf():', arr10.indexOf('홍길순1'))  //없으면 -1
+console.log ('indexOf():', arr10.includes('동길이'))  // true
+console.log ('indexOf():', arr10.includes('홍길순1'))  //false
+console.log ('indexOf():', arr10.lastIndexOf('홍길순'))  //1
+
+// 배열.find(함수식) // 콜백 함수 조건에 
+// 배열.findIndex(테스트함수) // 콜백 함수 조건에 맞는 첫 요소 인덱스
+const targetUser = myArray.find( (data)=> data == '강감찬') 해당 값이 있으면 해당값 출력
+const targetUserIndex = myArray.findIndex((data)=> data == '강감찬')  있으면 해당값의 인덱스 출력
+
+// 문자열 -> 숫자 변환 : Number()
+const searchId = Number(event.target.value)  // 이렇게 써도 되고 링크 시킨거 연결해도 되고
+
+// 정렬하기
+// 숫자일 경우
+arr.sort(function(a,b) {
+    return a - b  // 오름 차순
+})
+arr2.sort(function(a,b) {
+    return b - a  // 내림 차순
+})
+
+// 내림차순
+arr_str.sort(function (a,b) {
+    if (a>b) return -1
+    if (a<b) return 1
+    if (a==b) return 0
+})
+
+console.log('--sort(), resverse() : 유니코드 기준으로 정렬')
+sort_test.sort()  // 유니코드 기준으로 정렬해서 숫자는 이걸로 정렬안됨
+
+// 스프레드연산(...): 유사배열 -> 배열 전환
+console.log([...myString])  // 일시적으로 배열로바꿈
+// Error: allDiv.filter is not a function (유사 배열 관계로 .filter()함수 지원안됨)
+
+const filter_ex = filter_arr.filter( (element)=> element.classList.contains('on'))  // 배열의 classList에 on있는 태그 출력
+const newString = [...myString].map( (ch)=> `${ch}!!`)  배열 데이터 마다 바뀐값 대입
+const newString2 = newString.reduce( (a,b)=> a+b)
+
+
+sort까지
 
