@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>동의서 페이지</title>
+    <title>동의서 페이지(myself)</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <style>
@@ -15,7 +15,7 @@
         <div class="agree_box">
             <!-- 전체 동의 체크 -->
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="allChk">
+                <input class="form-check-input ss dd" type="checkbox" id="allChk">
                 <label class="form-check-label" for="allChk">전체 동의</label>
             </div>
             <hr>
@@ -25,7 +25,7 @@
                 <input class="form-check-input required" type="checkbox" id="check12">
                 <label class="form-check-label" for="check12">필수 선택2</label><br>
                 <input class="form-check-input required" type="checkbox" id="check13">
-                <label class="form-check-label" for="check13">필수 선택3</label>
+                <label class="form-check-label" for="check13">필수 선택3</label><br>
             </div>
             <div class="form-check" id="box2">
                 <input class="form-check-input" type="checkbox" id="check21">
@@ -33,7 +33,7 @@
                 <input class="form-check-input" type="checkbox" id="check22">
                 <label class="form-check-label" for="check22">선택2</label><br>
                 <input class="form-check-input" type="checkbox" id="check23">
-                <label class="form-check-label" for="check23">선택3</label>
+                <label class="form-check-label" for="check23">선택3</label><br>
             </div>
             <hr>
             <div class="buttons">
@@ -49,12 +49,12 @@
         const cancel = document.querySelector('#cancel')
         const next = document.querySelector('#next')
         const inputGroup1 = document.querySelectorAll('#box1 input')
-        const AllinputGroup = document.querySelectorAll('#box1 input, #box2 input')
+        const allInputGroup = document.querySelectorAll('#box1 input, #box2 input')
         const resultBox = document.querySelector('#resultBox')
 
         allChk.addEventListener('click', (e)=> {
             // console.log(e)
-            for(let chk of AllinputGroup) {
+            for(let chk of allInputGroup) {
                 if (allChk.checked) {
                     chk.checked=true
                 }
@@ -62,6 +62,7 @@
                     chk.checked=false
                 }
             }
+            required()
         })
 
         cancel.addEventListener('click', ()=> {
@@ -70,17 +71,17 @@
         
         next.addEventListener('click', ()=> {
             let result = ''
-            let a = 0
-            for(let chk of AllinputGroup) {
+            let count1 = 0
+            for(let chk of allInputGroup) {
                 if(chk.classList.contains('required')&&chk.checked==false) {
                     alert('필수 항목을 체크하세요!')
                     resultBox.textContent = '선택한 값 :'
                     return
                 }
                 else {
-                    a++
+                    count1++
                 }
-                if(a==3) {
+                if(count1==inputGroup1.length) {
                     alert('정상 처리 되었습니다~')
                 }
                 if (chk.checked==true) {
@@ -89,6 +90,35 @@
             }
             resultBox.textContent = `선택한 값 : ${result.substr(0, result.lastIndexOf(', '))}`
             console.log(result)
+        })
+
+        
+        // 필수 전부 체크시 버튼 활성화
+        next.setAttribute('disabled', true)
+        inputGroup1.forEach( (chk)=> {
+            chk.addEventListener('change', ()=> {
+                required()
+            })
+        })
+        function required() {
+            let count2 = 0
+            inputGroup1.forEach( (chk)=> {
+                if(chk.checked) count2++
+            })
+            if(count2==inputGroup1.length) next.removeAttribute('disabled')
+            else next.setAttribute('disabled', true)
+        }
+
+        // 전부 체크시 전체 동의 버튼 체크
+        allInputGroup.forEach( (chk)=> {
+            chk.addEventListener('change', ()=> {
+                count3 = 0
+                allInputGroup.forEach( (chk)=> {
+                    if(chk.checked) count3++
+                })
+                if(count3==allInputGroup.length) allChk.checked=true
+                else  allChk.checked=false
+            })
         })
 
         // console.log(check23.labels[0].innerHTML)

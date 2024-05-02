@@ -43,18 +43,19 @@
             let newBox = document.createElement('div')
             let newBox2 = document.createElement('div')
             if (a==1) {
-            newBox.textContent = '새로생성된 박스'
-            newBox.classList.add('newBox')
-            console.log(newBox)
-            // 객체 교체
-            oldBox.replaceWith(newBox)
+                newBox.textContent = '새로생성된 박스'
+                newBox.classList.add('newBox')
+                console.log(newBox)
+                // 객체 교체
+                oldBox.replaceWith(newBox)
             }
             else {
-            newBox2.textContent = '박스2'
-            newBox2.classList.add('newBox2')
-            console.log(newBox2)
-            // 객체 교체
-            newBox.replaceWith(newBox2)
+                console.log(a)
+                newBox2.textContent = '박스2'
+                newBox2.classList.add('newBox2')
+                console.log(newBox2)
+                // 객체 교체
+                newBox.replaceWith(newBox2)
             }
 
         })
