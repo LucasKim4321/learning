@@ -6,9 +6,9 @@ document.getElementById(아이디)  아이디만
 document.querySelector(선택자)  아이디 클래스 태그 다 찾아짐
 
 여러 개 선택
-document.getElementByClassName(클래스)
-document.getElementByName(태그이름)
-document.getElementByAll(선택자)
+document.getElementsByClassName(클래스)
+document.getElementsByName(태그이름)
+document.getElementsByAll(선택자)
 */
 
 

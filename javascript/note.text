@@ -1,0 +1,313 @@
+alert("안녕하세요!...(｡•̀ᴗ-)✧")
+document.write("hello javascript!!!") 
+prompt("이름:","초기값")  입력 받은 값을 반환
+
+// 변수: 단일 기억장소
+// 상수: 기억장소에 넣을 값
+
+// 대입문
+// 변수 = 상수
+// 변수 = 수식
+// 변수 = 변수
+
+
+단일 기억장소 : 일반 변수
+복수 기억장소 : 배열구조, 객체구조
+n개의 기억장소 -> n-1의 인덱스번호 표시
+
+- 배열구조 -> "[데이터1,...]" 표시
+- 객체구조 -> "{'key':'value',...}" 표시
+
+연산식 : 
+산술식 => 
+이항 연산 : +, -, *(곱하기), /(나누기), %(나눈 나머지), **(제곱)
+단항 연산 : ++, --
+관계 연산 : >,>=,<,<=,!=(같지않다), 같음(==,===)
+         : 관계연산의 결과는 true, false
+논리연산 : !(NOT) &&(AND) ||(OR)
+&&(AND) : 모든 조건이 ture면 true
+||(OR) : 모든 조건이 false => false
+^(XOR) : 모든 조건이 true 이거나 false면 false 1,0으로 표시
+NOT -> AND -> OR 순으로 계산
+
+삼항 연산자 : 조건식 ? true경우 처리 : false인 경우 처리
+
+복합형 대입연산자
++=,-=,*=,/=,%=
+
+변수 : 단일 기억장소
+변수이름 규칙: 영어,숫자,특수문자(_) 혼용 가능
+                첫글자는 영문자, _ 시작
+ex) a, a_01, _myName
+사용불가: 10_a, 1a, 키워드(var,let,for ...)
+
+상수 : 기억장소에 넣을 값
+
+변수 : 단일 기억장소
+배열,객체 : 복수 기억장소
+상수 : 데이터(값)
+
+문자열 연산자 : "+" -> 연결
+// console.log('a='+a)
+
+
+진위 여부판별 : Boolean타입 -> true/false
+console.log("0=>", Boolean(0))  // false
+console.log("1=>", Boolean(1))  // true
+console.log("-1=>", Boolean(-1))  // true
+
+
+
+제어문 : 흐름의 방향을 제어
+if, switch, while, for ...
+
+1.
+- if (조건식) 참인 경우 처리
+
+- if (조건식)
+참인 경우
+
+- if (조건식) {
+    참인 경우
+}
+
+2. if else
+
+if (조건식) 참인경우 else 거짓인 경우
+
+if (조건식) 
+참인경우
+else 거짓인 경우
+
+if (조건식) {
+    참인 경우
+}
+else {
+    거짓인 경우
+}
+
+3. else if
+
+if (조건식)
+참인경우1
+else if (조건식2)
+참인경우2
+else if (조건식3)
+참인경우3
+else
+
+
+
+switch(site) {
+    case "구글":
+        url="www.google.com"
+        break
+    case "다음":
+        url="www.daum.net"
+        break
+    case "네이버":
+        url="www.naver.com"
+        break
+    case "네이트":
+        url="www.nate.com"
+        break
+    default:{
+        alert("보기 중에 없는 사이트입니다.")
+        location.reload()
+    }
+}
+
+
+
+// 메시지 창 : alert("메시지") 메시지창 생성
+// 입력 창 : prompt("메시지", "기본값") 입력가능한 창 생성
+// 판별 여부 창 : confirm("메시지") 확인하면 true 취소하면 false
+
+
+// 내장 함수
+// Math.random() 랜덤한 숫자 생성
+// Math.floor() 소수점 아래 생략
+// 0~n-1 사이 숫자 발생
+
+
+// for(초기치; 조건식; 증감치) {
+//     반복 처리 할 내용
+// }
+//반복문 변수는 반복문 내에서만 적용
+
+
+// 특정 구간을 반복처리 : for -> 일정한 횟수만 반복,  while -> 조건을 만족하는 동안 계속 무한 반복
+
+// while(조건식) {
+//     참인 동안
+//     반복 처리 할 내용
+// }
+
+// while(true) { 
+//     // console.log("무한 반복하기")
+//     // document.write("무한 반복하기")
+// }
+
+
+
+// 화살표 함수 : "=>"
+// 함수를 간략히 기술, this를 묶을 수 있음, 콜백함수 처리 가능
+// 함수 자체를 인자값으로 사용 가능
+// 익명 함수 (제 사용 불가?)
+// 변수를 빌려서 함수를 작성하기 때문에 함수 작성 후 불러와야함
+// 변수에 상수, 산술식, 변수, 함수식 대입 가능
+// 익명(에로우) 함수는 호출보다 먼저 선언해야 함.
+
+// 1. 인자가 없고, 반환 값이 없는 함수
+const fun01 = ()=> console.log("화살표함수 01")
+const fun02 = ()=> {
+    for (i=1; i<=3; i++) {
+        console.log(i)
+    }
+}
+fun01()
+fun02()
+
+// 2. 인자가 있고, 반환 값이 없는 함수
+const fun03 = (name,age) => console.log(`당신의 이름은 ${name}, 나이는 ${age}`)
+const fun04 = (start, end) => {
+    for (i=start; i<=end; i++){
+        console.log(i)
+    }
+}
+fun03('홍길동',12)
+fun04(3,6)
+
+// 3. 인자가 있고, 반환 값이 있는 함수
+let fun05 = (num1, num2) => num1+num2
+let fun06 = (num1, num2) => {
+    return num1+num2
+}
+console.log(fun05(11,6))
+console.log(fun06(10,15))
+
+// 3. 인자가 있고, 반환 값이 있는 함수
+let fun05 = (num1, num2) => num1+num2
+let fun06 = (num1, num2) => {
+    return num1+num2
+}
+console.log(fun05(11,6))
+console.log(fun06(10,15))
+
+// 4. 가변 인자
+let fun07 = (...values) => console.log(values)  // 받아온 인자 배열로 저장
+let fun08 = (...values) => {
+    for ( const value of values) {
+        console.log(value)
+    }
+}
+fun07(10)
+fun07(10,20)
+
+
+
+// 일반 함수 정의
+function myPrint(f01) {  // 2.함수식이 매개 변수를 전달 받음 f01=`이름:${name}, 나이:${age}`
+    let name = prompt('이름:',"")
+    let age = prompt("나이:","")
+    let prn_str= f01(name,age)
+    console.log(prn_str)
+}
+myPrint(fun01) // 1.인자값으로 함수식을 전달
+
+// 전역 변수 : 함수 밖에서 선언한 변수 공통 사용 가능
+// 지역 변수 : 함수 내에서 선언한 변수 함수 내에서만 사용 가능
+
+
+
+문서 객체를 선택
+
+1개 선택
+document.getElementById(아이디)  아이디만
+document.querySelector(선택자)  아이디 클래스 태그 다 찾아짐
+
+여러 개 선택
+document.getElementsByClassName(클래스)
+document.getElementsByName(태그이름)
+document.getElementsByAll(선택자)
+
+// 태그요소 선택시 여러개일 경우는 배열구조형식으로 전환 됨.
+// 외부에서 여러개의 데이터를 받으면 배열구조로 저장
+
+
+
+// 수학 객체
+
+console.log(Math.abs(1), Math.abs(-1))  // 절대값 반환   음수도 양수로 나옴
+console.log(Math.max(10,50,90,100))  // 최대값
+console.log(Math.min(10,50,90,100))  // 최저값
+console.log(Math.round(10.51),Math.round(10.44))  // 소수점 아래 반올림
+console.log(Math.floor(10.54))  // 자리 내림 소수점 아래 자름,   음수 일때 올려짐 trunc랑 차이남
+console.log(Math.ceil(10.2))  // 자리 올림 소수점 아래 자름,   숫자 비교를 하기때문에 음수일때 다름, 내려짐
+console.log(Math.trunc(10.4144,2))  // 단순히 소수점 아래 자름
+console.log(Math.PI)  // 파이
+console.log(Math.random())  // 소수점 이하 랜덤한 숫자
+console.log(Math.random()*10)  // 0~9 10가지 랜덤한 숫자
+
+console.log(Math.pow(10,3))  // 제곱   10의 3승의 값
+console.log(Math.sqrt(4))  // 루트   루트4의 값
+
+
+
+// 자바스크립트는 객체(Object)기반 언어
+// 객체 => 기능과 속성을 가진 형태 => 변수 + 함수
+
+// 객체 종류
+// - 내장 객체 : String, Date, Array ...
+// - 브라우저 객체모델 : window.screen,location,navigator
+// - 문서 객체모델 : HTML문서 구조
+
+
+
+console.log(" 홍길동은 부산에 있습니다. ".length)  // 문자열 길이 측정 공백 포함
+
+// 대상.indexOf('해당 글자열')의 첫번째 자리를 대상과 비교해  index 번호 표시  없으면 -1  
+const str1= 'Javascript good!!'
+console.log( str1.indexOf('script'))  // 4
+console.log(str1.indexOf('ipt',3))  // 특정 인덱스번호 3부터 검색  7
+
+console.log(str1.search(/Javascript/))  // 일치하는 글자 인덱스번호 찾음   없으면 -1 
+console.log(str1.includes('Javascript'))  // 검색성공여부 : true/false
+console.log(str1.startsWith('Java'))  // 문자열 시작 확인  해당 문자열로 시작시 true 아니면 false
+console.log(str1.endsWith('!!'))  // 문자열 끝 확인  해당 문자열로 끝날시 true
+console.log('javascript'.charAt(4))  // 해당 index번호 위치에 있는 글자 표시  index는 0부터
+
+
+
+
+// 변수, 배열구조, 객체구조
+// forEach()
+
+const data = [10,20,30]
+const data2 = 'asdf1234아야얼엵'
+const data3 = {a:1,b:2,c:3,abc:4}
+console.log(data,data.length,'***')  // 배열은 개수를 측정
+console.log(data2,data2.length,'***')  // .length 문자열,배열구조 길이 측정  숫자열x 객체변수x
+console.log(data3,data3.length,'***')  // 객체구조 길이 측정 안됨
+console.log(data[0].length,'***') // 배열 내부 데이터 길이 측정 불가
+
+console.log('-- 배열 읽기1')
+console.log(data[0])
+console.log(data[1])
+console.log(data[2])
+
+console.log('-- 배열 읽기2:for')
+for (i=0; i<data.length; i++) {
+    console.log(data[i])  // data[i]=>data[0],data[1],data[2]
+}
+
+console.log('-- 배열 읽기2:확장forEach')
+// 배열객체.forEach(배열객체 안에 있는 데이터를 순차적으로 읽어서 처리)
+data.forEach ( (item)=> {  // 변수data에 있는 값을 순서대로 출력  //위에거랑 같음
+    console.log(item)
+})
+
+console.log('javascript'.slice(3,8))  // '문자열'.slice(n,n2) 문자열 n번째에서 시작해서 n2번째까지 자름
+console.log('javascript'.slice(4))  // 4번째부터 나옴
+
+
