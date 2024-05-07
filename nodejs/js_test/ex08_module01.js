@@ -8,8 +8,9 @@
 // }
 
 // export default : 하나의 파일에 하나의 모듈만 내보내기
-export default class MyClass1 {
+export class MyClass1 {
     myMethod1() {
         return 'myClass1 메서드가 실행되었습니다.'
     }
 }
+export default MyClass1 

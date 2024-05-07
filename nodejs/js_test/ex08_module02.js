@@ -29,5 +29,8 @@ const myObj = {name:'홍길동',age:10}  // 객체 내보내기
 function myPrn() {  // 함수 내보내기
     console.log('myPrn() = my task')
 }
+function myPrn2(name, age) {  // 함수 내보내기
+    console.log(`myPrn2() name ${name}, age ${age}`)
+}
 
-export {MyClass2, PI, myObj, myPrn}
+export {MyClass2, PI, myObj, myPrn, myPrn2}
