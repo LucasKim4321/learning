@@ -431,6 +431,8 @@ const newString2 = newString.reduce( (a,b)=> a+b)
 ex08 filter까지
 
 
+
+
 nodejs\js_test\ex02_class.js
 
 // 클래스 = 멤버변수 + 함수(메서드) 구성
