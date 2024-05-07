@@ -28,6 +28,7 @@ class MyClass {
     }
 }
 // const obj1 = new MyClass() // 인자 없는 생성자
+// console.log(obj1)
 // const obj2 = new MyClass('여우',20)  // 인자 있는 생성자
 // console.log(obj2)  //  MyClass{} 출력
 // const obj3 = new MyClass()
