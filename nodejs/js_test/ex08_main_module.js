@@ -8,7 +8,7 @@ import {MyClass1} from './ex08_module01.js'
 import {MyClass2, PI,myObj,myPrn,myPrn2} from './ex08_module02.js'
 
 // 파일내에 모든 모듈 가져오기, 별칭 부여
-import * as m from './ex08_module02.js'
+import * as m from './ex08_module02.js'  // 이것만해도 동작함
 
 
 // MyClass1 메소드로 문자열 가져오기

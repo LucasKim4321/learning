@@ -14,7 +14,7 @@
 const data = `{"name":"길순이","age":20}`  // '는 안됨
 console.log('JSON형식의 문자열',data)
 
-// 문자열을 JSON으로 전환
+// 문자열을 JSON(객체)으로 전환
 const info = JSON.parse(data)
 console.log('문자열을 JSON으로 전환 => JSON객체:',info)
 console.log(info.name, info.age)

@@ -1,4 +1,4 @@
-async function load () {
+async function load () {  // 비동기?
     const data = await fetch('ex11_sample.txt')  // await 데이터를 정상적으로 불러 온 후 대입
     const text = await data.text()
     // console.log(text)
@@ -21,7 +21,7 @@ async function xml_load() {
     const data = await fetch('ex11_sample.xml')
     const text = await data.text()  // 텍스트 형식
     // XML형식으로 해석
-    const xml = new DOMParser().parseFromString(text, 'application/xml')
+    const xml = new DOMParser().parseFromString(text, 'application/xml')  // DOMParser() 요걸로 써야함
     console.log(text)
     // console.log(xml)
     document.querySelector('#log2').innerHTML = text

@@ -15,7 +15,7 @@
 //     console.log(value)
 // })
 
-const promise = new Promise( (resolve,reject)=> {
+const promise = new Promise( (resolve,reject)=> {  // 선언할때 new Promise 선언  인자,변수는 뭘 쓰든 관계없음
     let flag= true
     if (flag ===true)
         resolve('orange')
@@ -23,11 +23,11 @@ const promise = new Promise( (resolve,reject)=> {
         reject('apple')
 }) //.then((result)=>console.log(result)).catch((result)=>{console.log(result)})
 
-promise.then((value)=> {
+promise.then((value)=> {  // 작업 완료 후 실행
     console.log(value)
 })
 // 실패할 가능성이 있는 비동기 작업을 처리할 경우
-promise.catch((value)=> {
+promise.catch((value)=> {  // 실패시 실행
     console.log(value)
 })
 
@@ -38,7 +38,7 @@ for (let i=0; i<5; i++) {
     const func = (resolve)=> {
         console.log(`1. 처리 ${i} 시작`, new Date().toLocaleDateString())
         // const delayMsec = 2000 // 2초
-        const delayMsec = 1000 * Math.ceil(Math.random()*5)
+        const delayMsec = 1000 * Math.ceil(Math.random()*5) // 1~5초
         console.log(delayMsec)
 
         setTimeout( ()=> {  // 지연 처리

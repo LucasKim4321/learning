@@ -42,8 +42,10 @@ console.log(myInstance.myName)  // myName정의 후 출력 가능  #myName이랑
 console.log(myInstance.getMyName)
 
 console.log('-------')
+//   //멤버변수 값설정: 메서드로 통해
 myInstance.funSetmyName('강감찬')
 console.log(myInstance.myName)
+// 멤버변수 값읽기: 메서드로 통해
 console.log(myInstance.funGetmyName()) 
 
 

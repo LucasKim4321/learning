@@ -24,12 +24,12 @@ class MyClass2 {
     }
 }
 
-const PI = 3.1415292  // 상수 내보내기
-const myObj = {name:'홍길동',age:10}  // 객체 내보내기
-function myPrn() {  // 함수 내보내기
+const PI = 3.1415292
+const myObj = {name:'홍길동',age:10}
+function myPrn() {
     console.log('myPrn() = my task')
 }
-function myPrn2(name, age) {  // 함수 내보내기
+function myPrn2(name, age) {  // 인자 있는 함수
     console.log(`myPrn2() name ${name}, age ${age}`)
 }
 
