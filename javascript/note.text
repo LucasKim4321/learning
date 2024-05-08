@@ -452,3 +452,45 @@ class MyClass {
 }
 // const obj1 = new MyClass()
 const obj2 = new MyClass('여우',20)
+
+
+
+
+함수 선언
+// 쿠키생성
+var setCookie = function(name, value, exp){
+  var date = new Date();
+  date.setTime(date.getTime() + exp*60*60*1000);
+  document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+};
+
+// 쿠키로드
+var getCookie = function(name){
+  var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  return value? value[2] : null;
+}
+
+// 쿠키연장
+var extendCookie = function(name, exp){
+  var cookie_value = getCookie(name);
+  if(cookie_value) setCookie(name, cookie_value, exp);
+}
+
+// 쿠키삭제
+var deleteCookie = function(name){
+  document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+}
+ 
+
+사용법
+// 쿠키생성
+setCookie('test_cookie', 'hi', 1); //  1시간의 'hi'값을 가진 test_cookie를 생성
+
+// 쿠키읽기
+var test = getCookie('test_cookie');  // hi
+
+// 쿠키연장
+extendCookie('test_cookie', 1); // 1시간 연장
+
+// 쿠키삭제
+deleteCookie('test_cookie');
