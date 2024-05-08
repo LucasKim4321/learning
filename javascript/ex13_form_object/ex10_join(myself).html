@@ -23,17 +23,22 @@
 <body>
     <div class="container">
         <div class="box">
-            <form action="">
+            <form id="myForm" action="ex10_log_in(myself).html">
                 <div class="mt-4 row">
-                    <label for="id" class="form-label col-2">Email address</label>
-                    <input type="email" class="form-control col" id="id" placeholder="name@example.com">
-                </div>
-                <div class="row g-3 align-items-center mt-4">
                     <div class="col-auto">
-                      <label for="pwd" class="col-form-label">Password</label>
+                        <label for="id" class="form-label lh-lg">ID</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" class="form-control required" id="id" placeholder="아이디 입력">
+                    </div>
+                    <button type="button" id="btnChk" class="btn btn-outline-secondary col-auto">check</button>
+                </div>
+                <div class="row g-3 align-items-center mt-2">
+                    <div class="col-auto">
+                      <label for="password" class="col-form-label">Password</label>
                     </div>
                     <div class="col-auto">
-                      <input type="password" id="pwd" class="form-control" aria-describedby="passwordHelpInline">
+                      <input type="password" id="password" class="form-control required" aria-describedby="passwordHelpInline" placeholder="비밀번호 입력" minlength="8" maxlength="20">
                     </div>
                     <div class="col-auto">
                       <span id="passwordHelpInline" class="form-text">
@@ -41,17 +46,25 @@
                       </span>
                     </div>
                 </div>
+                <div class="row mt-4">
+                    <div class="col-auto">
+                        <label for="email" class="form-label lh-lg">Email address</label>
+                    </div>
+                    <div class="col">
+                        <input type="email" class="form-control required" id="email" placeholder="name@example.com">
+                    </div>
+                </div>
                 <div class="input-group mt-4">
-                    <span class="input-group-text" id="inputGroup-sizing-default">주소</span>
-                    <input type="text" id="address" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <span class="input-group-text" id="inputGroup-sizing-default">address</span>
+                    <input type="text" id="address" class="form-control required" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                   </div>
                 <div class="mt-4">
                     <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
                     <textarea class="form-control w-100" id="exampleFormControlTextarea1" rows="3"></textarea>
                 </div>
                 <div class="mt-5 d-flex">
-                    <button type="button" id="prev" class="btn btn-outline-secondary ms-auto">취소</button>
-                    <button type="submit" id="next" class="btn btn-outline-secondary ms-3" disabled>다음</button>
+                    <button type="button" id="btnPrev" class="btn btn-outline-secondary ms-auto">취소</button>
+                    <button type="submit" id="btnNext" class="btn btn-outline-secondary ms-3">다음</button>
                 </div>
             </form>
         </div>
@@ -59,22 +72,41 @@
 
     <script>
         const id = document.querySelector('#id')
-        const pwd = document.querySelector('#pwd')
+        const password = document.querySelector('#password')
         const address = document.querySelector('#address')
-        const pref = document.querySelector('#prev')
-        const next = document.querySelector('#next')
-        // const inputgroup = document.querySelector('form')
+        const btnPrev = document.querySelector('#btnPrev')
+        const btnNext = document.querySelector('#btnNext')
+        const btnChk = document.querySelector('#btnChk')
+        const inputgroup = document.querySelectorAll('#myForm .required')
+        const myForm = document.querySelectorAll('#myForm')
+        console.log(inputgroup)
 
-        function required() {
-            for( let input of inputgroup){}
+        btnNext.addEventListener('click', (e)=> {
+            required(e)
+        })
+
+        function required(e) {
+            for( let input of inputgroup){
+                if(input.value=='') {
+                    alert(`${input.id}를 입력해주세요.`)
+                    e.preventDefault()
+                    return
+                }
+            }
+            alert('등록이 완료되었습니다.')
         }
 
-
-        pref.addEventListener('click', ()=> {
-            history.back()
+        btnChk.addEventListener('click', ()=> {
+            if(id.value==localStorage.getItem('id')) {
+                alert('이미 존재하는 아이디입니다!')
+            }
+            else {
+                alert('사용 가능한 아이디입니다 :b')
+            }
         })
-        next.addEventListener('click', ()=> {
-            history.forward()
+
+        btnPrev.addEventListener('click', ()=> {
+            location.href= 'ex10_log_in(myself).html'  // 해당 페이지 이동  window생략
         })
     </script>
 </body>

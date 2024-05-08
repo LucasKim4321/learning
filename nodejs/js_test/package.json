@@ -14,7 +14,7 @@
     "ex08": "node ex08_main_module.js",
     "ex0901": "node ex09_promise01.js",
     "ex0902": "node ex09_promise02.js",
-    "ex10": "node ex10_jason01.js",
+    "ex10": "node ex10_json01.js",
     "ex11": "index.html",
     "ex12": "ex12_storage_cookie.html",
     "ex1301": "node ex13_error01.js",

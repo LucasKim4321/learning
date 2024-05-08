@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div id="box1" class="form-check form-switch mt-3">
-                    <input class="form-check-input" type="checkbox" role="switch" id="remember" checked>
+                    <input class="form-check-input" type="checkbox" role="switch" id="remember">
                     <label class="form-check-label" for="remember">아이디 기억하기</label>
                 </div>
                 <div class="mt-5 text-center">
@@ -53,25 +53,34 @@
         const logInID = document.querySelector('#logInID')
         const logInPwd = document.querySelector('#logInPwd')
         const remember = document.querySelector('#remember')
-
+        const logInBtn = document.querySelector('#logInBtn')
         
-        remember.addEventListener('click', (e)=> {
+
+        logInBtn.addEventListener('click', ()=> {
             if(remember.checked==true) {
                 localStorage.setItem('id',logInID.value)
-                localStorage.setItem('id',logInPwd.value)
+                localStorage.setItem('pwd',logInPwd.value)
+                localStorage.setItem('chk', true)  // string 속성으로 저장됨
             }
-            else localStorage.clear()
+            else {
+                localStorage.clear()
+            }
         })
-        
-        const dataRead = localStorage.getItem('myKey')
-            data.value = dataRead
-        function rememberChk(){
-            if(remember.checked) {
-                logInID.value = getCookie('id')
-                logInPwd.value = getCookie('pwd')
+
+        rememberChk()
+        function rememberChk() {
+            const chk = localStorage.getItem('chk')
+            if(chk=='true') {
+                console.log('true')
+                remember.checked = true
+                logInID.value = localStorage.getItem('id')
+                logInPwd.value = localStorage.getItem('pwd')
+            }
+            else {
+                console.log('false')
+                // remember.checked = false
             }
         }
-        rememberChk()
 
 
 

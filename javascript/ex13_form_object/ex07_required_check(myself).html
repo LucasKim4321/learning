@@ -69,13 +69,14 @@
             window.location.reload() 
         })
         
-        next.addEventListener('click', ()=> {
+        next.addEventListener('click', (e)=> {
             let result = ''
             let count1 = 0
             for(let chk of allInputGroup) {
                 if(chk.classList.contains('required')&&chk.checked==false) {
                     alert('필수 항목을 체크하세요!')
                     resultBox.textContent = '선택한 값 :'
+                    e.preventDefault()
                     return
                 }
                 else {
@@ -93,33 +94,33 @@
         })
 
         
-        // 필수 전부 체크시 버튼 활성화
-        next.setAttribute('disabled', true)
-        inputGroup1.forEach( (chk)=> {
-            chk.addEventListener('change', ()=> {
-                required()
-            })
-        })
-        function required() {
-            let count2 = 0
-            inputGroup1.forEach( (chk)=> {
-                if(chk.checked) count2++
-            })
-            if(count2==inputGroup1.length) next.removeAttribute('disabled')
-            else next.setAttribute('disabled', true)
-        }
+        // // 필수 전부 체크시 버튼 활성화
+        // next.setAttribute('disabled', true)
+        // inputGroup1.forEach( (chk)=> {
+        //     chk.addEventListener('change', ()=> {
+        //         required()
+        //     })
+        // })
+        // function required() {
+        //     let count2 = 0
+        //     inputGroup1.forEach( (chk)=> {
+        //         if(chk.checked) count2++
+        //     })
+        //     if(count2==inputGroup1.length) next.removeAttribute('disabled')
+        //     else next.setAttribute('disabled', true)
+        // }
 
-        // 전부 체크시 전체 동의 버튼 체크
-        allInputGroup.forEach( (chk)=> {
-            chk.addEventListener('change', ()=> {
-                count3 = 0
-                allInputGroup.forEach( (chk)=> {
-                    if(chk.checked) count3++
-                })
-                if(count3==allInputGroup.length) allChk.checked=true
-                else  allChk.checked=false
-            })
-        })
+        // // 전부 체크시 전체 동의 버튼 체크
+        // allInputGroup.forEach( (chk)=> {
+        //     chk.addEventListener('change', ()=> {
+        //         count3 = 0
+        //         allInputGroup.forEach( (chk)=> {
+        //             if(chk.checked) count3++
+        //         })
+        //         if(count3==allInputGroup.length) allChk.checked=true
+        //         else  allChk.checked=false
+        //     })
+        // })
 
         // console.log(check23.labels[0].innerHTML)
 
