@@ -9,12 +9,14 @@
 // const promise = new Promise( (resolve)=> {
 //     setTimeout( ()=> {
 //         resolve('orange')
-//     },1000)
+//     },2000)
+//     for(i=1; i<=5; i++) {console.log(i)}  // 먼저 실행
 // })
 // promise.then( (value)=> {
 //     console.log(value)
 // })
 
+// resolve()=>then(), reject()=>catch()
 const promise = new Promise( (resolve,reject)=> {  // 선언할때 new Promise 선언  인자,변수는 뭘 쓰든 관계없음
     let flag= true
     if (flag ===true)
@@ -41,24 +43,25 @@ for (let i=0; i<5; i++) {
         const delayMsec = 1000 * Math.ceil(Math.random()*5) // 1~5초
         console.log(delayMsec)
 
-        setTimeout( ()=> {  // 지연 처리
+        setTimeout( ()=> {  // 비동기 지연 처리 함수  setTimeout(수행할 함수, 시간설정)
             console.log(`2. 처리 ${i} 시작`, new Date().toLocaleDateString())
             resolve()  // 코드가 정상처리
         }, delayMsec)
     }
-
-    // 배열에 저장
+    // 비동기식 처리하는 함수객체를 배열에 저장
     arrFunc.push(func)  //[0],[1]....[4]
 }
 // console.log(arrFunc)
+// 비동기 함수 저장 배열 => 배열에 promise 객체 저장
 const arrPromise = arrFunc.map((func)=> new Promise(func))
-// console.log('---> Promise 배열로 전환')
-// console.log(arrPromise)
+console.log('---> Promise 배열로 전환')
+console.log(arrPromise)
 
 // 병렬 처리 실행
 Promise.all(arrPromise).then(()=>{  // 모든 작업 완료 후 실행
     console.log('모든 작업이 완료되었습니다.')
 })
+
 
 
 // const promise = new Promise()
