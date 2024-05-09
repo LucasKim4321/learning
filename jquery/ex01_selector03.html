@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(function() {
+            // $('.box2 a[target]').css('color','red')
+            // $('.box2 a[href^=https]').css('color','red')  href속성이 https로 시작하는
+            // $('.box2 a[href$=net]').css('color','red')  // net으로 끝나는
+            // $('#member_f :text').css('color','red')  // 폼 요소 중에 타입이 text인것
+            // $('input[type=text]').css('color','red')  // 인풋 요소 중에 타입이 text인것
+            // $('#member_f :password').css('background-color','lightgray')  // 폼 요소 중에 타입이 password인것
+
+            $('.box3 p:hidden').css({
+                'display':'block',
+                'background':'lightcoral'
+            })
+            var z1 = $('.zone1 :selected').val()  // x.value(e.target.value)  value값을 불러옴
+            console.log('선택된 항목:',z1)  // value값 출력
+
+            var z2 = $('.zone2 :checked').val()
+            console.log('선택된 항목:',z2)
+            
+            var z3 = $('.zone3 :checked').val()
+            console.log('선택된 항목:',z3)
+
+            $('#course').on('change',function() {  // addEventListener()기능
+                let val = $('#course option:selected').val()
+                console.log(val)
+            })
+        })
+    </script>
+    <style>
+        a {text-decoration: none;}
+    </style>
+</head>
+<body>
+    <div class="box3">
+        <p>내용1</p>
+        <p style="display:none">내용2</p>
+        <p>내용3</p>
+        <form action="#">
+            <div class="zone1">
+                <select name="course" id="course">  <!-- name 저장 할 때 저장소 이름 -->
+                    <option value="opt1">옵션1</option>
+                    <option value="opt2" selected>옵션2</option>
+                    <option value="opt3">옵션3</option>
+                </select>
+            </div>
+            <div class="zone2">
+                <input type="checkbox" name="hobby1" value="독서">독서
+                <input type="checkbox" name="hobby2" value="자전거">자전거
+                <input type="checkbox" name="hobby3" value="등산" checked>등산
+            </div>
+            <div class="zone3">
+                <input type="radio" name="gender" value="male">남성
+                <input type="radio" name="gender" value="female" checked>여성
+            </div>
+        </form>
+    </div>
+    <div class="box2">
+        <ul>
+            <li><a href="http://tjoeun.atosoft.kr" target="_blank">더조은</a></li>
+            <li><a href="https://www.naver.com" target="_blank">네이버</a></li>
+            <li><a href="https://www.google.com" target="_blank">구글</a></li>
+            <li><a href="https://www.daum.net" target="_blank">다음</a></li>
+        </ul>
+        <form action="#" method="get" id="member_f">
+            <div>
+                <label for="user_id">아이디</label>
+                <input type="text" name="user_id" id="user_id">
+            </div>
+            <div>
+                <label for="user_pw">비밀번호</label>
+                <input type="password" name="user_pw" id="user_pw">
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(function() {
+            // $('#menu li:first').css('background-color','skyblue')  // 첫번째
+            // $('#menu li:last').css('background-color','lightcoral')  // 마지막
+            // $('#menu li').last().css('background-color','red')  //마지막
+            // $('#menu li:odd').css('background-color','lightblue')  // 홀수(인덱스 번호 기준)
+            // $('#menu li:even').css('background-color','lightcoral')  // 짝수
+            // $('#menu li').eq(3).css('background-color','lightcoral')  // 인덱스번호
+            // $('#menu li:lt(4)').css('background-color','lightcoral')  // 인덱스번호보다 작은 것들
+            // $('#menu li:gt(2)').css('background-color','lightcoral')  // 인덱스번호보다 큰 것들
+            // $('#menu li:nth-child(3)').css('background-color','lightcoral')  // 몇 번째 자식요소(인덱스번호x)
+            // $('#menu li:nth-child(2n)').css('background-color','lightcoral')  // 짝수
+            // $('#menu li:nth-child(2n+1)').css('background-color','lightcoral')  // 홀수
+            // $('li:last').css('background-color','lightcoral')  // li중 맨 마지막
+            // $('#menu li:first-of-type').css('background-color','lightcoral')  // 첫번째
+            // $('#menu li').slice(2,4).css('background-color','lightcoral')  // 인덱스번호2번부터 4번 전까지
+        
+        
+            // 배열.forEach( ()=> {})
+            // $.each(배열, 수행할 내용)
+            const arr = $('#menu li')  // 배열
+            console.log(arr)
+            console.log('--------')
+            $.each( $('#menu li'), function(i,o) {  // i index o object
+                // console.log(i,o)
+                console.log(i, $(this))  // this 자기자신 객체
+            })
+            console.log('--------')
+            $(arr).each(function(idx,obj){
+                console.log(idx, $(this),obj)
+            })
+            console.log('--------')
+            $(arr).each((idx,obj)=>{
+                console.log(idx, $(this),obj)
+            })
+        
+            // $.map() : 반복수행하고 새열에 저장하고 반환
+            // $.grep(): 반복 수행하고 인덱스 오름차순으로 배열의 데이터 불러옴
+            const info = [{"area":"부산","name":"홍길순"},{"area":"서울","name":"홍길동"},{"area":"인천","name":"동길이"},{"area":"김해","name":"동길순"}]
+        
+            console.log('------map')
+            const info2 = $.map(info,(a,b)=>{  // a데이터 b인덱스번호
+                console.log(a,b)
+                if (a.area == '서울') return a
+            })
+            console.log('area:', info2)
+        
+                console.log('------grep')
+            const info3 = $.grep(info,(a,b)=>{
+                console.log(a,b)
+                if (a.area == '서울') return true
+                else return false
+            })
+            console.log('area:', info3)
+        
+            // 선택자의 인덱스 추출
+            const idx = $('#menu li').index($('#item'))  // 대상배열.index(추출할 요소)
+            console.log('idx=',idx)
+        
+        })
+    </script>
+</head>
+<body>
+    <div class="box">
+        <h3>탐색 선택자</h3>
+        <hr>
+        <ul id="menu">
+            <li>내용-1</li>
+            <li>내용-2</li>
+            <li id="item">내용-3</li>
+            <li>내용-4</li>
+            <li>내용-5</li>
+            <li>내용-6</li>
+        </ul>
+        <ul id="menu2">
+            <li>내용-1</li>
+            <li>내용-2</li>
+            <li>내용-3</li>
+            <li>내용-4</li>
+            <li>내용-5</li>
+            <li>내용-6</li>
+        </ul>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        .container{
+            width:1000px; height: 200px;
+            margin-top: 300px;
+            border: 1px solid lightcoral;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .box {
+            width: 90%; height: 60%;
+            border: 1px solid lightsalmon;
+            border-radius: 20px;
+            font-size: 60px;
+            line-height: 1.8em;
+            text-align: center;
+        }
+        .btnBox {
+            margin-top: 300px;
+            display:flex;
+        }
+        .btn {
+            margin-left:auto; margin-right:100px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <div id="log"></div>
+        </div>
+    </div>
+    <div class="btnBox">
+        <button class="btn logOut">로그아웃</button>
+    </div>
+
+    <script>
+        const log = document.querySelector('#log')
+        const logOut = document.querySelector('.logOut')
+
+        logOut.addEventListener('click', ()=> {
+            let decision = confirm('정말 떠나시겠습니까???')
+            if(decision) {
+                location.href= 'ex10_log_in(myself).html'
+            }
+        })
+
+        if (getCookie('id')) {
+            log.innerHTML = `${getCookie('id')}님 환영합니다!!!`
+            
+        }
+
+        // function deleteCookie(name,exp=1) {
+        //     var date = new Date()
+        //     date.setTime(date.getTime()+exp*1)
+        //     document.cookie = name + '=;expires=' + date.toUTCString() + ';path=/'
+        // }
+
+        function getCookie(name) {
+            var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
+            return value? value[2] : null
+        }
+    </script>
+</body>
+</html>

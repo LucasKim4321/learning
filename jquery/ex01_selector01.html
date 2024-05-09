@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        // $() jquery에서만 쓰는 객체
+        $(document).ready(function(){})  // DOM객체(document)가 정상적으로 로딩이되면 처리
+        $(function(){
+            console.log('jqeury ok...')
+            // $('h1') // const h1 = document.querySelector('h1') 이거랑 같음
+            // 태그 선택자
+            $('h1').css('color','lightcoral')  // css속성 한개 선택
+            $('#title').css({
+                // '스타일시트에서 사용하는 속성이름':'속성값'
+                'border': '1px solid blue',
+                'background-color': 'skyblue',
+                // js 스타일 속성 이름
+                border: '1px solid black'
+            })
+            $('.ti').css('background-color','lightcoral').css('border','2px dashed green')
+            $('h2,h3').css('font-size','24px')
+            $('.box1 h1').css({border:'1px solid skyblue', 'border-radius':'10px',padding:'5px 10px'})
+            
+            // 자식 요소
+            $('.box2 > h1').css('color','red')
+            $('.box2').children('h1').css('color','blue')
+            const el = $('.box2')
+            el.children('h1').css('color','gray')
+            el.find('>h1').css('color','lightblue')
+            el.children().css('border','1px solid gray')
+
+            // 동위 선택자(형제요소선택자) '+'  next()랑 같음
+            $('.box2 > .txt+p').css('color','green')
+            var style_1 = {
+                'background-color':'lightblue',
+                'border':'2px solid lightcoral'
+            }
+            // 공통된 부모 요소를 가지는 요소들만 적용
+            // $('.txt').next().next().next().css(style_1)  // next() 지정한 요소의 다음요소
+            // $('.txt').prev().css(style_1)  // prev() 지정한 요소의 이전요소
+            // $('.txt').nextAll().css(style_1)  // nextAll() 지정한 요소의 다음 요소 전부
+            // $('.txt').prevAll().css(style_1)  // prevAll() 지정한 요소의 이전 요소 전부
+            // $('.txt').siblings().css(style_1)  // siblings() 자기 자신을 제외한 모든 형제 요소
+
+            // 상위 요소 선택자
+            // $('#sec').parents('div').css(style_1) // parents('상위요소') 선택한 요소의 상위요소 
+            // $('#sec').parents().css(style_1)  // parents() 모든 상위 요소
+            $('#sec > h1').closest('div').css(style_1) // closest('상위요소') 가장 가까운 상위요소
+            
+        })
+    </script>
+    <style></style>
+</head>
+<body>
+    <div class="box2">
+        <h1>인접 선택자</h1>
+        <p class="txt">내용1</p>
+        <p>내용2</p>
+        <div id="sec">
+            <h1>자식 요소</h1>
+            <p>내용3</p>
+        </div>
+        <p>내용4</p>
+    </div>
+    <div class="box1">
+        <h1>제이쿼리</h1>
+        <h2 id="title">선택자</h2>
+        <h3 class="ti">직접 선택자</h3>
+        <h3 class="ti">인접 선택자</h3>
+    </div>
+</body>
+</html>
