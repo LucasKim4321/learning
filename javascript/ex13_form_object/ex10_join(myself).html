@@ -15,7 +15,7 @@
             border-radius: 20px;
         }
         .box {
-            width: 800px;
+            width: 90%;
             margin-left: auto; margin-right: auto;
         }
     </style>
@@ -87,6 +87,11 @@
 
         function required(e) {
             for( let input of inputgroup){
+                if(id.value==getCookie('id')) {
+                    alert('이미 존재하는 아이디입니다!')
+                    e.preventDefault()
+                    returns
+                }
                 if(input.value=='') {
                     alert(`${input.id}를 입력해주세요.`)
                     e.preventDefault()
@@ -97,13 +102,28 @@
         }
 
         btnChk.addEventListener('click', ()=> {
-            if(id.value==localStorage.getItem('id')) {
+            if(id.value==getCookie('id')) {
                 alert('이미 존재하는 아이디입니다!')
             }
             else {
                 alert('사용 가능한 아이디입니다 :b')
             }
         })
+        
+        function getCookie(name) {
+            var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
+            console.log(value)
+            return value? value[2] : null  // value값이 존재하면 참  참이면 value[2] 거짓이면 null
+        }
+
+        // btnChk.addEventListener('click', ()=> {
+        //     if(id.value==localStorage.getItem('id')) {
+        //         alert('이미 존재하는 아이디입니다!')
+        //     }
+        //     else {
+        //         alert('사용 가능한 아이디입니다 :b')
+        //     }
+        // })
 
         btnPrev.addEventListener('click', ()=> {
             location.href= 'ex10_log_in(myself).html'  // 해당 페이지 이동  window생략
