@@ -87,10 +87,12 @@
 
         function required(e) {
             for( let input of inputgroup){
-                if(id.value==getCookie('id')) {
+            let chk = id_cookies2.filter((e)=>e==id.value)
+            console.log(chk)
+                if(chk!='') {
                     alert('이미 존재하는 아이디입니다!')
                     e.preventDefault()
-                    returns
+                    return
                 }
                 if(input.value=='') {
                     alert(`${input.id}를 입력해주세요.`)
@@ -98,36 +100,63 @@
                     return
                 }
             }
+            setCookie('id',id.value)
+            setCookie('pwd',password.value)
             alert('등록이 완료되었습니다.')
         }
 
         btnChk.addEventListener('click', ()=> {
-            if(id.value==getCookie('id')) {
+            let chk = id_cookies2.filter((e)=>e==id.value)
+            console.log(chk)
+            if(chk!='') {
                 alert('이미 존재하는 아이디입니다!')
             }
             else {
                 alert('사용 가능한 아이디입니다 :b')
             }
         })
-        
-        function getCookie(name) {
-            var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
-            console.log(value)
-            return value? value[2] : null  // value값이 존재하면 참  참이면 value[2] 거짓이면 null
+ 
+        let arr_cookies = document.cookie.split('; ')
+        let id_cookies = arr_cookies.filter((e)=>e.includes('id'))
+        let id_cookies2 = []
+        for (i=0; i<id_cookies.length; i++){
+            let cookies = id_cookies[i].split('=')
+            id_cookies2.push(cookies[1])
         }
 
+        function setCookie(name,value,exp=1) {
+            let num = id_cookies.length + 1
+            let date = new Date()
+            date.setTime(date.getTime()+exp*24*60*60*1000)
+            document.cookie = name + num + '=' +value + ';expires=' + date.toTUCstring + ';path=/'
+        }
+
+        function getCookie(name) {
+            var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+            console.log(value)
+            return value? value[2] : null;
+        }
+
+       
+        btnPrev.addEventListener('click', ()=> {
+            location.href= 'ex10_log_in(myself).html'  // 해당 페이지 이동  window생략
+        })
+
+        
         // btnChk.addEventListener('click', ()=> {
-        //     if(id.value==localStorage.getItem('id')) {
+        //     if(arr_cookies.includes('id:'+id.value)) {
         //         alert('이미 존재하는 아이디입니다!')
         //     }
         //     else {
         //         alert('사용 가능한 아이디입니다 :b')
         //     }
         // })
-
-        btnPrev.addEventListener('click', ()=> {
-            location.href= 'ex10_log_in(myself).html'  // 해당 페이지 이동  window생략
-        })
+        // let arr_cookies = []
+        // for (i=0; i<document.cookie.split('; ').length; i++){
+        //     let cookies = document.cookie.split('; ')[i].split('=')
+        //     arr_cookies.push(cookies[0],cookies[1])
+        // }
+        // console.log(arr_cookies)
     </script>
 </body>
 </html>

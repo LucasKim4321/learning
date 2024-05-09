@@ -22,8 +22,8 @@
             <form action="ex10_log_in success(myself).html">
                 <div class="mt-4">
                     <div class="mt-4 row">
-                        <label for="logInID" class="form-label col-2 ps-4">아이디</label>
-                        <input type="text" class="form-control col" id="logInID">
+                        <label for="logInId" class="form-label col-2 ps-4">아이디</label>
+                        <input type="text" class="form-control col" id="logInId">
                     </div>
                     <div class="mt-4 row">
                         <label for="logInPwd" class="form-label col-2 ps-4">비밀번호</label>
@@ -48,7 +48,7 @@
 
     
     <script>
-        const logInID = document.querySelector('#logInID')
+        const logInId = document.querySelector('#logInId')
         const logInPwd = document.querySelector('#logInPwd')
         const remember = document.querySelector('#remember')
         const logInBtn = document.querySelector('#logInBtn')
@@ -56,7 +56,7 @@
 
         // logInBtn.addEventListener('click', ()=> {
         //     if(remember.checked==true) {
-        //         localStorage.setItem('id',logInID.value)
+        //         localStorage.setItem('id',logInId.value)
         //         localStorage.setItem('pwd',logInPwd.value)
         //     }
         //     else {
@@ -70,7 +70,7 @@
         //     if(id) {
         //         console.log('true')
         //         remember.checked = true
-        //         logInID.value = localStorage.getItem('id')
+        //         logInId.value = localStorage.getItem('id')
         //         logInPwd.value = localStorage.getItem('pwd')
         //     }
         //     else {
@@ -80,16 +80,19 @@
         // }
 
 
-        logInBtn.addEventListener('click', ()=> {
+        logInBtn.addEventListener('click', (e)=> {
             if(remember.checked==true) {
-                setCookie('id',logInID.value,3)
-                setCookie('pwd',logInPwd.value,3)
+                setCookie('id',logInId.value,1)
+                setCookie('pwd',logInPwd.value,1)
             }
             else {
                 deleteCookie('id')
                 deleteCookie('pwd')
             }
-            
+            if(logInId.value==false||logInPwd.value==false) {
+                e.preventDefault()
+            }
+            setCookie('loggedInId',logInId.value,1)
         })
 
         rememberChk()
@@ -98,7 +101,7 @@
             if(id) {
                 console.log('true')
                 remember.checked = true
-                logInID.value = getCookie('id')
+                logInId.value = getCookie('id')
                 logInPwd.value = getCookie('pwd')
             }
             else {
