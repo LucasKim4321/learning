@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        // user_id=user_id2, user_name=user_name2  chk1=chk10, chk2=chk20
+        $(function() {
+            const js_user_name = document.querySelector('#user_name')
+            console.log(js_user_name.value)
+            const user_name = $('#user_name')
+            const user_id = $('#user_id')
+            
+            // console.log(js_user_name)
+            // console.log(user_name)
+
+            console.log('name',$('#user_name').val())  // 대상.var() 대상의 value값
+            $('#user_name').val('길순이')
+            console.log('name',$('#user_name').val())
+
+            // prop()  *체크
+            var chk1 = $('#chk1').prop('checked')
+            var chk2 = $('#chk2').prop('checked')
+            console.log(chk1)
+            console.log(chk2)
+
+            $('#chk1').prop('checked',true)  // checked 값 설정
+            $('#chk2').prop('checked',false)
+            $('#chk2').prop('name','chk3')  //값이 바뀜
+            
+            // 선택된 항목의 index값 추출
+            var sel_result = $('#sel').prop('selectedIndex')  // select태그 내에 선택된 option의 index번호
+            console.log(sel_result)
+
+            // console.log($('#sel'))
+
+            $('#sel').on('change',function(e){
+                // console.log(e)
+                // --- prop() 적용 ---
+                let index = $(this).prop('selectedIndex')  // 1. 변경된 항목의 index추출
+                // console.log('selected Index:'+index)
+                // $(this).find('option').eq(index).prop('selected',true)  // 2. 변경된 항목 index값으로 항목의 찾아 select옵션 적용
+                // let sel_value = $('#sel option:selected').val()  // 3. 변경시킨 select 항목 값 추출
+                // console.log('현재 선택된 항목:'+sel_value)
+
+                // -- attr() --
+                $(this).find('option').attr('selected',false)  // select 속성 모두 삭제
+                $(this).find('option').eq(index).attr('selected',true)  // 변경된 항목에 select 속성 추가
+            })
+            
+            // console.log($('#sel').find('option:eq(2)'))
+            // console.dir(document.querySelector('#sel option:nth-child(3)'))
+            // document.querySelector('#sel option:nth-child(2)').selected = true
+            // $(this).find('option:eq(2)').prop('defaultSelected',false)
+
+        })
+    </script>
+</head>
+<body>
+    <div class="box7">
+        <div>
+            <input type="checkbox" name="chk1" id="chk1">chk1
+            <input type="checkbox" name="chk2" id="chk2" checked>chk2
+        </div>
+        <div>
+            <select name="sel" id="sel">
+                <option value="opt1">딸기</option>
+                <option value="opt2">바나나</option>
+                <option value="opt3" selected>오렌지</option>
+                <option value="opt4">사과</option>
+            </select>
+        </div>
+        <div>
+            <label for="user_name">
+                <input type="text" name="user_name" id="user_name" value="홍길동">
+            </label>
+            <label for="user_name">
+                <input type="text" name="user_id" id="user_id" value="hello">
+            </label>
+        </div>
+    </div>
+    
+</body>
+</html>

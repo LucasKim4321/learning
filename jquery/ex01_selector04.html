@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+        $(function() {
+            // 요소 중 '내용1' 텍스트를 포함하는 요소
+            // $('.inner_1 p:contains(내용1)').css('background-color','lightblue')
+
+            // 하위 요소 중 가장 가까운 요소
+            // $('.inner_1').contents().css('background-color','lightcoral')
+            // $('.inner_1 p:has(strong)').css('background-color','lightcoral')
+
+            // 특정 요소를 제외한 나머지 요소
+            // $('.inner_2 p').not(':first').css('background-color','lightcoral')
+            // $('.inner_2 p').not(':nth-child(2)').css('background-color','lightcoral')
+
+            // :nth-child(위치), .eq(index번호)
+            // $('.inner_2 p').eq(2).css('background-color','lightcoral')
+
+            // end() 인덱스를 선택하기 전의 선택자 적용 ??
+            // $('.inner_2 p').eq(2).end().css('background-color','lightcoral')
+
+            // find(): 수직방향(하위요소), filter(): 형제선택자(수평방향)
+            // $('.inner_1 .txt1').css('border','1px solid red')
+            // var inner_1 = $('.inner_1')
+            // inner_1.find('.txt1').css('border','1px solid red')
+
+            // 1. 형제 노드 탐색
+            // $('.inner_2 p').filter(':nth-child(2)').css('border','1px solid red')
+            var inner_2 = $('.inner_2 p')
+            // inner_2.filter(':nth-child(2)').css('border','1px solid red')
+
+            // 특정 조건의 요소만 스타일 적용
+            inner_2.filter( function(idx,obj) {
+                console.log(idx,obj)
+                return idx%2 == 0  // true인 객체만 반환
+            }).css('color','green')
+
+            // 배열.map()  배열.
+            let rs1 = $('.inner_2 p').eq(2).is(':visible')
+            console.log(':visible',rs1)
+            let rs2 = $('.inner_2 p').eq(3).is(':visible')
+            console.log(':visible',rs2)
+            var rs3 = $('#chk1').is(':checked')
+            console.log(':checked',rs3)
+            var rs4 = $('#chk2').is(':checked')
+            console.log(':checked',rs4)
+
+            //*체크
+            let name = $('.name').html()
+            let age = $('.age').text()
+            console.log(name)
+            console.log(age)
+            $('.name').html('<b>홍길동</b>')
+            $('.age').text('<b>10</b>')
+
+            //xxx.getAttribute('class'), xxx.getAtttribute('class','b')
+            var attr = $('.name').attr('class')
+            console.log(attr)
+            $('.name').attr('id','name')  // 요소 속성 설정
+            $('.name').removeAttr('my')  // 요소의 특정 속성 제거
+
+            var imgSrc = $('.box5 img').attr('src')
+            console.log(imgSrc)
+            $('.box5 img').attr({
+                'width':150,
+                'src': imgSrc.replace(imgSrc,'img/rabbit2.png'),//*체크
+                'alt':'토끼2'
+            }).removeAttr('border')
+
+            // addClass(), removeClass(), toggleClass(), hasClass()
+            $('.box6 p:nth-child(1)').addClass('add')
+            $('.box6 p:nth-child(2)').removeClass('block')
+            var is_has1 = $('.box6 p:nth-child(1)').hasClass('add')  // 있으면 true 없으면 false
+            var is_has2 = $('.box6 p:nth-child(2)').hasClass('block')
+            console.log('is_has1,is_has2 ',is_has1,is_has2)
+            $('.box6 p:nth-child(3)').toggleClass('to')  // 있으면 삭제 없으면 추가
+            $('.box6 p:nth-child(4)').toggleClass('to')
+        })
+    </script>
+    <style>
+    </style>
+</head>
+<body>
+    <div class="box6">
+        <p>1</p>
+        <p class="block rock">2</p>
+        <p class="to">3</p>
+        <p>4</p>
+    </div>
+    <div class="box5">
+        <p><img src="img/rabbit1.avif" alt=""></p>
+        <p class="name 12 33" my='as'>홍길동</p>
+        <p class="age">10</p>
+    </div>
+    <div class="box4">
+        <section class="inner_1">
+            <p class="txt1"><span>내용1</span></p>
+            <p class="txt2"><span><strong class="txt1">내용2</strong></span></p>
+            <p class="txt3"><span><b>내용3</b></span></p>
+            <p class="txt3" style="display:none"><span><b>내용3-1</b></span></p>
+            <p>
+                <input type="checkbox" name="chk1" id="chk1" checked>
+                <label for="chk1">체크1</label>
+                <input type="checkbox" name="chk2" id="chk2">
+                <label for="chk2">체크2</label>
+            </p>
+        </section>
+        <section class="inner_2">
+            <p><span>내용4</span></p>
+            <p><span>내용5</span></p>
+            <p><span>내용6</span></p>
+        </section>
+    </div>
+</body>
+</html>
