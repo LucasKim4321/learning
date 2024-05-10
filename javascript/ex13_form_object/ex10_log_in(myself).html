@@ -80,14 +80,15 @@
         // }
 
 
+        // 로그인 버튼
         logInBtn.addEventListener('click', (e)=> {
             if(remember.checked==true) {
-                setCookie('id',logInId.value,1)
-                setCookie('pwd',logInPwd.value,1)
+                setCookie('rememberedId',logInId.value,1)
+                setCookie('rememberedPwd',logInPwd.value,1)
             }
             else {
-                deleteCookie('id')
-                deleteCookie('pwd')
+                deleteCookie('rememberedId')
+                deleteCookie('rememberedPwd')
             }
             if(logInId.value==false||logInPwd.value==false) {
                 e.preventDefault()
@@ -95,14 +96,15 @@
             setCookie('loggedInId',logInId.value,1)
         })
 
+        // 아이디 기억하기
         rememberChk()
         function rememberChk() {
-            const id = getCookie('id')
+            const id = getCookie('rememberedId')
             if(id) {
                 console.log('true')
                 remember.checked = true
-                logInId.value = getCookie('id')
-                logInPwd.value = getCookie('pwd')
+                logInId.value = getCookie('rememberedId')
+                logInPwd.value = getCookie('rememberedPwd')
             }
             else {
                 console.log('false')
@@ -110,6 +112,7 @@
             }
         }
         
+        // 쿠키 설정
         function setCookie(name, value, exp) {
             var date = new Date()
             date.setTime(date.getTime() + exp*24*60*60*1000)
@@ -128,6 +131,26 @@
             return value? value[2] : null  // value값이 존재하면 참  참이면 value[2] 거짓이면 null
         }
 
+
+        // btnChk.addEventListener('click', ()=> {
+        //     let chk = id_cookies2.filter((e)=>e==id.value)
+        //     console.log(chk)
+        //     if(chk!='') {
+        //         alert('이미 존재하는 아이디입니다!')
+        //     }
+        //     else {
+        //         alert('사용 가능한 아이디입니다 :b')
+        //     }
+        // })
+ 
+
+        // let arr_cookies = document.cookie.split('; ')
+        // let id_cookies = arr_cookies.filter((e)=>e.includes('id'))
+        // let id_cookies2 = []
+        // for (i=0; i<id_cookies.length; i++){
+        //     let cookies = id_cookies[i].split('=')
+        //     id_cookies2.push(cookies[1])
+        // }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

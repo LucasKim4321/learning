@@ -29,47 +29,54 @@
             margin-top: 300px;
             display:flex;
         }
-        .btn {
+        .logOut {
             margin-left:auto; margin-right:100px;
+            text-decoration: none;
+            color: black;
         }
+
 
     </style>
 </head>
 <body>
     <div class="container">
         <div class="box">
-            <div id="log"></div>
+            <div id="log">로그인을 해주세요!!</div>
         </div>
     </div>
     <div class="btnBox">
-        <button class="btn logOut">로그아웃</button>
+        <a class="logOut" href="#">로그아웃</a>
     </div>
 
     <script>
         const log = document.querySelector('#log')
+        const btnBox = document.querySelector('.btnBox')
         const logOut = document.querySelector('.logOut')
 
         logOut.addEventListener('click', ()=> {
             let decision = confirm('정말 떠나시겠습니까???')
             if(decision) {
-                location.href= 'ex10_log_in(myself).html'
+                deleteCookie(getCookie('loggedInId'))
+                log.innerHTML = `로그인을 해주세요!!`
+                btnBox.innerHTML = `<a class="logOut" href="ex10_log_in(myself).html">로그인하기</a>`
+                // location.href= 'ex10_log_in(myself).html'
             }
+            
         })
 
         if (getCookie('loggedInId')) {
-            log.innerHTML = `${getCookie('loggedInId')}님 환영합니다!!!`
-            
+            log.innerHTML = `${getCookie('loggedInId')}님 환영합니다 :b`
         }
-
-        // function deleteCookie(name,exp=1) {
-        //     var date = new Date()
-        //     date.setTime(date.getTime()+exp*1)
-        //     document.cookie = name + '=;expires=' + date.toUTCString() + ';path=/'
-        // }
 
         function getCookie(name) {
             var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
             return value? value[2] : null
+        }
+
+        function deleteCookie(loggedInId, exp=1) {
+            var date = new Date()
+            date.setTime(date.getTime() + exp*1)
+            document.cookie = 'loggedInId=' + loggedInId + ';expires=' + date.toUTCString() + ';path=/'
         }
     </script>
 </body>

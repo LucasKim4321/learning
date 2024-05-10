@@ -6,13 +6,32 @@
     <title>Document</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
-        .box1 {
+        .box1, .box2 {
             width: 500px;
             padding: 30px;
         }
-        .box1 > div {
+        .box1 > div , .box2 > div {
             border: 1px solid green;
             margin: 10px; padding: 10px;
+        }
+        .container {
+            width: 400px; height: 100px;
+            position: relative;
+            border: 5px solid red;
+            overflow: hidden;
+        }
+        .slide-show {
+            position: absolute;  /**/
+            left: -200px;
+            width: 200px; height: 100px;
+            /* margin-left: auto; margin-right: auto; */
+            background-color: lightpink;
+            display: flex;
+        }
+        .slide {
+            width: 200px; height: 100px;
+            flex: 0 0 200px;
+            background-color: lightblue;
         }
     </style>
     <script>
@@ -27,16 +46,29 @@
             // $('.box1').remove()  // 대상 요소 삭제
             // $('.box1').empty()  // 하위 요소 삭제
 
+            var copyObj = $('.box1').children().clone()  // box1의 하위요소 복사
+            $('.box2').append(copyObj)  // 하위요소 붙여넣기
+            $('.box1 div:eq(0)').replaceWith('<div><h3>replace method</h3></div>')  // box1첫번째요소 교체
+            $('<p>replaceAll</p>').replaceAll('.box2 div')  // box2의 모든 요소 교체
 
         })
     </script>
 </head>
 <body>
+    <div class="container">
+        <div class="slide-show">
+            <div class="slide">이미지-1</div>
+            <div class="slide">이미지-2</div>
+            <div class="slide">이미지-3</div>
+        </div>
+    </div>
+    <hr>
     <div class="box1">
         <div>내용1</div>
         <div>내용2</div>
         <div>내용3</div>
     </div>
+    <div class="box2"></div>
     
 </body>
 </html>
