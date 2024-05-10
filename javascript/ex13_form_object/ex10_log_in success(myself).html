@@ -26,14 +26,15 @@
             text-align: center;
         }
         .btnBox {
-            margin-top: 300px;
-            display:flex;
+            margin-top: 100px;
+            text-align: center;
         }
         .logOut {
-            margin-left:auto; margin-right:100px;
             text-decoration: none;
             color: black;
         }
+        .count_box {margin-top: 100px;}
+        #joined_count {text-align: center;}
 
 
     </style>
@@ -47,32 +48,46 @@
     <div class="btnBox">
         <a class="logOut" href="#">로그아웃</a>
     </div>
+    <div class="count_box">
+        <h2 id="joined_count">가입자수 :</h2>
+    </div>
 
     <script>
         const log = document.querySelector('#log')
         const btnBox = document.querySelector('.btnBox')
         const logOut = document.querySelector('.logOut')
+        const joined_count = document.querySelector('#joined_count')
 
+        // 가입자수 추출 후 표시
+        let arr_cookies = document.cookie.split('; ')  // '; '를 기준으로 나눠서 배열로 저장
+        let count = arr_cookies.filter((e)=>e.includes('joinedCount'))  //count 쿠키 추출
+        let count_value
+        if (count=='') count_value = 0
+        else count_value = count[0].split('=')[1]
+        joined_count.innerHTML = `가입자수 : ${count_value}`
+ 
+        // 로딩시 로그인 여부 체크
+        if (getCookie('loggedInId')) {
+            log.innerHTML = `${getCookie('loggedInId')}님 환영합니다 :b`
+        }
+        else btnBox.innerHTML = `<a class="logOut" href="ex10_log_in(myself).html">로그인하기</a>`
+
+        // 로그 아웃 버튼
         logOut.addEventListener('click', ()=> {
             let decision = confirm('정말 떠나시겠습니까???')
             if(decision) {
                 deleteCookie(getCookie('loggedInId'))
                 log.innerHTML = `로그인을 해주세요!!`
                 btnBox.innerHTML = `<a class="logOut" href="ex10_log_in(myself).html">로그인하기</a>`
-                // location.href= 'ex10_log_in(myself).html'
             }
-            
         })
 
-        if (getCookie('loggedInId')) {
-            log.innerHTML = `${getCookie('loggedInId')}님 환영합니다 :b`
-        }
-
+        // 쿠키 찾기
         function getCookie(name) {
             var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
             return value? value[2] : null
         }
-
+        // 쿠키 제거
         function deleteCookie(loggedInId, exp=1) {
             var date = new Date()
             date.setTime(date.getTime() + exp*1)

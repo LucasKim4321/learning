@@ -46,14 +46,88 @@
         </div>
     </div>
 
-    
     <script>
         const logInId = document.querySelector('#logInId')
         const logInPwd = document.querySelector('#logInPwd')
         const remember = document.querySelector('#remember')
         const logInBtn = document.querySelector('#logInBtn')
-        
+        const btnChk = document.querySelector('#btnChk')
 
+        // id값 추출
+        let arr_cookies = document.cookie.split('; ')  // '; '를 기준으로 나눠서 배열로 저장
+        let id_cookies = arr_cookies.filter((e)=>e.includes('id'))  // id 쿠키만 추출
+        let id_cookies2 = []
+        for (i=0; i<id_cookies.length; i++){  // id 쿠키에서 값만 빼서 배열로 저장
+            let cookies = id_cookies[i].split('=')
+            id_cookies2.push(cookies[1])
+        }
+        // pwd값 추출
+        let pwd_cookies = arr_cookies.filter((e)=>e.includes('pwd'))  // pwd 쿠키만 추출
+        let pwd_cookies2 = []
+        for (i=0; i<pwd_cookies.length; i++){  // pwd 쿠키에서 값만 빼서 배열로 저장
+            let cookies = pwd_cookies[i].split('=')
+            pwd_cookies2.push(cookies[1])
+        }
+        
+        // 로그인 버튼
+        logInBtn.addEventListener('click', (e)=> {
+            let idChk = id_cookies2.filter((e)=>e==logInId.value) != ''  // 입력한 id값이랑 일치하는 id쿠키값이 존재하면 true
+            let idIndexChk = id_cookies2.indexOf(logInId.value)
+            let pwdChk = pwd_cookies2[idIndexChk] == logInPwd.value  // 일치하는 id의 비밀번호를 체크
+            console.log(idChk)
+            if(idChk&&pwdChk) {  // 데이터가 일치하면
+                if(remember.checked==true) {
+                    setCookie('rememberedId',logInId.value,1)
+                    setCookie('rememberedPwd',logInPwd.value,1)
+                }
+                else {
+                    deleteCookie('rememberedId')
+                    deleteCookie('rememberedPwd')
+                }
+                if(logInId.value==false||logInPwd.value==false) {
+                    e.preventDefault()
+                }
+                setCookie('loggedInId',logInId.value,1)
+            }
+            else {  // 데이터가 일치하지 않으면
+                e.preventDefault()
+                alert('아이디 또는 비밀번호를 잘못 입력했습니다!')
+            }
+        })
+
+        // 아이디 기억하기
+        rememberChk()
+        function rememberChk() {
+            const id = getCookie('rememberedId')
+            if(id) {
+                console.log('rememberChk=true')
+                remember.checked = true
+                logInId.value = getCookie('rememberedId')
+                logInPwd.value = getCookie('rememberedPwd')
+            }
+            else {
+                console.log('rememberChk=false')
+                // remember.checked = false
+            }
+        }
+        
+        // 쿠키 설정
+        function setCookie(name, value, exp) {
+            var date = new Date()
+            date.setTime(date.getTime() + exp*24*60*60*1000)
+            document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/'
+        }
+        function deleteCookie(name, exp=1) {
+            var date = new Date()
+            date.setTime(date.getTime() + exp*1)
+            document.cookie = name + '=' + ';expires=' + date.toUTCString() + ';path=/'
+        }
+        function getCookie(name) {
+            var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
+            return value? value[2] : null  // value값이 존재하면 참  참이면 value[2] 거짓이면 null
+        }
+
+        // localStorage를 이용한 로그인
         // logInBtn.addEventListener('click', ()=> {
         //     if(remember.checked==true) {
         //         localStorage.setItem('id',logInId.value)
@@ -63,7 +137,6 @@
         //         localStorage.clear()
         //     }
         // })
-
         // rememberChk()
         // function rememberChk() {
         //     const id = localStorage.getItem('id')
@@ -77,79 +150,6 @@
         //         console.log('false')
         //         // remember.checked = false
         //     }
-        // }
-
-
-        // 로그인 버튼
-        logInBtn.addEventListener('click', (e)=> {
-            if(remember.checked==true) {
-                setCookie('rememberedId',logInId.value,1)
-                setCookie('rememberedPwd',logInPwd.value,1)
-            }
-            else {
-                deleteCookie('rememberedId')
-                deleteCookie('rememberedPwd')
-            }
-            if(logInId.value==false||logInPwd.value==false) {
-                e.preventDefault()
-            }
-            setCookie('loggedInId',logInId.value,1)
-        })
-
-        // 아이디 기억하기
-        rememberChk()
-        function rememberChk() {
-            const id = getCookie('rememberedId')
-            if(id) {
-                console.log('true')
-                remember.checked = true
-                logInId.value = getCookie('rememberedId')
-                logInPwd.value = getCookie('rememberedPwd')
-            }
-            else {
-                console.log('false')
-                // remember.checked = false
-            }
-        }
-        
-        // 쿠키 설정
-        function setCookie(name, value, exp) {
-            var date = new Date()
-            date.setTime(date.getTime() + exp*24*60*60*1000)
-            document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/'
-        }
-
-        function deleteCookie(name, exp=1) {
-            var date = new Date()
-            date.setTime(date.getTime() + exp*1)
-            document.cookie = name + '=' + ';expires=' + date.toUTCString() + ';path=/'
-        }
-
-        function getCookie(name) {
-            var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)')
-            console.log(value)
-            return value? value[2] : null  // value값이 존재하면 참  참이면 value[2] 거짓이면 null
-        }
-
-
-        // btnChk.addEventListener('click', ()=> {
-        //     let chk = id_cookies2.filter((e)=>e==id.value)
-        //     console.log(chk)
-        //     if(chk!='') {
-        //         alert('이미 존재하는 아이디입니다!')
-        //     }
-        //     else {
-        //         alert('사용 가능한 아이디입니다 :b')
-        //     }
-        // })
- 
-
-        // let arr_cookies = document.cookie.split('; ')
-        // let id_cookies = arr_cookies.filter((e)=>e.includes('id'))
-        // let id_cookies2 = []
-        // for (i=0; i<id_cookies.length; i++){
-        //     let cookies = id_cookies[i].split('=')
-        //     id_cookies2.push(cookies[1])
         // }
     </script>
 

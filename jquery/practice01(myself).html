@@ -7,19 +7,36 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <style>
-        * { margin:0; padding: 0;}
+        * { margin:0; padding: 0; }
+        #title {
+            margin-top: 100px;
+            font-size: 70px;
+            text-align: center;
+            color:lightgrey;
+            box-shadow: 0 0 5px 5px lightgray;
+        }
         .outLine {
-            margin-top: 300px;
-            border: 20px solid lightgrey;
-            box-shadow: 0 0 20px 10px gray;
+            margin-top: 50px;
+            box-shadow: 0 0 30px 10px gray;
             display: flex;
         }
         #btnL{margin-left: auto;}
         #btnR{margin-right: auto;}
+        #btnL, #btnR {
+            border:0;
+            padding: 0 10px;
+            background-color: white;
+            color: grey;
+        }
+        #btnL:hover, #btnR:hover {
+            background-color: rgba(200, 200, 200, 0.5);
+            box-shadow: 0 0 25px 20px  rgba(200, 200, 200, 0.5);
+            transition: all 1s;
+        }
         #img_slider1 {
             position: relative;
             width: 600px; height:400px;
-            border: 10px solid red;
+            /* border: 10px solid red; */
             margin: 0 20px;
             overflow: hidden;
         }
@@ -38,12 +55,11 @@
             /* border: 1px solid black; */
             text-align: center;
         }
-        img {
-            height:100%;
-        }
+        img { height:100%; }
     </style>
 </head>
 <body>
+    <h1 id="title">귀여운 토끼!</h1>
     <div class="outLine">
         <button id="btnL">◁</button>
         <div id="img_slider1" class="img_slider">
@@ -74,6 +90,7 @@
             console.log(img_boxes.length)
 
             let left = 0
+            console.log(imgs_box1.css('left'),typeof(imgs_box1.css('left')))
             btnL.on('click', ()=> {
                 if(left!=0) {
                     left += 600

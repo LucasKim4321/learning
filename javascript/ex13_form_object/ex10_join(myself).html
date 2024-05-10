@@ -81,14 +81,51 @@
         const myForm = document.querySelectorAll('#myForm')
         console.log(inputgroup)
 
+        // id값 추출
+        let arr_cookies = document.cookie.split('; ')
+        let id_cookies = arr_cookies.filter((e)=>e.includes('id'))
+        let id_cookies2 = []
+        for (i=0; i<id_cookies.length; i++){
+            let cookies = id_cookies[i].split('=')
+            id_cookies2.push(cookies[1])
+        }
+
+        
+        
+
+        // id 중복 체크
+        btnChk.addEventListener('click', ()=> {
+            let chk = id_cookies2.filter((e)=>e==id.value)
+            console.log(chk)
+            if(chk!='') {
+                alert('이미 존재하는 아이디입니다!')
+            }
+            else {
+                alert('사용 가능한 아이디입니다 :b')
+            }
+        })
+
+        // 가입한 숫자 카운트
+        let count = arr_cookies.filter((e)=>e.includes('joinedCount'))  //count 쿠키 추출
+        let count_value
+        if (count=='') count_value = 0
+        else count_value = count[0].split('=')[1]
+        function setCountCookie(count_value, exp=1) {
+            count_value++
+            let date = new Date()
+            date.setTime(date.getTime()+exp*24*60*60*1000)
+            document.cookie = 'joinedCount=' + count_value + ';expires=' + date.toUTCString() + ';path=/'
+        }
+
+        // 다음 버튼(submit)
         btnNext.addEventListener('click', (e)=> {
             required(e)
         })
-
+        // 필수 체크 함수
         function required(e) {
             for( let input of inputgroup){
             let chk = id_cookies2.filter((e)=>e==id.value)
-            console.log(chk)
+            // console.log(chk)
                 if(chk!='') {
                     alert('이미 존재하는 아이디입니다!')
                     e.preventDefault()
@@ -100,64 +137,34 @@
                     return
                 }
             }
-            setCookie('id',id.value)
-            setCookie('pwd',password.value)
+            setCookie('id',count_value,id.value)
+            setCookie('pwd',count_value,password.value)
+            setCountCookie(count_value)
             alert('등록이 완료되었습니다.')
         }
 
-        btnChk.addEventListener('click', ()=> {
-            let chk = id_cookies2.filter((e)=>e==id.value)
-            console.log(chk)
-            if(chk!='') {
-                alert('이미 존재하는 아이디입니다!')
-            }
-            else {
-                alert('사용 가능한 아이디입니다 :b')
-            }
+        
+
+
+        // 취소 버튼(로그인 화면)
+        btnPrev.addEventListener('click', ()=> {
+            location.href= 'ex10_log_in(myself).html'  // 해당 페이지 이동  window생략
         })
- 
 
-        let arr_cookies = document.cookie.split('; ')
-        let id_cookies = arr_cookies.filter((e)=>e.includes('id'))
-        let id_cookies2 = []
-        for (i=0; i<id_cookies.length; i++){
-            let cookies = id_cookies[i].split('=')
-            id_cookies2.push(cookies[1])
-        }
-
-        function setCookie(name,value,exp=1) {
-            let num = id_cookies.length + 1
+        // 쿠키 저장
+        function setCookie(name,count_value,value,exp=1) {
             let date = new Date()
             date.setTime(date.getTime()+exp*24*60*60*1000)
-            document.cookie = name + num + '=' +value + ';expires=' + date.toTUCstring + ';path=/'
+            document.cookie = name + count_value + '=' + value + ';expires=' + date.toUTCString() + ';path=/'
         }
 
+        // 쿠키 불러오기
         function getCookie(name) {
             var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
             console.log(value)
             return value? value[2] : null;
         }
 
-       
-        btnPrev.addEventListener('click', ()=> {
-            location.href= 'ex10_log_in(myself).html'  // 해당 페이지 이동  window생략
-        })
-
-        
-        // btnChk.addEventListener('click', ()=> {
-        //     if(arr_cookies.includes('id:'+id.value)) {
-        //         alert('이미 존재하는 아이디입니다!')
-        //     }
-        //     else {
-        //         alert('사용 가능한 아이디입니다 :b')
-        //     }
-        // })
-        // let arr_cookies = []
-        // for (i=0; i<document.cookie.split('; ').length; i++){
-        //     let cookies = document.cookie.split('; ')[i].split('=')
-        //     arr_cookies.push(cookies[0],cookies[1])
-        // }
-        // console.log(arr_cookies)
     </script>
 </body>
 </html>
