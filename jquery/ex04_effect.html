@@ -11,6 +11,14 @@
             width: 300px; height: 300px;
             border: 1px solid lightblue;
             position: relative; 
+            overflow: hidden;
+            display: inline-block;
+        }
+        .ani_box2 {
+            width: 300px; height: 300px;
+            border: 1px solid lightblue;
+            position: relative;
+            display: inline-block;
         }
         .ani_box .box1 {
             width: 50px; height: 50px;
@@ -47,6 +55,8 @@ Laborum eu sunt pariatur ullamco aliqua Lorem aliqua tempor anim duis qui est el
         <div class="ani_box">
             <div class="box1"></div>
         </div>
+        <div class="ani_box2">
+        </div>
     </div>
     <!-- 효과 메서드
     숨김: .hide(), .fadeOut(), slideUp()
@@ -60,7 +70,7 @@ Laborum eu sunt pariatur ullamco aliqua Lorem aliqua tempor anim duis qui est el
                 // 1.
                 // $('.content').slideUp()
                 // $('.content').slideUp('fast')  // 'slow','normal','fast'
-                // $('.content').slideUp(2000)
+                // $('.content').slideUp(2000)  // 2000밀리초 2초
                 $('.content').slideUp(1000, 'linear',function(){  // slideUP 동작 후 이벤트 실행
                     // alert('ddd')
                     $('#btn1').hide(1000)
@@ -90,7 +100,15 @@ Laborum eu sunt pariatur ullamco aliqua Lorem aliqua tempor anim duis qui est el
             })
             $('#abtn1').on('click',function(){
                 // 대상.animate({스타일,수행시간,가속도,콜백함수})
-                $('.ani_box .box1').animate({스타일,수행시간,가속도,콜백함수})
+                $('.ani_box .box1').animate({
+                    'left':'500px',
+                    'top':'50px',
+                },1000,'linear', function(){
+                    $(this).animate({
+                        'left':'50px',
+                        'top':'10px',
+                    },1000)
+                })
             })
             $('#abtn2').on('click',function(){})
         })

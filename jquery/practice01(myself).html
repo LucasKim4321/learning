@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>토끼 슬라이더</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <style>
@@ -104,6 +104,11 @@
                     imgs_box1.css('left',left)
                     console.log(imgs_box1.css('left'),typeof(imgs_box1.css('left')))
                 }
+            })
+            window.addEventListener('keyup',(e)=>{
+                console.log(e.keyCode)
+                if(e.keyCode==39){btnR.trigger('click')}
+                if(e.keyCode==37){btnL.trigger('click')}
             })
         })
     </script>
