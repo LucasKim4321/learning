@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        .div1 {
+            width: 200px; height: 200px;
+            background-color: lightgreen;
+        }
+        .div2 {
+            width: 100px; height: 100px;
+            background-color: lightsalmon;
+        }
+        body {
+            width: 4000px; height: 2000px;
+            background-color: lightskyblue
+        }
+        .wrap {
+            position: fixed;
+            left: 200px;
+            top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h3>jquery 이벤트 활용하기</h3>
+    <div class="box4">
+        <input type="text" id="user_id2">
+    </div>
+    <div class="box3">
+        <form action="#" id="frm1">
+            <input type="text" id="user_id">
+            <input type="text" id="user_pw">
+        </form>
+        <form action="#" id="frm2">
+            <input type="text" id="user_id">
+            <input type="text" id="user_pw">
+        </form>
+    </div>
+    <div class="wrap">
+        scrollTop: <span class="top">0</span>px
+        scrollLeft: <span class="left">0</span>px
+        <form action="#">
+            <input type="text" class="scrollTop" placeholder="scrollTop">
+            <input type="text" class="scrollLeft" placeholder="scrollLeft">
+            <button type="reset" class="reset">초기화</button>
+        </form>
+    </div>
+    <div class="div1">작업영역1
+        <div class="div2">작업영역2</div>
+    </div>
+    <div class="box1">
+        <div><button class="btn1">버튼1</button></div>
+        <div>btn1 클릭 메시지</div>
+        <div><button class="btn2">버튼2</button></div>
+        <div>btn2 클릭 메시지</div>
+        <div class="link"><a href="https://www.google.com">Google</a></div>
+        <div><button class="btn3">버튼3</button></div>
+        <div>btn3 클릭 메시지</div>
+        <div><button class="btn4">버튼4</button></div>
+        <div>btn4 클릭 메시지</div>
+    </div>
+
+
+
+    <!-- 이벤트 등록 방식 3가지
+    $('이벤트 대상').on('이벤트종류1 이벤트종류2...', 함수식or함수) 이벤트 2개 이상 가능
+    $('이벤트 대상').on({'이벤트종류1 ...': 함수식or함수})
+    $('이벤트 대상').on({
+        '이벤트종류1 ...': 함수식or함수,
+        '이벤트종류2 ...': 함수식or함수,
+        '이벤트종류3 ...': 함수식or함수
+    })
+    $('이벤트 대상').이벤트종류(함수식) -->
+
+    <script>
+        $(function(){
+            console.log('jquery ok...')
+            // on 함수 호출 1
+            $('.btn1').click(function(){
+                console.log('btn1 click!')
+                $('.btn1').parent().next().css({
+                    'color':'lightcoral'
+                })
+                $(this).parent().next().css({  // $(this) jquery에서만 됨
+                    'background-color':'lightblue'
+                })
+            })
+            // on함수 호출 2
+            $('.btn2').on('click',function(){
+                console.log('btn2 click!!')
+                $(this).parent().next().css({
+                    'margin':'10px',
+                    'padding':'10px',
+                    'border':'1px solid black',
+                    'fontSize':'20px'  // font-size(html), fontSize(js) 둘 다 사용 가능
+                })
+                $('.btn1').trigger('click')  // 이벤트 트리거 btn1의 이벤트 발생
+                $('.btn1').off('click')  // 이벤트 제거 btn1의 이벤트 제거
+                $('.link a').click(function(e){
+                    e.preventDefault() //기본 이벤트 제거
+                    alert('a태그 요소 클릭')
+                    for(var i=1; i<=10; i++){
+                        console.log(i)
+                    }
+                    setTimeout(()=>{
+                        location.href='https://www.naver.com'
+                    },2000)
+                })
+            })
+            // on함수 호출 3
+            $('.btn3').on({
+                'click':function(){
+                    console.log('btn3 click!!!')
+                    
+                }
+            })
+            // javaScript 이벤트 호출
+            document.querySelector('.btn4').addEventListener('click', ()=>{
+                    console.log('btn4 click!!!!')
+                $('.btn4').parent().next().css({
+                    'color':'lightcoral'
+                })
+                $(this).parent().next().css({  // 안됨
+                    'background-color':'lightblue'
+                })
+            })
+            $('.div1').on({
+                'mouseover':function(){  // mouseover는 영역 안에 영역도 구분
+                    console.log('mouseover')
+                },
+                'mouseout':function(){
+                    console.log('---mouseout---')
+                },
+                'mouseenter':function(){  // mouseenter는 영역 안에 영역은 관계없음
+                    console.log('mouseenter')
+                },
+                'mouseleave':function(){
+                    console.log('---mouseleave---')
+                },
+            })
+            // $(document).on('mousemove',function(e){
+            //     console.log('mousemove')
+            //     $('.div2').text(e.pageX+","+e.pageY)
+            // })
+            
+            document.addEventListener('mousemove', (e)=>{
+                console.log('mousemove')
+                // $('.div2').text(e.pageX+","+e.pageY)
+                document.querySelector('.div2').innerText = e.pageX+","+e.pageY
+            })
+
+            // scroll 이벤트 윈도우
+            $(window).on('scroll',function(){
+                var top = Math.floor($(this).scrollTop())  // 대상.scrollTop() 대상의 top 좌표 출력
+                var left = Math.floor($(this).scrollLeft())  // 대상.scrollLeft() 대상의 left 좌표 출력
+                $('.top').text(top)
+                $('.left').text(left)
+            })
+            $('.scrollTop').on('keyup',function(e){
+                if(e.keyCode==13){
+                    $('.top').text(e.target.value)
+                    window.scrollTo($('.scrollLeft').val(), $('.scrollTop').val(),'smooth')
+                }
+            })
+            $('.scrollLeft').on('keyup',function(e){
+                if(e.keyCode==13){
+                    $('.left').text(e.target.value)
+                    window.scrollTo($('.scrollLeft').val(), $('.scrollTop').val(),'smooth')
+                }
+            })
+            // 좌표는 현재 화면 기준.  스크롤시 바뀜
+            const rect = document.querySelector('.btn1').getBoundingClientRect();  // 좌표 값구하는 함수
+            console.log(rect)
+            console.log($('.btn1').scrollTop())
+            console.log($('.btn1').scrollLeft())
+            $('.reset').on('click',function(e){
+                window.scrollTo(0,0)
+            })
+
+            $('#user_id, #user_pw').on('focus',function(){
+                $(this).css({
+                    'background-color':'blue'
+                })
+            })
+            $('#user_id, #user_pw').on('blur',function(){
+                $(this).css({
+                    'background-color':'yellow'
+                })
+            })
+            // focusin focusout 대상요소의 하위요소 중 입력요소포커스가 이동하면 이벤트 발생
+            $('#frm2').on('focusin',function(){
+                $(this).css({
+                    'background-color':'blue'
+                })
+            })
+            $('#frm2').on('focusout',function(){
+                $(this).css({
+                    'background-color':'yellow'
+                })
+            })
+            $(document).on('keydown', keyEventFnc)
+            function keyEventFnc(e){
+                console.log(e.keyCode)
+                var direct = ''
+                switch(e.keyCode) {
+                    case 37:
+                        direct='LEFT'
+                        break;
+                    case 38:
+                        direct='TOP'
+                        break;
+                    case 39:
+                        direct='RIGHT'
+                        break;
+                    case 40:
+                        direct='BOTTOM'
+                        break;
+                }
+                // if(direct) {
+                //     $('#user_id2').val(direct)
+                // }
+                $('#user_id2').val(direct)
+            }
+        })
+    </script>
+</body>
+</html>

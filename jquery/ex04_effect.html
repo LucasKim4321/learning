@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Effect</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .ani_box {
+            width: 300px; height: 300px;
+            border: 1px solid lightblue;
+            position: relative; 
+        }
+        .ani_box .box1 {
+            width: 50px; height: 50px;
+            background-color: lightgreen;
+            position: absolute;  /* 상위(부모)요소가 기준점 */
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="buttons border m-3 p-3">
+            <button class="btn btn-outline-success"   id="btn1">slideUp</button>
+            <button class="btn btn-outline-danger"    id="btn2">slideDown</button>
+            <button class="btn btn-outline-primary"   id="btn3">toggleSide</button>
+            <button class="btn btn-outline-secondary" id="btn4">fadeTo(0.3)</button>
+            <button class="btn btn-outline-secondary" id="btn5">fadeTo(1)</button>
+        </div>
+        <hr>
+        <div class="box">
+            <div class="content">
+                Anim non mollit labore Lorem magna ut. Eiusmod esse do occaecat incididunt enim. Sint tempor minim minim qui. Fugiat ut est cillum fugiat elit irure tempor deserunt nisi. Laboris aliquip nostrud ea voluptate id ullamco fugiat laborum deserunt excepteur excepteur dolor irure. Non duis ullamco velit enim aliqua est sint aliqua ut laboris.
+
+Nisi deserunt non eiusmod non quis elit laboris. Aliqua mollit consectetur fugiat Lorem fugiat dolore nulla cupidatat nulla dolor veniam dolor mollit aliqua. Qui labore qui sunt culpa id dolor anim ex do adipisicing. Excepteur ea sit laborum laborum mollit dolore culpa cillum cillum ea.
+
+Laborum eu sunt pariatur ullamco aliqua Lorem aliqua tempor anim duis qui est elit. Est et dolore velit tempor sit Lorem ullamco adipisicing adipisicing magna ad Lorem. Nulla minim aliquip Lorem veniam esse exercitation officia consequat amet proident laborum.
+            </div>
+        </div>
+        <div class="box2 m-3 p-3 border">   
+            <div class="btn btn-outline-success" id="abtn1">버튼1</div>
+            <div class="btn btn-outline-danger" id="abtn2">버튼2</div>
+        </div>
+        <div class="ani_box">
+            <div class="box1"></div>
+        </div>
+    </div>
+    <!-- 효과 메서드
+    숨김: .hide(), .fadeOut(), slideUp()
+    노출: .show(), fadeIn(), slideDown()
+    노출/숨김
+    toggle(), fadeToggle(), slideToggle(), fadeto() -->
+
+    <script>
+        $(function(){
+            $('#btn1').on('click',function(){
+                // 1.
+                // $('.content').slideUp()
+                // $('.content').slideUp('fast')  // 'slow','normal','fast'
+                // $('.content').slideUp(2000)
+                $('.content').slideUp(1000, 'linear',function(){  // slideUP 동작 후 이벤트 실행
+                    // alert('ddd')
+                    $('#btn1').hide(1000)
+                    $('#btn2').show(1000)
+                })
+            })
+            $('#btn2').click(function(){
+                $('.content').fadeIn(1000,'swing',function(){
+                        $('#btn1').show(1000)
+                        $('#btn2').hide(1000)
+                })
+            })
+            $('#btn3').on('click',function(){
+                $('.content').slideToggle(1000,'linear')
+            })
+            $('.buttons button').on('click',function(e){
+                // console.log(e.target.id)
+                if(e.target.id == 'btn4'){
+                    console.log('btn4')
+                    $('.content').fadeTo('normal',0.3)
+                }
+                if(e.target.id == 'btn5') {
+                    console.log('btn5')
+                    $('.content').fadeTo('normal',1)
+                }
+            
+            })
+            $('#abtn1').on('click',function(){
+                // 대상.animate({스타일,수행시간,가속도,콜백함수})
+                $('.ani_box .box1').animate({스타일,수행시간,가속도,콜백함수})
+            })
+            $('#abtn2').on('click',function(){})
+        })
+    </script>
+</body>
+</html>
