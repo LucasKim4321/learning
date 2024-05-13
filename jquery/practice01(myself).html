@@ -92,17 +92,17 @@
             let left = 0
             console.log(imgs_box1.css('left'),typeof(imgs_box1.css('left')))
             btnL.on('click', ()=> {
-                if(left!=0) {
+                if(left<0) {
                     left += 600
                     imgs_box1.css('left',left)
-                    console.log(imgs_box1.css('left'),typeof(imgs_box1.css('left')))
+                    console.log('left',left,typeof(left))
                 }
             })
             btnR.on('click', ()=> {
-                if(left!=(img_boxes.length*(-600)+600)) {
+                if(left>((img_boxes.length-1)*(-600))) {
                     left -= 600
                     imgs_box1.css('left',left)
-                    console.log(imgs_box1.css('left'),typeof(imgs_box1.css('left')))
+                    console.log('left',left,typeof(left))
                 }
             })
             window.addEventListener('keyup',(e)=>{

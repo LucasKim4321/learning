@@ -20,15 +20,15 @@ function generateError() {
     try{
         var rnd = Math.random()  // 0 < rnd > 1
         console.log('발생한 숫자=>',rnd)
-        if (rnd >= 0.5) {
-            throw new Error(`number:${rnd}`)
+        if (rnd >= 0.5) {  // 조건 만족시 에러
+            throw new Error(`number:${rnd}`)  // 에러값(`number:${rnd}`) 리턴
         }
         else {
             console.log('에러 없음')
         }
     }
     catch(error) {
-        console.log('errorMessage:',error.message)
+        console.log('errorMessage:',error.message)  // 에러값 출력
     }
     finally {  // 에러가 발생하든 말든 실행됨
         console.log('에러 처리 완료')

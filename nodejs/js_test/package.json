@@ -19,6 +19,7 @@
     "ex12": "ex12_storage_cookie.html",
     "ex1301": "node ex13_error01.js",
     "ex1302": "node ex13_error02_try_catch.js",
+    "ex14": "node ex14_obj_set_map.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
