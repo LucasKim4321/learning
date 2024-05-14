@@ -1,0 +1,6 @@
+npmjs.com    lodash
+maven repository
+
+npx create-react-app .       // 현재 위치에 리엑트 생성
+npx create-react-app second_app     // second_app위치에 리엑트 생성
+cmd에 mkdir 경로  경로에 폴더 생성

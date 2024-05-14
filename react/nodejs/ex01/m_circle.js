@@ -10,4 +10,5 @@ function getCircumference(radius) {
 console.log(PI)
 console.log(getArea(3))
 
-export {getArea,getCircumference}  //  한꺼번에 export
+// export {getArea,getCircumference}  //  한꺼번에 export
+export default {getArea,getCircumference}  // 기본값으로 내보내기

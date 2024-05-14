@@ -7,6 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         $(function() {
+            // 요소 선택
             // $('#menu li:first').css('background-color','skyblue')  // 첫번째
             // $('#menu li:last').css('background-color','lightcoral')  // 마지막
             // $('#menu li').last().css('background-color','red')  //마지막
@@ -46,14 +47,14 @@
             const info = [{"area":"부산","name":"홍길순"},{"area":"서울","name":"홍길동"},{"area":"인천","name":"동길이"},{"area":"김해","name":"동길순"}]
         
             console.log('------map')
-            const info2 = $.map(info,(a,b)=>{  // a데이터 b인덱스번호
+            let info2 = $.map(info,(a,b)=>{  // a데이터 b인덱스번호
                 console.log(a,b)
                 if (a.area == '서울') return a
             })
             console.log('area:', info2)
         
                 console.log('------grep')
-            const info3 = $.grep(info,(a,b)=>{
+            let info3 = $.grep(info,(a,b)=>{
                 console.log(a,b)
                 if (a.area == '서울') return true
                 else return false

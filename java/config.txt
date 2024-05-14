@@ -1,4 +1,4 @@
-oracle또든 openjdk 에서 jdk17 다운
+oracle 또는 openjdk 에서 jdk17 다운
 
 1. jdk 다운 -> 압축해제 -> 폴더설정
 2. 환경변수 -> JAVA_HOME

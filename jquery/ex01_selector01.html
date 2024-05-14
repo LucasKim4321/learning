@@ -7,11 +7,13 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
         // $() jquery에서만 쓰는 객체
+
         $(document).ready(function(){})  // DOM객체(document)가 정상적으로 로딩이되면 처리
-        $(function(){
+        $(function(){  // $(function(){내용}) 내용에 있는 juqery만 읽기 가능
             console.log('jqeury ok...')
-            // $('h1') // const h1 = document.querySelector('h1') 이거랑 같음
+            
             // 태그 선택자
+            // $('h1') // const h1 = document.querySelector('h1') 이거랑 같음
             $('h1').css('color','lightcoral')  // css속성 한개 선택
             $('#title').css({
                 // '스타일시트에서 사용하는 속성이름':'속성값'
@@ -38,6 +40,7 @@
                 'background-color':'lightblue',
                 'border':'2px solid lightcoral'
             }
+
             // 공통된 부모 요소를 가지는 요소들만 적용
             // $('.txt').next().next().next().css(style_1)  // next() 지정한 요소의 다음요소
             // $('.txt').prev().css(style_1)  // prev() 지정한 요소의 이전요소
@@ -48,11 +51,12 @@
             // 상위 요소 선택자
             // $('#sec').parents('div').css(style_1) // parents('상위요소') 선택한 요소의 상위요소 
             // $('#sec').parents().css(style_1)  // parents() 모든 상위 요소
-            $('#sec > h1').closest('div').css(style_1) // closest('상위요소') 가장 가까운 상위요소
+            // $('#sec > h1').closest('div').css(style_1) // closest('상위요소') 가장 가까운 상위요소
             
         })
     </script>
-    <style></style>
+    <style>
+    </style>
 </head>
 <body>
     <div class="box2">

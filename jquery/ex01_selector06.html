@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
     <style>
         .box8 {
             width: 300px; height: 300px;
@@ -14,10 +14,11 @@
     </style>
     <script>
         $(function(){
+            // var box8 = document.querySelector('.box8')  // 안됨
             var box8 = $('.box8')
-            console.log('width:'+box8.width())
-            console.log('height:'+box8.height())
-            console.log('innerWidth:'+box8.innerWidth())  // border 안쪽 패딩 포함
+            console.log('width:'+box8.width())  // 순수 박스의 가로
+            console.log('height:'+box8.height())  // 세로
+            console.log('innerWidth:'+box8.innerWidth())  // 패딩 포함
             console.log('innerHeight:'+box8.innerHeight())
             console.log('outerWidth:'+box8.outerWidth())  // border까지 포함
             console.log('outerHeight:'+box8.outerHeight())
