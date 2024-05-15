@@ -155,8 +155,8 @@
 
             // scroll 이벤트 윈도우
             $(window).on('scroll',function(){
-                var top = Math.floor($(this).scrollTop())  // 대상.scrollTop() 대상의 top 좌표 출력
-                var left = Math.floor($(this).scrollLeft())  // 대상.scrollLeft() 대상의 left 좌표 출력
+                var top = Math.floor($(this).scrollTop())  // 대상.scrollTop() 대상의 top 좌표 리턴
+                var left = Math.floor($(this).scrollLeft())  // 대상.scrollLeft() 대상의 left 좌표 리턴
                 $('.top').text(top)
                 $('.left').text(left)
             })

@@ -2,6 +2,9 @@ alert("안녕하세요!...(｡•̀ᴗ-)✧")
 document.write("hello javascript!!!") 
 prompt("이름:","초기값")  입력 받은 값을 반환
 
+
+ex02
+
 // 변수: 단일 기억장소
 // 상수: 기억장소에 넣을 값
 
@@ -10,6 +13,13 @@ prompt("이름:","초기값")  입력 받은 값을 반환
 // 변수 = 수식
 // 변수 = 변수
 
+// 변수이름 영어 혹은 영어+숫자 혼용 앞자리는 무조건 영어   
+// 변수는 앞글자 소문자 클래스는 앞글자 대문자 (어떻게 해도 상관없지만 구분하기 위한 규칙)
+
+// 변수 선언 : 데이터 값에 이름을 지정
+// var 변수 중복 선언 가능 수정 가능
+// let 변수 중복 선언 불가능 수정만 가능
+// const 변수 수정 불가 (읽기전용)
 
 단일 기억장소 : 일반 변수
 복수 기억장소 : 배열구조, 객체구조
@@ -17,6 +27,26 @@ n개의 기억장소 -> n-1의 인덱스번호 표시
 
 - 배열구조 -> "[데이터1,...]" 표시
 - 객체구조 -> "{'key':'value',...}" 표시
+
+// 배열 데이터 저장. 앞에서부터 index번호 순서대로 0부터 부여
+// 0팽귄 1고래 2참치
+const myArray=['팽귄','고래','참치']
+console.log(myArray) // 배열 myArray 출력
+myArray[0] = '100' //const읽기전용이지만 배열,객체 구조시 내부에는 적용안됨
+console.log(myArray[0])  // 배열 myArray의 수정된 인덱스번호 0번 값('100') 출력
+
+// 객체 데이터 저장. 객체 안에 각각 변수에 데이터 저장.
+const myObj = { id:20, name:'홍길동', name2:'홍길순'}
+console.log(myObj)  // 객체 myObj 출력
+console.log(myObj.id)  // 객체 myObj의 id의 값 출력
+console.log(myObj.name)  // 객체 myObj의 name의 값 출력
+
+console.log('홍길동',typeof('홍길동')) // '홍길동'은 string 속성 출력
+console.log('100',typeof('100')) // '100'은 string 속성 출력
+console.log(100,typeof(100)) // 그냥 100은 number 속성
+console.log (5>2, typeof(5>2)) // 5>2는 boolean 속성 출력
+
+string 문자열 number 숫자 boolean 참거짓 object 객체
 
 연산식 : 
 산술식 => 
@@ -34,6 +64,15 @@ NOT -> AND -> OR 순으로 계산
 
 복합형 대입연산자
 +=,-=,*=,/=,%=
+
+console.log("5=='5'", 5=="5") //true ==숫자 문자 속성 관계없이 결과 출력
+console.log("5==='5'", 5==="5") //false ===만 속성 다르면 무조건 false
+console.log("문자==='문자'", "문자"==="문자") //true ===,== 글자도 비교됨 true
+console.log("5>'2'", 5>"2") //true 숫자 문자 관계없이 결과 출력
+
+// (조건식) ? 참일시 리턴 : 거짓일 시 리턴
+// (조건식) ? 참 : 거짓(조건식2) ? 참 : 거짓
+// console.log((userW>avgW) ? (userW-avgW)+"초과" : (userW<avgW) ? (avgW-userW)+"미달" : "완벽!")
 
 변수 : 단일 기억장소
 변수이름 규칙: 영어,숫자,특수문자(_) 혼용 가능

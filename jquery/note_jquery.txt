@@ -232,3 +232,164 @@ console.log('innerWidth:'+box8.innerWidth())  // 패딩 포함
 console.log('innerHeight:'+box8.innerHeight())
 console.log('outerWidth:'+box8.outerWidth())  // border까지 포함
 console.log('outerHeight:'+box8.outerHeight())
+
+
+ex02_DOMEdit.html
+
+형제 노드 기준 : 특정 요소 앞, 뒤 요소 추가
+$('.box1 div').eq(1).after('</div>After()</div>')
+$('</div>After()</div>').insertAfter('.box1 div:eq(1)')
+$('.box1 div').eq(1).before('</div>Before()</div>')
+$('</div>Before()</div>').insertBefore('.box1 div:eq(1)')
+$('.box1').append('<div>append()</div>')  // append() 맨 마지막에 추가
+$('.box1').prepend('<div>prepend()</div>')  // prepend() 맨 앞에 추가
+$('.box1').remove()  // 대상 요소 삭제
+$('.box1').empty()  // 하위 요소 삭제
+
+var copyObj = $('.box1').children().clone()  // box1의 하위요소 복사
+$('.box2').append(copyObj)  // 하위요소 붙여넣기
+$('.box1 div:eq(0)').replaceWith('<div><h3>replace method</h3></div>')  // box1첫번째요소 교체
+$('<p>replaceAll</p>').replaceAll('.box2 div')  // box2의 모든 요소 교체
+
+
+ex03_event.html
+
+<!-- 이벤트 등록 방식 3가지
+$('이벤트 대상').on('이벤트종류1 이벤트종류2...', 함수식or함수) 이벤트 2개 이상 가능
+$('이벤트 대상').on({'이벤트종류1 ...': 함수식or함수})
+$('이벤트 대상').on({
+    '이벤트종류1 ...': 함수식or함수,
+    '이벤트종류2 ...': 함수식or함수,
+    '이벤트종류3 ...': 함수식or함수
+})
+$('.div1').on({
+    'mouseover':function(){  // mouseover는 영역 안에 영역도 구분
+        console.log('mouseover')
+    },
+    'mouseout':function(){
+        console.log('---mouseout---')
+    },
+    'mouseenter':function(){  // mouseenter는 영역 안에 영역은 관계없음
+        console.log('mouseenter')
+    },
+    'mouseleave':function(){
+        console.log('---mouseleave---')
+    },
+})
+
+$('이벤트 대상').이벤트종류(함수식) -->
+$('.btn1').click(function(){})  // 클릭 이벤트
+$('.btn1').one(function(){})  // 한번만 실행
+$('.btn1').trigger('click')  // 이벤트 트리거 btn1의 이벤트 발생
+$('.btn1').off('click')  // 이벤트 제거 btn1의 이벤트 제거
+대상.preventDefault() // 기본 이벤트 제거  // 자바스크립트
+
+// 대상.scrollTop() 대상의 top 좌표 리턴
+// 대상.scrollLeft() 대상의 left 좌표 리턴
+
+// 좌표는 현재 화면 기준.  스크롤시 바뀜
+const rect = document.querySelector('.btn1').getBoundingClientRect();  // 좌표 값구하는 함수
+
+$('#user_id, #user_pw').on('focus',function(){
+    $(this).css({
+        'background-color':'blue'
+    })
+})
+$('#user_id, #user_pw').on('blur',function(){
+    $(this).css({
+        'background-color':'yellow'
+    })
+})
+// focusin focusout 대상요소의 하위요소 중 입력요소포커스가 이동하면 이벤트 발생
+$('#frm2').on('focusin',function(){
+    $(this).css({
+        'background-color':'blue'
+    })
+})
+$('#frm2').on('focusout',function(){
+    $(this).css({
+        'background-color':'yellow'
+    })
+})
+
+
+ex04_effect.html
+
+<!-- 효과 메서드
+숨김: .hide(), .fadeOut(), slideUp()
+노출: .show(), fadeIn(), slideDown()
+노출/숨김
+toggle(), fadeToggle(), slideToggle(), fadeto() -->
+
+// 대상.효과메서드(적용시간)
+$('.content').slideUp('fast')  // 'slow','normal','fast'
+$('.content').slideUp(2000)  // 2000밀리초 2초
+$('.content').slideUp(1000, 'linear',function(){   // 'linear',function(){후속동작} // slideUP 동작 후 이벤트 실행
+    $('#btn1').hide(1000)
+    $('#btn2').show(1000)
+})
+대상.fadeTo('속도',적용값)
+대상.animate({스타일,수행시간,가속도,콜백함수})
+
+
+ex05_ajax.html
+**fetch
+$.ajax({
+    url:'https://jsonplaceholder.typicode.com/todos',
+    dataType:'json',
+    success: function(items){
+        console.log(items)
+        // var tb = $('<table class="table table-striped table-hover" />')  // 테이블 객체 생성 1
+        var tb = $('<table />').addClass('table table-striped table-hover')  // 테이블 객체 생성 2
+        tb.append($('<thead><tr><th>userId</th><th>id</th><th>completed</th><th>title</th></thead></tr><tbody>'))
+        if(items.length>0){  // 데이터가 있으면
+            items.forEach((item)=>{
+                // console.log(item)
+                // tr, td 객체 생성
+                var row = $("<tr />").append(
+                    $('<td />').text(item.userId),
+                    $('<td />').text(item.id),
+                    $('<td />').text(item.completed),
+                    $('<td />').text(item.title))
+                tb.append(row)  // table객체에 tr,td 추가
+                
+            }) // end forEach
+            $('.wrap').append(tb,$('</tbody>'))  // table객체를 div.wrap에 추가
+        } // end if
+    },
+    error: function(e){
+        console.log(e)
+        
+    }
+})
+
+
+ex06_slide_show01.html
+
+var slides = $('.slide_show .slide')
+console.log(slides)
+// jquery each
+// $(selector).each(function(idx,item))
+// 슬라이드 초기화 (위치설정)
+slides.each(function(idx,slide){
+    console.log(idx,slide,idx*300)
+    $(this).css({
+        'left':(idx*300)+'px'  // 0,300,600
+    })
+})
+var slide_show_left = 0
+console.log('left:',slide_show_left)
+$('.lBtn').click(function(){
+    if(slide_show_left<0){
+        slide_show_left+=300
+        $('.slide_show').stop().animate({'left':slide_show_left+'px'},500)
+        console.log('left:',slide_show_left)
+    }
+})
+$('.rBtn').click(function(){
+    if(slide_show_left>(slides.length-1)*-300){
+        slide_show_left-=300
+        $('.slide_show').stop().animate({'left':slide_show_left+'px'},500)
+        console.log('left:',slide_show_left)
+    }
+})
