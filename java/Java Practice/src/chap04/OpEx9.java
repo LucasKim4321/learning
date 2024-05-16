@@ -1,0 +1,20 @@
+package chap04;
+
+public class OpEx9 {
+
+	public static void main(String[] args) {
+		int a = 5;
+		int b = 4;
+		int c = 3;
+		
+		// *(곱하기)연산이 먼저 실행됨
+		System.out.println(a+b*c);  // 17
+		
+		// 괄호로 묶어 우선순위를 높여줌
+		System.out.println((a+b)*c);  // 27
+		
+		int var = 7-1*20/5;  // 값 3
+		System.out.println(var);	
+	}
+
+}
