@@ -42,3 +42,25 @@ npmjs.com
 
 자바 라이브러리
 maven  gradle
+
+해당하는 자바 버전이 없으면 자동으로 경로에 다운 받음
+경로 C:\Users\601\.m2\repository\org
+
+외부라이브러리를 불러오면 자동으로 다운
+안되면 수동으로 업데이트
+프로젝트 오른쪽클릭 maven -> update project
+
+라이브러리 불러올때 라이브러리끼리 충돌일어나면 새로운 라이브러리의 버전을 낮춤
+
+System.out.print("Hello~");    print줄바꿈 없는 문자열 출력
+system.out.println("Java!!");   println 줄바꿈 있는 문자열 출력
+
+Help -> eclipse marketplace  이클립스 마켓플레이스
+
+delete하면 이클립스 상에서만 지움 실제파일 존재
+실제파일까지 지우는 거 체크시 실제파일 삭제
+
+라이브러리 불러오기 import
+
+package 안만들고 class만들때 package같이 생성 가능
+
