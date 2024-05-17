@@ -20,15 +20,16 @@ public class Test_Q03 {
 		
 		// 1부터 두 수 중 작은 숫자까지만 반복처리
 		// 최대(max), 최소(min)
-		int max = -9999;
+		int max = -9999, min = 9999;
 		for (int i=1; i<=num1; i++) {
 			if ((num1%i==0)&&(num2%i==0)) {
 				System.out.println("공약수:"+i);
 				if (max<i) max = i;  // 공약수 중 가장 큰값 추출
+				if (min>i) min = i;
 			}
 		}
 		System.out.println("최대공약수 = "+max);
-		
+		System.out.println("최소공약수 = "+min);
 	}
 
 }
