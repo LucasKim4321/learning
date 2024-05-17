@@ -1,5 +1,7 @@
 package chap03;
 
+import java.util.Scanner;
+
 public class Sam03For {
 
 	public static void main(String[] args) {
@@ -60,7 +62,19 @@ public class Sam03For {
 			}
 		}
 		
-		
+		// switch에서 반환처리하기
+		int mon = 0;
+		Scanner sc = new Scanner(System.in); // 키보드 준비
+		System.out.println("계절을 판단 할 수 있게 월을 입력:");
+		mon = sc.nextInt(); //키보드 사용해서 mon값 입력
+		String season = switch(mon) {
+			case 12,1,2  : yield "겨울";  // yield return 역할
+			case 3,4,5   : yield "봄";
+			case 6,7,8   : yield "여름";
+			case 9,10,11 : yield "가을";
+			default      : yield "기후온난화";
+		};
+		System.out.printf("%d월은 %s입니다.",mon,season);
 		
 	}
 
