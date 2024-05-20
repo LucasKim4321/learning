@@ -39,6 +39,7 @@ public class Method02 {
 		}
 		return tot;
 	}
+	//s
 	
 	// 재귀함수: 종료하는 조건식을 줘야함 없으면 overflow현상 일어남
 	public static int sum2 (int a) {
