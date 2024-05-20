@@ -2,7 +2,7 @@ package chap05;
 
 import java.util.Scanner;
 
-public class ex07_ForEx {
+public class Ex07_ForEx {
 
 	public static void main(String[] args) {
 //		for (int i=0; i<10; i++) {

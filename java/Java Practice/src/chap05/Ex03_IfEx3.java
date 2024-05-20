@@ -2,7 +2,7 @@ package chap05;
 
 import java.util.Scanner;
 
-public class ex03_IfEx3 {
+public class Ex03_IfEx3 {
 
 	public static void main(String[] args) {
 		

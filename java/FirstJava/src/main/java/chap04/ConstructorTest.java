@@ -2,6 +2,7 @@ package chap04;
 
 import chap04.vo.Data;
 import chap04.vo.Data2;
+import chap04.vo.Data3;
 
 public class ConstructorTest {
 	public static void main(String[] args) {
@@ -19,5 +20,16 @@ public class ConstructorTest {
 		
 		System.out.println(data1);
 		System.out.println(data2.toString());
+		
+		Data3 data100 = new Data3();
+		data100.setName("홍길동");
+		data100.setAge(10);
+		
+		System.out.println(data100.getName());
+		System.out.println(data100.getAge());
+		System.out.println(data100.toString());
+		
+		Data3 data200 = new Data3("김길동",20);
+		System.out.println(data200);
 	}
 }

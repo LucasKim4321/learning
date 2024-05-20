@@ -1,11 +1,11 @@
 package chap05;
 
-public class ex14_ContinueEx {
+public class Ex11_BreakEx1 {
 
 	public static void main(String[] args) {
 		for (int i=0; i<10; i++) {
-			if ( i==5) {
-				continue;  // 더 실행 안하고 다음으로 넘어감
+			if (i == 5) {
+				break;
 			}
 			System.out.println(i);
 		}

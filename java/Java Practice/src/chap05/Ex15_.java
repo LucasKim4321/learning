@@ -1,6 +1,6 @@
 package chap05;
 
-public class ex15_ {
+public class Ex15_ {
 
 	public static void main(String[] args) {
 //		//무한 반복문

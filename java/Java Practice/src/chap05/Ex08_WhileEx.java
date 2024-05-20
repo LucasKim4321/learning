@@ -1,6 +1,6 @@
 package chap05;
 
-public class ex08_WhileEx {
+public class Ex08_WhileEx {
 
 	public static void main(String[] args) {
 		int sum = 0;

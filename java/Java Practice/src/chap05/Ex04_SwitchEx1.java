@@ -1,6 +1,6 @@
 package chap05;
 
-public class ex04_SwitchEx1 {
+public class Ex04_SwitchEx1 {
 
 	public static void main(String[] args) {
 		int number = 2;

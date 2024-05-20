@@ -2,7 +2,7 @@ package chap05;
 
 import java.util.Scanner;
 
-public class ex06_SwitchExStr {
+public class Ex06_SwitchExStr {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);

@@ -2,7 +2,7 @@ package chap05;
 
 import java.util.Scanner;
 
-public class ex05_SwitchEx2 {
+public class Ex05_SwitchEx2 {
 
 	public static void main(String[] args) {
 		System.out.println("점수를 입력하세요.");

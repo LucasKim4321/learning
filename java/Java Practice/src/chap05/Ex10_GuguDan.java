@@ -2,7 +2,7 @@ package chap05;
 
 import java.util.Scanner;
 
-public class ex10_GuguDan {
+public class Ex10_GuguDan {
 
 	public static void main(String[] args) {
 //		Scanner sc = new Scanner(System.in);
