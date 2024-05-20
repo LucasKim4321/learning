@@ -22,6 +22,7 @@ public class ClassStudent {
 		System.out.println("총점:"+student.getTot());
 		
 		System.out.println("평균:"+student.getAvg());
+		//ㄴㄴ
 		
 	}
 
