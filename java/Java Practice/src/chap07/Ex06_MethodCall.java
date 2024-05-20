@@ -3,14 +3,20 @@ package chap07;
 public class Ex06_MethodCall {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
+		// 직접 실행
+		Method.printName();
+		
+		// 객체를 생성해서 실행
+		Method m = new Method();
+		m.printEmail();
+		
 	}
 
 }
 
 class Method {
-	static void ddprintName() {
+	static void printName() {
 		System.out.println("printName() 실행");
 	}
 	
