@@ -14,6 +14,7 @@ public class Method02 {
 		
 		System.out.println("---재귀함수");
 		System.out.println(sum2(3));
+//		s
 	}
 	
 	// 오버로딩
