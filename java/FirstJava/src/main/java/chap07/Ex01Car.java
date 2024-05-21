@@ -5,7 +5,7 @@ import lombok.ToString;
 
 @ToString
 @AllArgsConstructor
-public abstract class Ex01Car {
+public abstract class Ex01Car {  // 추상(abstract) 클래스
 	private String color;  // 색
 	private String manufacturer;  // 제조사
 	
