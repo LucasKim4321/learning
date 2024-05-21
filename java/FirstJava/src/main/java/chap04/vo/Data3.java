@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-//@Data  // Getter,Setter,ToString,Constructor 포함
+//@Data  // Getter,Setter,ToString,Constructor 다 포함 이거만 써도됨
 public class Data3 {
 	String name;
 	int age;
