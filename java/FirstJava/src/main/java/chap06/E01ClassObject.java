@@ -5,6 +5,8 @@ public class E01ClassObject {
 	public static void main(String[] args) {
 		MyObject obj1 = new MyObject();
 		MyObject2 obj2 = new MyObject2();
+		System.out.println(obj1);
+		System.out.println(obj2);
 		
 		String A = new String("길순이");  // 매번 기억장소를 새로 할당받음
 		String B = "길순이";  // 한번 할당 받은 기억장소를 그대로 사용
@@ -33,6 +35,7 @@ public class E01ClassObject {
 
 }
 
+class ssss {}
 class MyObject extends Object{
 	String name;
 	

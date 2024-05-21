@@ -1,7 +1,11 @@
 package chap05;
 
+import lombok.ToString;
+
+@ToString
 public class E01Student {
 	String name;
+	
 	public E01Student(String name) {
 		this.name = name;
 	}

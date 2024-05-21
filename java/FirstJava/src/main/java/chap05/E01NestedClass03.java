@@ -12,7 +12,6 @@ public class E01NestedClass03 {
 				
 			}
 		};
-		r.run();
 		
 		Greeting greeting = new Greeting() {
 			

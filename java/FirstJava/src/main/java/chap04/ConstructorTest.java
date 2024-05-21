@@ -19,6 +19,7 @@ public class ConstructorTest {
 		Data2 data2 = new Data2("홍길순",12);
 		
 		System.out.println(data1);
+		System.out.println(data2);
 		System.out.println(data2.toString());
 		
 		Data3 data100 = new Data3();
@@ -31,5 +32,6 @@ public class ConstructorTest {
 		
 		Data3 data200 = new Data3("김길동",20);
 		System.out.println(data200);
+		
 	}
 }

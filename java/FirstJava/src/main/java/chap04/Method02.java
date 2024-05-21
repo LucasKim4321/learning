@@ -1,5 +1,7 @@
 package chap04;
 
+import java.util.Arrays;
+
 public class Method02 {
 
 	public static void main(String[] args) {
@@ -14,6 +16,15 @@ public class Method02 {
 		
 		System.out.println("---재귀함수");
 		System.out.println(sum2(3));
+		
+//		Static s1 = new Static();
+//		s1.sayHi();
+//		System.out.println(s1.age());
+//		s1.sayHi2();
+//		System.out.println(s1.age2());
+//		sayHi2();  // 안됨  static은 같은 클래스 내에서만 적용되는 듯
+//		System.out.println(age2());
+		
 	}
 	
 	// 오버로딩
@@ -22,8 +33,7 @@ public class Method02 {
 		System.out.println("Hello");
 	}
 	public static void hello(String name) {
-		System.out.println(name);
-		System.out.println("Hello!!");
+		System.out.println(name+" Hello!!");
 	}
 	public static void hello(int num) {
 		System.out.println(num);
@@ -37,6 +47,8 @@ public class Method02 {
 		for(int i : num1) {  // num1[0],num1[1]....
 			tot += i;
 		}
+		System.out.println(num1);  // 배열 주소가 나옴
+		System.out.println(Arrays.toString(num1));  // 배열의 값들이 나옴
 		return tot;
 	}
 	

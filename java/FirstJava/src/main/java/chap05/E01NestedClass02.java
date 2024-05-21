@@ -1,5 +1,7 @@
 package chap05;
 
+import java.util.Arrays;
+
 public class E01NestedClass02 {
 
 	public static void main(String[] args) {

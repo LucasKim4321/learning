@@ -13,7 +13,7 @@ public class Data {
 	}
 	
 	public Data(String name) {
-		this(name, 0);  // 생성자 호출
+		this(name, 2);  // 생성자 호출
 	}
 
 	public Data(String name, int age) {
