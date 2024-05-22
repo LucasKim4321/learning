@@ -6,8 +6,8 @@ public class E03WrapperClass {
 
 	public static void main(String[] args) {
 		// Wrapper클래스 : 기본 자료형 -> 객체화
-		// boolean, byte, char, short, int, long, float, double  기본 자료형
-		// Boolean, Byte, Charactor, Short, Integer, Long, Float, Double  Wrapper화
+		// 기본 자료형 boolean, byte, char, short, int, long, float, double
+		// Wrapper클래스 Boolean, Byte, Charactor, Short, Integer, Long, Float, Double
 		
 		System.out.println("int 최대값:"+Integer.MAX_VALUE);
 		System.out.println("int 최소값:"+Integer.MIN_VALUE);

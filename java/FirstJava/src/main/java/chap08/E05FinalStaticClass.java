@@ -39,7 +39,8 @@ public class E05FinalStaticClass {
 		s2.increaseNum();
 		System.out.println(s2.getNumCounter());
 		
-		
+
+		System.out.println("----------");
 		StaticNumber2.num3 = 100;
 		StaticNumber2.increaseNum();
 		System.out.println(StaticNumber2.getNumCounter());

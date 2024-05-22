@@ -4,7 +4,7 @@ public class E03InterfaceClass01 {
 
 	public static void main(String[] args) {
 //		 인터페이스 :  상수와 추상메서드로만 구성
-		ICompute a = new Apartment();  // 업케스팅
+		ICompute a = new Apartment();  // 업케스팅 클래스에서 implements ICompute 안해주면 에러
 		float area1 = a.compute(30);
 		System.out.printf("아파트의 면적은 %f제곱미터입니다.\n",area1);
 		float pyung1 = a.toPyung(20);

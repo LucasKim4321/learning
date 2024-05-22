@@ -42,7 +42,7 @@ class Person2 implements Teacher {
 }
 
 // 학생, 선생님
-class Person3 implements Student, Teacher {
+class Person3 implements Student, Teacher {  // 여러개의 인터페이스 받기 가능
 
 	@Override
 	public void teach() {

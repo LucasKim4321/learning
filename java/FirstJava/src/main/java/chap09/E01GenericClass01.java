@@ -15,6 +15,11 @@ public class E01GenericClass01 {
 		Genclass2<String> g2 = new Genclass2<String>();
 		g2.setT("김길동");
 		System.out.println(g2.getT());
+		
+		Genclass2 g3 = new Genclass2();  // 이렇게도 사용 가능하지만 추천하지 않음
+		g3.setT("김길동");
+		System.out.println(g3.getT());
+		
 	}
 
 }
