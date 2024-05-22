@@ -18,7 +18,7 @@ public class E01Middle extends E01Student {  // extends 부모클래스로부터
 //		this.score = 0;  // 현재클래스의 변수
 //	}
 
-	// 3. 부모 클래스 멤버변수가 private로 설정되었을 때 사용
+//	//3. 부모 클래스 멤버변수가 private로 설정되었을 때 사용
 	public E01Middle(String name, int grade, int score) {
 		super(name,grade);  // 부모생성자에게 값을 넘겨주면 부모생성자가 처리함
 		this.score = score;
@@ -28,7 +28,7 @@ public class E01Middle extends E01Student {  // extends 부모클래스로부터
 		System.out.println("이름:"+getName()+",학년"+getGrade()+",점수"+score);
 	}
 
-	// 1.
+//	//1.
 //	public void studentInfo() {
 //		System.out.println("나는 중학생입니다.");
 //		System.out.println("이름:"+name+",학년"+grade);

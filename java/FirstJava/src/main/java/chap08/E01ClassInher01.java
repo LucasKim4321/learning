@@ -3,18 +3,18 @@ package chap08;
 public class E01ClassInher01 {
 
 	public static void main(String[] args) {
-//		1.
-//		상속 -> 자원 재사용
+//		//1.
+//		//상속 -> 자원 재사용
 //		E01Middle m = new E01Middle();
-//		부모클래스의 기능을 상속받아 재사용
+//		//부모클래스의 기능을 상속받아 재사용
 //		m.setName("홍길동");
 //		m.setGrade(1);
 //		m.study();
 //		m.test();
 //		System.out.println(m.test());
 
-//		2.
-//		상속 -> 자원 재사용
+		//2.
+		//상속 -> 자원 재사용
 //		E01Middle m = new E01Middle("동순이",10);
 //		m.study();
 //		System.out.println(m.test());
@@ -24,7 +24,7 @@ public class E01ClassInher01 {
 //		m.setScore(30);
 //		m.studentInfo();
 
-//		3.
+		//3.
 		System.out.println("------E01Middle");
 		E01Middle m = new E01Middle("동순이",10,50);
 		m.study();  // 자식 클래스의 study()를 불러옴.

@@ -6,9 +6,10 @@ import reportWebVitals from './reportWebVitals';
 
 // root.render(컴포넌트)
 const root = ReactDOM.createRoot(document.getElementById('root'));  // virtual(가상) DOM에만 업데이트 하다가 한번에 업데이트 해줌
-root.render(
+root.render(  // render(대상)  대상(리엑트프로그램)을 html 태그로 만듬
   // <React.StrictMode>  // 호환성 관련 (없어도됨)
-    <App />
+  // 컴포넌트 호출 =>  "<컴포넌트이름 />"
+    <App />  // App컴포넌트를 가져옴
   // </React.StrictMode>
 );
 

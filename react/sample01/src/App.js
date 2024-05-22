@@ -1,23 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
+import './App.css';
+import Header from './component/Header.js';
+import Body from './component/Body.js';
+import Footer from './component/Footer.js';
+
+function App() {  // component
+  return (  // html랑 거의 흡사하지만 다름  리엑트에서만 쓰는 jsx문법 html+javascript
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Body />
+      <Footer />
     </div>
   );
 }

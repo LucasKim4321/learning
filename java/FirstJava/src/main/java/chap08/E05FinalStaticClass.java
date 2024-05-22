@@ -15,13 +15,13 @@ public class E05FinalStaticClass {
 		n1.increaseNum();
 		System.out.println(n1.getNumCounter());
 		
-		
 		System.out.println("------n2");
 		n2.increaseNum();
 		System.out.println(n2.getNumCounter());
 		n2.increaseNum();
 		System.out.println(n2.getNumCounter());
 
+		
 		System.out.println("-------static");
 		//static클래스의 변수는 하나의 기억장소를 배정받음
 		StaticNumber s1 = new StaticNumber();
@@ -32,7 +32,6 @@ public class E05FinalStaticClass {
 		System.out.println(s1.getNumCounter());
 		s1.increaseNum();
 		System.out.println(s1.getNumCounter());
-		
 		
 		System.out.println("------n2");
 		s2.increaseNum();
