@@ -1,4 +1,5 @@
-
+// App 최상위 컴포넌트
+// Header,Body,Footer 하위 컴포넌트
 import './App.css';
 import Header from './component/Header.js';
 import Body from './component/Body.js';
