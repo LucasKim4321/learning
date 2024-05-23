@@ -23,8 +23,10 @@ public class E02LinkedListCollection {
 		list2.add("dog");list2.add("cat");list2.add("lion");
 		myToString();
 		list1.add(2,"tiger");list2.add(2,"tiger");
-		myToString();
+		myToString(); 
 		
+		// ArrayList => 자주 검색
+		// LinkedList 수정 삭제 삽입 작업이 빈번 할 경우
 	}
 	
 	public static void myToString() {

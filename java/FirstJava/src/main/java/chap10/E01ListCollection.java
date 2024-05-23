@@ -3,7 +3,7 @@ package chap10;
 import java.util.ArrayList;
 import java.util.List;
 
-public class E1ListCollection {
+public class E01ListCollection {
 
 	public static void main(String[] args) {
 //		Collections framework

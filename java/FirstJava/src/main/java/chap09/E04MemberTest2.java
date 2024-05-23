@@ -19,6 +19,8 @@ public class E04MemberTest2 {
 		memberVO2 = MemberVO2.builder().id("King").password("3456").name("킹").phoneNum("010-2222-2222").build();
 		member.regMember(memberVO2); // 등록
 		
+		
+		// 전체 조회 (List에 있는 자료를 순차적 읽기)
 		System.out.println("-----");
 //		System.out.println(member.viewMember(memberVO2));
 //		System.out.println("-----");
