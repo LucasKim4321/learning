@@ -17,3 +17,6 @@ root.render(  // render(대상)  대상(리엑트프로그램)을 html 태그로
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// 리엑트 컴포넌트 => 자바스크립트 함수를 만들어 HTML값을 반환
+// JSX(자바스크립트 + XML) : 자바스크립트 + HTML태그 섞어서 사용하는 문법
