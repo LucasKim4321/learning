@@ -1,10 +1,14 @@
 package chap09.member;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MemberImpl implements Member{
 	String memberData;
-	MemberVO[] memberList = new MemberVO[10];
+	
+	// 동적 배열 처리
+	// 리스트에 집어넣어서 배열을 만듬.
+	ArrayList<MemberVO> members = new ArrayList<MemberVO>();
 
 	@Override
 	public String viewMember(MemberVO vo) {
@@ -22,10 +26,11 @@ public class MemberImpl implements Member{
 				vo.getPassword()+","+
 				vo.getPhoneNum();
 		
-		memberList[memberList.length] = vo;
-		System.out.println(Arrays.toString(memberList));
-//		System.out.println(memberData);
+		System.out.println(memberData);
 		System.out.println("회원 가입되었습니다.");
+		
+		members.add(vo);
+		System.out.println("회원 목록: "+members);
 		
 	}
 
