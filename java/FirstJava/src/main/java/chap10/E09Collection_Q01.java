@@ -57,7 +57,7 @@ public class E09Collection_Q01 {
 //			System.out.println("생성된 로또 번호 : "+setList);
 		}
 		System.out.println(list);  // 저장된 로또번호 출력
-//		System.out.println(list.get(0));
+		System.out.println(list.get(0));
 //		list.forEach(a-> {
 //			System.out.println(a+" size "+a.size());
 //			a.forEach(b->{
