@@ -1,9 +1,11 @@
 package chap10;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class E09Collection_Q01 {
 
@@ -23,10 +25,10 @@ public class E09Collection_Q01 {
 		times = sc.nextInt();
 		
 		Random rnd = new Random();  // 난수 발생
-		
+		List<Set> list = new ArrayList<Set>();
 		for (int i=0; i<times; i++) {  // 로또 생성 개수만큼
 			// 로또 번호 생성
-			Set<Integer> setList = new TreeSet<Integer>();
+			Set<Integer> setList = new LinkedHashSet<Integer>();
 			
 			for (int j=0; j<7; j++) {  // 로또 번호 생성 : 7개 (6개, 1개 보너스
 				
@@ -40,6 +42,8 @@ public class E09Collection_Q01 {
 							System.out.printf("%d. ", no);
 						}
 						System.out.println("+보너스"+number);
+						setList.add(number);
+						list.add(setList);  // 리스트에 로또번호 저장
 					}
 					else {
 						setList.add(number);
@@ -48,9 +52,18 @@ public class E09Collection_Q01 {
 				else {
 					j--;  // 새로 생성한 난수가 이미 존재하면 제어변수j를 재설정해서 반복
 				}
+//				System.out.println(setList);
 			}
 //			System.out.println("생성된 로또 번호 : "+setList);
 		}
+		System.out.println(list);  // 저장된 로또번호 출력
+//		System.out.println(list.get(0));
+//		list.forEach(a-> {
+//			System.out.println(a+" size "+a.size());
+//			a.forEach(b->{
+//				System.out.println(b);
+//			});
+//		});
 
 	}
 
