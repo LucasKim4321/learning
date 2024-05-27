@@ -21,10 +21,6 @@ public class E02EnumValue {
 		FLOWER f = FLOWER.ROSE;
 		System.out.printf("I have a %s\n", f.getenName());
 
-//		FLOWER f2 = FLOWER("해바라기");
-//		System.out.printf("I have a %s\n", f2.getenName());
-//		
-
 		FLOWER f3 = FLOWER.ROSE;
 		System.out.printf("I have a %s\n", f3.getenName());
 		System.out.printf("I have a %s\n", f3.getkoName());
@@ -42,24 +38,21 @@ public class E02EnumValue {
 		case SATURDAY -> System.out.println("토요일");
 		default -> System.out.println("잘못입력했습니다.");
 		}
-	}
-
-	private static FLOWER FLOWER(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+	}	
 }
 
 // enum 클래스
 enum FLOWER {
 	SUNFLOWER("sunflower","해바라기"),ROSE("rose","장미");
+	
 	private final String enName;
 	private final String koName;
+	
 	private FLOWER(String enName, String koName) {  // flowerName에 장미, 해바라기가 들어감
 		this.enName = enName;
 		this.koName = koName;
 	}
+	
 	public String getenName() { return enName; }
 	public String getkoName() { return koName; }
 }

@@ -2,6 +2,7 @@ package chap11;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class E03StringMethod {
 
@@ -101,10 +102,25 @@ public class E03StringMethod {
 		System.out.println(c3.getName());  // 패키지명+클래스이름
 		System.out.println(c3.getSimpleName());  // 클래스이름
 		System.out.println(c3.getPackage().getName());  // 패키지명
-		
-		String sPath = c3.getResource("EnumClassTest.java").getPath();
+
+		System.out.println("----");
+		// 같은 경로에 있는 다른 리소스파일(.xml, 이미지, 설정파일 등)의 경로 추출
+		String sPath = c3.getResource("rabbit1.avif").getPath();
 		System.out.println(sPath);
-				
+
+		System.out.println("----");
+		// StringTokenizer클래스 : split()와 유사
+		String data1 = "사과 바나나 수박 참외";
+		String data2 = "202405/27";
+		StringTokenizer str1 = new StringTokenizer(data1); // 구분자 생략시 공백
+		System.out.println(str1);
+		while(str1.hasMoreTokens()) {
+			System.out.println(str1.nextToken());
+		}
+		StringTokenizer str2 = new StringTokenizer(data2, "/"); // "/"을 기준으로 나눔
+		while(str2.hasMoreTokens()) {
+			System.out.println(str2.nextToken());
+		}
 	}
 
 }
