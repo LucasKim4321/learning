@@ -5,9 +5,11 @@ import Header from './component/Header.js';
 import Body from './component/Body.js';
 import Footer from './component/Footer.js';
 import BodyEvent from './component/BodyEvent.js';
+import BodyState from './component/BodyState.js';
+import BodyState2 from './component/BodyState2.js';
 
 function ChildComp() {
-  return <div>children</div>  
+  return <div>children component</div>  
 }
 
 function App() {  // component
@@ -27,7 +29,12 @@ function App() {  // component
       <Body {...BodyProps}>
         <ChildComp />
       </Body>
+      <hr/>
       <BodyEvent/>
+      <hr/>
+      <BodyState/>
+      <hr/>
+      <BodyState2/>
       <Footer />
     </div>
   );
