@@ -9,6 +9,9 @@
 import {useState} from "react"; // 상태관리 컴포넌트
 
 function BodyState() {
+    // address = "부산"  // 에러남
+    const [address, setAddress] = useState("서울")
+
     const name = "길순이"
     const [count, setCount] = useState(0)  // setCount 통해 count값을 +1 시킨후 count에 대입
     
@@ -47,7 +50,7 @@ function BodyState() {
 
     return(
         <div>
-            <h2>이름: {name}</h2>
+            <h2>이름: {name}, {address}</h2>
             <hr/>
             <h1>useState로 관리하는 count변수</h1>
             <h3>{count}</h3>
