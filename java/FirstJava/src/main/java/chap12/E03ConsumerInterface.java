@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-public class E03FunInterface02 {
+public class E03ConsumerInterface {
 
 	public static void main(String[] args) {
 		// 매개 변수가 한 개인 함수형 인터페이스
