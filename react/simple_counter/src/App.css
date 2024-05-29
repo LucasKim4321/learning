@@ -1,9 +1,12 @@
 body {
   padding: 20px;
 }
+.container {
+  width:700px;
+}
 .App {
   text-align: center;
-  width: 500px;
+  width: 70%;
   margin: 0 auto;
   padding: 20px;
   background-color: lightgoldenrodyellow;
@@ -11,7 +14,7 @@ body {
   border-radius: 10px;
 }
 
-.App > section {
+.App section {
   padding: 20px;
   background-color: lightsalmon;
   border: 1px solid lightcoral;
@@ -21,6 +24,10 @@ body {
 
 .App .controller {
   padding:10px;
+}
+
+.App button {
+  margin: 0 5px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
