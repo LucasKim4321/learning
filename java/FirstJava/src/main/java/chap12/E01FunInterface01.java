@@ -4,7 +4,7 @@ public class E01FunInterface01 {
 
 	public static void main(String[] args) {
 //		함수형 인터페이스 (Function Interface)
-//		람다식(Lamda expression)
+//		람다식(Lambda expression)
 //		메서드 참조(Method reference): x -> System.out.print(x) ==> System.out::println
 
 		

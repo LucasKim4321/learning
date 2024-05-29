@@ -11,7 +11,7 @@ public class E02StreamFlatMap {
 		String[] str1 = {"홍길동","동길이","동순이"};
 		String[] str2 = {"김길동","이순신","강감찬"};
 		
-		Stream<String[]> stm1 = Stream.of(str1, str2);  // Strea.of(가변인자)
+		Stream<String[]> stm1 = Stream.of(str1, str2);  // Stream.of(가변인자)
 		System.out.println("-- Stream.of(s,t)");
 		stm1.forEach(x -> {
 			System.out.println(Arrays.toString(x));

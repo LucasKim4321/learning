@@ -14,7 +14,7 @@ import lombok.Data;
 public class E01StreamSample01 {
 
 	public static void main(String[] args) {
-		// 스트림의 장접
+		// 스트림의 장점
 		// 람다식 사용 가능, 대용량의 데이터를 병렬 처리, 데이터를 최종처리전에 여러가지 작업 처리 가능
 		
 		// 스트림 : 대용량의 데이터를 빠르게 처리하기 위해 도입.
