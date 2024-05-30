@@ -41,19 +41,27 @@ public class E08CollectMethod2 {
 		System.out.println(G7);
 //		G7.add("한국");  // unmodifiableList 때문에 안됨
 		
-		// 평균
+		// 평균 : averagingInt(), averagingLong(), averagingDouble()
 		System.out.println("-- averagingInt()");
 		List<Integer> scores = Arrays.asList(100,100,61,85,91);
 		System.out.println("평균 : "+scores.stream().collect(Collectors.averagingInt(i->i)));
+
+		System.out.println("-- averagingLong()");
+		List<Long> scores2 = Arrays.asList(100L,100L,61L,85L,91L);
+		System.out.println("평균 : "+scores2.stream().collect(Collectors.averagingLong(i->i)));
+
+		System.out.println("-- averagingDouble()");
+		List<Double> scores3 = Arrays.asList(100.0, 100.21, 61.22, 85.99, 91.45);
+		System.out.println("평균 : "+scores3.stream().collect(Collectors.averagingDouble(i->i)));
 		
-		List<Score> scores2 = Arrays.asList(
+		List<Score> scores4 = Arrays.asList(
 				new Score ("홍길동",100,100,100),
 				new Score ("동길이",100,100,80),
 				new Score ("동순이",100,100,90),
 				new Score ("김길동",100,100,70)
 				);
-		double avgMat = scores2.stream().collect(Collectors.averagingInt(Score::getMat));
-		System.out.println(avgMat);
+		double avgMat = scores4.stream().collect(Collectors.averagingInt(Score::getMat));
+		System.out.printf("수학 평균: %6.3f\n",avgMat);
 	}
 
 }
