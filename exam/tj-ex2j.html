@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>화면 설계</title>
+    <style>
+        /* Taejin */
+        /* * { border: 1px solid gray;} */
+        #container {
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 30px;
+            /* border: 1px solid gray; */
+            /* background-color: lightsalmon; */
+        }
+        #header {
+            margin-bottom: 20px;
+            height:100px;
+            background-color: lightcoral;
+        }
+        #nav {
+            margin-bottom: 20px;
+            height:50px;
+            background-color: lightgreen;
+        }
+        #inner {
+            display: flex;
+            margin-bottom: 20px;
+            height:300px;
+        }
+        #inner1 {
+            flex: 1;
+        }
+        #inner1-1 {
+            background-color: lightgrey;
+            height: 50%;
+        }
+        #inner1-2 {
+            background-color: lightblue;
+            height: 50%;
+        }
+        #inner2 {
+            flex: 1;
+            background-color: lightpink;
+            height: 100%;
+        }
+        #footer {
+            background-color: lightseagreen;
+            height: 100px;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2>태진</h2>
+        <div id="header">header</div>
+        <div id="nav">nav</div>
+        <div id="inner">
+            <div id="inner1">
+                <div id="inner1-1">inner1-1</div>
+                <div id="inner1-2">inner1-2</div>
+            </div>
+            <div id="inner2">inner2</div>
+        </div>
+        <div id="footer">footer</div>
+    </div>
+</body>
+</html>
