@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        #div1 {
+            background-color :#00f;
+            color:#fff;
+            width:100px;
+            height:100px;
+            position:absolute;
+            left : 0px;
+            top : 0px;
+        }
+        </style>
+        
+        
+        <script type="text/javascript">
+        var x = 0;
+        var y = 0;
+        
+        
+        function moveLeft() {
+            x -= 20;
+            var obj = document.getElementById('div1');
+            obj.style.left = x + 'px';  // px는 스타일시트 단
+        }
+        
+        
+        function moveRight() {
+            x += 20;
+            var obj = document.getElementById('div1');
+            obj.style.left = x + 'px';  // px는 스타일시트 단
+        }
+        
+        
+        function moveUp() {
+            y -= 20;
+            var obj = document.getElementById('div1');
+            obj.style.top = y + 'px';  // px는 스타일시트 단
+        }
+        function moveDown() {
+            y += 20;
+            var obj = document.getElementById('div1');
+            obj.style.top = y + 'px';  // px는 스타일시트 단
+        }
+        
+        
+        function main() {
+            var obj_u = document.getElementById('btn_up');
+            var obj_l = document.getElementById('btn_left');
+            var obj_r = document.getElementById('btn_right');
+            var obj_d = document.getElementById('btn_down');
+            obj_u.addEventListener('click', moveUp, false);
+            obj_l.addEventListener('click', moveLeft, false);
+            obj_r.addEventListener('click', moveRight, false);
+            obj_d.addEventListener('click', moveDown, false);
+        }
+        
+        
+        window.onload = main;
+        
+        
+        </script>
+        </head>
+        
+        
+        <body>
+        
+        <div id="div1">
+        this is div
+        </div>
+        
+        <div id='control' style="left:300px; top:300px; position:absolute">
+        <form name="move">
+            <input type="button" id="btn_up" value="top"><br/>
+            <input type="button" id="btn_left" value="left">
+            <input type="button" id="btn_right" value="right"><br/>
+            <input type="button" id="btn_down" value="down">
+            
+        </form>
+        </div>
+</body>
+</html>

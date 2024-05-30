@@ -1,43 +1,39 @@
 
-* { border: 1px solid gray;}
+/* * { border: 1px solid gray;} */
 .container {
-    padding: 0;
+    padding: 10px;
+    border: 1px solid lightgrey;
 }
 #header {
-    background-color: lightsalmon;
+    background-color: lightblue;
 }
-/* #navbarNavDropdown {
-    height: 100px;
-} */
 #menu3, #menu4 {
 height: 100%;
 }
 .dropdown-menu {
     background-color: rgb(252, 199, 179);
 }
-#headerPicture {
-    background-image: url(./gwanganli1.jpg);
-    height: 300px;
-}
 #inner {
     display: flex;
     height: 300px;
     margin-top: 20px;
+    overflow: hidden;
 }
 #inner1 {
     flex: 1;
     height: 100%;
 }
 #inner1head {
-    height: 20%;
+    height: 15%;
 }
-#inner1-1 {
-    height: 80%;
-    /* display: none; */
+#myTabContent {
+    height: 85%;
 }
-#inner1-2 {
-    height: 80%;
-    display: none;
+#home-tab-pane{
+    height: 100%;
+}
+#profile-tab-pane {
+    height: 100%;
 }
 #inner2 {
     flex: 1;
@@ -45,14 +41,11 @@ height: 100%;
     display: flex;
     text-align: center;
 }
-#inner2-1 {
+#inner2 div {
     flex: 1;
 }
-#inner2-2 {
-    flex: 1;
-}
-#inner2-3 {
-    flex: 1;
+#inner2 div div {
+    margin-bottom: 20px;
 }
 .imgdiv {
     overflow: hidden;
@@ -72,6 +65,8 @@ height: 100%;
 #footer {
     display: flex;
     margin-top: 20px;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
 }
 #foot {
     flex: 8;
@@ -80,10 +75,66 @@ height: 100%;
     display: flex;
     margin-top: 10px;
 }
+#foot1 div {
+    padding: 0 10px; 
+    border-right: 1px solid gray;
+}
 #foot2 {
     display: flex;
     margin-top: 10px; margin-bottom: 10px;
 }
+#foot2 div {
+    padding: 0 10px;
+}
 #logo {
     flex: 2;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+#logo i {
+    padding: 5px;
+}
+
+.outLine {
+    display: flex;
+    overflow: hidden;
+}
+#btnL{margin-left: auto;}
+#btnR{margin-right: auto;}
+#btnL, #btnR {
+    border:0;
+    padding: 0 10px;
+    background-color: lightblue;
+    color: grey;
+}
+#btnL:hover, #btnR:hover {
+    background-color: rgba(200, 200, 200, 0.5);
+    box-shadow: 0 0 25px 20px  rgba(200, 200, 200, 0.5);
+    transition: all 1s;
+}
+#img_slider1 {
+    position: relative;
+    width: 100%; height: 300px;
+    /* border: 10px solid red; */
+    margin: 0 20px;
+    overflow: hidden;
+}
+#imgs_box1 {
+    position:absolute;
+    left:0;
+    width: 600px; height: 300px;
+    /* border: 1px solid blue; */
+    /* display:flex;를 해줘야 박스 크기 무시하고 다 튀어나가고 여백도 사라짐 */
+    display:flex;
+    transition: all 1s;
+}
+.img_box {
+    width: 600px; height: 300px;
+    /* border: 1px solid black; */
+    text-align: center;
+}
+img {
+    width: 100%;
+    /* height:100%; */
 }
