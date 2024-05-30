@@ -88,13 +88,20 @@ public class E11CollectMethod04 {
 		// findAny() : 스트림 요소 중에 조건에 맞는 첫 번째 요소 추출
 		// findFirst() : 스트림 요소 중에 첫 번째 요소 추출
 		System.out.println("-- findAny()");
-		List<Integer> li = Arrays.asList(4,6,2,8,10);
+		List<Integer> li = Arrays.asList(4,8,2,10,6);
 		// 요소들 중에 제일 먼저 찾은 요소를 추출
 		li.stream().findAny().ifPresent(System.out::println);
 		
-		li.stream().filter( x-> x>6).findAny().ifPresent(System.out::println);
+		li.stream().filter( x-> x>7).findAny().ifPresent(System.out::println);
 		
-		li.stream().findFirst().ifPresent(System.out::println);
+		// findAny() 병렬 스트림 : 순서와 관계 없이 첫 번째 요소 추출 (먼저 된것)
+		li.parallelStream().filter( x-> x>7).findAny().ifPresent(System.out::println);
+		
+		// 요소중 첫 번째
+		li.stream().filter( x-> x>7).findFirst().ifPresent(System.out::println);
+		
+		// findFirst() 병렬 스트림 : 똑같이 첫 번째거 나옴
+		li.parallelStream().filter( x-> x>7).findFirst().ifPresent(System.out::println);
 	}
 
 }
