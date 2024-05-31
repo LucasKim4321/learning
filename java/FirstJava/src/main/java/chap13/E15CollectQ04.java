@@ -1,6 +1,8 @@
 package chap13;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class E15CollectQ04 {
 
@@ -9,7 +11,12 @@ public class E15CollectQ04 {
 		//   보기> Sample01, Sample02,..
 		//			[ Sample01.java, Sample02.java,...]
 		
-		List<String> fileList = Arrays.asList(null)
+		List<String> fileList = Arrays.asList("Sample01","Sample02","Sample03","Sample04");
+		
+		System.out.println(fileList);
+		List<String> newFileList = fileList.stream().map(x -> x +".java").collect(Collectors.toList());
+		System.out.println(newFileList);
+		
 	}
 
 }
