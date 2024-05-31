@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class E1CollectMethod06 {
+public class E13CollectMethod06 {
 
 	public static void main(String[] args) {
 		// flatMap() : 여러 개의 Stream을 모두 합쳐서 하나의 스트림으로 반환
