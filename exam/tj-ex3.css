@@ -110,7 +110,7 @@ height: 100%;
 
 .outLine {
     display: flex;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 #btnL{
     left: 0;
@@ -142,7 +142,7 @@ height: 100%;
     left:0;
     height: 400px;
     display:flex;
-    transition: all 1s;
+    /* transition: all 1s; */
 }
 .img_box {
     height: 400px;
