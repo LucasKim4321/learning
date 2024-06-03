@@ -37,7 +37,7 @@ public class E08File04 {
 		
 		// 버퍼를 이용하여 파일 스트림 처리
 		// 장치간에 데이터의 전송속도, 처리속도를 최적의 상태로 유지
-		// FileInputStream -> BufferInputStream -> BufferedInputStream -> FileinputStream
+		// FileInputStream -> BufferInputStream -> FileOutputStream -> BufferedOutputStream
 		
 		System.out.println("-- 버퍼 이용하기");
 		try( FileInputStream fis = new FileInputStream("pom.xml");
