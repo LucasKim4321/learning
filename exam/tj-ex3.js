@@ -13,7 +13,6 @@
     const img_slider1 = document.querySelector('#img_slider1')
     const header = document.querySelector('#header')
 
-    console.log(imgs_box1)
 
     // 초기 위치 설정
     img_boxes.forEach((x)=>{x.style.flex = `0 0 ${img_slider1.offsetWidth}px`})

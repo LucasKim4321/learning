@@ -1,6 +1,11 @@
 /* Taejin */
 
 /* * { border: 1px solid gray;} */
+.zilla-slab-bold {
+    font-family: "Zilla Slab", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
 .container {
     padding: 10px;
     border: 1px solid lightgrey;
@@ -11,9 +16,10 @@
 #menu3, #menu4 {
 height: 100%;
 }
-.dropdown-menu {
-    background-color: rgb(250, 201, 181);
+#logo {
+    font-size: 30px;
 }
+
 #inner {
     display: flex;
     height: 300px;
@@ -97,13 +103,13 @@ height: 100%;
 #foot2 div {
     padding: 0 10px;
 }
-#logo {
+#quickLink {
     flex: 2;
     display: flex;
     justify-content: right;
     align-items: center;
 }
-#logo i {
+#quickLink i {
     margin-right: 20px;
     cursor: pointer;
 }
