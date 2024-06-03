@@ -50,7 +50,7 @@ public class E11CollectMethod04 {
 		// sum() : 요소의 모든 수를 더하는 메서드
 		System.out.println("-- reduce()");
 		int sum1 = IntStream.rangeClosed(1, 5)
-//				.boxed()  // 생략하면 자동으로 박싱해줌 // IntStream -> Stream<Integer>, collect(메서드 안에서 xxx.reducing() 반드시 써야함
+//				.boxed() => IntStream -> Stream<Integer> // 생략하면 자동으로 박싱해줌 (생략했을때 에러 걸리는 경우도 있음), collect(메서드 안에서 xxx.reducing() 반드시 써야함
 				.reduce(0, (a,b)->a+b);
 		System.out.println("1~5까지의 합(reduce(0, (a,b)->a+b)) : "+sum1);
 		

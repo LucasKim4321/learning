@@ -1,6 +1,6 @@
 package chap13;
 
-public class E15Ex01 {
+public class E15Practice {
 
 			// 1. Stream을 이용해서 구구단 
 	
