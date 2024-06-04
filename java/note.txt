@@ -1,4 +1,4 @@
-
+C:\Users\601\.m2\.lemminx-maven\org    maven 파일 위치
 System.out.println('두번째 생성한 파일입니다.!!');  // 자바에서는'문자열' 안됨
 System.out.println("두번째 생성한 파일입니다.!!");
 기계어로 번역 -> 컴파일러, 인터프리터
