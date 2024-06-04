@@ -10,11 +10,11 @@ import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-public class E07FileClass02 {
+public class E06FileClass02 {
 
 	public static void main(String[] args) {
 		// 파일 속성  표시하기
-		String path =  "C:"+File.separator+"javaStudy"+File.separator+"java"+
+		String path =  "C:"+File.separator+"javaStudy"+File.separator+"learning"+File.separator+"java"+
 						File.separator+"FirstJava"+File.separator;
 		System.out.println(path);
 		

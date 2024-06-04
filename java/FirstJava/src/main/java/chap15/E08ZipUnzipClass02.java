@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class E09ZipUnzipClass02 {
+public class E08ZipUnzipClass02 {
 
 	public static void main(String[] args) {
 		// Zip Unzip : 압축 풀기

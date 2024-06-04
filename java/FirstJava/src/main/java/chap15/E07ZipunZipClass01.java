@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class E08ZipunZipClass01 {
+public class E07ZipunZipClass01 {
 
 	public static void main(String[] args) {
 		// Zip and Unzip

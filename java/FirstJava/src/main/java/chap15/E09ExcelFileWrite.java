@@ -8,7 +8,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class E10ExcelFileWrite {
+public class E09ExcelFileWrite {
 
 	public static void main(String[] args) {
 		// 엑셀 파일 생성
