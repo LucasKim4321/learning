@@ -1,8 +1,8 @@
-package chap14;
+package chap15;
 
 import java.io.FileOutputStream;
 
-public class E06File2 {
+public class E02File2 {
 
 	public static void main(String[] args) {
 		// FileOutputStream

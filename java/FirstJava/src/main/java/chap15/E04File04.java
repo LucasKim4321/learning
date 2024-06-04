@@ -1,4 +1,4 @@
-package chap14;
+package chap15;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -12,7 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
-public class E08File04 {
+public class E04File04 {
 
 	public static void main(String[] args) {
 		// 문자열 -> 파일 처리

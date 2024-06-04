@@ -1,11 +1,11 @@
-package chap14;
+package chap15;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 
-public class E07File03 {
+public class E03File03 {
 
 	public static void main(String[] args) {
 		System.out.println("-- 한글 한글자 처리 : 3byte구성, 3회 read() --");

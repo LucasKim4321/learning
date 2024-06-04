@@ -1,10 +1,10 @@
-package chap14;
+package chap15;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-public class E05File01 {
+public class E01File01 {
 
 	public static void main(String[] args) {
 		// 자바 스트림 : 입출력을 도와주는 클래스
