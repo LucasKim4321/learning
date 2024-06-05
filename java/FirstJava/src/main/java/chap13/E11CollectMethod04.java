@@ -55,6 +55,18 @@ public class E11CollectMethod04 {
 		System.out.println("1~5까지의 합(reduce(0, (a,b)->a+b)) : "+sum1);
 		
 		int sum2 = IntStream.rangeClosed(1, 5).boxed().reduce(0, Integer::sum);
+		/*
+		 * Intger.sum(a,b) => Intger::sum => 메서드 참조
+		 * public final class Integer extends Number{
+		 *     public static int sum(int a, int b) {
+			        return a + b;
+			   }
+		   }
+		   
+		   final : 변수 => 읽기 전용
+		   final : 메서드 => 오버라이딩 불가
+		   final : 클래스 => 상속 불가
+		 */
 		System.out.println("1~5까지의 합(reduce(0, Integer::sum)) : "+sum2);
 		
 		Integer sum3 = IntStream.rangeClosed(1, 10).skip(8).sum();  // skip(8) 8개 넘김
