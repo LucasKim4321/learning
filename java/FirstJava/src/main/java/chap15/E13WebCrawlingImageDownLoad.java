@@ -3,15 +3,17 @@ package chap15;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -21,6 +23,7 @@ public class E13WebCrawlingImageDownLoad {
 
 	public static void main(String[] args) {
 		// 이미지 다운
+		
 		
 		// 경로 설정
 		String img_path = "C:"+File.separator+"javaStudy"+File.separator+"learning"+File.separator+"java"
@@ -91,6 +94,37 @@ public class E13WebCrawlingImageDownLoad {
 //			System.out.println(imgFileList);
 //			imgFileList.stream().forEach(System.out::println);
 			imgFileList.forEach(System.out::println);
+			
+			// 3. 압축하기
+			try (FileOutputStream fos = new FileOutputStream(img_path+"book.zip");
+					ZipOutputStream zos = new ZipOutputStream(fos)) {
+				imgFileList.stream().forEach(file-> {
+					byte[] bytes = new byte[1024];  // 읽어올 블럭 단위
+					File f = new File(img_path+file);
+					// zip 파일의 output Stream
+					try(FileInputStream fis = new FileInputStream(f)) {
+						ZipEntry zipEntry = new ZipEntry(f.getName());
+						
+						// 압출할 파일 추가
+						zos.putNextEntry(zipEntry);
+						
+						int length;
+						while( (length = fis.read(bytes)) != 0) {
+							zos.write(bytes,0, length);
+						}
+						
+						
+					} catch (Exception e) {
+						System.out.println(e.getMessage());  // null 에러 표시 원인은?
+					}
+					
+					// 1개의 이미지 -> 압축처리한 후, 원본 삭제
+					if (f.exists()) { f.deleteOnExit(); }  // 파일이 존재하면 파일 삭제
+				});
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
