@@ -1,6 +1,16 @@
 package chap15;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
@@ -11,37 +21,81 @@ public class E13WebCrawlingImageDownLoad {
 
 	public static void main(String[] args) {
 		// 이미지 다운
+		
+		// 경로 설정
+		String img_path = "C:"+File.separator+"javaStudy"+File.separator+"learning"+File.separator+"java"
+		+File.separator+"FirstJava"+File.separator+"src"+File.separator+"main"+File.separator+"java"+File.separator+"chap15"+File.separator+"WebCrawling"+File.separator;
+		System.out.println(img_path);
 
 		Document document;
 		try {
-			document = Jsoup.connect("https://product.kyobobook.co.kr/new/#?page=1&sort=new&year=&month=&week=&per=20&saleCmdtDvsnCode=KOR&gubun=preOrderGubun").get();
+			document = Jsoup.connect("https://www.namgarambooks.co.kr/").get();
 //			System.out.println(document);
-			Elements elements = (Elements)document.select("#mainDiv .container_wrapper > #contents > .contents_inner > #contents > .tab_wrap > #tabBest01 #tabBest01Sub01 .switch_prod_wrap .prod_list");  //  .prod_link .img_box img
-			elements.stream().forEach(title -> System.out.println(title.html()));
+			Elements elements = (Elements)document.select("#wrap .container .inner .post-item img");  // .title
+//			elements.stream().forEach(title -> System.out.println(title.outerHtml()));
 			
-//			List<String> list =
-//			elements.stream().map(element -> {
-//				String path = element.attr("src");
-//				String ext = path.split("\\.")[(path.split("\\.").length-1)];  // .을 기준으로 나눴을때 마지막에 있는게 확장자
-//				
-//				// "abvc.txtesxx" => "jpg"로 처리
-//				// 4자 이하는 확장자, 확장자가 없으면 jpg로 처리
-//				ext = (ext.length() > 4 || "".contentEquals(ext)) ? "jpg" : ext ;
-//				return element.attr("src")+"|"+element.attr("alt")+"|"+ext;
-//			})
-//			.collect(Collectors.toList());
+			// 1.  "src=이미지 파일 경로 | alt=도서제목 | 이미지 확장자"
+			List<String> list =
+			elements.stream().map(element -> {
+				String path = element.attr("src");
+				// src="이미지 파일"의 확장자만 추출
+				String ext = path.split("\\.")[(path.split("\\.").length-1)];  // .을 기준으로 나눴을때 마지막에 있는게 확장자
+				
+				// "abvc.txtesxx" => "jpg"로 처리
+				// 4자 이하는 확장자, 확장자가 없으면 jpg로 처리
+				ext = (ext.length() > 4 || "".contentEquals(ext)) ? "jpg" : ext ;
+				
+				// 반환 : 이미지 src속성값 + alt속성값 + 이미지 확장자
+				// img 태그의 alt값이 없으면 랜덤한 이름 생성
+				String alt = element.attr("alt").trim();
+				int len = alt.length();
+				if (len <1) {
+					UUID uuid = UUID.randomUUID();  // 중복되지않는 랜덤한 난수(숫자,영어 조합) 생성
+					alt = "다운로드_"+uuid.toString();
+				}
+//				return element.attr("src")+"|"+element.attr("alt")+"|"+ext;  // alt 값이 있을 때
+				return element.attr("src")+"|"+alt+"|"+ext;  // alt 값이 없을 때
+			})
+			.collect(Collectors.toList());
+			
 //			System.out.println(list);
+			list.stream().forEach(System.out::println);
 			
+			// 2. 다운로드 이미지 파일 리스트
+			List<String> imgFileList = 
+					list.stream()
+					.map(mapper-> {
+						// 다운로드 파일이름 생성 : 저장할 파일이름 생성
+						String returnVal = mapper.split("\\|")[1]+"."+mapper.split("\\|")[2];  // alt+확장자
+						
+						// 이미지가 있는 서버에 URL객체로 통해 접속하여 이미지 가져오기
+						URL url;
+						try {
+							url = new URL("https:"+mapper.split("\\|")[0]);  // mapper.split("\\|")[0]서버 주소
+							try (InputStream  in  = new BufferedInputStream(url.openStream());
+								 OutputStream out = new BufferedOutputStream(new FileOutputStream(img_path+returnVal))) {
+								
+								// 서버에 있는 이미지 파일을 읽어서 로컬 저장소에 파일로 저장
+								for (int i; (i =in.read()) != -1;) {  //  == int i; while( (i=in.read()) != -1){}  // 파일 데이터가 있으면 처리
+									out.write(i);
+								}
+								
+							} catch (Exception e) {
+								System.out.println(e.getMessage());
+							}
+						} catch (MalformedURLException e) { System.out.println(e.getMessage()); }
+						return returnVal;
+					})
+					.collect(Collectors.toList());
 			
-			
-//			.forEach( s -> {
-//			System.out.println(s);
-//			});
-			
+//			System.out.println(imgFileList);
+//			imgFileList.stream().forEach(System.out::println);
+			imgFileList.forEach(System.out::println);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+
 
 	}
 

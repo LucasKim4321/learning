@@ -12,7 +12,7 @@ public class E07ZipunZipClass01 {
 	public static void main(String[] args) {
 		// Zip and Unzip
 		String path = "C:"+File.separator+"javaStudy"+File.separator+"learning"+File.separator+"java"
-		+File.separator+"FirstJava"+File.separator+"src"+File.separator+"main"+File.separator+"java"+File.separator+"test"+File.separator;
+		+File.separator+"FirstJava"+File.separator+"src"+File.separator+"main"+File.separator+"java"+File.separator+"chap15"+File.separator+"test"+File.separator;
 		System.out.println(path);
 		
 		// 블럭 : 한번 읽어오는 단위

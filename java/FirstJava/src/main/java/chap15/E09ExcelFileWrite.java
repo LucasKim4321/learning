@@ -15,7 +15,7 @@ public class E09ExcelFileWrite {
 		
 		// 경로 설정
 		String path = "C:"+File.separator+"javaStudy"+File.separator+"learning"+File.separator+"java"
-		+File.separator+"FirstJava"+File.separator+"src"+File.separator+"main"+File.separator+"java"+File.separator+"excel"+File.separator;
+		+File.separator+"FirstJava"+File.separator+"src"+File.separator+"main"+File.separator+"java"+File.separator+"chap15"+File.separator+"excel"+File.separator;
 		System.out.println(path);
 	
 		// 1. 엑셀 workbook 생성

@@ -28,7 +28,7 @@ public class E04File04 {
 		InputStream is = new ByteArrayInputStream(name.getBytes());  // name.getBytes()  name을 바이트로 바꿈
 		
 		try(FileOutputStream fw = new FileOutputStream("hangul4.txt")) {
-			int i; 
+			int i;
 			while ( (i=is.read())!= -1) {
 				fw.write(i);
 			}

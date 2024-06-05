@@ -63,7 +63,7 @@ public class E06FileClass02 {
 			p.mkdir();
 		}
 		
-		// 파일 생
+		// 파일 생성
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.print("생성할 파일이름을 입력하세요. (확장자 생략): ");
