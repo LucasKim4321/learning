@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import chap16.vo.MemberVO;
@@ -28,8 +29,8 @@ public class MemberDAO {
 			
 			conn = DriverManager.getConnection(
 					"jdbc:mariadb://localhost:3306/mydb", // Host
-					"java", // 계정
-					"1234"  // 패스워드
+					"root", // 계정
+					"3690"  // 패스워드
 					);
 			
 			if (conn != null) {
@@ -68,17 +69,19 @@ public class MemberDAO {
 			// PrepareStatement()
 			// -------------------------------------------------- //
 			
+			// """  """ 이런식으로 쓰면 괄호 같이 적용?
 			String sql2 = """
-					insert into member(memberno, id, name)
+					insert into member(memberno, id, name) 
 					values (?,?,?)
 					""";
 			
 			pstmt = conn.prepareStatement(sql2);
+			System.out.println("1111"+pstmt);  // parameters 값은 비어있음
 			pstmt.setInt(1, vo.getMemberno());
 			pstmt.setString(2, vo.getId());
 			pstmt.setString(3, vo.getName());
-			
-			result = pstmt.executeUpdate();
+			System.out.println("2222"+pstmt);  // set한것들 parameters 값에 들어감
+			result = pstmt.executeUpdate();  // update 후 반환값 1
 
 			
 		} catch (Exception e) {}
@@ -95,6 +98,7 @@ public class MemberDAO {
 	// 회원 목록
 	public List<MemberVO> list() {
 		List<MemberVO> list = new ArrayList<MemberVO>();
+		System.out.println("333 list"+list);
 		
 		try {
 			String sql = "select * from member";
@@ -102,13 +106,13 @@ public class MemberDAO {
 			rs = stmt.executeQuery(sql);
 			
 			while( rs.next()) {
-				MemberVO vo = new MemberVO();
+				MemberVO vo2 = new MemberVO();
 				
-				vo.setMemberno(rs.getInt("memberno"));
-				vo.setId(rs.getString("id"));
-				vo.setName(rs.getString("name"));
+				vo2.setMemberno(rs.getInt("memberno"));
+				vo2.setId(rs.getString("id"));
+				vo2.setName(rs.getString("name"));
 				
-				list.add(vo);
+				list.add(vo2);
 			}
 			
 		} catch (Exception e) {}

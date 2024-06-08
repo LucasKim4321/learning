@@ -4,7 +4,7 @@
 
 SHOW DATABASES;
 -- db 생성하기
-CREATE DATABASE mydb;
+CREATE DATABASE mydbmydb;
 -- db열기
 USE mydb;
 -- 현재 db에 있는 테이블 보기

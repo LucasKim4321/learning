@@ -27,9 +27,9 @@ public class E02MemberMain {
 		System.out.println("result code: "+rs);
 		
 		// 회원 목록
-		List<MemberVO> list = dao.list();
-		list.stream().forEach(System.out::println);
-		
+//		List<MemberVO> list = dao.list();
+//		list.stream().forEach(System.out::println);
+		dao.list().stream().forEach(System.out::println);
 		
 		
 

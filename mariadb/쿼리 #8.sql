@@ -1,3 +1,5 @@
+USE mydb;
+
 -- Member
 CREATE TABLE MEMBER (
 	memberno INT,
@@ -12,7 +14,7 @@ INSERT INTO MEMBER(memberno, id, name) VALUES (1, 'hong', '홍길동');
 SELECT @@autocommit;  -- 상태 확인
 SET @@autocommit = 0;  -- autocommit off
 SET @@autocommit = 1;  -- on
-
 SELECT * FROM MEMBER;
 
+DELETE from member;
 DROP TABLE member;

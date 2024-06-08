@@ -59,6 +59,7 @@ VALUES
 	('이순신', 1, 2019, 11, 3, 300000, '국가유공자'),
 	('강감찬', 1, 2019, 11, 7, 300000, '국가유공자');
 	
+SELECT * FROM tutions;
 -- 테이블 변경 --
 ALTER TABLE tutions RENAME tuitions;
 

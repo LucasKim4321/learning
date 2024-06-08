@@ -1,6 +1,6 @@
 -- 테이블 복사
 CREATE TABLE students2 LIKE students;
-CREATE TABLE IF NOT EXISTS students2 LIKE students;
+CREATE TABLE IF NOT EXISTS mydbstudents2 LIKE students;
 
 -- 테이블 데이터 복사
 INSERT INTO students2 (SELECT * FROM students);

@@ -31,6 +31,7 @@ public class E01DBConnection {
 			finally {
 				if (conn != null) try {
 					conn.close();
+					System.out.println("접속 해제!!!");
 				}
 				catch (Exception e) {
 					System.out.println(e.getMessage());
