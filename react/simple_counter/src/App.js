@@ -32,9 +32,9 @@ function App() {
   //   console.log("useState 객체 값 업데이트.\ncount: ",count,"\n text: ",text)
   // }, [count,text])
 
-  // 두번째 인자 의존성 배열 생략시, 컴포넌트를 렌더링할 때마다 콜백함수 수행
+  // 1. 두번째 인자 의존성 배열 생략시, 컴포넌트를 렌더링할 때마다 콜백함수 수행
   useEffect( ()=> {
-    // useEffect에서 마운트 시점은 제외하고 업데이트 시점에만 콜백함수
+    // 2. useEffect에서 마운트 시점은 제외하고 업데이트 시점에만 콜백함수
     if (!didMountRef.current){
       didMountRef.current = true;
       return;
@@ -44,10 +44,10 @@ function App() {
     console.log("useState 객체 값 업데이트.\ncount: ",count,"\n text: ",text)
   })
 
-  // useEffect에서 빈 배열을 전달하면 마운트 시점에만 콜백함수 1번만 수행
+  // 3. useEffect에서 빈 배열을 전달하면 마운트 시점에만 콜백함수 1번만 수행
   useEffect( ()=> {console.log('컴포넌트 마운트, 의존성 배열에 빈 배열 전달')},[])
 
-  // 클린업(Cleanup)기능 : 특정 함수가 실행되고 종료된 후, 수행하고자 하는 내용이 있으면 처리
+  // 클린업(Cleanup)기능 : 특정 함수가 실행되고 종료된 후, 수행하고자 하는 내용이 있을 경우
   useEffect( ()=> {
     const intervalID = setInterval(() => {
       console.log("1초마다 깜박!!!")
@@ -70,7 +70,7 @@ function App() {
         </section>
         <section>
           <Viewer count2={count}/>
-          {/* {조건식이 참이면 컴포넌트값으로 반환{} */}
+          {/* {조건식이 참이면 컴포넌트값으로 반환} */}
           {count%2==0 && <Even/>}
           {count%2!=0 && <div>현재 카운트는 홀수입니다.</div>}
         </section>
