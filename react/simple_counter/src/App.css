@@ -1,12 +1,9 @@
 body {
   padding: 20px;
 }
-.container {
-  width:700px;
-}
 .App {
   text-align: center;
-  width: 70%;
+  width: 700px;
   margin: 0 auto;
   padding: 20px;
   background-color: lightgoldenrodyellow;

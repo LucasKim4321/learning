@@ -1,5 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css'
-
 import './App.css';
 import Viewer from './component/Viewer.js'
 import Controller from './component/Controller.js'
@@ -74,6 +72,7 @@ function App() {
           <Viewer count2={count}/>
           {/* {조건식이 참이면 컴포넌트값으로 반환{} */}
           {count%2==0 && <Even/>}
+          {count%2!=0 && <div>현재 카운트는 홀수입니다.</div>}
         </section>
         <section>
           <Controller handleSetCount2={handleSetCount}/>
