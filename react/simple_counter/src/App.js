@@ -19,7 +19,7 @@ function App() {
   const handleSetCount = (value) => {
     setCount(count+value)
   }
-  const handlechangeText = (e) => {
+  const handleChangeText = (e) => {
     // console.log("값의 변화: ",e.target.value)
     setText(e.target.value);
   }
@@ -69,7 +69,7 @@ function App() {
           <h1>Simple Counter</h1>
         </div>
         <section>
-          <input className='alert alert-danger' value={text} onChange={handlechangeText}/>
+          <input className='alert alert-danger' value={text} onChange={handleChangeText}/>
         </section>
         <section>
           <Viewer count2={count}/>
