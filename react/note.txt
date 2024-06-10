@@ -5,4 +5,8 @@ npx create-react-app .       // 현재 위치에 리엑트 생성
 npx create-react-app second_app     // second_app위치에 리엑트 생성
 npx create-react-app sample01
 npx create-react-app sample_counter
+
+ctrl + c // 중지
+npm run start  // 실행
+
 cmd에 mkdir 경로  경로에 폴더 생성
