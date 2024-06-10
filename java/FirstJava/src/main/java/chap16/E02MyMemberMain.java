@@ -8,7 +8,7 @@ public class E02MyMemberMain {
 	public static void main(String[] args) {
 		MyMemberDAO dao = new MyMemberDAO();	
 		MyMemberVo vo = new MyMemberVo();
-		vo.setMemberno(2);
+		vo.setMemberno(3);
 		vo.setId("Kim0131");
 		vo.setName("김태진");
 		

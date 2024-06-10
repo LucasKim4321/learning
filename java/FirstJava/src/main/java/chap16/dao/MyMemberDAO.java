@@ -62,6 +62,7 @@ public class MyMemberDAO {
 	
 	// 데이터 조회
 	
+	
 	// 데이터 수정
 		
 	// 데이터 삭제
