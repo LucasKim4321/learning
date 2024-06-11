@@ -79,7 +79,7 @@ class Dialog2 extends JDialog {
 	JTextField tf = new JTextField(10);
 	JButton okButton = new JButton("OK");
 	
-	public Dialog2(JLabel label, String string) {
+	public Dialog2(JLabel label, String title) {
 		setLayout(new FlowLayout());
 		add(tf);
 		add(okButton);
@@ -96,9 +96,11 @@ class Dialog2 extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				String text = tf.getName();
 				label.setText(text);
-				dispose();
+				dispose();  // 다디얼로그 종료
 			}
 		});
 	}
 	
 }
+
+//** 수정필요
