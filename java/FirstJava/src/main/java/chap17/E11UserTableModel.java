@@ -36,11 +36,11 @@ public class E11UserTableModel extends AbstractTableModel {
 	}
 	
 	// 각 컬럼명
-	public String getcolumnName(int rowIndex) {
+	public String getColumnName(int rowIndex) {
 		return columnNames[rowIndex];
 	}
 	// 각 셀의 편집 기능 여부 지정
-	public boolean iscellEditable(int rowIndex, int columnIndex) {
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return columnEditables[columnIndex];
 	}
 	// 셀의 데이터 수정시 수정돈 데이터를 반영
