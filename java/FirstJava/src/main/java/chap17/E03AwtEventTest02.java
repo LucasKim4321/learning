@@ -63,9 +63,9 @@ public class E03AwtEventTest02 {
 				System.out.println("버튼1 클릭");
 				System.out.println("ActionEvent: "+e);
 				System.out.println("getActionCommand(): "+e.getActionCommand());
-				System.out.println(e.getModifiers());
-				System.out.println(e.getWhen());
-				System.out.println(e.paramString());
+				System.out.println("getModifiers(): "+e.getModifiers());
+				System.out.println("getWhen(): "+e.getWhen());
+				System.out.println("paramString(): "+e.paramString());
 			}
 			else if (e.getSource() == btn2) {
 				System.out.println("버튼2 클릭");

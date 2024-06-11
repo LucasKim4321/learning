@@ -64,9 +64,19 @@ public class E11UserTableModelTest extends JFrame {
 		
 		memberJList = new JList();
 		memberJList.setBackground(Color.GREEN);
+
+		Object[][] emp = {
+				{"220000","박길동","총무부"},
+				{"220001","홍길동","관리부"},
+				{"220002","동길동","영업부"},
+				{"220003","동길이","관리부"},
+				{"220004","동길이","관리부"}
+		
+		};
 		
 		memTable = new JTable();
 		memTable.setModel(new E11UserTableModel(emp));
+
 		
 		searchBtn = new JButton("조회하기");
 		// 조회버튼 클릭시 처리하는 내용
@@ -75,13 +85,13 @@ public class E11UserTableModelTest extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Object[][] data = {
-						{"220000","박길동","총무부"},
-						{"220001","홍길동","관리부"},
-						{"220002","동길동","영업부"},
-						{"220003","동길이","관리부"},
-						{"220003","동길이","관리부"}
-				
+						{"220005","홍길동","관리부"},
+						{"220006","박길동","총무부"},
+						{"220007","이순신","회계부"},
+						{"220008","임꺽정","개발부"},
+						{"220009","강감찬","관리부"}
 				};
+
 				memTable.setModel(new E11UserTableModel(data));
 			}
 		});

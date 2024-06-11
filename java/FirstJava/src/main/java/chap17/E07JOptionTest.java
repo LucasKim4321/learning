@@ -23,7 +23,7 @@ public class E07JOptionTest extends JFrame implements ActionListener{
 	public E07JOptionTest() {
 		super("여러가지 메시지 박스 테스트");  // 창의 제목
 //		setLayout(new FlowLayout());  // 가로 방향으로 배치
-		setLayout(new BorderLayout());  //BorderLayout 방식으로 배치
+//		setLayout(new BorderLayout());  //BorderLayout 방식으로 배치  기본값
 		
 		btn1 = new JButton("출력 메시지 박스");
 		btn2 = new JButton("확인 메시지 박스");
@@ -34,14 +34,14 @@ public class E07JOptionTest extends JFrame implements ActionListener{
 		
 		// 현재클래스(프레임 기능을 가진 클래스)
 //		add(btn1);add(btn2);add(btn3);add(btn4);
-		add(btn1, BorderLayout.NORTH);
-		add(btn2, BorderLayout.EAST);
-		add(btn3, BorderLayout.WEST);
-		add(btn4, BorderLayout.CENTER);
-		add(jLab, BorderLayout.SOUTH);
+		add(btn1, BorderLayout.NORTH);  // 위 가로 공간 모두 차지
+		add(btn2, BorderLayout.EAST);  // 오른쪽 세로 빈공간 모두 차지
+		add(btn3, BorderLayout.WEST);  // 왼쪽 세로 빈공간 모두 차지
+		add(btn4, BorderLayout.CENTER);  // 빈공간 모두 차지
+		add(jLab, BorderLayout.SOUTH);  // 아래 가로 공간 모두 차지
 //		add(img1);
 
-		setLocation(300,300);
+		setLocation(800,300);
 		setSize(600,400);
 //		setPreferredSize(new Dimension(600,400));
 //		pack();

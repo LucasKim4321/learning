@@ -15,7 +15,7 @@ public class E02AwtEventTest01 implements ActionListener {
 	// 생성자
 	
 	public E02AwtEventTest01() {
-		frame = new Frame("이벥트 핸들러 예제");
+		frame = new Frame("이벤트 핸들러 예제");
 		btn1 = new Button("btn1");
 		btn2 = new Button("btn2");
 		btn3 = new Button("btn3");
@@ -79,6 +79,7 @@ public class E02AwtEventTest01 implements ActionListener {
 			System.out.println("버튼5 클릭");
 			System.out.println("ActionEvent: "+e);
 			System.out.println("getActionCommand(): "+e.getActionCommand());
+			System.out.println("getWhen(): "+(e.getWhen()/1000/60/60/24/365));
 		}
 		
 	}
