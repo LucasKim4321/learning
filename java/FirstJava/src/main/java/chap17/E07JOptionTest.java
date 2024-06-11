@@ -22,7 +22,8 @@ public class E07JOptionTest extends JFrame implements ActionListener{
 	
 	public E07JOptionTest() {
 		super("여러가지 메시지 박스 테스트");  // 창의 제목
-		setLayout(new FlowLayout());  // 가로 방향으로 배치
+//		setLayout(new FlowLayout());  // 가로 방향으로 배치
+		setLayout(new BorderLayout());  //BorderLayout 방식으로 배치
 		
 		btn1 = new JButton("출력 메시지 박스");
 		btn2 = new JButton("확인 메시지 박스");
