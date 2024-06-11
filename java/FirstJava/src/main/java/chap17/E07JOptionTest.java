@@ -1,14 +1,15 @@
 package chap17;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -17,6 +18,7 @@ public class E07JOptionTest extends JFrame implements ActionListener{
 	JButton btn1, btn2, btn3, btn4;
 	String[] str = {"카드결제", "계좌이체"};
 	ImageIcon img1;
+	JLabel jLab;
 	
 	public E07JOptionTest() {
 		super("여러가지 메시지 박스 테스트");  // 창의 제목
@@ -27,16 +29,22 @@ public class E07JOptionTest extends JFrame implements ActionListener{
 		btn3 = new JButton("입력 메시지 박스");
 		btn4 = new JButton("선택 메시지 박스");
 		img1 = new ImageIcon("C:\\javaStudy\\learning\\images\\frog (1).jpg");
+		jLab = new JLabel(img1);
 		
 		// 현재클래스(프레임 기능을 가진 클래스)
-		add(btn1);add(btn2);add(btn3);add(btn4);
-
+//		add(btn1);add(btn2);add(btn3);add(btn4);
+		add(btn1, BorderLayout.NORTH);
+		add(btn2, BorderLayout.EAST);
+		add(btn3, BorderLayout.WEST);
+		add(btn4, BorderLayout.CENTER);
+		add(jLab, BorderLayout.SOUTH);
 //		add(img1);
-		pack();
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		setLocation(300,300);
-		setPreferredSize(new Dimension(500,500));
+		setSize(600,400);
+//		setPreferredSize(new Dimension(600,400));
+//		pack();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		
 		btn1.addActionListener(this);

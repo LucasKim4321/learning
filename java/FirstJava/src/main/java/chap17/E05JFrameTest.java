@@ -27,8 +27,9 @@ public class E05JFrameTest {
 		jFrame.add(btn3, BorderLayout.EAST);
 		jFrame.add(btn4, BorderLayout.CENTER);
 		
-		jFrame.setPreferredSize(new Dimension(500,500));
+		jFrame.setPreferredSize(new Dimension(1000,500));
 		jFrame.pack();
+		
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jFrame.setVisible(true);
 	}
