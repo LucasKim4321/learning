@@ -49,7 +49,7 @@ public class E01MovieWindowView extends JFrame implements ActionListener {
 		add(BorderLayout.CENTER, movieList);
 		add(BorderLayout.SOUTH, btnExit);
 		
-		setBounds(0,0,1000,600);
+		setBounds(200,200,1000,600);  // setBounds(가로위치,세로위치,가로크기,세로크기)
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
