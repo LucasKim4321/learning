@@ -5,9 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public abstract class AbstractBaseDAO {
+//AbstractBaseDAO a = new AbstractBaseDAO()
+
+public abstract class AbstractBaseDAO {  // abstract 한 이유 : 인스턴스를 생성하지 않게 설계
 	
-	protected static final String driver = "orb.mariadb.jdbc.Driver";
+	protected static final String driver = "org.mariadb.jdbc.Driver";
 	protected static final String url = "jdbc:mariadb://localhost:3306/rentcar";  //rentcar데이터베이스를 불러옴
 	protected static final String user = "root";
 	protected static final String pwd = "3690";
