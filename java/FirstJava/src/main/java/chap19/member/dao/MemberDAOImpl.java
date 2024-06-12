@@ -17,15 +17,15 @@ public class MemberDAOImpl extends AbstractBaseDAO implements MemberDAO{
 		String sql = "";
 		if (_memName != null && _memName.length() != 0) {
 			sql = "SELECT * FROM t_member WHERE memName = ? ORDER BY memId";
+			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, _memName);
 			
 		} else {
-			sql = "Select * from t_member";
+			
+			sql = "SELECT * FROM t_member";
 			pstmt = conn.prepareStatement(sql);
 		}
-		
-		pstmt = conn.prepareStatement(sql);
 		
 		rs = pstmt.executeQuery();
 		
@@ -59,7 +59,7 @@ public class MemberDAOImpl extends AbstractBaseDAO implements MemberDAO{
 		}
 		rs.close();
 		
-		return null;
+		return memList;
 	}
 
 	@Override

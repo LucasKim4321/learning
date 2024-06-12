@@ -11,7 +11,7 @@ CREATE table t_member (
 	memPwd			VARCHAR(30),  -- 비밀번호
 	memName			VARCHAR(30),  -- 이름
 	memAddress		VARCHAR(100),  -- 주소
-	memPhoneNumber INT			,  -- 전화번호
+	memPhoneNumber VARCHAR(20)	,  -- 전화번호
 	PRIMARY KEY(memId)
 );
 
@@ -42,3 +42,20 @@ CREATE table t_res (
 DROP TABLE t_res;
 DROP TABLE t_member;
 DROP TABLE t_car;
+
+INSERT INTO t_member (
+	memId,
+	memPwd,
+	memName,
+	memAddress,
+	memPhoneNumber
+)
+VALUES 
+	('hong100','1234','홍길동','서울','010-1234-1234'),
+	('hong300','3456','홍길동','인천','010-1234-7777'),
+	('hong200','2345','동길동','부산','010-2345-2345');
+	
+DELETE 
+	
+SELECT * FROM t_member;
+SELECT * FROM t_member WHERE memName = '홍길동' ORDER BY memId;
