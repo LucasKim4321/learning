@@ -1,12 +1,16 @@
 package chap18;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.List;
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import chap18.controller.MovieController;
@@ -18,6 +22,9 @@ public class E01MovieWindowView extends JFrame implements ActionListener {
 	JTextField tMovieTitle;
 	JButton btnTitleInsert, btnSave, btnExit, btnDelete;
 	List movieList;
+	
+//	DefaultListModel model = new DefaultListModel();
+//	JList movieList = new JList(model);
 	
 	MovieController controller;
 	
@@ -54,11 +61,11 @@ public class E01MovieWindowView extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// 이벤트 등록 처리
-		movieList.addActionListener(this);
+		movieList.addActionListener(this);;
 		btnTitleInsert.addActionListener(this);
 		btnSave.addActionListener(this);
-		btnExit.addActionListener(this);
 		btnDelete.addActionListener(this);
+		btnExit.addActionListener(this);
 
 		
 	}
@@ -81,19 +88,51 @@ public class E01MovieWindowView extends JFrame implements ActionListener {
 			
 			System.out.println("이벤트 발생: "+mTitle);
 			if (e.getSource() == btnTitleInsert) {
-				controller.addTitle();
-			} else if (e.getSource() == btnSave) {
-				controller.saveTitles();
-			} else if (e.getSource() == btnDelete) {
-				controller.delTitles();
-			} else {
+				resultMsg = "영화제목을 추가했습니다.";
+//				System.out.println("영화제목 추가하기");
+				
+				// 텍스트에 입력한 영화제목 읽기
+				mTitle = tMovieTitle.getText().trim();
+				
+				// controller에 추가요청(입력한 영화제목, 현재 영화제목 List)
+				controller.addTitle(mTitle, movieList);
+				
+				tMovieTitle.setText("");  // 입력창 초기화
+				
+			}
+			else if (e.getSource() == btnSave) {
+				resultMsg = "영화 제목을 파일에 저장했습니다.";
+//				System.out.println("영화 제목을 파일에 저장");
+				controller.saveTitles(movieList);
+			}
+			else if (e.getSource() == btnDelete) {
+				resultMsg = "해당 영화 제목을 파일에서 삭제했습니다.";
+			}
+			else if (e.getSource() == btnExit){
 				controller.exitTitles();
+				System.exit(1);  // 비정상 종료
+//				System.exit(0);  // 정상 종료
+			}
+			else {
+				resultMsg = "해당 영화 제목을 파일에서 삭제했습니다.";
+				controller.delTitles(mTitle, movieList);
+//				controller.selectTitles();
 			}
 			
+			JOptionPane.showMessageDialog(this,  resultMsg, "메시지 박스", JOptionPane.INFORMATION_MESSAGE);
 			
 		} catch (Exception e2) {}
 		
 	}
-	
 
 }
+
+/*
+ Button : ActionEvent(클릭), FocusEvent, Key...
+ Checkbox : ItemEvent(체크박스, 리스트 항목 선택) ...
+ Frame : WindowEvent ...
+ List : ActionEvent, ItemEvent ...
+ Label : FocusEvent ...
+ Choice : ItemEvent ...
+ Adjustable : AdjustmentEvent ...
+ */
