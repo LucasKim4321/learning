@@ -4,13 +4,13 @@ const TodoItem = ()=> {
     return (
         <div className="TodoItem">
             <div className="checkbox_col">
-                <div className="form-check form-switch">
+                <div className="form-check form-switch m-0">
                     <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                    <label className="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+                    <label className="form-check-label" for="flexSwitchCheckDefault">12</label>
                 </div>
             </div>
             <div className="title_col">
-                할 일
+                오늘의 할 일!!
             </div>
             <div className="date_col">
                 {new Date().toLocaleDateString()}
