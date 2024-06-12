@@ -55,7 +55,7 @@ VALUES
 	('hong300','3456','홍길동','인천','010-1234-7777'),
 	('hong200','2345','동길동','부산','010-2345-2345');
 	
-DELETE 
+DELETE FROM t_member;
 	
 SELECT * FROM t_member;
 SELECT * FROM t_member WHERE memName = '홍길동' ORDER BY memId;
