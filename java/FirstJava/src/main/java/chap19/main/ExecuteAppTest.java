@@ -23,12 +23,13 @@ public class ExecuteAppTest {
 //							.memName("홍길동")
 //							.build();
 		MemberVO vo = new MemberVO();
-		vo.setMemName(name);
+		vo.setMemName(name);  // 입력한 값으로 vo객체 생성
 		
-		listMembers = controller.listMember(vo);
+		//넘겨받은 데이터로 List를 생성해 listMembers 변수 생성
+		listMembers = controller.listMember(vo);  // 생성한 vo객체 넘겨줌  
 		
 		System.out.println("-- 회원 정보 조회 --");
-		listMembers.stream().forEach( m-> {
+		listMembers.stream().forEach( m-> {  // 받은 List객체를 forEach로 풀어서 표시
 			System.out.println(m);
 		});
 	}

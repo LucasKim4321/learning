@@ -61,7 +61,7 @@ public class E01MovieWindowView extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// 이벤트 등록 처리
-		movieList.addActionListener(this);;
+		movieList.addActionListener(this);
 		btnTitleInsert.addActionListener(this);
 		btnSave.addActionListener(this);
 		btnDelete.addActionListener(this);
@@ -119,7 +119,9 @@ public class E01MovieWindowView extends JFrame implements ActionListener {
 //				controller.selectTitles();
 			}
 			
-			JOptionPane.showMessageDialog(this,  resultMsg, "메시지 박스", JOptionPane.INFORMATION_MESSAGE);
+			// JOptionPane.showMessageDialog(
+			System.out.println(JOptionPane.INFORMATION_MESSAGE);  // JOptionPane.INFORMATION_MESSAGE == 1  JOptionPane.MESSAGE입력 후 보면 목록 나옴
+			JOptionPane.showMessageDialog(this,  resultMsg, "메시지 박스", JOptionPane.INFORMATION_MESSAGE);  // 메시지 타입 1   -1 부터 0포함 3까지 있음 5가지
 			
 		} catch (Exception e2) {}
 		

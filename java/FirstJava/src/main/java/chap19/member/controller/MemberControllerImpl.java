@@ -8,7 +8,7 @@ import chap19.member.dao.MemberDAOImpl;
 import chap19.member.vo.MemberVO;
 
 public class MemberControllerImpl implements MemberController{
-	public MemberDAO memberDAO;
+	public MemberDAO memberDAO;  // 이유?
 
 	public MemberControllerImpl() {
 		memberDAO = new MemberDAOImpl();
