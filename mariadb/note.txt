@@ -1,3 +1,19 @@
+쿼리1
+-- 사용자 계정 관리
+-- 사용자 계정 등록
+CREATE USER 'java01'@'localhost' IDENTIFIED BY '1234';
+-- 원격 접속
+-- CREATE USER 'java01'@'%' IDENTIFIED BY '1234';
+-- 원격 접속 (특정 IP접속)
+-- CREATE USER 'java01'@'192.168.*.*' IDENTIFIED BY '1234';
+-- 등록된 계정에 권한 설정
+GRANT ALL PRIVILEGES ON *.* TO 'java01'@'localhost';
+-- 권한 회수
+REVOKE ALL PRIVILEGES ON *.* FROM 'java01'@'localhost';
+-- 계정 삭제
+DROP USER 'java01'@'localhost';
+
+쿼리2
 -- SQL 모든 명령어
 -- 대소문자 구별하지 않는다.
 -- 세미콜론으로 끝내는 것을 원칙.
@@ -39,29 +55,25 @@ INSERT INTO students (student_name, school_name, school_level,school_grade,is_ad
 VALUES
 	('성춘향','남원','중학교',3,0),
 	('이몽룡','남원','고등학교',1,0),
-	('방자','남원','중학교',2,0),
-	('향단','남원','중학교',2,0),
-	('변사또','남원','고등학교',3,0),
-	('심청','도화','고등학교',2,0),
-	('심학규','도화','고등학교',3,0),
-	('용왕','도화','고등학교',3,0),
-	('곽씨','도화','고등학교',1,0),
-	('뺑덕','남원','고등학교',2,0),
-	('흥부','남원','고등학교',3,0),
 	('놀부','조선','초등학교',3,0);
 
 -- select from
 SELECT student_name, school_name FROM students;
+
 -- 중복 제거
 SELECT DISTINCT school_name FROM students;
+
 -- 원하는 자료의 수
 SELECT id, school_name FROM students LIMIT 5;
 SELECT id, school_name FROM students LIMIT 3,7;
+
 -- 정렬 : 오름차순(asc), 내림차순(desc)
-SELECT * FROM students ORDER BY school_grade ASC;
-SELECT * FROM students ORDER BY school_grade DESC;
+SELECT * FROM students ORDER BY school_grade ASC;   오름차순(asc), 
+SELECT * FROM students ORDER BY school_grade DESC;   내림차순(desc)
 SELECT * FROM students ORDER BY school_level, school_grade DESC;
+
 -- 테이블 삭제
 DROP TABLE students;
+
 -- db 삭제
 DROP database mydb;
