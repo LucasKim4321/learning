@@ -38,6 +38,7 @@ public abstract class AbstractBaseDAO {  // abstract 한 이유 : 인스턴스�
 			
 			try {
 				rs.close(); pstmt.close(); conn.close();
+				
 			} catch (Exception e2) {e2.getMessage();}
 		
 		}
