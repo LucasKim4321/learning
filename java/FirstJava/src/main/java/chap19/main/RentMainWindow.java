@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 
 import chap19.common.base.AbstractBaseWindow;
 import chap19.member.controller.MemberController;
+import chap19.member.controller.MemberControllerImpl;
 import chap19.member.window.RegMemDialog;
 
 public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 가진 클랙스 상속
@@ -54,6 +55,8 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 		memberMenu = new JMenu("회원 관리");
 		resMenu = new JMenu("예약 관리");
 		helpMenu = new JMenu("도움말");
+		
+		memberController = new MemberControllerImpl();
 	}
 	
 	// 서브메뉴 생성 메서드
@@ -117,6 +120,23 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
+		// 메뉴항목 이벤트 리스너 등록
+		memMenu21.addActionListener(new MemberHandler());
+		memMenu22.addActionListener(new MemberHandler());
+		memMenu23.addActionListener(new MemberHandler());
+		memMenu24.addActionListener(new MemberHandler());
+		
+		carMenu11.addActionListener(new MemberHandler());
+		carMenu12.addActionListener(new MemberHandler());
+		carMenu13.addActionListener(new MemberHandler());
+		carMenu14.addActionListener(new MemberHandler());
+
+		resMenu31.addActionListener(new MemberHandler());
+		resMenu32.addActionListener(new MemberHandler());
+		resMenu33.addActionListener(new MemberHandler());
+		resMenu34.addActionListener(new MemberHandler());
+		
+		helpMenu41.addActionListener(new MemberHandler());
 		
 	}
 	
@@ -149,8 +169,7 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 					
 				}
 				
-			} catch (Exception e2) {System.out.println(e2.getMessage());
-			}
+			} catch (Exception e2) {System.out.println(e2.getMessage());}
 		}
 		
 	}

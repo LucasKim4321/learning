@@ -8,7 +8,7 @@ USE rentcar;
 
 CREATE table t_member (
 	memId				VARCHAR(20),  -- 아이디(PK)
-	memPassword			VARCHAR(30),  -- 비밀번호
+	memPassword		VARCHAR(30),  -- 비밀번호
 	memName			VARCHAR(30),  -- 이름
 	memAddress		VARCHAR(100),  -- 주소
 	memPhoneNum    VARCHAR(20)	,  -- 전화번호
@@ -19,8 +19,8 @@ CREATE table t_car (
 	carNumber		VARCHAR(30),  -- 차번호(PK)
 	carName			VARCHAR(30),  -- 차이름
 	carColor			VARCHAR(30),  -- 차색상
-	displacement	INT,			  -- 배기량
-	manufacturer 	VARCHAR(50),  -- 제조사
+	displacement	INT,			  -- 배기량displacement
+	manufacturer 	VARCHAR(50),  -- 제조사manufacturer
 	PRIMARY KEY(carNumber)
 );
 
@@ -60,6 +60,7 @@ VALUES
 	
 DELETE FROM t_member;
 DROP TABLE t_member;
-	
+
+SELECT * FROM t_member WHERE memId = 'hong600';
 SELECT * FROM t_member;
 SELECT * FROM t_member WHERE memName = '홍길동' ORDER BY memId;

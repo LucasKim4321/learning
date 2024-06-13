@@ -1,5 +1,6 @@
 package chap19.member.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +18,9 @@ public class MemberControllerImpl implements MemberController {
 	
 	@Override
 	public List<MemberVO> listMember(MemberVO memberVO) {
+		// 회원 정보 조회하는 dao 호출
 		List<MemberVO> memList = new ArrayList<MemberVO>();
 		
-		// 회원 정보 조회하는 dao 호출
 		try {
 			memList =  memberDAO.selectMember(memberVO);
 			
@@ -40,8 +41,8 @@ public class MemberControllerImpl implements MemberController {
 
 	@Override
 	public int modMember(MemberVO memberVO) {
-		int result = 0;
 		//회원 정보 수정 하는 dao 호출
+		int result = 0;
 		try {
 			result = memberDAO.updateMember(memberVO);
 		} catch (Exception e) { System.out.println(e.getMessage());	}
@@ -53,12 +54,23 @@ public class MemberControllerImpl implements MemberController {
 	public int removeMember(MemberVO memberVO) {
 		//회원 정보 삭제 하는 dao 호출
 		int result = 0;
-		
 		try {
 			result = memberDAO.deleteMember(memberVO);
 		} catch (Exception e) { System.out.println(e.getMessage());	}
 		
 		return result;
+	}
+
+	@Override
+	public MemberVO checkId(String memId) {
+		// 회원 등록시 중복 체크하는 dao 호출
+		MemberVO vo = new MemberVO();
+			try {
+				vo = memberDAO.checkId(memId);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				}
+		return vo;
 	}
 
 }

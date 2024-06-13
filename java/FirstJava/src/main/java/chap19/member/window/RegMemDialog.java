@@ -66,15 +66,25 @@ public class RegMemDialog extends JDialog {
 				
 				MemberVO vo = new MemberVO(id, password, name, address, phoneNum);
 				
-				// 회원 정보 DB등록 요청
-				int result = memberController.regMember(vo);
-				
-				if (result > 0) {
-					showMessage("새 회원을 등록했습니다.",result);
-				
-				} else {
-					showMessage("회원 등록 실패",result);
+				// optional**
+				// ID중복체크
+				MemberVO checkIdVO = memberController.checkId(id);
+				System.out.println("checkIdVO.getMemId(): "+checkIdVO.getMemId());
+				if (checkIdVO.getMemId() == null) {  // id가 중복 체크 아니면
+					
+					// 회원 정보 DB등록 요청
+					int result = memberController.regMember(vo);
+					
+					if (result > 0) {
+						showMessage("새 회원을 등록했습니다.",result);
+					
+					} else {
+						showMessage("회원 등록 실패",result);
+					}
+				} else {  // id가 중복일 경우
+					showMessage("사용중인 id입니다.",-1);
 				}
+				
 			}  // end actionPerformed()
 		});  // end ActionListener()
 		

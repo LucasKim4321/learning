@@ -1,12 +1,45 @@
 import './TodoEditor.css';
+import {useState, useRef} from 'react';
 
-const TodoEditor = ()=> {
+const TodoEditor = ({onCreate})=> {
+    const [content, setContent] = useState("");
+    const inputRef = useRef();
+
+    // ㅇ
+    const onChangeContent = (e)=> {
+        setContent(e.target.value)
+
+        console.log(content)
+    }
+
+    // 추가버튼 동작
+    const onSubmit = ()=> {
+        if (!content) {
+            inputRef.current.focus();
+            return;
+        }
+        onCreate(content);  // 아이템 추가
+        setContent("");  // 입력란은 초기화
+    }
+    const onKeyDown = (e)=> {
+        if (e.keyCode == 13) {
+            onSubmit();
+        }
+    }
+
     return(
         <div className="TodoEditor border border-danger-subtle p-2 rounded-2">
             <h4 className="m-0">새로운 Todo 작성하기!! 💕</h4>
             <div className="edit_wrapper">
-                <input placeholder="새로운 Todo..."/>
-                <button>추가</button>
+                <input 
+                type="search"
+                placeholder="새로운 Todo..."
+                value={content}
+                onChange={onChangeContent}
+                onKeyDown={onKeyDown}
+                ref={inputRef}
+                />
+                <button onClick={onSubmit}>추가</button>
             </div>
         </div>
     );

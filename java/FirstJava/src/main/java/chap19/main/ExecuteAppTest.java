@@ -12,29 +12,29 @@ import chap19.member.window.RegMemDialog;
 public class ExecuteAppTest {
 
 	public static void main(String[] args) {
-//		Scanner sc = new Scanner(System.in);
+		Scanner sc = new Scanner(System.in);
 		
 		MemberControllerImpl controller = new MemberControllerImpl();
-//		List<MemberVO> listMembers = new ArrayList<MemberVO>();
+		List<MemberVO> listMembers = new ArrayList<MemberVO>();
 		
-//		System.out.print("이름: ");
-//		String name = sc.nextLine().trim();
-//		
-////		MemberVO vo = MemberVO.builder()
-////								.memName(name)
-////								.build();
-//		
-//		MemberVO vo = new MemberVO();
-//		vo.setMemName(name);
-//		
-//		listMembers =  controller.listMember(vo);
-//		
-//		System.out.println("-- 회원 정보 조회 --");
-//		listMembers.stream().forEach( m -> {
-//			System.out.println(m);
-//		});
+		System.out.print("이름: ");
+		String name = sc.nextLine().trim();
 		
-		// 회원 정보 입력
+//		MemberVO vo = MemberVO.builder()
+//								.memName(name)
+//								.build();
+		
+		MemberVO vo = new MemberVO();
+		vo.setMemName(name);
+		
+		listMembers =  controller.listMember(vo);
+		
+		System.out.println("-- 회원 정보 조회 --");
+		listMembers.stream().forEach( m -> {
+			System.out.println(m);
+		});
+		
+//		// 회원 정보 입력(추가)
 //		System.out.println("-- 회원 정보 입력");
 //		MemberVO insertVO = new MemberVO("HONG100", "1234", "홍길동", "서울", "010-1234-4444");
 //		
@@ -66,19 +66,25 @@ public class ExecuteAppTest {
 //			System.out.println("회원 정보 수정 실패");
 //		}
 		
-//		// 회원 정보 삭제
-//		System.out.println("-- 회원 정보 삭제");
-//		MemberVO delVO = MemberVO.builder().memId("HONG100").build();
+		// 회원 정보 삭제
+		System.out.println("-- 회원 정보 삭제");
+		MemberVO delVO = MemberVO.builder().memId("HONG500").build();  // 삭제할 정보를 가진 VO객체 생성
+		
+		int result = controller.removeMember(delVO);  // 정보를 컨트롤러로 보냄
+		if (result > 0) {
+			System.out.println("회원 정보 삭제 완료");
+		} else {
+			System.out.println("회원 정보 삭제 실패");
+		}		
+
+		
+		
+		// 다이얼로그 창 이용
+		
+		// 회원 등록
+//		MemberControllerImpl controller = new MemberControllerImpl();
 //		
-//		result = controller.removeMember(delVO);
-//		if (result > 0) {
-//			System.out.println("회원 정보 삭제 완료");
-//		} else {
-//			System.out.println("회원 정보 삭제 실패");
-//		}		
-		
-		System.out.println("1. membercotrollor: "+controller);
-		
+//		System.out.println("1. membercotrollor: "+controller);
 //		new RegMemDialog(controller, "회원 등록");
 
 	}

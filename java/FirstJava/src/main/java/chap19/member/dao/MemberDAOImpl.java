@@ -1,5 +1,6 @@
 package chap19.member.dao;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,9 +126,45 @@ public class MemberDAOImpl extends AbstractBaseDAO implements MemberDAO{
 		pstmt.setString(1, memberVO.getMemId());
 		
 		result = pstmt.executeUpdate();
+		System.out.println("11result: "+result);
 		
 		return result;
 		
 	}
 
+	// 회원 ID로 정보 조회 유무 체크
+	@Override
+	public MemberVO checkId(String id) throws Exception {
+		int result = 0;
+		String _id = id;
+		
+		MemberVO vo = new MemberVO();
+		
+		String sql = "SELECT * FROM t_member WHERE memId = ?";
+		
+		
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, _id);  //  입력한 이름으로 테이블상의 데이터 검색
+			
+
+		rs = pstmt.executeQuery();
+
+
+		while(rs.next()) {
+			String memId 		= rs.getString("memId");
+			String memPassword 	= rs.getString("memPassword");
+			String memName 		= rs.getString("memName");
+			String memAddress 	= rs.getString("memAddress");
+			String memPhoneNum 	= rs.getString("memPhoneNum");
+			
+			vo.setMemId(memId);
+			vo.setMemName(memName);
+			vo.setMemPassword(memPassword);
+			vo.setMemPhoneNum(memPhoneNum);
+			vo.setMemAddress(memAddress);
+		
+		}
+		return vo;
+
+	}
 }
