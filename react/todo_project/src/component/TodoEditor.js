@@ -2,24 +2,34 @@ import './TodoEditor.css';
 import {useState, useRef} from 'react';
 
 const TodoEditor = ({onCreate})=> {
+/* 
+    ref prop
+    React의 ref prop은 HTML 엘리먼트의 레퍼런스를 변수에 저장하기 위해서 사용합니다.
+
+    예를 들어, 다음과 같이 <input> 엘리먼트에 ref prop으로 inputRef라는 변수를 넘기게 되면, 
+    우리는 이 inputRef 객체의 current 속성을 통해서 <input> 엘리먼트에 접근할 수 있고, DOM API를 이용하여 제어할 수 있습니다.
+*/
     const [content, setContent] = useState("");
     const inputRef = useRef();
+    // inputRef = document.querySelector('#input1')와 유사 방식
 
-    // ㅇ
+    // input에 입력시 동작
     const onChangeContent = (e)=> {
-        setContent(e.target.value)
+        setContent(e.target.value)  // input의 현재 value값을 content에 저장
 
-        console.log(content)
+        // console.log(content)  // 바뀌기전 값이 보이지만 setContent는 정상 작동했음
+        console.log(e.target.value)
     }
 
     // 추가버튼 동작
     const onSubmit = ()=> {
-        if (!content) {
-            inputRef.current.focus();
+        if (!content) {  // content값이 없으면
+            inputRef.current.focus();  // inputRef가 들어있는 입력창(inputRef.current) 활성화(focus)
+            inputRef.current.placeholder = "새로운 Todo를 입력해주세요 ~";
             return;
         }
-        onCreate(content);  // 아이템 추가
-        setContent("");  // 입력란은 초기화
+        onCreate(content);  // 아이템 추가 : 입력창의 value 값을 아이템리스트에 추가
+        setContent("");  // 입력란 초기화
     }
     const onKeyDown = (e)=> {
         if (e.keyCode == 13) {

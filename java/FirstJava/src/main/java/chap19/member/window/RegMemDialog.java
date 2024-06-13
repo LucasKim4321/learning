@@ -67,13 +67,17 @@ public class RegMemDialog extends JDialog {
 				MemberVO vo = new MemberVO(id, password, name, address, phoneNum);
 				
 				// optional**
+				// ID중복체크: 객체에 널(null) 허용하는 타입
+//				Optional<MemberVO> checkIdVO =  Optional.ofNullable(memberController.checkId(id));
+				
 				// ID중복체크
-				MemberVO checkIdVO = memberController.checkId(id);
+				MemberVO checkIdVO = memberController.checkId(id);  // id가 중복이 아니면 null(검색이 안되서) 중복이면 Id값이 들어있음(검색이 됬으니까)
 				System.out.println("checkIdVO.getMemId(): "+checkIdVO.getMemId());
-				if (checkIdVO.getMemId() == null) {  // id가 중복 체크 아니면
-					
+
+				if (checkIdVO.getMemId() == null) {  // 중복이 아닐시: null이면 중복아님
 					// 회원 정보 DB등록 요청
-					int result = memberController.regMember(vo);
+					int result = memberController.regMember(vo);  // 애초에 id가 서버에서 primary 설정이라 중복이면 안만들어지긴 함
+					System.out.println("result: "+result);  // 만들기 성공하면 1 실패하면 0
 					
 					if (result > 0) {
 						showMessage("새 회원을 등록했습니다.",result);
@@ -121,7 +125,7 @@ public class RegMemDialog extends JDialog {
 			JOptionPane.showMessageDialog(this,msg,"메시지박스",JOptionPane.INFORMATION_MESSAGE);
 
 		} else {
-			JOptionPane.showMessageDialog(this,msg,"메시지박스",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this,msg,"메시지박스",JOptionPane.WARNING_MESSAGE);
 			
 		}
 		

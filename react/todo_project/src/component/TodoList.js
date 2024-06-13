@@ -3,20 +3,20 @@ import TodoItem from './TodoItem.js';
 import {useState} from 'react';
 
 const TodoList = ({todo, onUpdate, onDelete})=> {
-    console.log(todo)
+    console.log(todo)  // todo todoitem들이 배열로 저장되어있음
 
     const [search, setSearch] = useState("");
     const onChangeSearch = (e) => {
         setSearch(e.target.value)
 
-        console.log("search: ",search)
+        console.log("search: ",search)  // 바뀌기전 값이 보이지만 setSearch 정상 작동했음
     }
 
     // 검색 필터 함수
     const getSearchResult = ()=> {
         return search === ""  // 비교문 ? 참인경우 : 참이 아닌 경우
                         ? todo  // 참인 경우
-                        : todo.filter((it)=>it.content.toLowerCase().includes(search.toLowerCase()))
+                        : todo.filter((it)=>it.content.toLowerCase().includes(search.toLowerCase()))  // includes  s주의
     }
 
     //  // 추가버튼 동작

@@ -66,7 +66,7 @@ public class MemberControllerImpl implements MemberController {
 		// 회원 등록시 중복 체크하는 dao 호출
 		MemberVO vo = new MemberVO();
 			try {
-				vo = memberDAO.checkId(memId);
+				vo = memberDAO.checkId(memId);  // 중복체크 : 찾아서 있으면 값이 들어있고 아니면 null
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				}
