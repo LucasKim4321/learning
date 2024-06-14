@@ -41,14 +41,14 @@ public class RegMemDialog extends JDialog {
 
 	private void init() {
 		lId 		= new JLabel("아이디");
-		lName 		= new JLabel("이름");
 		lPassword 	= new JLabel("비밀번호");
+		lName 		= new JLabel("이름");
 		lAddress 	= new JLabel("주소");
 		lPhoneNum 	= new JLabel("전화번호");
 		
 		tfId		= new JTextField(20);
-		tfName 		= new JTextField(20);
 		tfPassword 	= new JTextField(20);
+		tfName 		= new JTextField(20);
 		tfAddress 	= new JTextField(20);
 		tfPhoneNum 	= new JTextField(20);
 		
@@ -59,8 +59,8 @@ public class RegMemDialog extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				// 화면에 있는 값을 변수로 저장
 				String id 		= tfId.getText().trim();
-				String name 	= tfName.getText().trim();
 				String password = tfPassword.getText().trim();
+				String name 	= tfName.getText().trim();
 				String address 	= tfAddress.getText().trim();
 				String phoneNum = tfPhoneNum.getText().trim();
 				
@@ -97,11 +97,11 @@ public class RegMemDialog extends JDialog {
 		jPanel.add(lId);
 		jPanel.add(tfId);
 
-		jPanel.add(lName);
-		jPanel.add(tfName);
-
 		jPanel.add(lPassword);
 		jPanel.add(tfPassword);
+
+		jPanel.add(lName);
+		jPanel.add(tfName);
 
 		jPanel.add(lAddress);
 		jPanel.add(tfAddress);

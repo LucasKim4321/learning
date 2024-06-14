@@ -18,6 +18,7 @@ import chap19.common.base.AbstractBaseWindow;
 import chap19.member.controller.MemberController;
 import chap19.member.controller.MemberControllerImpl;
 import chap19.member.window.RegMemDialog;
+import chap19.member.window.SearchMemDialog;
 
 public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 가진 클랙스 상속
 
@@ -162,10 +163,13 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 					new RegMemDialog(memberController, "회원 등록창: ");
 					
 				} else if (e.getSource() == memMenu22) {
+					new SearchMemDialog(memberController, "회원 조회창: ");
 					
 				} else if (e.getSource() == memMenu23) {
+//					new ModMemDialog(memberController, "회원수정창"); // 아직 없음
 					
 				} else if (e.getSource() == memMenu24) {
+//					new DelMemDialog(memberController, "회원삭제창"); // 아직 없음
 					
 				}
 				

@@ -10,6 +10,7 @@ import chap19.member.controller.MemberControllerImpl;
 
 public class DelMemDialog {
 	// 회원 정보 삭제 화면
+	// 조회 후 추가로 삭제 화면 띄움
 	
 	// 회원 정보 삭제 요청 객체
 	MemberController memberController;
