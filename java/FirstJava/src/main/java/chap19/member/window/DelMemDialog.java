@@ -10,6 +10,8 @@ import chap19.member.controller.MemberControllerImpl;
 
 public class DelMemDialog {
 	// 회원 정보 삭제 화면
+	// 조회
+	
 	// 조회 후 추가로 삭제 화면 띄움
 	
 	// 회원 정보 삭제 요청 객체
@@ -17,7 +19,7 @@ public class DelMemDialog {
 	
 	// 화면 구성 요소 객체
 	JPanel jPanel;
-	JLabel lId, lName, lPassword, lAddress, lPhoneNum; 
+	JLabel lId, lName, lPassword, lAddress, lPhoneNum;
 	JTextField tfId, tfName, tfPassword, tfAddress, tfPhoneNum;
 	JButton btnReg;
 	

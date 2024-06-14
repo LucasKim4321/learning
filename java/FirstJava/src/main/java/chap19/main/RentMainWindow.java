@@ -17,6 +17,9 @@ import javax.swing.JTextField;
 import chap19.common.base.AbstractBaseWindow;
 import chap19.member.controller.MemberController;
 import chap19.member.controller.MemberControllerImpl;
+import chap19.member.window.ModMemDialog;
+import chap19.member.window.ModMemDialog1;
+import chap19.member.window.ModifyMemDialogT;
 import chap19.member.window.RegMemDialog;
 import chap19.member.window.SearchMemDialog;
 
@@ -166,7 +169,8 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 					new SearchMemDialog(memberController, "회원 조회창: ");
 					
 				} else if (e.getSource() == memMenu23) {
-//					new ModMemDialog(memberController, "회원수정창"); // 아직 없음
+//					new ModMemDialog(memberController, "회원 수정창");
+					new ModifyMemDialogT(memberController, getTitle());
 					
 				} else if (e.getSource() == memMenu24) {
 //					new DelMemDialog(memberController, "회원삭제창"); // 아직 없음

@@ -21,25 +21,27 @@ import javax.swing.event.ListSelectionListener;
 import chap19.common.RentTableModel;
 import chap19.member.controller.MemberController;
 import chap19.member.vo.MemberVO;
+import chap19.member.window.SearchMemDialog.ListColSelectionHandler;
+import chap19.member.window.SearchMemDialog.ListRowSelectionHandler;
+import chap19.member.window.SearchMemDialog.MemberBtnHandler;
 
-public class SearchMemDialog extends JDialog {
+public class ModMemDialog1 extends JDialog {
+
 //	명령어만 다르고 다루는 방식은 모든 언어가 다 비슷(똑같?)
+
 	
 	JPanel		panelSearch, panelBtn;
 	JTextField	tf;
 	JLabel		lMemName;
 	
 	JButton btnSearch;
-	JButton btnReg;
 	JButton btnModify;
-	JButton btnDelete;
 	
 	// 테이블
 	JTable memTable;
 
 	// 테이블UI 모델 객체
 	RentTableModel rentTableModel;
-	
 	// 테이블 모델
 	String[] columnNames = {"아이디","비밀번호","이름","주소","전화번호"};
 	Object[][] memItems = new String[0][5];  // 테이블에 표시될 회원 정보 저장(2차원 배열)
@@ -49,7 +51,7 @@ public class SearchMemDialog extends JDialog {
 	MemberController memberController;
 	
 	// 생성자
-	public SearchMemDialog(MemberController memberController, String str) {
+	public ModMemDialog1(MemberController memberController, String str) {
 		this.memberController = memberController;
 		
 		setTitle(str);
@@ -83,20 +85,14 @@ public class SearchMemDialog extends JDialog {
 		panelSearch.add(tf);
 		panelSearch.add(btnSearch);
 		
-		btnReg	  = new JButton("회원등록하기");
 		btnModify = new JButton("수정하기");
-		btnDelete = new JButton("삭제하기");
 		
 		// 각 버튼에 대한 이벤트 핸들러
 		btnSearch.addActionListener(new MemberBtnHandler());
-		btnReg.addActionListener(new MemberBtnHandler());  // 사용자 정의 이벤트 핸들러 추가
 		btnModify.addActionListener(new MemberBtnHandler());
-		btnDelete.addActionListener(new MemberBtnHandler());
 		
 		// 버튼에 관련 UI Panel
-		panelBtn.add(btnReg);
 		panelBtn.add(btnModify);
-		panelBtn.add(btnDelete);
 
 		// ------------------//
 		//      Table설정
@@ -117,7 +113,7 @@ public class SearchMemDialog extends JDialog {
 		add(panelBtn, BorderLayout.SOUTH);
 		
 		setLocation(300,100);	// 다이얼로그 출력 위치
-		setSize(800,600);		// 창의 크기
+		setSize(400,200);		// 창의 크기
 		setModal(true);			// 항상 부모창 위에 표시
 		setVisible(true);		// 대화창을 화면에 표시
 		
@@ -208,10 +204,6 @@ public class SearchMemDialog extends JDialog {
 				tf.setText("");  // 클리어 안하면 화면에 찌거기 데이터가 남음
 				return;
 				
-			} else if (e.getSource() == btnReg) {  // 추가 버튼 동작
-				new RegMemDialog(memberController, "회원 등록창");
-				return;
-				
 			} else if (e.getSource() == btnModify) {  // 수정 버튼 동작
 				memId		= (String) memItems[rowIdx][0];
 				memPassword = (String) memItems[rowIdx][1];
@@ -222,22 +214,8 @@ public class SearchMemDialog extends JDialog {
 				MemberVO memVO = new MemberVO(memId, memPassword, memName, memAddress, memPhoneNum);
 				System.out.println("수정 된 회원: "+memVO);
 				
-				memberController.modMember(memVO);
+				new ModMemDialog2(memberController, memVO, "회원 수정");
 				return;
-				
-			} else if (e.getSource() == btnDelete) {  // 삭제 버튼 동작
-				memId		= (String) memItems[rowIdx][0];
-				memPassword = (String) memItems[rowIdx][1];
-				memName		= (String) memItems[rowIdx][2];
-				memAddress	= (String) memItems[rowIdx][3];
-				memPhoneNum	= (String) memItems[rowIdx][4];
-				
-				MemberVO memVO = new MemberVO(memId, memPassword, memName, memAddress, memPhoneNum);
-				System.out.println("삭제 된 회원: "+memVO);
-				
-				memberController.removeMember(memVO);
-				return;
-				
 			}
 		}  // end actionPerformed
 	}  // end MemberBtnHandler
@@ -274,6 +252,5 @@ public class SearchMemDialog extends JDialog {
 		}
 		
 	}
-	
 	
 }

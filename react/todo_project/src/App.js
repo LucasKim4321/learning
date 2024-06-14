@@ -4,6 +4,7 @@ import {useState, useRef} from 'react';
 import Header from './component/header.js';
 import TodoEditor from './component/TodoEditor.js';
 import TodoList from './component/TodoList.js';
+import TestReducerComp from './component/TestReducercomp.js';
 
 // 함수 밖에 선언 전역 변수
 // 목데이터 설정
@@ -47,6 +48,9 @@ function App() {
   return (
     <div className='container'>
       <div className='contents alert alert-warning'>
+        <div>
+        <TestReducerComp/>
+        </div>
         <Header/>
         <TodoEditor onCreate={onCreate}/>
         <TodoList todo={todo} onUpdate={onUpdate} onDelete={onDelete}/>
