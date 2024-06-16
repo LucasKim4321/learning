@@ -15,12 +15,12 @@ CREATE table t_member (
 	PRIMARY KEY(memId)
 );
 
-CREATE table t_car (
-	carNumber		VARCHAR(30),  -- 차번호(PK)
-	carName			VARCHAR(30),  -- 차이름
-	carColor			VARCHAR(30),  -- 차색상
-	displacement	INT,			  -- 배기량displacement
-	manufacturer 	VARCHAR(50),  -- 제조사manufacturer
+	CREATE table t_car (
+		carNumber		VARCHAR(30),  -- 차번호(PK)
+		carName			VARCHAR(30),  -- 차이름
+		carColor			VARCHAR(30),  -- 차색상
+		displacement	INT,			  -- 배기량displacement
+		manufacturer 	VARCHAR(50),  -- 제조사manufacturer
 	PRIMARY KEY(carNumber)
 );
 

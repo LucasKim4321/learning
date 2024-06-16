@@ -14,12 +14,16 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import chap19.car.controller.CarController;
+import chap19.car.controller.CarControllerImpl;
+import chap19.car.window.DelCarDialog;
+import chap19.car.window.ModCarDialog;
+import chap19.car.window.SearchCarDialog;
 import chap19.common.base.AbstractBaseWindow;
 import chap19.member.controller.MemberController;
 import chap19.member.controller.MemberControllerImpl;
+import chap19.member.window.DelMemDialog;
 import chap19.member.window.ModMemDialog;
-import chap19.member.window.ModMemDialog1;
-import chap19.member.window.ModifyMemDialogT;
 import chap19.member.window.RegMemDialog;
 import chap19.member.window.SearchMemDialog;
 
@@ -47,6 +51,7 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 	
 	// MemberController
 	MemberController memberController;
+	CarController carController;
 	
 	// CarController
 	// ResController
@@ -61,6 +66,7 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 		helpMenu = new JMenu("도움말");
 		
 		memberController = new MemberControllerImpl();
+		carController = new CarControllerImpl();
 	}
 	
 	// 서브메뉴 생성 메서드
@@ -95,7 +101,7 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 		
 		// 4. 도움말
 		menuBar.add(helpMenu);
-		helpMenu.add(helpMenu41 = new JMenuItem("버전"));
+		helpMenu.add(helpMenu41 = new JMenuItem("프로그램 정보"));
 		
 		jPanel = new JPanel();
 		lCarName = new JLabel("차량번호");
@@ -169,13 +175,53 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 					new SearchMemDialog(memberController, "회원 조회창: ");
 					
 				} else if (e.getSource() == memMenu23) {
-//					new ModMemDialog(memberController, "회원 수정창");
-					new ModifyMemDialogT(memberController, getTitle());
+					new ModMemDialog(memberController, "회원 수정창");
+//					new ModifyMemDialogT(memberController, getTitle());
 					
 				} else if (e.getSource() == memMenu24) {
-//					new DelMemDialog(memberController, "회원삭제창"); // 아직 없음
+					new DelMemDialog(memberController, "회원 삭제창"); // 아직 없음
 					
 				}
+				
+				else if (e.getSource() == carMenu11) {
+					new RegMemDialog(memberController, "회원 등록창: ");
+//					new RegCarDialog(memberController, "차량 등록창: ");
+					
+				} else if (e.getSource() == carMenu12) {
+					new SearchCarDialog(memberController, "차량 조회창: ");
+					
+				} else if (e.getSource() == carMenu13) {
+					new ModCarDialog(carController, "차량 수정창");
+					
+				} else if (e.getSource() == carMenu14) {
+					new DelMemDialog(memberController, "회원 삭제창"); // 아직 없음
+//					new DelCarDialog(carController, "차량 삭제창"); // 아직 없음
+					
+				}
+				
+				else if (e.getSource() == resMenu31) {
+					new RegMemDialog(memberController, "회원 등록창: ");
+//					new SearchCarDialog(carController, "예약 등록창: ");
+					
+				} else if (e.getSource() == resMenu32) {
+					new SearchMemDialog(memberController, "회원 조회창: ");
+//					new SearchCarDialog(carController, "예약 조회창: ");
+					
+				} else if (e.getSource() == resMenu33) {
+					new ModCarDialog(carController, "차량 수정창");
+//					new ModCarDialog(carController, "예약 수정창");
+					
+				}else if (e.getSource() == resMenu34) {
+					new DelMemDialog(memberController, "회원 삭제창");
+//					new DelCarDialog(carController, "예약 삭제창"); // 아직 없음
+					
+				}
+				
+				else if (e.getSource() == helpMenu41) {
+					new DelMemDialog(memberController, "프로그램 정보");
+					
+				}
+				
 				
 			} catch (Exception e2) {System.out.println(e2.getMessage());}
 		}

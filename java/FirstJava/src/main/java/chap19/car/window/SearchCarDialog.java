@@ -1,4 +1,4 @@
-package chap19.member.window;
+package chap19.car.window;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -22,7 +22,7 @@ import chap19.common.RentTableModel;
 import chap19.member.controller.MemberController;
 import chap19.member.vo.MemberVO;
 
-public class SearchMemDialog extends JDialog {
+public class SearchCarDialog extends JDialog {
 //	명령어만 다르고 다루는 방식은 모든 언어가 다 비슷(똑같?)
 	
 	JPanel		panelSearch, panelBtn;
@@ -39,17 +39,17 @@ public class SearchMemDialog extends JDialog {
 
 	// 테이블UI 모델 객체
 	RentTableModel rentTableModel;
-	
+
 	// 테이블 모델
-	String[] columnNames = {"아이디","비밀번호","이름","주소","전화번호"};
-	Object[][] memItems = new String[0][5];  // 테이블에 표시될 회원 정보 저장(2차원 배열)
+	String[] columnNames = {"차량 번호","차종","색상","배기량","제조사"};
+	Object[][] memItems = new String[0][5];  // 테이블에 표시될 차량 정보 저장(2차원 배열)
 	int rowIdx = 0, colIdx = 0;  //  테이블 수정시 선택한 행과 열 인덱스 저장
 	
-	// 회원 관리 컨트롤러는 입력, 수정, 조회, 삭제 작업요청시 작업처리하는 객체
+	// 차량 관리 컨트롤러는 입력, 수정, 조회, 삭제 작업요청시 작업처리하는 객체
 	MemberController memberController;
 	
 	// 생성자
-	public SearchMemDialog(MemberController memberController, String str) {
+	public SearchCarDialog(MemberController memberController, String str) {
 		this.memberController = memberController;
 		
 		setTitle(str);
@@ -74,8 +74,8 @@ public class SearchMemDialog extends JDialog {
 		panelSearch = new JPanel();
 		panelBtn 	= new JPanel();
 		
-		lMemName	= new JLabel("이름");
-		tf 			= new JTextField("회원 이름을 입력하세요.");
+		lMemName	= new JLabel("차종");
+		tf 			= new JTextField("차종을 입력하세요.");
 		btnSearch   = new JButton("조회하기");
 		
 		// 검색에 관련 UI Panel
@@ -83,7 +83,7 @@ public class SearchMemDialog extends JDialog {
 		panelSearch.add(tf);
 		panelSearch.add(btnSearch);
 		
-		btnReg	  = new JButton("회원등록하기");
+		btnReg	  = new JButton("차량등록하기");
 		btnModify = new JButton("수정하기");
 		btnDelete = new JButton("삭제하기");
 		
@@ -124,13 +124,13 @@ public class SearchMemDialog extends JDialog {
 		
 	}
 	
-	// 회원 정보를 받아 테이블 데이터 모델에 전달하여 테이블 view에 표시하는 메서드
+	// 차량 정보를 받아 테이블 데이터 모델에 전달하여 테이블 view에 표시하는 메서드
 	private void loadTableData(List<MemberVO> memList) {
 		
-		// 넘겨받은 회원정보 List에 회원정보가 있으면 처리
+		// 넘겨받은 차량정보 List에 차량정보가 있으면 처리
 		if (memList != null && memList.size() != 0 ) {  // list가 null이 아니고 list값이 비어있지 않으면
 			
-			// 회원정보 -> 테이블 데이터로 전환
+			// 차량정보 -> 테이블 데이터로 전환
 			memItems = new String[memList.size()][5];  // List의 개수 만큼 테이블 행을 설정
 			
 			for (int i=0; i<memList.size(); i++) {
@@ -165,7 +165,7 @@ public class SearchMemDialog extends JDialog {
 		JOptionPane.showMessageDialog(this, msg, "메시지 박스", JOptionPane.QUESTION_MESSAGE);  // promt랑 비슷?
 	}
 	
-	// 회원관리 이벤트를 처리하는 클래스(내부 클래스 이벤트 핸들러)
+	// 차량관리 이벤트를 처리하는 클래스(내부 클래스 이벤트 핸들러)
 	class MemberBtnHandler implements ActionListener {
 		String memId			= null;
 		String memPassword		= null;
@@ -210,7 +210,7 @@ public class SearchMemDialog extends JDialog {
 				return;
 				
 			} else if (e.getSource() == btnReg) {  // 추가 버튼 동작
-				new RegMemDialog(memberController, "회원 등록창");
+				new RegCarDialog(memberController, "차량 등록창");
 				return;
 				
 			} else if (e.getSource() == btnModify) {  // 수정 버튼 동작
@@ -221,7 +221,7 @@ public class SearchMemDialog extends JDialog {
 				memPhoneNum	= (String) memItems[rowIdx][4];
 				
 				MemberVO memVO = new MemberVO(memId, memPassword, memName, memAddress, memPhoneNum);
-				System.out.println("수정 된 회원: "+memVO);
+				System.out.println("수정 된 차량: "+memVO);
 				
 				memberController.modMember(memVO);
 				return;
@@ -234,7 +234,7 @@ public class SearchMemDialog extends JDialog {
 				memPhoneNum	= (String) memItems[rowIdx][4];
 				
 				MemberVO memVO = new MemberVO(memId, memPassword, memName, memAddress, memPhoneNum);
-				System.out.println("삭제 된 회원: "+memVO);
+				System.out.println("삭제 된 차량: "+memVO);
 				
 				memberController.removeMember(memVO);
 				return;

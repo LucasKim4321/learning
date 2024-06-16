@@ -1,4 +1,4 @@
-package chap19.member.window;
+package chap19.car.window;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import chap19.member.controller.MemberController;
 import chap19.member.vo.MemberVO;
 
-public class RegMemDialog extends JDialog {
+public class RegCarDialog extends JDialog {
 	// 회원 정보 등록 화면
 	
 	// 회원 정보 등록 요청 객체
@@ -28,7 +28,7 @@ public class RegMemDialog extends JDialog {
 	JButton btnReg;
 
 	// 생성자	
-	public RegMemDialog(MemberController memberController, String str) {
+	public RegCarDialog(MemberController memberController, String str) {
 		System.out.println("2. membercotrollor: "+memberController);
 		
 		this.memberController = memberController;
@@ -40,11 +40,11 @@ public class RegMemDialog extends JDialog {
 	}
 
 	private void init() {
-		lId 		= new JLabel("아이디");
-		lPassword 	= new JLabel("비밀번호");
-		lName 		= new JLabel("이름");
-		lAddress 	= new JLabel("주소");
-		lPhoneNum 	= new JLabel("전화번호");
+		lId 		= new JLabel("차량 번호");
+		lPassword 	= new JLabel("색상");
+		lName 		= new JLabel("차종");
+		lAddress 	= new JLabel("배기량");
+		lPhoneNum 	= new JLabel("제조사");
 		
 		tfId		= new JTextField(20);
 		tfPassword 	= new JTextField(20);
@@ -97,11 +97,11 @@ public class RegMemDialog extends JDialog {
 		jPanel.add(lId);
 		jPanel.add(tfId);
 
-		jPanel.add(lPassword);
-		jPanel.add(tfPassword);
-
 		jPanel.add(lName);
 		jPanel.add(tfName);
+		
+		jPanel.add(lPassword);
+		jPanel.add(tfPassword);
 
 		jPanel.add(lAddress);
 		jPanel.add(tfAddress);

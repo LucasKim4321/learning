@@ -1,4 +1,4 @@
-package chap19.member.window;
+package chap19.car.window;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import chap19.member.controller.MemberController;
 import chap19.member.vo.MemberVO;
 
-public class DelMemDialog extends JDialog {
+public class DelCarDialog extends JDialog {
 	// 회원 정보 등록 화면
 	
 	// 회원 정보 등록 요청 객체
@@ -30,7 +30,7 @@ public class DelMemDialog extends JDialog {
 	JButton btnSearch, btnDelete, btnCancel;
 
 	// 생성자	
-	public DelMemDialog(MemberController memberController, String str) {
+	public DelCarDialog(MemberController memberController, String str) {
 		
 		this.memberController = memberController;
 				

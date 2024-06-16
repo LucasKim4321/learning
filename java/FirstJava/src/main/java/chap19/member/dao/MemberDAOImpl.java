@@ -149,7 +149,6 @@ public class MemberDAOImpl extends AbstractBaseDAO implements MemberDAO{
 
 		rs = pstmt.executeQuery();
 
-
 		while(rs.next()) {
 			String memId 		= rs.getString("memId");
 			String memPassword 	= rs.getString("memPassword");
