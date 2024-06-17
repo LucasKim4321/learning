@@ -69,16 +69,16 @@ INSERT INTO t_car (
 		manufacturer,  -- 제조사manufacturer(char)
 		segment)  -- 크기(char)
 VALUES
-	('20다4567','HyundaiI30','white','1353','Hyundai','C'),
-	('20다4566','KiaRay','red','800','Hyundai','A'),
-	('20다4565','MiniCountryman','black','1100','Mini','B'),
-	('20다4568','AudiA3','gray','1353','Audi','C'),
-	('20다4569','BMW3Series','gray','1700','BMW','D'),
-	('20다4564','ToyotaAvalon','blue','2100','Toyota','E'),
-	('20다4563','BenzSClass','silver','2200','Benz','F'),
-	('20다4562','LamborghiniMurcielago','yello','6192','Lamborghini','S'),
-	('20다4570','KIACarnival','gray','2902','KIA','M'),
-	('20다4571','Wrangler','green','1995','Jeep','J');
+	('20다4567','HyundaiI30','white','1353','Hyundai','준중형차'),
+	('20다4566','KiaRay','red','800','Hyundai','경차'),
+	('20다4565','MiniCountryman','black','1100','Mini','소형차'),
+	('20다4568','AudiA3','gray','1353','Audi','준중형차'),
+	('20다4569','BMW3Series','gray','1700','BMW','중형차'),
+	('20다4564','ToyotaAvalon','blue','2100','Toyota','준대형차'),
+	('20다4563','BenzSClass','silver','2200','Benz','대형차'),
+	('20다4562','LamborghiniMurcielago','yello','6192','Lamborghini','스포츠카'),
+	('20다4570','KIACarnival','gray','2902','KIA','미니밴'),
+	('20다4571','Wrangler','green','1995','Jeep','SUV');
 	
 
 INSERT t_res (
@@ -102,9 +102,9 @@ returnDate ADDDATE(returnDate,INTERVAL 1 DAY)
 WHERE resNumber = '1234';
 	
 SELECT * FROM t_member;
-SELECT * FROM t_res;
+SELECT * FROM t_car;
 	
-DELETE FROM t_member;
+DELETE FROM t_car;
 DROP TABLE t_car;
 
 SELECT * FROM t_car WHERE carNumber = '20다4562';
@@ -119,6 +119,11 @@ WHERE carNumber = '2222';
 
 UPDATE t_member SET memPassword = '5555', memName = '5555', memAddress = '5555', memPhoneNum = '5555' WHERE memId = 'hong600';
 
+
+--	('1234','2024-1-4','2024-1-4','2024-1-8','20다4569','hong500'),
+-- !(_wanttedStartDate2 >= startDate2 && _wanttedReturnDate2 <= returnDate2)
+
+SELECT * FROM t_res WHERE (startDate <= '2024-1-5' AND '2024-1-5' < returnDate)or(startDate < '2024-1-5' AND '2024-1-5' >= returnDate);
 
 SELECT * FROM t_member WHERE memId = 'hong600';
 SELECT * FROM t_member;
