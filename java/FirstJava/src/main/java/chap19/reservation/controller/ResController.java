@@ -1,7 +1,9 @@
 package chap19.reservation.controller;
 
+import java.sql.Date;
 import java.util.List;
 
+import chap19.car.vo.CarVO;
 import chap19.reservation.vo.ResVO;
 
 public interface ResController {
@@ -16,10 +18,14 @@ public interface ResController {
 	
 	// 삭제
 	public int removeRes(ResVO resVO);
+
+	// 차 체크
+	public CarVO checkCar(String segment);
 	
-	// 체크
-	public ResVO checkResNum(ResVO resVO);
-	
-	// date.valueof
-	//
+	// 예약 체크
+	public ResVO checkRes(String type, String value);
+
+	// 예약 가능 날짜 체크
+	public List<ResVO> checkAvailableDate(Date startDate, Date returnDate);
+
 }

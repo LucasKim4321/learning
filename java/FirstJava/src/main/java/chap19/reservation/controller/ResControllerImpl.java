@@ -1,8 +1,10 @@
 package chap19.reservation.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import chap19.car.vo.CarVO;
 import chap19.reservation.dao.ResDAO;
 import chap19.reservation.dao.ResDAOImpl;
 import chap19.reservation.vo.ResVO;
@@ -64,7 +66,13 @@ public class ResControllerImpl implements ResController{
 	}
 
 	@Override
-	public ResVO checkResNum(ResVO resVO) {
+	public CarVO checkCar(String segment) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ResVO checkRes(String type, String value) {
 		// 체크
 		ResVO vo = new ResVO();
 		
@@ -73,5 +81,15 @@ public class ResControllerImpl implements ResController{
 //		} catch (Exception e) {System.out.println(e.getMessage());}
 		return vo;
 	}
+	
+	@Override
+	public List<ResVO> checkAvailableDate(Date startDate, Date returnDate) {
+		
+		
+		return null;
+		
+	}
+ 
+	
 
 }

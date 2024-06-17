@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import chap19.car.vo.CarVO;
 import chap19.common.base.AbstractBaseDAO;
 import chap19.reservation.vo.ResVO;
 
@@ -88,13 +89,107 @@ public class ResDAOImpl extends AbstractBaseDAO implements ResDAO {
 
 	@Override
 	public int deleteRes(ResVO resVO) throws Exception {
-		// TODO Auto-generated method stub
 		return 0;
+
 	}
 
 	@Override
-	public int checkResNum(String resNumber) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public CarVO checkCar(String value) throws Exception {
+		int result = 0;
+		String _value = value;
+		
+		CarVO vo = new CarVO();
+		
+		String sql = "SELECT * FROM t_car WHERE segment = ?";
+		
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, _value);  // 입력한 이름으로 테이블상의 데이터 검색
+		
+		rs = pstmt.executeQuery();
+
+		
+		while(rs.next()) {
+			String carNumber	= rs.getString("carNumber");
+			String carName 		= rs.getString("carName");
+			String carColor 	= rs.getString("carColor");
+			int displacement 	= rs.getInt("displacement");
+			String manufacturer = rs.getString("manufacturer");
+			String segment 		= rs.getString("segment");
+			
+			vo.setCarNumber(carNumber);
+			vo.setCarColor(carColor);
+			vo.setCarName(carName);
+			vo.setDisplacement(displacement);
+			vo.setManufacturer(manufacturer);
+			vo.setSegment(segment);
+		
+		}
+		return vo;
 	}
+
+	@Override
+	public ResVO checkRes(String type, String value) throws Exception {
+		int result = 0;
+		String _type = type;
+		String _value = value;
+		
+		ResVO vo = new ResVO();
+		
+		String sql = "SELECT * FROM t_res WHERE "+_type+" = ?";
+		
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1,  _value);  // 입력한 이름으로 테이블상의 데이터 검색
+		
+		rs = pstmt.executeQuery();
+
+		
+		while(rs.next()) {
+			
+			String resNumber		= rs.getString("resNumber");  // 예약번호
+			Date resDate 			= rs.getDate("resDate");  // 예약번호
+			Date startDate			= rs.getDate("startDate");  // 이용시작일자
+			Date returnDate 		= rs.getDate("returnDate");  // 반납일자
+			String resCarNumber		= rs.getString("resCarNumber"); // 예약차번호
+			String resUserId 		= rs.getString("resUserId");  // 예약자아이디
+			
+			vo.setResNumber(resNumber);
+			vo.setResDate(resDate);
+			vo.setStartDate(startDate);
+			vo.setReturnDate(returnDate);
+			vo.setResCarNumber(resCarNumber);
+			vo.setResUserId(resUserId);
+		
+		}
+		return vo;
+	}
+	
+	@Override
+	public List<ResVO> checkAvailableDate(Date wanttedStartDate, Date wanttedReturnDate) throws Exception {
+		int result = 0;
+		Date _wanttedStartDate = wanttedStartDate;
+		Date _wanttedReturnDate = wanttedReturnDate;
+
+		List<ResVO> availableCars = new ArrayList<ResVO>();
+		availableCars = selectRes(null);  // 예약목록 전부 불러옴
+		
+		for (int i=0; i<availableCars.size(); i++) {
+			ResVO resVO = availableCars.get(i);
+			Date startDate = resVO.getStartDate();
+			Date returnDate = resVO.getReturnDate();
+			
+//			if(!((_wanttedStartDate >= startDate && _wanttedStartDate < returnDate)&&(_wanttedReturnDate <= returnDate && _wanttedReturnDate > startDate)));
+//			if(!(_wanttedStartDate2 >= startDate2 && _wanttedReturnDate2 <= returnDate2)) {}
+				
+			
+		}
+		
+		
+		return availableCars;
+		
+		
+		
+	}
+ 
+
+
 }

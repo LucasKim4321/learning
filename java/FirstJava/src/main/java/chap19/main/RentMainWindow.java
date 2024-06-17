@@ -27,6 +27,9 @@ import chap19.member.window.DelMemDialog;
 import chap19.member.window.ModMemDialog;
 import chap19.member.window.RegMemDialog;
 import chap19.member.window.SearchMemDialog;
+import chap19.reservation.controller.ResController;
+import chap19.reservation.controller.ResControllerImpl;
+import chap19.reservation.window.RegResDialog;
 
 public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 가진 클랙스 상속
 
@@ -53,6 +56,7 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 	// MemberController
 	MemberController memberController;
 	CarController carController;
+	ResController resController;
 	
 	// CarController
 	// ResController
@@ -68,6 +72,7 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 		
 		memberController = new MemberControllerImpl();
 		carController = new CarControllerImpl();
+		resController = new ResControllerImpl();
 	}
 	
 	// 서브메뉴 생성 메서드
@@ -199,20 +204,20 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 				}
 				
 				else if (e.getSource() == resMenu31) {
-					new RegMemDialog(memberController, "회원 등록창: ");
-//					new SearchCarDialog(carController, "예약 등록창: ");
+//					new RegMemDialog(memberController, "회원 등록창: ");
+					new RegResDialog(resController, "예약 등록창: ");
 					
 				} else if (e.getSource() == resMenu32) {
 					new SearchMemDialog(memberController, "회원 조회창: ");
-//					new SearchCarDialog(carController, "예약 조회창: ");
+//					new SearchResDialog(resController, "예약 조회창: ");
 					
 				} else if (e.getSource() == resMenu33) {
 					new ModCarDialog(carController, "차량 수정창");
-//					new ModCarDialog(carController, "예약 수정창");
+//					new ModResDialog(resController, "예약 수정창");
 					
 				}else if (e.getSource() == resMenu34) {
 					new DelMemDialog(memberController, "회원 삭제창");
-//					new DelCarDialog(carController, "예약 삭제창"); // 아직 없음
+//					new DelResDialog(resController, "예약 삭제창"); // 아직 없음
 					
 				}
 				

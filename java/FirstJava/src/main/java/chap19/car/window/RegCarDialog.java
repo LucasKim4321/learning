@@ -25,7 +25,7 @@ public class RegCarDialog extends JDialog {
 	JPanel jPanel, btnPanel;
 	JLabel lCarNumber, lCarName, lCarColor, lDisplacement, lManufacturer,lSegment;
 	JTextField tfCarNumber, tfCarcarName, tfCarColor, tfDisplacement, tfManufacturer,tfSegment;
-	JButton btnModify, btnCancel;
+	JButton btnRegister, btnCancel;
 
 	// 생성자	
 	public RegCarDialog(CarController carController, String str) {
@@ -55,13 +55,15 @@ public class RegCarDialog extends JDialog {
 
 		// 검색에 관련 UI Panel
 		
+		
+		
 		btnPanel = new JPanel();
-		btnModify = new JButton("등록");
+		btnRegister = new JButton("등록");
 		btnCancel = new JButton("취소");
 		
-		btnPanel.add(btnModify);
+		btnPanel.add(btnRegister);
 		btnPanel.add(btnCancel);
-		btnModify.addActionListener(new MemberBtnHandler());
+		btnRegister.addActionListener(new MemberBtnHandler());
 		btnCancel.addActionListener(new MemberBtnHandler());
 
 		
@@ -99,7 +101,7 @@ public class RegCarDialog extends JDialog {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 				
-			if(e.getSource() == btnModify) {
+			if(e.getSource() == btnRegister) { 
 				// 화면에 있는 값을 변수로 저장
 				String carNumber 		= tfCarNumber.getText().trim();
 				String carColor = tfCarColor.getText().trim();
@@ -117,12 +119,12 @@ public class RegCarDialog extends JDialog {
 				
 				if (result > 0) {
 					showMessage("차량을 등록했습니다.",result);
-				
+					
 				} else {
 					showMessage("차량 등록 실패",result);
 				}
 				
-			} else if (e.getSource()==btnCancel){//삭제 
+			} else if (e.getSource()==btnCancel){  // 취소 
 				dispose();
 				return;
 			}
