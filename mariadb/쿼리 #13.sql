@@ -120,10 +120,8 @@ WHERE carNumber = '2222';
 UPDATE t_member SET memPassword = '5555', memName = '5555', memAddress = '5555', memPhoneNum = '5555' WHERE memId = 'hong600';
 
 
---	('1234','2024-1-4','2024-1-4','2024-1-8','20다4569','hong500'),
--- !(_wanttedStartDate2 >= startDate2 && _wanttedReturnDate2 <= returnDate2)
-
-SELECT * FROM t_res WHERE (startDate <= '2024-1-5' AND '2024-1-5' < returnDate)or(startDate < '2024-1-5' AND '2024-1-5' >= returnDate);
+-- SELECT * FROM t_res WHERE not(('2024-4-2' <= startDate and startDate < '2024-4-9')OR('2024-4-2' < returnDate and returnDate <= '2024-4-9')); 반납일에도 시작 가능  반납일에 시작할 경우 시간으로 세분화
+SELECT * FROM t_res WHERE not(('2024-4-2' <= startDate and startDate <= '2024-4-9')OR('2024-4-2' <= returnDate and returnDate <= '2024-4-9'));  -- 반납일에 시작 불가능
 
 SELECT * FROM t_member WHERE memId = 'hong600';
 SELECT * FROM t_member;

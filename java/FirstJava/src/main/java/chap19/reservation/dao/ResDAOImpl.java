@@ -164,28 +164,47 @@ public class ResDAOImpl extends AbstractBaseDAO implements ResDAO {
 	}
 	
 	@Override
-	public List<ResVO> checkAvailableDate(Date wanttedStartDate, Date wanttedReturnDate) throws Exception {
+	public List<ResVO> checkDate(Date wanttedStart, Date wanttedReturn) throws Exception {
 		int result = 0;
-		Date _wanttedStartDate = wanttedStartDate;
-		Date _wanttedReturnDate = wanttedReturnDate;
+		Date _wanttedStart = wanttedStart;
+		Date _wanttedReturn = wanttedReturn;
 
 		List<ResVO> availableCars = new ArrayList<ResVO>();
-		availableCars = selectRes(null);  // 예약목록 전부 불러옴
+//		availableCars = selectRes(null);  // 예약목록 전부 불러옴
 		
-		for (int i=0; i<availableCars.size(); i++) {
-			ResVO resVO = availableCars.get(i);
-			Date startDate = resVO.getStartDate();
-			Date returnDate = resVO.getReturnDate();
+		String sql = "";
+		
+		sql = "SELECT * FROM t_res WHERE not((? <= startDate and startDate <= ?)OR(? <= returnDate and returnDate <= ?))";
+		
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setDate(1, _wanttedStart);
+		pstmt.setDate(2, _wanttedReturn);
+		pstmt.setDate(3, _wanttedStart);
+		pstmt.setDate(4, _wanttedReturn);
+		
+		rs = pstmt.executeQuery();
+		
+		while(rs.next()) {
+			String resNumber	= rs.getString("resNumber");  // 예약번호
+			Date resDate		= rs.getDate("resDate");  // 예약날짜
+			Date startDate  	= rs.getDate("startDate"); // 이용시작일자
+			Date returnDate 	= rs.getDate("returnDate");  // 반납일자
+			String resCarNumber	= rs.getString("resCarNumber");  // 예약차번호
+			String resUserId	= rs.getString("resUserId");  // 예약자아이디
 			
-//			if(!((_wanttedStartDate >= startDate && _wanttedStartDate < returnDate)&&(_wanttedReturnDate <= returnDate && _wanttedReturnDate > startDate)));
-//			if(!(_wanttedStartDate2 >= startDate2 && _wanttedReturnDate2 <= returnDate2)) {}
-				
+			ResVO vo = new ResVO();
+			vo.setResNumber(resNumber);
+			vo.setResDate(resDate);
+			vo.setStartDate(startDate);
+			vo.setReturnDate(returnDate);
+			vo.setResCarNumber(resCarNumber);
+			vo.setResUserId(resUserId);
 			
+			availableCars.add(vo);
 		}
-		
+		rs.close();
 		
 		return availableCars;
-		
 		
 		
 	}

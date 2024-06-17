@@ -204,7 +204,6 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 				}
 				
 				else if (e.getSource() == resMenu31) {
-//					new RegMemDialog(memberController, "회원 등록창: ");
 					new RegResDialog(resController, "예약 등록창: ");
 					
 				} else if (e.getSource() == resMenu32) {

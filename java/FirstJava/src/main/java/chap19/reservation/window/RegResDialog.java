@@ -42,7 +42,7 @@ public class RegResDialog extends JDialog {
 
 	private void init() {
 		searchPanel		= new JPanel();
-		lSearchSegment	= new JLabel("차량크기");
+		lSearchSegment	= new JLabel("차량 크기");
 		tfSearch		= new JTextField(20);
 		btnSearch		= new JButton("검색");
 		

@@ -83,7 +83,7 @@ public class ResControllerImpl implements ResController{
 	}
 	
 	@Override
-	public List<ResVO> checkAvailableDate(Date startDate, Date returnDate) {
+	public List<ResVO> checkDate(Date startDate, Date returnDate) {
 		
 		
 		return null;
