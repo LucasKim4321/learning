@@ -11,7 +11,7 @@ CREATE table t_member (
 	memPassword		VARCHAR(30),  -- 비밀번호
 	memName			VARCHAR(30),  -- 이름
 	memAddress		VARCHAR(100),  -- 주소
-	memPhoneNum    VARCHAR(20)	,  -- 전화번호
+	memPhoneNum    VARCHAR(20),  -- 전화번호
 	PRIMARY KEY(memId)
 );
 
@@ -21,6 +21,8 @@ CREATE table t_member (
 		carColor			VARCHAR(30),  -- 차색상
 		displacement	INT,			  -- 배기량displacement
 		manufacturer 	VARCHAR(50),  -- 제조사manufacturer
+		segment			VARCHAR(30),  -- 크기
+		
 	PRIMARY KEY(carNumber)
 );
 
@@ -44,11 +46,11 @@ DROP TABLE t_member;
 DROP TABLE t_car;
 
 INSERT INTO t_member (
-	memId,
-	memPassword,
-	memName,
-	memAddress,
-	memPhoneNum
+	memId,  -- (char)
+	memPassword,  -- (char)
+	memName,  -- (char)
+	memAddress,  -- (char)
+	memPhoneNum  -- (char)
 )
 VALUES 
 	('hong100','1234','홍길동','서울','010-1234-1234'),
@@ -58,9 +60,67 @@ VALUES
 	('hong600','3456','홍길동','인천','010-1234-7777'),
 	('hong200','2345','동길동','부산','010-2345-2345');
 	
+		
+INSERT INTO t_car (
+		carNumber,-- 차번호(char)(PK)
+		carName,  -- 차이름(char)
+		carColor,  -- 차색상(char)
+		displacement,  -- 배기량displacement  (int)
+		manufacturer,  -- 제조사manufacturer(char)
+		segment)  -- 크기(char)
+VALUES
+	('20다4567','HyundaiI30','white','1353','Hyundai','C'),
+	('20다4566','KiaRay','red','800','Hyundai','A'),
+	('20다4565','MiniCountryman','black','1100','Mini','B'),
+	('20다4568','AudiA3','gray','1353','Audi','C'),
+	('20다4569','BMW3Series','gray','1700','BMW','D'),
+	('20다4564','ToyotaAvalon','blue','2100','Toyota','E'),
+	('20다4563','BenzSClass','silver','2200','Benz','F'),
+	('20다4562','LamborghiniMurcielago','yello','6192','Lamborghini','S'),
+	('20다4570','KIACarnival','gray','2902','KIA','M'),
+	('20다4571','Wrangler','green','1995','Jeep','J');
+	
+
+INSERT t_res (
+		resNumber,  -- 예약번호(char)(PK)
+		resDate,  -- 예약날짜  (DATE)
+		startDate,  -- 이용시작일자  (DATE)
+		returnDate,  -- 반납일자  (DATE)
+		resCarNumber,  -- 예약차번호(char)(FK)
+		resUserId)  -- 예약자아이디(char)(FK)
+VALUES
+	('1234','2024-1-4','2024-1-4','2024-1-8','20다4569','hong500'),
+	('1235','2024-2-1','2024-2-1','2024-3-1','20다4563','hong200'),
+	('1236','2024-3-28','2024-3-28','2024-4-2','20다4571','hong400'),
+	('1237','2024-4-16','2024-4-16','2024-4-17','20다4562','hong100');
+	
+UPDATE t_res
+SET 
+resDate ADDDATE(resDate,INTERVAL 1 DAY),
+startDate ADDDATE(startDate,INTERVAL 1 DAY),
+returnDate ADDDATE(returnDate,INTERVAL 1 DAY)
+WHERE resNumber = '1234';
+	
+SELECT * FROM t_member;
+SELECT * FROM t_res;
+	
 DELETE FROM t_member;
-DROP TABLE t_member;
+DROP TABLE t_car;
+
+SELECT * FROM t_car WHERE carNumber = '20다4562';
+SELECT * FROM t_car WHERE carNumber = '2222';
+UPDATE t_car 
+SET carName = '5555',
+	 displacement = 1111,
+	 carColor = '5555',
+	 manufacturer = '5555',
+	 segment = '5555'
+WHERE carNumber = '2222';
+
+UPDATE t_member SET memPassword = '5555', memName = '5555', memAddress = '5555', memPhoneNum = '5555' WHERE memId = 'hong600';
+
 
 SELECT * FROM t_member WHERE memId = 'hong600';
 SELECT * FROM t_member;
+SELECT * FROM t_car;
 SELECT * FROM t_member WHERE memName = '홍길동' ORDER BY memId;
