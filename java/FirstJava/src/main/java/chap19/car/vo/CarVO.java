@@ -15,4 +15,5 @@ public class CarVO {
 	private String carColor;
 	private int displacement;
 	private String manufacturer;
+	private String segment;
 }

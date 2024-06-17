@@ -23,8 +23,8 @@ public class ModCarDialog extends JDialog {
 	
 	// 화면 구성 요소 객체
 	JPanel jPanel, searchPanel, btnPanel;
-	JLabel lSearchId, lCarNumber, lCarName, lCarColor, lDisplacement, lManufacturer;
-	JTextField tfSearch, tfCarNumber, tfCarcarName, tfCarColor, tfDisplacement, tfManufacturer;
+	JLabel lSearchId, lCarNumber, lCarName, lCarColor, lDisplacement, lManufacturer,lSegment;
+	JTextField tfSearch, tfCarNumber, tfCarName, tfCarColor, tfDisplacement, tfManufacturer,tfSegment;
 	JButton btnSearch, btnModify, btnCancel;
 
 	// 생성자	
@@ -44,16 +44,18 @@ public class ModCarDialog extends JDialog {
 		btnSearch   = new JButton("조회");
 		
 		lCarNumber 		= new JLabel("차량 번호");
-		lCarColor 	= new JLabel("색상");
+		lCarColor		= new JLabel("색상");
 		lCarName 		= new JLabel("차종");
 		lDisplacement 	= new JLabel("배기량");
 		lManufacturer 	= new JLabel("제조사");
+		lSegment		= new JLabel("크기");
 		
 		tfCarNumber		= new JTextField(20);
-		tfCarColor 	= new JTextField(20);
-		tfCarcarName 		= new JTextField(20);
+		tfCarColor		= new JTextField(20);
+		tfCarName 	= new JTextField(20);
 		tfDisplacement 	= new JTextField(20);
 		tfManufacturer 	= new JTextField(20);
+		tfSegment		= new JTextField(20);
 		
 
 		// 검색에 관련 UI Panel
@@ -78,7 +80,7 @@ public class ModCarDialog extends JDialog {
 		jPanel.add(tfCarNumber);
 
 		jPanel.add(lCarName);
-		jPanel.add(tfCarcarName);
+		jPanel.add(tfCarName);
 
 		jPanel.add(lCarColor);
 		jPanel.add(tfCarColor);
@@ -89,6 +91,9 @@ public class ModCarDialog extends JDialog {
 		jPanel.add(lManufacturer);
 		jPanel.add(tfManufacturer);
 
+		jPanel.add(lSegment);
+		jPanel.add(tfSegment);
+		
 //		searchPanel.add(jPanel, BorderLayout.SOUTH);
 		add(searchPanel, BorderLayout.NORTH);
 		add(jPanel, BorderLayout.CENTER);
@@ -117,9 +122,10 @@ public class ModCarDialog extends JDialog {
 						
 						tfCarNumber.setText(searchedVO.getCarNumber());
 						tfCarColor.setText(searchedVO.getCarColor());
-						tfCarcarName.setText(searchedVO.getCarName());
+						tfCarName.setText(searchedVO.getCarName());
 						tfDisplacement.setText(Integer.toString(searchedVO.getDisplacement()));
 						tfManufacturer.setText(searchedVO.getManufacturer());
+						tfSegment.setText(searchedVO.getSegment());
 						
 					} else {  // 없을 경우
 						showMessage("아이디가 존재하지 않습니다.", -1);
@@ -134,11 +140,12 @@ public class ModCarDialog extends JDialog {
 				// 화면에 있는 값을 변수로 저장
 				String carNumber 		= tfCarNumber.getText().trim();
 				String carColor = tfCarColor.getText().trim();
-				String carName 	= tfCarcarName.getText().trim();
+				String carName 	= tfCarName.getText().trim();
 				String displacement 	= tfDisplacement.getText().trim();
 				String manufacturer = tfManufacturer.getText().trim();
+				String segment = tfSegment.getText().trim();
 				
-				CarVO vo = CarVO.builder().carNumber(carNumber).carColor(carColor).carName(carName).displacement(Integer.valueOf(displacement) ).manufacturer(manufacturer).build();
+				CarVO vo = CarVO.builder().carNumber(carNumber).carColor(carColor).carName(carName).displacement(Integer.valueOf(displacement) ).manufacturer(manufacturer).segment(segment).build();
 				System.out.println("modify CarVO:"+vo);
 				
 				// 회원 정보 DB수정 요청

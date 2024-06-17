@@ -18,16 +18,16 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import chap19.common.RentTableModel;
-import chap19.member.controller.MemberController;
-import chap19.member.vo.MemberVO;
+import chap19.car.controller.CarController;
+import chap19.car.vo.CarVO;
+import chap19.common.CarRentTableModel;
 
 public class SearchCarDialog extends JDialog {
 //	명령어만 다르고 다루는 방식은 모든 언어가 다 비슷(똑같?)
 	
 	JPanel		panelSearch, panelBtn;
 	JTextField	tf;
-	JLabel		lMemName;
+	JLabel		lCarName;
 	
 	JButton btnSearch;
 	JButton btnReg;
@@ -35,22 +35,22 @@ public class SearchCarDialog extends JDialog {
 	JButton btnDelete;
 	
 	// 테이블
-	JTable memTable;
+	JTable carTable;
 
 	// 테이블UI 모델 객체
-	RentTableModel rentTableModel;
+	CarRentTableModel carRentTableModel;
 
 	// 테이블 모델
-	String[] columnNames = {"차량 번호","차종","색상","배기량","제조사"};
-	Object[][] memItems = new String[0][5];  // 테이블에 표시될 차량 정보 저장(2차원 배열)
+	String[] columnNames = {"차량 번호","차종","색상","배기량","제조사","크기"};
+	Object[][] carItems = new String[0][6];  // 테이블에 표시될 차량 정보 저장(2차원 배열)
 	int rowIdx = 0, colIdx = 0;  //  테이블 수정시 선택한 행과 열 인덱스 저장
 	
 	// 차량 관리 컨트롤러는 입력, 수정, 조회, 삭제 작업요청시 작업처리하는 객체
-	MemberController memberController;
+	CarController carController;
 	
 	// 생성자
-	public SearchCarDialog(MemberController memberController, String str) {
-		this.memberController = memberController;
+	public SearchCarDialog(CarController carController, String str) {
+		this.carController = carController;
 		
 		setTitle(str);
 		init();
@@ -58,14 +58,14 @@ public class SearchCarDialog extends JDialog {
 	
 	// UI 객체 생성하는 메서드
 	public void init() {
-		memTable = new JTable();
+		carTable = new JTable();
 		// 테이블 행 선택 객체
-		ListSelectionModel rowSel = memTable.getSelectionModel();
+		ListSelectionModel rowSel = carTable.getSelectionModel();
 		// 선택 방법
 		// SINGLE_SELECTION(단일 선택),SINGLE_INTERVAL_SELECTION, MULTIPLE_INTERVAL_SELECTION(다중 선택)
 		rowSel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  // SINGLE_SELECTION 단일 선택
 		
-		ListSelectionModel colSel = memTable.getColumnModel().getSelectionModel();
+		ListSelectionModel colSel = carTable.getColumnModel().getSelectionModel();
 		colSel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		// ListSelection 이벤트 처리
@@ -74,12 +74,12 @@ public class SearchCarDialog extends JDialog {
 		panelSearch = new JPanel();
 		panelBtn 	= new JPanel();
 		
-		lMemName	= new JLabel("차종");
+		lCarName	= new JLabel("차종");
 		tf 			= new JTextField("차종을 입력하세요.");
 		btnSearch   = new JButton("조회하기");
 		
 		// 검색에 관련 UI Panel
-		panelSearch.add(lMemName);
+		panelSearch.add(lCarName);
 		panelSearch.add(tf);
 		panelSearch.add(btnSearch);
 		
@@ -103,9 +103,9 @@ public class SearchCarDialog extends JDialog {
 		// ------------------//
 		
 		// 테이블 데이터 모델 생성
-		rentTableModel = new RentTableModel(memItems, columnNames);
+		carRentTableModel = new CarRentTableModel(carItems, columnNames);
 		// 테이블 UI view에 테이블 데이터 모델을 설정
-		memTable.setModel(rentTableModel);
+		carTable.setModel(carRentTableModel);
 		
 		// 테이블 이벤트 핸들러
 		rowSel.addListSelectionListener(new ListRowSelectionHandler());  // 행 클릭시
@@ -113,7 +113,7 @@ public class SearchCarDialog extends JDialog {
 		
 		// 각 panel을 대화창에 배치
 		add(panelSearch, BorderLayout.NORTH);
-		add(new JScrollPane(memTable), BorderLayout.CENTER);
+		add(new JScrollPane(carTable), BorderLayout.CENTER);
 		add(panelBtn, BorderLayout.SOUTH);
 		
 		setLocation(300,100);	// 다이얼로그 출력 위치
@@ -125,37 +125,38 @@ public class SearchCarDialog extends JDialog {
 	}
 	
 	// 차량 정보를 받아 테이블 데이터 모델에 전달하여 테이블 view에 표시하는 메서드
-	private void loadTableData(List<MemberVO> memList) {
+	private void loadTableData(List<CarVO> carList) {
 		
 		// 넘겨받은 차량정보 List에 차량정보가 있으면 처리
-		if (memList != null && memList.size() != 0 ) {  // list가 null이 아니고 list값이 비어있지 않으면
+		if (carList != null && carList.size() != 0 ) {  // list가 null이 아니고 list값이 비어있지 않으면
 			
 			// 차량정보 -> 테이블 데이터로 전환
-			memItems = new String[memList.size()][5];  // List의 개수 만큼 테이블 행을 설정
+			carItems = new String[carList.size()][6];  // List의 개수 만큼 테이블 행을 설정
 			
-			for (int i=0; i<memList.size(); i++) {
-				MemberVO memVO = memList.get(i);
+			for (int i=0; i<carList.size(); i++) {
+				CarVO carVO = carList.get(i);
 				
-				memItems[i][0] = memVO.getMemId();
-				memItems[i][1] = memVO.getMemPassword();
-				memItems[i][2] = memVO.getMemName();
-				memItems[i][3] = memVO.getMemAddress();
-				memItems[i][4] = memVO.getMemPhoneNum();
+				carItems[i][0] = carVO.getCarNumber();
+				carItems[i][1] = carVO.getCarName();
+				carItems[i][2] = carVO.getCarColor();
+				carItems[i][3] = String.valueOf(carVO.getDisplacement());
+				carItems[i][4] = carVO.getManufacturer();
+				carItems[i][5] = carVO.getSegment();
 			}
 			
 			// 테이블 데이터 모델 설정
-			rentTableModel = new RentTableModel(memItems, columnNames);
+			carRentTableModel = new CarRentTableModel(carItems, columnNames);
 			// 테이블 UI view에 테이블 데이터 모델 설정
-			memTable.setModel(rentTableModel);
+			carTable.setModel(carRentTableModel);
 			
 		} else {
 			// 전달 받은 데이터가 없을 경우 처리
 //			System.out.println("조회한 정보가 없습니다.");
 			message("조회한 정보가 없습니다.");
 			
-			memItems = new Object[0][5];  // **
-			rentTableModel = new RentTableModel(memItems, columnNames);
-			memTable.setModel(rentTableModel);
+			carItems = new Object[0][6];  // **
+			carRentTableModel = new CarRentTableModel(carItems, columnNames);
+			carTable.setModel(carRentTableModel);
 		}
 		
 	}
@@ -167,12 +168,13 @@ public class SearchCarDialog extends JDialog {
 	
 	// 차량관리 이벤트를 처리하는 클래스(내부 클래스 이벤트 핸들러)
 	class MemberBtnHandler implements ActionListener {
-		String memId			= null;
-		String memPassword		= null;
-		String memName			= null;
-		String memAddress		= null;
-		String memPhoneNum		= null;
-		List<MemberVO> memList	= null;
+		String carNumber			= null;
+		String carName		= null;
+		String carColor			= null;
+		String displacement		= null;
+		String manufacturer		= null;
+		String segment		= null;
+		List<CarVO> carList	= null;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -180,63 +182,66 @@ public class SearchCarDialog extends JDialog {
 			if (e.getSource() == btnSearch) {  // 조회 버튼 동작
 				String name = tf.getText().trim();
 				
-				memList = new ArrayList<MemberVO>();
-				MemberVO memVO = new MemberVO();
+				carList = new ArrayList<CarVO>();
+				CarVO carVO = new CarVO();
 				
 				if (name != null && name.length() != 0) {
 					
-					memVO.setMemName(name);  // 이름 기준으로 조회
+					carVO.setCarName(name);  // 이름 기준으로 조회
 					// 조회 요청
-					memList = memberController.listMember(memVO);
-//					Optional<memList> memList = memberController.listMember(memVO);
-					if(memList != null && memList.size() != 0) {  // 검색결과 값이 있을 경우
-						loadTableData(memList);
+					carList = carController.listCar(carVO);
+//					Optional<carList> carList = memberController.listMember(carVO);
+					if(carList != null && carList.size() != 0) {  // 검색결과 값이 있을 경우
+						loadTableData(carList);
 					} else {  // 없을 경우
 						loadTableData(null);
 					}
 					
 //					System.out.println("-- 이름 검색");
-//					memList.stream().forEach(System.out::println);
+//					carList.stream().forEach(System.out::println);
 					
 				} else {
 					// 전체 조회
-					memList = memberController.listMember(memVO);
-					loadTableData(memList);
+					carList = carController.listCar(carVO);
+					loadTableData(carList);
 					
 //					System.out.println("--전체 조회");
-//					memList.stream().forEach(System.out::println);
+//					carList.stream().forEach(System.out::println);
 				}
 				tf.setText("");  // 클리어 안하면 화면에 찌거기 데이터가 남음
 				return;
 				
 			} else if (e.getSource() == btnReg) {  // 추가 버튼 동작
-				new RegCarDialog(memberController, "차량 등록창");
+				new RegCarDialog(carController, "차량 등록창");
 				return;
 				
 			} else if (e.getSource() == btnModify) {  // 수정 버튼 동작
-				memId		= (String) memItems[rowIdx][0];
-				memPassword = (String) memItems[rowIdx][1];
-				memName		= (String) memItems[rowIdx][2];
-				memAddress	= (String) memItems[rowIdx][3];
-				memPhoneNum	= (String) memItems[rowIdx][4];
+				carNumber		= (String) carItems[rowIdx][0];
+				carName			= (String) carItems[rowIdx][1];
+				carColor		= (String) carItems[rowIdx][2];
+				displacement	= (String) carItems[rowIdx][3];
+				manufacturer	= (String) carItems[rowIdx][4];
+				segment			= (String) carItems[rowIdx][5];
+
+				CarVO carVO = CarVO.builder().carNumber(carNumber).carColor(carColor).carName(carName).displacement(Integer.valueOf(displacement) ).manufacturer(manufacturer).segment(segment).build();
+				System.out.println("수정 된 차량: "+carVO);
 				
-				MemberVO memVO = new MemberVO(memId, memPassword, memName, memAddress, memPhoneNum);
-				System.out.println("수정 된 차량: "+memVO);
-				
-				memberController.modMember(memVO);
+				carController.modCar(carVO);
 				return;
 				
 			} else if (e.getSource() == btnDelete) {  // 삭제 버튼 동작
-				memId		= (String) memItems[rowIdx][0];
-				memPassword = (String) memItems[rowIdx][1];
-				memName		= (String) memItems[rowIdx][2];
-				memAddress	= (String) memItems[rowIdx][3];
-				memPhoneNum	= (String) memItems[rowIdx][4];
+				carNumber		= (String) carItems[rowIdx][0];
+				carName			= (String) carItems[rowIdx][1];
+				carColor		= (String) carItems[rowIdx][2];
+				displacement	= (String) carItems[rowIdx][3];
+				manufacturer	= (String) carItems[rowIdx][4];
+				segment			= (String) carItems[rowIdx][5];
+
 				
-				MemberVO memVO = new MemberVO(memId, memPassword, memName, memAddress, memPhoneNum);
-				System.out.println("삭제 된 차량: "+memVO);
+				CarVO carVO = CarVO.builder().carNumber(carNumber).carColor(carColor).carName(carName).displacement(Integer.valueOf(displacement) ).manufacturer(manufacturer).segment(segment).build();
+				System.out.println("삭제 된 차량: "+carVO);
 				
-				memberController.removeMember(memVO);
+				carController.removeCar(carVO);
 				return;
 				
 			}

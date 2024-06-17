@@ -13,7 +13,7 @@ public class CarDAOImpl extends AbstractBaseDAO implements CarDAO{
 	@Override
 	public List<CarVO> selectCar(CarVO carVO) throws Exception {
 		
-		List<CarVO> memList = new ArrayList<CarVO>();
+		List<CarVO> carList = new ArrayList<CarVO>();
 		
 		String _carName = carVO.getCarName();  // 넘겨받은 데이터(입력한 이름으로 생성한 객체)의 Name값을 입력받아 _carColor 변수 생성 
 		String sql = "";
@@ -34,11 +34,12 @@ public class CarDAOImpl extends AbstractBaseDAO implements CarDAO{
 		rs = pstmt.executeQuery();
 		
 		while(rs.next()) {
-			String carNumber 		= rs.getString("carNumber");
-			String carName 	= rs.getString("carName");
-			String carColor 		= rs.getString("carColor");
+			String carNumber	= rs.getString("carNumber");
+			String carName		= rs.getString("carName");
+			String carColor 	= rs.getString("carColor");
 			int displacement 	= rs.getInt("displacement");
-			String manufacturer 	= rs.getString("manufacturer");
+			String manufacturer = rs.getString("manufacturer");
+			String segment 		= rs.getString("segment");
 			
 			CarVO vo = new CarVO();
 			vo.setCarNumber(carNumber);
@@ -46,13 +47,14 @@ public class CarDAOImpl extends AbstractBaseDAO implements CarDAO{
 			vo.setCarName(carName);
 			vo.setDisplacement(displacement);
 			vo.setManufacturer(manufacturer);
+			vo.setSegment(segment);
 			
-			memList.add(vo);
+			carList.add(vo);
 			
 		}
 		rs.close();
 		
-		return memList;
+		return carList;
 	}
 
 	// 차 정보 등록 기능 처리
@@ -62,20 +64,22 @@ public class CarDAOImpl extends AbstractBaseDAO implements CarDAO{
 		String sql = """
 				INSERT INTO t_car (
 					carNumber, 
-					carName ,
 					carColor, 
+					carName ,
 					displacement ,
-					manufacturer 
+					manufacturer,
+					segment
 				) VALUES 
-					(?,?,?,?,?)
+					(?,?,?,?,?,?)
 				""";
 		
 		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, carVO.getCarName());
+		pstmt.setString(1, carVO.getCarNumber());
 		pstmt.setString(2, carVO.getCarColor());
-		pstmt.setInt(3, carVO.getDisplacement());
-		pstmt.setString(4, carVO.getManufacturer());
-		pstmt.setString(5, carVO.getCarNumber());
+		pstmt.setString(3, carVO.getCarName());
+		pstmt.setInt(4, carVO.getDisplacement());
+		pstmt.setString(5, carVO.getManufacturer());
+		pstmt.setString(6, carVO.getSegment());
 		
 		result = pstmt.executeUpdate();
 
@@ -87,18 +91,20 @@ public class CarDAOImpl extends AbstractBaseDAO implements CarDAO{
 		int result = 0;
 		String sql = """
 				UPDATE t_car 
-				SET carName = ?,
-						carColor = ?,
+					SET	carName = ?,
 						displacement = ?,
-						manufacturer = ?
-				WHERE carNumber = ?
+						carColor = ?,
+						manufacturer = ?,
+						segment = ?
+					WHERE carNumber = ?;
 				""";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, carVO.getCarName());
 		pstmt.setString(2, carVO.getCarColor());
 		pstmt.setInt(3, carVO.getDisplacement());
 		pstmt.setString(4, carVO.getManufacturer());
-		pstmt.setString(5, carVO.getCarNumber());
+		pstmt.setString(5, carVO.getSegment());
+		pstmt.setString(6, carVO.getCarNumber());
 		
 		result = pstmt.executeUpdate();
 		return result;
@@ -143,12 +149,14 @@ public class CarDAOImpl extends AbstractBaseDAO implements CarDAO{
 			String carColor 		= rs.getString("carColor");
 			int displacement 	= rs.getInt("displacement");
 			String manufacturer 	= rs.getString("manufacturer");
+			String segment 	= rs.getString("segment");
 			
 			vo.setCarNumber(carNumber);
 			vo.setCarColor(carColor);
 			vo.setCarName(carName);
 			vo.setDisplacement(displacement);
 			vo.setManufacturer(manufacturer);
+			vo.setSegment(segment);
 		
 		}
 		return vo;

@@ -18,6 +18,7 @@ import chap19.car.controller.CarController;
 import chap19.car.controller.CarControllerImpl;
 import chap19.car.window.DelCarDialog;
 import chap19.car.window.ModCarDialog;
+import chap19.car.window.RegCarDialog;
 import chap19.car.window.SearchCarDialog;
 import chap19.common.base.AbstractBaseWindow;
 import chap19.member.controller.MemberController;
@@ -184,18 +185,16 @@ public class RentMainWindow extends AbstractBaseWindow {  // JFrame 기능을 �
 				}
 				
 				else if (e.getSource() == carMenu11) {
-					new RegMemDialog(memberController, "회원 등록창: ");
-//					new RegCarDialog(memberController, "차량 등록창: ");
-					
+					new RegCarDialog(carController, "차량 등록창: ");
+				
 				} else if (e.getSource() == carMenu12) {
-					new SearchCarDialog(memberController, "차량 조회창: ");
+					new SearchCarDialog(carController, "차량 조회창: ");
 					
 				} else if (e.getSource() == carMenu13) {
 					new ModCarDialog(carController, "차량 수정창");
 					
 				} else if (e.getSource() == carMenu14) {
-					new DelMemDialog(memberController, "회원 삭제창"); // 아직 없음
-//					new DelCarDialog(carController, "차량 삭제창"); // 아직 없음
+					new DelCarDialog(carController, "차량 삭제창"); // 아직 없음
 					
 				}
 				

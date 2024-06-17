@@ -12,111 +12,122 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import chap19.member.controller.MemberController;
-import chap19.member.vo.MemberVO;
+import chap19.car.controller.CarController;
+import chap19.car.vo.CarVO;
 
 public class RegCarDialog extends JDialog {
 	// 회원 정보 등록 화면
 	
 	// 회원 정보 등록 요청 객체
-	MemberController memberController;
+	CarController carController;
 	
 	// 화면 구성 요소 객체
-	JPanel jPanel;
-	JLabel lId, lName, lPassword, lAddress, lPhoneNum;
-	JTextField tfId, tfName, tfPassword, tfAddress, tfPhoneNum;
-	JButton btnReg;
+	JPanel jPanel, btnPanel;
+	JLabel lCarNumber, lCarName, lCarColor, lDisplacement, lManufacturer,lSegment;
+	JTextField tfCarNumber, tfCarcarName, tfCarColor, tfDisplacement, tfManufacturer,tfSegment;
+	JButton btnModify, btnCancel;
 
 	// 생성자	
-	public RegCarDialog(MemberController memberController, String str) {
-		System.out.println("2. membercotrollor: "+memberController);
+	public RegCarDialog(CarController carController, String str) {
 		
-		this.memberController = memberController;
-		
-		System.out.println("3. membercotrollor: "+memberController);
-		
+		this.carController = carController;
+				
 		setTitle(str);
 		init(); // 화면 요소 객체 생성 메서드 호출
 	}
 
 	private void init() {
-		lId 		= new JLabel("차량 번호");
-		lPassword 	= new JLabel("색상");
-		lName 		= new JLabel("차종");
-		lAddress 	= new JLabel("배기량");
-		lPhoneNum 	= new JLabel("제조사");
 		
-		tfId		= new JTextField(20);
-		tfPassword 	= new JTextField(20);
-		tfName 		= new JTextField(20);
-		tfAddress 	= new JTextField(20);
-		tfPhoneNum 	= new JTextField(20);
+		lCarNumber 		= new JLabel("차량 번호");
+		lCarColor		= new JLabel("색상");
+		lCarName 		= new JLabel("차종");
+		lDisplacement 	= new JLabel("배기량");
+		lManufacturer 	= new JLabel("제조사");
+		lSegment		= new JLabel("크기");
 		
-		btnReg = new JButton("회원등록하기");
-		btnReg.addActionListener(new ActionListener() {  // 이벤트 리스너 추가
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// 화면에 있는 값을 변수로 저장
-				String id 		= tfId.getText().trim();
-				String password = tfPassword.getText().trim();
-				String name 	= tfName.getText().trim();
-				String address 	= tfAddress.getText().trim();
-				String phoneNum = tfPhoneNum.getText().trim();
-				
-				MemberVO vo = new MemberVO(id, password, name, address, phoneNum);
-				
-				// optional**
-				// ID중복체크: 객체에 널(null) 허용하는 타입
-//				Optional<MemberVO> checkIdVO =  Optional.ofNullable(memberController.checkId(id));
-				
-				// ID중복체크
-				MemberVO checkIdVO = memberController.checkId(id);  // id가 중복이 아니면 null(검색이 안되서) 중복이면 Id값이 들어있음(검색이 됬으니까)
-				System.out.println("checkIdVO.getMemId(): "+checkIdVO.getMemId());
+		tfCarNumber		= new JTextField(20);
+		tfCarColor		= new JTextField(20);
+		tfCarcarName 	= new JTextField(20);
+		tfDisplacement 	= new JTextField(20);
+		tfManufacturer 	= new JTextField(20);
+		tfSegment		= new JTextField(20);
+		
 
-				if (checkIdVO.getMemId() == null) {  // 중복이 아닐시: null이면 중복아님
-					// 회원 정보 DB등록 요청
-					int result = memberController.regMember(vo);  // 애초에 id가 서버에서 primary 설정이라 중복이면 안만들어지긴 함
-					System.out.println("result: "+result);  // 만들기 성공하면 1 실패하면 0
-					
-					if (result > 0) {
-						showMessage("새 회원을 등록했습니다.",result);
-					
-					} else {
-						showMessage("회원 등록 실패",result);
-					}
-				} else {  // id가 중복일 경우
-					showMessage("사용중인 id입니다.",-1);
-				}
-				
-			}  // end actionPerformed()
-		});  // end ActionListener()
+		// 검색에 관련 UI Panel
+		
+		btnPanel = new JPanel();
+		btnModify = new JButton("등록");
+		btnCancel = new JButton("취소");
+		
+		btnPanel.add(btnModify);
+		btnPanel.add(btnCancel);
+		btnModify.addActionListener(new MemberBtnHandler());
+		btnCancel.addActionListener(new MemberBtnHandler());
+
 		
 		jPanel = new JPanel(new GridLayout(0,2));
 		
-		jPanel.add(lId);
-		jPanel.add(tfId);
+		jPanel.add(lCarNumber);
+		jPanel.add(tfCarNumber);
 
-		jPanel.add(lName);
-		jPanel.add(tfName);
+		jPanel.add(lCarName);
+		jPanel.add(tfCarcarName);
+
+		jPanel.add(lCarColor);
+		jPanel.add(tfCarColor);
 		
-		jPanel.add(lPassword);
-		jPanel.add(tfPassword);
+		jPanel.add(lDisplacement);
+		jPanel.add(tfDisplacement);
 
-		jPanel.add(lAddress);
-		jPanel.add(tfAddress);
+		jPanel.add(lManufacturer);
+		jPanel.add(tfManufacturer);
 
-		jPanel.add(lPhoneNum);
-		jPanel.add(tfPhoneNum);
+		jPanel.add(lSegment);
+		jPanel.add(tfSegment);
 		
 		add(jPanel, BorderLayout.NORTH);
-		add(btnReg, BorderLayout.SOUTH);
+		add(btnPanel, BorderLayout.SOUTH);
 		
 		setLocation(400,200);
-		setSize(400,400);
+		setSize(500,400);
 		pack();  // 창 크기를 알맞게 조정
 		setModal(true);
 		setVisible(true);
+	}
+	class MemberBtnHandler implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+				
+			if(e.getSource() == btnModify) {
+				// 화면에 있는 값을 변수로 저장
+				String carNumber 		= tfCarNumber.getText().trim();
+				String carColor = tfCarColor.getText().trim();
+				String carName 	= tfCarcarName.getText().trim();
+				String displacement 	= tfDisplacement.getText().trim();
+				String manufacturer = tfManufacturer.getText().trim();
+				String segment = tfSegment.getText().trim();
+				
+				CarVO vo = CarVO.builder().carNumber(carNumber).carColor(carColor).carName(carName).displacement(Integer.valueOf(displacement) ).manufacturer(manufacturer).segment(segment).build();
+				System.out.println("modify CarVO:"+vo);
+				
+				// 회원 정보 DB수정 요청
+				int result = carController.regCar(vo);  // 애초에 carNumber가 서버에서 primary 설정이라 중복이면 안만들어지긴 함
+				System.out.println("result: "+result);  // 만들기 성공하면 1 실패하면 0
+				
+				if (result > 0) {
+					showMessage("차량을 등록했습니다.",result);
+				
+				} else {
+					showMessage("차량 등록 실패",result);
+				}
+				
+			} else if (e.getSource()==btnCancel){//삭제 
+				dispose();
+				return;
+			}
+			
+		}
 	}
 
 	// 메시지 전달 창
@@ -131,4 +142,5 @@ public class RegCarDialog extends JDialog {
 		}
 		
 	}
+
 }
