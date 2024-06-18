@@ -14,15 +14,15 @@ const mockTodo = [
 ];
 
 // State관리 값의 변수를 줄 함수를 외부 함수로 정의
-function reducer (state, action) {
+function reducer (state, action) {  // state = todo
   switch (action.type) {
-    case "CREATE":
-      return [action.newItem, ...state]
+    case "CREATE":  // action.type의 값이 CREATE 일 때
+      return [action.newItem, ...state]  // newItem + ...todo
 
-    case "UPDATE":
+    case "UPDATE":  // action.type의 값이 UPDATE 일 때
       return state.map((e)=> e.id === action.targetId ? {...e, isDone: !e.isDone} : e)
 
-    case "DELETE":
+    case "DELETE":  // action.type의 값이 DELETE 일 때
       return state.filter( (e) => e.id !== action.targetId)
 
     default:
@@ -33,10 +33,10 @@ function reducer (state, action) {
 
 function App() {
   // 변수(상태)
-  const [todo, dispatch] = useReducer (reducer, mockTodo);
+  const [todo, dispatch] = useReducer (reducer, mockTodo);  // useReducer(실행할 함수, 기본값)
 
   // const [todo, setTodo] = useState(mockTodo);
-  const idRef = useRef(3);  // 변수 역할
+  const idRef = useRef(3);  // 변수 역할  todo 추가시 id: 3부터 해서 추가
 
   // 함수(기능)
   const onCreate = (content)=> {
@@ -59,7 +59,7 @@ function App() {
       type:"CREATE",
       newItem: {
         id: idRef.current,   // 변수 역할
-        content,
+        content,  // 전달 받은(입력한) 내용
         isDone: false,
         createdDate: new Date().getTime()
       }
@@ -102,7 +102,8 @@ function App() {
         </div>
         <Header/>
         <TodoEditor onCreate={onCreate}/>
-        <TodoList todo={todo} onUpdate={onUpdate} onDelete={onDelete}/>
+        {/* {} 왼쪽의 값(변수)을 통해 {}안의 값을 전달해줌 */}
+        <TodoList todo={todo} onUpdate={onUpdate} onDelete={onDelete}/>  
       </div>
     </div>
   );

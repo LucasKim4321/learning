@@ -3,12 +3,12 @@ import { useReducer } from "react";
 // useReducer 컴포넌트 밖에서 사용 가능
 // action = {type:"DECREASE", data: 1}
 // dispath({type:"INCREASE", data: 1})
-function reducer(state, action) {
+function reducer(state, action) {   // state = count
     switch (action.type) {
-        case "INCREASE":
-            return state + action.data;
-        case "DECREASE":
-            return state - action.data;
+        case "INCREASE":  // action.type이 INCREASE 일때
+            return state + action.data;  // count값 + data값
+        case "DECREASE":  // action.type이 DECREASE 일때
+            return state - action.data;  // count값 - data값
     }
 }
 

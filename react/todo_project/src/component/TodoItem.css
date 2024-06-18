@@ -12,6 +12,7 @@
 }
 .TodoItem .title_col {
     flex: 1;
+    overflow: hidden;  /* 내용이 크기를 초과하면 숨김 */
 }
 
 /* 부트 스트랩 효과 제거 */
