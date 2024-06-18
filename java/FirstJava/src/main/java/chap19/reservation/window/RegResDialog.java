@@ -10,8 +10,10 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import chap19.common.CarRentTableModel;
 import chap19.reservation.controller.ResController;
 
 public class RegResDialog extends JDialog {
@@ -29,8 +31,20 @@ public class RegResDialog extends JDialog {
 	// 예약 구성 요소 객체
 	JPanel jPanel, btnPanel, searchPanel;
 	JLabel lSearchSegment, lResNumber, lResDate, lStartDate, lReturnDate, lResCarNumber, lResUserId;
-	JTextField tfSearch, tfResNumber, tfResDate, tfStartDate, tfReturnDate, tfResCarNumber, tfResUserId;
+	JTextField tfStartSearch, tfReturnSearch, tfResNumber, tfResDate, tfStartDate, tfReturnDate, tfResCarNumber, tfResUserId;
 	JButton btnSearch, btnRegister, btnCancel;
+	
+	// 테이블
+	JTable carTable;
+	
+	// 테이블UI 모델 객체
+	CarRentTableModel carRentTableModel;
+	
+	// 테이블 모델
+	String[] columnNames = {"차량 번호","차종","색상","배기량","제조사","크기"};
+	
+	
+	
 	
 	// 생성자
 	public RegResDialog(ResController resController, String str) {
@@ -42,8 +56,9 @@ public class RegResDialog extends JDialog {
 
 	private void init() {
 		searchPanel		= new JPanel();
-		lSearchSegment	= new JLabel("차량 크기");
-		tfSearch		= new JTextField(20);
+		lSearchSegment	= new JLabel("예약 날짜");
+		tfStartSearch		= new JTextField(20);
+		tfReturnSearch		= new JTextField(20);
 		btnSearch		= new JButton("검색");
 		
 		lResNumber		= new JLabel("예약번호");
@@ -62,7 +77,8 @@ public class RegResDialog extends JDialog {
 
 		// 검색에 관련 UI Panel
 		searchPanel.add(lSearchSegment);
-		searchPanel.add(tfSearch);
+		searchPanel.add(tfStartSearch);
+		searchPanel.add(tfReturnSearch);
 		searchPanel.add(btnSearch);
 		
 		btnPanel = new JPanel();

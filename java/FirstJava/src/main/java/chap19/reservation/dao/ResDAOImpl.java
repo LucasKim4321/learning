@@ -174,6 +174,7 @@ public class ResDAOImpl extends AbstractBaseDAO implements ResDAO {
 		
 		String sql = "";
 		
+//		SELECT * FROM t_res WHERE not(('2024-4-2' <= startDate and startDate < '2024-4-9')OR('2024-4-2' < returnDate and returnDate <= '2024-4-9'));  // 반납일에도 시작 가능  반납일에 시작할 경우 시간으로 세분화
 		sql = "SELECT * FROM t_res WHERE not((? <= startDate and startDate <= ?)OR(? <= returnDate and returnDate <= ?))";
 		
 		pstmt = conn.prepareStatement(sql);

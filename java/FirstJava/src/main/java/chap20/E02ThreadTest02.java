@@ -54,7 +54,6 @@ class Sum extends Thread {
 //}
 
 /*
- * 
  *  * 스레드 상태 제어
  * interrup() : 예외 발생 일시정지
  * notify(), notifyAll(): 일시정지 -> 실행 대기 상태
@@ -67,9 +66,14 @@ class Sum extends Thread {
  * stop(): 스레드 종료
  * 
  * 
- * 
  *  스레드 생성 -> (RUNNABLE(실행) :  실행준비 -> 실행  ) -> 종료
  *  
- *  sleep()/ interrupt() :  일시정지, 
+ *  스레드의 실행 상태(State)
+ *  runnable상태 : 스레드를 실행하기 위한 준비 상태
+ *  running상태: 스레드 스케줄러가 선택한 스레드를 실행하는 상태
  *  
+ *  1. 스레드 생성 시 new상태
+ *  2. start() 메서드를 호출하면 스레드는 runnable(실행 준비) 상태
+ *  3. JVM의 스레드 스케줄러의 의해서 스레드의 run()메서드 가 호출-> running상태
+ *  4. run()메서드 완료하면 종료(terminated)
  */
