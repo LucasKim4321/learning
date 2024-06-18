@@ -109,7 +109,7 @@ public class SearchCarDialog extends JDialog {
 		
 		// 테이블 이벤트 핸들러
 		rowSel.addListSelectionListener(new ListRowSelectionHandler());  // 행 클릭시
-		colSel.addListSelectionListener(new ListColSelectionHandler());  // 행 클릭시
+		colSel.addListSelectionListener(new ListColSelectionHandler());  // 열 클릭시
 		
 		// 각 panel을 대화창에 배치
 		add(panelSearch, BorderLayout.NORTH);

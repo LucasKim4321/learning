@@ -29,7 +29,7 @@ const TestReducerComp = ()=> {
             <div>
                 <button className="btn btn-outline-danger opacity-75 me-3"
                         // onClick={onIncrease}
-                        onClick={()=> dispatch({type:"INCREASE", data: 1})}
+                        onClick={()=> dispatch({type:"INCREASE", data: 1})}  // 클릭시 익명함수를 써서 dispatch를 실행
                         >1씩 증가</button>
                 <button className="btn btn-outline-danger opacity-75"
                         // onClick={onDecrease}

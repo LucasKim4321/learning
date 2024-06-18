@@ -5,16 +5,25 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import chap19.car.controller.CarController;
+import chap19.car.vo.CarVO;
 import chap19.common.CarRentTableModel;
 import chap19.reservation.controller.ResController;
+import chap19.reservation.vo.ResVO;
 
 public class RegResDialog extends JDialog {
 	// 예약 정보 등록 화면
@@ -42,7 +51,11 @@ public class RegResDialog extends JDialog {
 	
 	// 테이블 모델
 	String[] columnNames = {"차량 번호","차종","색상","배기량","제조사","크기"};
+	Object[][] carItems = new String[0][6];  // 테이블에 표시될 차량 정보 저장(2차원 배열)
+	int rowIdx = 0, colIdx = 0;  //  테이블 수정시 선택한 행과 열 인덱스 저장
 	
+	// 차량 관리 컨트롤러는 입력, 수정, 조회, 삭제 작업요청시 작업처리하는 객체
+	CarController carController;
 	
 	
 	
@@ -56,7 +69,7 @@ public class RegResDialog extends JDialog {
 
 	private void init() {
 		searchPanel		= new JPanel();
-		lSearchSegment	= new JLabel("예약 날짜");
+		lSearchSegment	= new JLabel("예약날짜(형식:2024-1-12)");
 		tfStartSearch		= new JTextField(20);
 		tfReturnSearch		= new JTextField(20);
 		btnSearch		= new JButton("검색");
@@ -110,6 +123,23 @@ public class RegResDialog extends JDialog {
 		jPanel.add(lResUserId);
 		jPanel.add(tfResUserId);
 		
+		// 테이블 데이터 모델 생성
+		carRentTableModel = new CarRentTableModel(carItems, columnNames);
+		
+		// 테이블 UI view에 테이블 데이터 모델을 설정
+		carTable.setModel(carRentTableModel);
+		
+		ListSelectionModel rowSel = carTable.getSelectionModel();
+		rowSel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);  // SINGLE_SELECTION 단일 선택
+		
+		ListSelectionModel colSel = carTable.getColumnModel().getSelectionModel();
+		colSel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		// 테이블 이벤트 핸들러
+		rowSel.addListSelectionListener(new ListRowSelectionHandler());  // 행 클릭시
+		colSel.addListSelectionListener(new ListColSelectionHandler());  // 열 클릭시
+
+		searchPanel.add(carTable, BorderLayout.SOUTH);
 		add(searchPanel, BorderLayout.NORTH);
 		add(jPanel, BorderLayout.CENTER);
 		add(btnPanel, BorderLayout.SOUTH);
@@ -121,24 +151,118 @@ public class RegResDialog extends JDialog {
 		setVisible(true);
 		
 	}
+
+	
+	// 차량 정보를 받아 테이블 데이터 모델에 전달하여 테이블 view에 표시하는 메서드
+	private void loadTableData(List<CarVO> carList) {
+		
+		// 넘겨받은 차량정보 List에 차량정보가 있으면 처리
+		if (carList != null && carList.size() != 0 ) {  // list가 null이 아니고 list값이 비어있지 않으면
+			
+			// 차량정보 -> 테이블 데이터로 전환
+			carItems = new String[carList.size()][6];  // List의 개수 만큼 테이블 행을 설정
+			
+			for (int i=0; i<carList.size(); i++) {
+				CarVO carVO = carList.get(i);
+				
+				carItems[i][0] = carVO.getCarNumber();
+				carItems[i][1] = carVO.getCarName();
+				carItems[i][2] = carVO.getCarColor();
+				carItems[i][3] = String.valueOf(carVO.getDisplacement());
+				carItems[i][4] = carVO.getManufacturer();
+				carItems[i][5] = carVO.getSegment();
+			}
+			
+			// 테이블 데이터 모델 설정
+			carRentTableModel = new CarRentTableModel(carItems, columnNames);
+			// 테이블 UI view에 테이블 데이터 모델 설정
+			carTable.setModel(carRentTableModel);
+			
+		} else {
+			// 전달 받은 데이터가 없을 경우 처리
+//				System.out.println("조회한 정보가 없습니다.");
+			message("조회한 정보가 없습니다.");
+			
+			carItems = new Object[0][6];  // **
+			carRentTableModel = new CarRentTableModel(carItems, columnNames);
+			carTable.setModel(carRentTableModel);
+		}
+		
+	}
+
+	// 테이블의 행 클릭시 이벤트 처리
+	class ListRowSelectionHandler implements ListSelectionListener {
+
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			if (!e.getValueIsAdjusting()) {
+				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+				
+				rowIdx = lsm.getMinSelectionIndex();
+				System.out.println((rowIdx+1)+" 번째 행이 선택됨...");
+			}
+		}
+		
+	}
+	// 테이블 열 클릭시 이벤트 처리
+	class ListColSelectionHandler implements ListSelectionListener {
+
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			// 선택한 항목의 행 추출
+//			ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+//			colIdx = lsm.getMinSelectionIndex();
+			if (!e.getValueIsAdjusting()) {
+				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+				
+				colIdx = lsm.getMinSelectionIndex();
+				System.out.println((rowIdx+1)+" 번째 행"+(colIdx+1)+" 열이 선택됨...");
+			}
+			
+		}
+		
+	}
 	
 	class ReservationBtnHandler implements ActionListener {
-
-		
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == btnRegister) {
+			// 조회버튼 클릭할 경우
+			if (e.getSource() == btnSearch) {  // 조회 버튼 동작
+				String startDate = tfStartDate.getText();
+				String returnDate = tfReturnDate.getText();
+
+				if ((startDate != null && startDate.length()>0)&&(returnDate != null && returnDate.length()>0)) {
+				
+					List<ResVO> carList = resController.checkDate(startDate, returnDate);
+	
+					if (carList != null && carList.size()>0){
+						
+						for (int i=0; i<carList.size(); i++) {
+							String car = carList.get(i).getResCarNumber();
+							
+						}
+					}
+				
+				} else {
+					message("날짜를 입력해주세요");
+				}
+				
+			} else if (e.getSource() == btnRegister) {
 				// 화면에 있는 값을 변수로 저장
 				
-			}
-			else if (e.getSource() == btnCancel) {  // 취소 
+			} else if (e.getSource() == btnCancel) {  // 취소 
 				dispose();
 				return;
 			}
 			
 		}
 		
+	}
+
+	// 메시지 전달할 메서드  메서드 안에 메서드 쓰는거 안됨
+	private void message(String msg) {
+		JOptionPane.showMessageDialog(this, msg, "메시지 박스", JOptionPane.QUESTION_MESSAGE);  // promt랑 비슷?
 	}
 		
 }

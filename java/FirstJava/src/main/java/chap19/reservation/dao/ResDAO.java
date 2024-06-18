@@ -26,7 +26,7 @@ public interface ResDAO {
 	public ResVO checkRes(String type, String value) throws Exception;
 	
 	// 예약 가능 날짜 체크
-	public List<ResVO> checkDate(Date startDate, Date returnDate) throws Exception;
+	public List<ResVO> checkDate(String startDate, String returnDate) throws Exception;
 	
 
 }

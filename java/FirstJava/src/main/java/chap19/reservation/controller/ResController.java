@@ -26,6 +26,6 @@ public interface ResController {
 	public ResVO checkRes(String type, String value);
 
 	// 예약 가능 날짜 체크
-	public List<ResVO> checkDate(Date startDate, Date returnDate);
+	public List<ResVO> checkDate(String startDate, String returnDate);
 
 }

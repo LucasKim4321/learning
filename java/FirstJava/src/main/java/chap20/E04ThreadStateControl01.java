@@ -79,8 +79,8 @@ public class E04ThreadStateControl01 {
 		videoThread.start();
 		System.out.println("1.videoThread상태: "+videoThread.getStackTrace());
 		
-		// 인터럽트 예외 발생하지 않고, 스레드 일시 정지 상태 **
-		videoThread.interrupt();  // **
+		//  인트럽트 예외 발생하지 않고, 스레드 일시 정지 상태있을 때 발생시킴
+		videoThread.interrupt();  // 메서드 호출 후 실제 예외 발생까지 시간이 지연
 		System.out.println("2.videoThread상태: "+videoThread.getStackTrace());
 		
 		try {
@@ -128,6 +128,7 @@ class Horse2 extends Thread {
 	private int horseNum;  // 경마번호
 	boolean yieldFlag;
 	
+	// 생성자: 객체 멤버 초기화 작업(경마번호 설정)
 	public Horse2(int horseNum) {
 		this.horseNum = horseNum;
 	}

@@ -1,5 +1,5 @@
 import './App.css';
-import {useState, useRef} from 'react';
+import {useRef, useReducer} from 'react';
 
 import Header from './component/header.js';
 import TodoEditor from './component/TodoEditor.js';
@@ -13,13 +13,35 @@ const mockTodo = [
   {id:1, isDone: false, content:"Java 공부하기", createdDate: new Date().getTime()}
 ];
 
+// State관리 값의 변수를 줄 함수를 외부 함수로 정의
+function reducer (state, action) {
+  switch (action.type) {
+    case "CREATE":
+      return [action.newItem, ...state]
+
+    case "UPDATE":
+      return state.map((e)=> e.id === action.targetId ? {...e, isDone: !e.isDone} : e)
+
+    case "DELETE":
+      return state.filter( (e) => e.id !== action.targetId)
+
+    default:
+      break;
+  }
+
+}
+
 function App() {
   // 변수(상태)
-  const [todo, setTodo] = useState(mockTodo);
+  const [todo, dispatch] = useReducer (reducer, mockTodo);
+
+  // const [todo, setTodo] = useState(mockTodo);
   const idRef = useRef(3);  // 변수 역할
 
   // 함수(기능)
   const onCreate = (content)=> {
+
+    /*  useReducer로 대체
     // 새 할 일 아이템 객체
     const newItem = {
       id: idRef.current,
@@ -31,18 +53,45 @@ function App() {
     // 새롭게 추가된 아이템은 항상 배열의 0번 요소
     setTodo([newItem, ...todo])  // 입력된값이 병합이 됨
     idRef.current += 1;
+  */
+
+    dispatch({
+      type:"CREATE",
+      newItem: {
+        id: idRef.current,   // 변수 역할
+        content,
+        isDone: false,
+        createdDate: new Date().getTime()
+      }
+    });
+    idRef.current += 1;;
+
   }
-  
+
+
   const onUpdate = (targetId) => {
+    /* useReducer로 대체
     setTodo(
-      todo.map((it)=> it.id === targetId ? {...it, isDone: !it.isDone} : it )
+      todo.map((e)=> e.id === targetId ? {...e, isDone: !e.isDone} : e )
     );
+    */
+
+    dispatch({
+      type: "UPDATE",
+      targetId
+    })
   }
 
   const onDelete = (targetId) => {
+    /* useReducer로 대체
     setTodo(
-      todo.filter( (it) => it.id !== targetId)  // 조건을 만족하는 값 반환
+      todo.filter( (e) => e.id !== targetId)  // 조건을 만족하는 값 반환
     );
+    */
+    dispatch({
+      type: "DELETE",
+      targetId
+    })
   }
 
   return (

@@ -164,10 +164,10 @@ public class ResDAOImpl extends AbstractBaseDAO implements ResDAO {
 	}
 	
 	@Override
-	public List<ResVO> checkDate(Date wanttedStart, Date wanttedReturn) throws Exception {
+	public List<ResVO> checkDate(String wanttedStart, String wanttedReturn) throws Exception {
 		int result = 0;
-		Date _wanttedStart = wanttedStart;
-		Date _wanttedReturn = wanttedReturn;
+		String _wanttedStart = wanttedStart;
+		String _wanttedReturn = wanttedReturn;
 
 		List<ResVO> availableCars = new ArrayList<ResVO>();
 //		availableCars = selectRes(null);  // 예약목록 전부 불러옴
@@ -178,10 +178,10 @@ public class ResDAOImpl extends AbstractBaseDAO implements ResDAO {
 		sql = "SELECT * FROM t_res WHERE not((? <= startDate and startDate <= ?)OR(? <= returnDate and returnDate <= ?))";
 		
 		pstmt = conn.prepareStatement(sql);
-		pstmt.setDate(1, _wanttedStart);
-		pstmt.setDate(2, _wanttedReturn);
-		pstmt.setDate(3, _wanttedStart);
-		pstmt.setDate(4, _wanttedReturn);
+		pstmt.setString(1, _wanttedStart);
+		pstmt.setString(2, _wanttedReturn);
+		pstmt.setString(3, _wanttedStart);
+		pstmt.setString(4, _wanttedReturn);
 		
 		rs = pstmt.executeQuery();
 		
