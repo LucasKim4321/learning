@@ -182,7 +182,7 @@ public class ResDAOImpl extends AbstractBaseDAO implements ResDAO {
 		pstmt.setString(2, _wanttedReturn);
 		pstmt.setString(3, _wanttedStart);
 		pstmt.setString(4, _wanttedReturn);
-		
+
 		rs = pstmt.executeQuery();
 		
 		while(rs.next()) {

@@ -13,6 +13,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -60,7 +61,7 @@ public class RegResDialog extends JDialog {
 	
 	
 	// 생성자
-	public RegResDialog(ResController resController, String str) {
+	public RegResDialog(ResController resController,CarController carController, String str) {
 		this.resController = resController;
 		
 		setTitle(str);
@@ -68,6 +69,10 @@ public class RegResDialog extends JDialog {
 	}
 
 	private void init() {
+		// 테이블 생성
+		carTable = new JTable();
+		
+		
 		searchPanel		= new JPanel();
 		lSearchSegment	= new JLabel("예약날짜(형식:2024-1-12)");
 		tfStartSearch		= new JTextField(20);
@@ -81,12 +86,12 @@ public class RegResDialog extends JDialog {
 		lResCarNumber	= new JLabel("예약차번호");
 		lResUserId		= new JLabel("예약자아이디");
 		
-		tfResNumber		= new JTextField();
-		tfResDate		= new JTextField();
-		tfStartDate		= new JTextField();
-		tfReturnDate	= new JTextField();
-		tfResCarNumber	= new JTextField();
-		tfResUserId		= new JTextField();
+		tfResNumber		= new JTextField(20);
+		tfResDate		= new JTextField(20);
+		tfStartDate		= new JTextField(20);
+		tfReturnDate	= new JTextField(20);
+		tfResCarNumber	= new JTextField(20);
+		tfResUserId		= new JTextField(20);
 
 		// 검색에 관련 UI Panel
 		searchPanel.add(lSearchSegment);
@@ -100,6 +105,7 @@ public class RegResDialog extends JDialog {
 		
 		btnPanel.add(btnRegister);
 		btnPanel.add(btnCancel);
+		btnSearch.addActionListener(new ReservationBtnHandler());
 		btnRegister.addActionListener(new ReservationBtnHandler());
 		btnCancel.addActionListener(new ReservationBtnHandler());
 		
@@ -123,8 +129,10 @@ public class RegResDialog extends JDialog {
 		jPanel.add(lResUserId);
 		jPanel.add(tfResUserId);
 		
+		
 		// 테이블 데이터 모델 생성
 		carRentTableModel = new CarRentTableModel(carItems, columnNames);
+//		carRentTableModel.columnEditables = new boolean[] {false, false, false, false, false, false, false};
 		
 		// 테이블 UI view에 테이블 데이터 모델을 설정
 		carTable.setModel(carRentTableModel);
@@ -139,13 +147,13 @@ public class RegResDialog extends JDialog {
 		rowSel.addListSelectionListener(new ListRowSelectionHandler());  // 행 클릭시
 		colSel.addListSelectionListener(new ListColSelectionHandler());  // 열 클릭시
 
-		searchPanel.add(carTable, BorderLayout.SOUTH);
 		add(searchPanel, BorderLayout.NORTH);
-		add(jPanel, BorderLayout.CENTER);
+		carTable.add(jPanel, BorderLayout.SOUTH);
+		add(new JScrollPane(carTable), BorderLayout.CENTER);  // 스크롤 기능 있는 테이블
 		add(btnPanel, BorderLayout.SOUTH);
 		
-		setLocation(400,200);  // 가로 세로
-		setSize(500,400);  // 가로 세로
+		setLocation(300,100);  // 가로 세로
+		setSize(800,600);  // 가로 세로
 		pack();  // 창 크기를 알맞게 조정  // size설정 무시
 		setModal(true);  // modal창으로 만듬
 		setVisible(true);
@@ -224,27 +232,47 @@ public class RegResDialog extends JDialog {
 	}
 	
 	class ReservationBtnHandler implements ActionListener {
+//		2024-4-2 2024-4-9
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			List<CarVO> carList = null;
 			// 조회버튼 클릭할 경우
 			if (e.getSource() == btnSearch) {  // 조회 버튼 동작
-				String startDate = tfStartDate.getText();
-				String returnDate = tfReturnDate.getText();
+				System.out.println("조회버튼");
+				String startDate = tfStartDate.getText().trim();
+				String returnDate = tfReturnDate.getText().trim();
 
-				if ((startDate != null && startDate.length()>0)&&(returnDate != null && returnDate.length()>0)) {
-				
-					List<ResVO> carList = resController.checkDate(startDate, returnDate);
-	
-					if (carList != null && carList.size()>0){
-						
-						for (int i=0; i<carList.size(); i++) {
-							String car = carList.get(i).getResCarNumber();
-							
+				//(startDate != null && startDate.length() != 0)&&(returnDate != null && returnDate.length() != 0)
+				if (true) {
+
+					System.out.println("1");
+					List<ResVO> resList = resController.checkDate(startDate, returnDate);
+//					resList.stream().forEach(System.out::println);
+//					resList.stream().forEach((v)-> {System.out.println(v.getResCarNumber());});
+					if (resList != null && resList.size() != 0){
+						System.out.println("2");
+						for (int i=0; i<resList.size(); i++) {
+							String car = resList.get(i).getResCarNumber();
+							carList.add(carController.checkNum(car));
 						}
+						if(carList != null && carList.size() != 0) {
+							System.out.println("3");
+							loadTableData(carList);
+						} else {
+							System.out.println("4");
+							loadTableData(null);
+						}
+					} else {
+						System.out.println("5");
+						message("검색실패");
+//						// 전체 조회
+//						carList = carController.listCar(carVO);
+//						loadTableData(carList);
 					}
 				
 				} else {
+					System.out.println("6");
 					message("날짜를 입력해주세요");
 				}
 				

@@ -3,12 +3,14 @@ package chap19.common;
 import javax.swing.table.AbstractTableModel;
 
 import chap19.member.controller.MemberController;
+import lombok.Data;
+
 
 public class CarRentTableModel extends AbstractTableModel{
 
 	Object[][] data;
 	String[] columnNames;
-	boolean[] columnEditables = new boolean[] {false, true, true, true, true, true, true};
+	public boolean[] columnEditables = new boolean[] {false, true, true, true, true, true, true};
 	
 	//생성자
 	public CarRentTableModel(Object[][] data, String[] columnNames) {
@@ -26,7 +28,7 @@ public class CarRentTableModel extends AbstractTableModel{
 	@Override
 	public int getColumnCount() {
 		// 테이블의 컬럼 수
-		return columnNames.length;
+		return columnNames.length;  // 설정한 이름 수 만큼 컬럼 수 설정
 	}
 
 	@Override
