@@ -166,7 +166,8 @@ public class ResDAOImpl extends AbstractBaseDAO implements ResDAO {
 	
 	@Override
 	public List<ResVO> checkDate(String wanttedStart, String wanttedReturn) throws Exception {
-		int result = 0;
+		
+		System.out.println("11");
 		Date _wanttedStart = Date.valueOf("2024-11-11");
 		Date _wanttedReturn = Date.valueOf("2024-11-14");
 //		String _wanttedStart = wanttedStart;

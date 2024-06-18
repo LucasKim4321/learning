@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -225,16 +226,20 @@ public class RegResDialog extends JDialog {
 	}
 	
 	class ReservationBtnHandler implements ActionListener {
+
+		List<CarVO> carList = null;
+		List<ResVO> resList = null;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			List<CarVO> carList = null;
-			List<ResVO> resList = null;
 			// 조회버튼 클릭할 경우
 			if (e.getSource() == btnSearch) {  // 조회 버튼 동작
 				System.out.println("조회버튼");
 				String startDate = tfStartSearch.getText().trim();
 				String returnDate = tfReturnSearch.getText().trim();
+				
+				carList = new ArrayList<CarVO>();
+				resList = new ArrayList<ResVO>();
 				
 //				(startDate != null && startDate.length() != 0)&&(returnDate != null && returnDate.length() != 0)
 				if (true) {
@@ -242,7 +247,7 @@ public class RegResDialog extends JDialog {
 					System.out.println("1");
 					resList = resController.checkDate(startDate, returnDate);
 					System.out.println(resList);
-					if (resList != null){
+					if (true){  // (resList != null)
 						System.out.println("2");
 						for (int i=0; i<resList.size(); i++) {
 							String car = resList.get(i).getResCarNumber();
