@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -28,12 +26,6 @@ import chap19.reservation.vo.ResVO;
 
 public class RegResDialog extends JDialog {
 	// 예약 정보 등록 화면
-	private String resNumber;  // 예약번호
-	private Date resDate;  // 예약날짜
-	private Date startDate;  // 이용시작일자
-	private Date returnDate;  // 반납일자
-	private String resCarNumber;  // 예약차번호
-	private String resUserId;  // 예약자아이디
 	
 	// 예약 정보 등록 요청 객체
 	ResController resController;
@@ -63,6 +55,7 @@ public class RegResDialog extends JDialog {
 	// 생성자
 	public RegResDialog(ResController resController,CarController carController, String str) {
 		this.resController = resController;
+		this.carController = carController;
 		
 		setTitle(str);
 		init();  // 화면 요소 객체 생성 메서드 호출
@@ -75,8 +68,8 @@ public class RegResDialog extends JDialog {
 		
 		searchPanel		= new JPanel();
 		lSearchSegment	= new JLabel("예약날짜(형식:2024-1-12)");
-		tfStartSearch		= new JTextField(20);
-		tfReturnSearch		= new JTextField(20);
+		tfStartSearch	= new JTextField(20);
+		tfReturnSearch	= new JTextField(20);
 		btnSearch		= new JButton("검색");
 		
 		lResNumber		= new JLabel("예약번호");
@@ -232,25 +225,24 @@ public class RegResDialog extends JDialog {
 	}
 	
 	class ReservationBtnHandler implements ActionListener {
-//		2024-4-2 2024-4-9
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			List<CarVO> carList = null;
+			List<ResVO> resList = null;
 			// 조회버튼 클릭할 경우
 			if (e.getSource() == btnSearch) {  // 조회 버튼 동작
 				System.out.println("조회버튼");
-				String startDate = tfStartDate.getText().trim();
-				String returnDate = tfReturnDate.getText().trim();
-
-				//(startDate != null && startDate.length() != 0)&&(returnDate != null && returnDate.length() != 0)
+				String startDate = tfStartSearch.getText().trim();
+				String returnDate = tfReturnSearch.getText().trim();
+				
+//				(startDate != null && startDate.length() != 0)&&(returnDate != null && returnDate.length() != 0)
 				if (true) {
 
 					System.out.println("1");
-					List<ResVO> resList = resController.checkDate(startDate, returnDate);
-//					resList.stream().forEach(System.out::println);
-//					resList.stream().forEach((v)-> {System.out.println(v.getResCarNumber());});
-					if (resList != null && resList.size() != 0){
+					resList = resController.checkDate(startDate, returnDate);
+					System.out.println(resList);
+					if (resList != null){
 						System.out.println("2");
 						for (int i=0; i<resList.size(); i++) {
 							String car = resList.get(i).getResCarNumber();

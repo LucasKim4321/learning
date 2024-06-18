@@ -1,6 +1,7 @@
 package chap19.reservation.dao;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -166,25 +167,26 @@ public class ResDAOImpl extends AbstractBaseDAO implements ResDAO {
 	@Override
 	public List<ResVO> checkDate(String wanttedStart, String wanttedReturn) throws Exception {
 		int result = 0;
-		String _wanttedStart = wanttedStart;
-		String _wanttedReturn = wanttedReturn;
-
+		Date _wanttedStart = Date.valueOf("2024-11-11");
+		Date _wanttedReturn = Date.valueOf("2024-11-14");
+//		String _wanttedStart = wanttedStart;
+//		String _wanttedReturn = wanttedReturn;
+		System.out.println("33");
 		List<ResVO> availableCars = new ArrayList<ResVO>();
-//		availableCars = selectRes(null);  // 예약목록 전부 불러옴
 		
 		String sql = "";
 		
 //		SELECT * FROM t_res WHERE not(('2024-4-2' <= startDate and startDate < '2024-4-9')OR('2024-4-2' < returnDate and returnDate <= '2024-4-9'));  // 반납일에도 시작 가능  반납일에 시작할 경우 시간으로 세분화
-		sql = "SELECT * FROM t_res WHERE not((? <= startDate and startDate <= ?)OR(? <= returnDate and returnDate <= ?))";
+		sql = "SELECT * FROM t_res WHERE NOT((? <= startDate and startDate <= ?)OR(? <= returnDate and returnDate <= ?))";
 		
 		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, _wanttedStart);
-		pstmt.setString(2, _wanttedReturn);
-		pstmt.setString(3, _wanttedStart);
-		pstmt.setString(4, _wanttedReturn);
+		pstmt.setDate(1, _wanttedStart);
+		pstmt.setDate(2, _wanttedReturn);
+		pstmt.setDate(3, _wanttedStart);
+		pstmt.setDate(4, _wanttedReturn);
 
 		rs = pstmt.executeQuery();
-		
+		System.out.println(rs);
 		while(rs.next()) {
 			String resNumber	= rs.getString("resNumber");  // 예약번호
 			Date resDate		= rs.getDate("resDate");  // 예약날짜
@@ -204,7 +206,7 @@ public class ResDAOImpl extends AbstractBaseDAO implements ResDAO {
 			availableCars.add(vo);
 		}
 		rs.close();
-		
+		System.out.println(availableCars);
 		return availableCars;
 		
 		
