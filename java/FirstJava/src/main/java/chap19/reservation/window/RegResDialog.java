@@ -325,7 +325,7 @@ public class RegResDialog extends JDialog {
 				// 등록 버튼 클릭할 경우
 				// 화면에 있는 값을 변수로 저장
 				
-			} else if (e.getSource() == btnCancel && idCheck == 1) {  // 취소 
+			} else if (e.getSource() == btnCancel) {  // 취소 
 				// 취소 버튼 클릭할 경우
 				dispose();
 				return;
