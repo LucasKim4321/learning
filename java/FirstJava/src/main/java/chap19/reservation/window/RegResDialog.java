@@ -1,12 +1,14 @@
 package chap19.reservation.window;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -15,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -22,6 +25,8 @@ import javax.swing.event.ListSelectionListener;
 import chap19.car.controller.CarController;
 import chap19.car.vo.CarVO;
 import chap19.common.CarRentTableModel;
+import chap19.member.controller.MemberController;
+import chap19.member.vo.MemberVO;
 import chap19.reservation.controller.ResController;
 import chap19.reservation.vo.ResVO;
 
@@ -30,13 +35,17 @@ public class RegResDialog extends JDialog {
 	
 	// 예약 정보 등록 요청 객체
 	ResController resController;
+	// 차량 관리 컨트롤러는 입력, 수정, 조회, 삭제 작업요청시 작업처리하는 객체
+	CarController carController;
+	// 맴버 컨트롤러
+	MemberController memberController;
 	
 	// 예약 구성 요소 객체
-	JPanel jPanel, btnPanel, searchPanel;
-	JLabel lSearchSegment, lResNumber, lResDate, lStartDate, lReturnDate, lResCarNumber, lResUserId;
-	JTextField tfStartSearch, tfReturnSearch, tfResNumber, tfResDate, tfStartDate, tfReturnDate, tfResCarNumber, tfResUserId;
-	JButton btnSearch, btnRegister, btnCancel;
-	
+	JPanel pUserId, jPanel, btnPanel, searchPanel;
+	JLabel lIdSearch, lSearchSegment, lResNumber, lResDate, lStartDate, lReturnDate, lResCarNumber, lResUserId;
+	JTextField tfIdSearch, tfStartSearch, tfReturnSearch, tfResNumber, tfResDate, tfStartDate, tfReturnDate, tfResCarNumber, tfResUserId;
+	JButton btnIdCheck, btnSearch, btnRegister, btnCancel;
+	JScrollPane scrollTable;
 	// 테이블
 	JTable carTable;
 	
@@ -48,15 +57,14 @@ public class RegResDialog extends JDialog {
 	Object[][] carItems = new String[0][6];  // 테이블에 표시될 차량 정보 저장(2차원 배열)
 	int rowIdx = 0, colIdx = 0;  //  테이블 수정시 선택한 행과 열 인덱스 저장
 	
-	// 차량 관리 컨트롤러는 입력, 수정, 조회, 삭제 작업요청시 작업처리하는 객체
-	CarController carController;
-	
-	
-	
+	// 아이디 체크 여부
+	int idCheck = 0;
+
 	// 생성자
-	public RegResDialog(ResController resController,CarController carController, String str) {
-		this.resController = resController;
+	public RegResDialog(ResController resController,CarController carController,MemberController memberController, String str) {
+		this.memberController = memberController;
 		this.carController = carController;
+		this.resController = resController;
 		
 		setTitle(str);
 		init();  // 화면 요소 객체 생성 메서드 호출
@@ -65,6 +73,7 @@ public class RegResDialog extends JDialog {
 	private void init() {
 		// 테이블 생성
 		carTable = new JTable();
+		scrollTable = new JScrollPane(carTable);
 		
 		
 		searchPanel		= new JPanel();
@@ -74,18 +83,20 @@ public class RegResDialog extends JDialog {
 		btnSearch		= new JButton("검색");
 		
 		lResNumber		= new JLabel("예약번호");
-		lResDate		= new JLabel("예약날짜");
-		lStartDate		= new JLabel("이용시작일자");
-		lReturnDate		= new JLabel("반납일자");
+		lResDate		= new JLabel("예약날짜(형식:2024-1-12)");
+		lStartDate		= new JLabel("이용시작일자(형식:2024-1-12)");
+		lReturnDate		= new JLabel("반납일자(형식:2024-1-12)");
 		lResCarNumber	= new JLabel("예약차번호");
 		lResUserId		= new JLabel("예약자아이디");
 		
-		tfResNumber		= new JTextField(20);
+		tfResNumber		= new JTextField("자동 생성");
 		tfResDate		= new JTextField(20);
 		tfStartDate		= new JTextField(20);
 		tfReturnDate	= new JTextField(20);
-		tfResCarNumber	= new JTextField(20);
-		tfResUserId		= new JTextField(20);
+		tfResCarNumber	= new JTextField("예약날짜 검색 후 차량 선택시 자동 입력");
+		tfResUserId		= new JTextField("아이디 체크시 자동 입력");
+		
+//		tfResNumber.setEnabled(false);
 
 		// 검색에 관련 UI Panel
 		searchPanel.add(lSearchSegment);
@@ -122,7 +133,15 @@ public class RegResDialog extends JDialog {
 
 		jPanel.add(lResUserId);
 		jPanel.add(tfResUserId);
-		
+
+		pUserId = new JPanel();
+		lIdSearch = new JLabel("아이디 입력: ");
+		tfIdSearch = new JTextField(20);
+		btnIdCheck = new JButton("체크");
+		pUserId.add(lIdSearch);
+		pUserId.add(tfIdSearch);
+		pUserId.add(btnIdCheck);
+		btnIdCheck.addActionListener(new ReservationBtnHandler());
 		
 		// 테이블 데이터 모델 생성
 		carRentTableModel = new CarRentTableModel(carItems, columnNames);
@@ -141,16 +160,22 @@ public class RegResDialog extends JDialog {
 		rowSel.addListSelectionListener(new ListRowSelectionHandler());  // 행 클릭시
 		colSel.addListSelectionListener(new ListColSelectionHandler());  // 열 클릭시
 
-		add(searchPanel, BorderLayout.NORTH);
-		carTable.add(jPanel, BorderLayout.SOUTH);
-		add(new JScrollPane(carTable), BorderLayout.CENTER);  // 스크롤 기능 있는 테이블
+		pUserId.add(searchPanel,BorderLayout.NORTH);
+		pUserId.add(scrollTable,BorderLayout.SOUTH);
+		add(pUserId, BorderLayout.NORTH);
+//		add(searchPanel, BorderLayout.NORTH);
+		add(jPanel, BorderLayout.CENTER);
 		add(btnPanel, BorderLayout.SOUTH);
 		
+		jPanel.setBorder(BorderFactory.createEmptyBorder(0 , 10 , 0 , 0));  // 여백
+		lResNumber.setHorizontalAlignment(JLabel.LEFT);  // 정렬
+		scrollTable.setPreferredSize(new Dimension(680,300));  // 테이블 크기 설정하기
 		setLocation(300,100);  // 가로 세로
-		setSize(800,600);  // 가로 세로
-		pack();  // 창 크기를 알맞게 조정  // size설정 무시
+		setSize(700,500);  // 가로 세로
+//		pack();  // 창 크기를 알맞게 조정  // size설정 무시
 		setModal(true);  // modal창으로 만듬
 		setVisible(true);
+		
 		
 	}
 
@@ -194,7 +219,8 @@ public class RegResDialog extends JDialog {
 
 	// 테이블의 행 클릭시 이벤트 처리
 	class ListRowSelectionHandler implements ListSelectionListener {
-
+		CarVO carVO = null;
+		
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			if (!e.getValueIsAdjusting()) {
@@ -202,13 +228,18 @@ public class RegResDialog extends JDialog {
 				
 				rowIdx = lsm.getMinSelectionIndex();
 				System.out.println((rowIdx+1)+" 번째 행이 선택됨...");
+				
+				carVO = resController.checkCar((String) carItems[rowIdx][5]);
+				tfResCarNumber.setText(carVO.getCarNumber());
+
 			}
 		}
 		
 	}
 	// 테이블 열 클릭시 이벤트 처리
 	class ListColSelectionHandler implements ListSelectionListener {
-
+		CarVO carVO = null;
+		
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			// 선택한 항목의 행 추출
@@ -219,6 +250,10 @@ public class RegResDialog extends JDialog {
 				
 				colIdx = lsm.getMinSelectionIndex();
 				System.out.println((rowIdx+1)+" 번째 행"+(colIdx+1)+" 열이 선택됨...");
+				
+				carVO = resController.checkCar((String) carItems[rowIdx][5]);
+				tfResCarNumber.setText(carVO.getCarNumber());
+				
 			}
 			
 		}
@@ -229,11 +264,25 @@ public class RegResDialog extends JDialog {
 
 		List<CarVO> carList = null;
 		List<ResVO> resList = null;
+		MemberVO memberVO = null;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// 조회버튼 클릭할 경우
-			if (e.getSource() == btnSearch) {  // 조회 버튼 동작
+			if (e.getSource() == btnIdCheck) {  // 아이디 체크
+				//  아이디 체크 버튼 클릭할 경우
+				memberVO = memberController.checkId(tfIdSearch.getText().trim());
+				if (memberVO.getMemId() != null) {
+					tfResUserId.setText(memberVO.getMemId());
+					message("아이디가 확인됐습니다.");
+					idCheck = 1;
+				} else {
+					message("등록되지 않은 아이디 입니다.");
+					idCheck = 0;
+				}
+			
+			} else if (e.getSource() == btnSearch && idCheck == 1) {  // 조회
+				
+				// 조회 버튼 클릭할 경우
 				System.out.println("조회버튼");
 				String startDate = tfStartSearch.getText().trim();
 				String returnDate = tfReturnSearch.getText().trim();
@@ -254,7 +303,6 @@ public class RegResDialog extends JDialog {
 						}
 						
 						if(carList != null && carList.size() != 0) {
-							System.out.println("3");
 							loadTableData(carList);
 							
 						} else {
@@ -273,12 +321,16 @@ public class RegResDialog extends JDialog {
 					message("날짜를 입력해주세요");
 				}
 				
-			} else if (e.getSource() == btnRegister) {
+			} else if (e.getSource() == btnRegister && idCheck == 1) {  // 등록 
+				// 등록 버튼 클릭할 경우
 				// 화면에 있는 값을 변수로 저장
 				
-			} else if (e.getSource() == btnCancel) {  // 취소 
+			} else if (e.getSource() == btnCancel && idCheck == 1) {  // 취소 
+				// 취소 버튼 클릭할 경우
 				dispose();
 				return;
+			} else {
+				message("아이디를 먼저 체크해주세요~");
 			}
 			
 		}

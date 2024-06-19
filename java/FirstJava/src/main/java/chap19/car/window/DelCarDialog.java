@@ -58,6 +58,14 @@ public class DelCarDialog extends JDialog {
 		tfSegment		= new JTextField(20);
 		
 
+		tfCarNumber. setEnabled(false);
+		tfCarColor. setEnabled(false);
+		tfCarcarName. setEnabled(false);
+		tfDisplacement. setEnabled(false);
+		tfManufacturer. setEnabled(false);
+		tfSegment. setEnabled(false);
+		
+
 		// 검색에 관련 UI Panel
 		searchPanel.add(lSearchId);
 		searchPanel.add(tfSearch);

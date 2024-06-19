@@ -20,7 +20,6 @@ public class E08PublicDataTest {
 		
 		InputStream stream = url.openStream();
 		
-		
 	}
 
 }
