@@ -241,27 +241,28 @@ public class RegResDialog extends JDialog {
 				carList = new ArrayList<CarVO>();
 				resList = new ArrayList<ResVO>();
 				
-//				(startDate != null && startDate.length() != 0)&&(returnDate != null && returnDate.length() != 0)
-				if (true) {
-
-					System.out.println("1");
+//				
+				if ((startDate != null && startDate.length() != 0)&&(returnDate != null && returnDate.length() != 0)) {
+					
 					resList = resController.checkDate(startDate, returnDate);
 					System.out.println(resList);
-					if (true){  // (resList != null)
-						System.out.println("2");
+					
+					if (resList != null) {
 						for (int i=0; i<resList.size(); i++) {
 							String car = resList.get(i).getResCarNumber();
 							carList.add(carController.checkNum(car));
 						}
+						
 						if(carList != null && carList.size() != 0) {
 							System.out.println("3");
 							loadTableData(carList);
+							
 						} else {
 							System.out.println("4");
 							loadTableData(null);
 						}
+						
 					} else {
-						System.out.println("5");
 						message("검색실패");
 //						// 전체 조회
 //						carList = carController.listCar(carVO);
@@ -269,7 +270,6 @@ public class RegResDialog extends JDialog {
 					}
 				
 				} else {
-					System.out.println("6");
 					message("날짜를 입력해주세요");
 				}
 				

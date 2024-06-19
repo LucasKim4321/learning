@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chap19.car.vo.CarVO;
+import chap19.common.base.AbstractBaseController;
 import chap19.reservation.dao.ResDAO;
 import chap19.reservation.dao.ResDAOImpl;
 import chap19.reservation.vo.ResVO;
 
-public class ResControllerImpl implements ResController{
+public class ResControllerImpl extends AbstractBaseController implements ResController{
 	
 	public ResDAO resDAO;
 	
@@ -67,29 +68,42 @@ public class ResControllerImpl implements ResController{
 
 	@Override
 	public CarVO checkCar(String segment) {
-		// TODO Auto-generated method stub
-		return null;
+		// 차 체크
+		CarVO vo = new CarVO();
+		
+		try {
+			vo = resDAO.checkCar(segment);
+			
+		} catch (Exception e) {System.out.println(e.getMessage());}
+		
+		return vo;
 	}
 
 	@Override
 	public ResVO checkRes(String type, String value) {
-		// 체크
+		// 예약 체크
 		ResVO vo = new ResVO();
 		
-//		try {
-//			vo = resDAO.checkResNum(resNumber);
-//		} catch (Exception e) {System.out.println(e.getMessage());}
+		try {
+			vo = resDAO.checkRes(type, value);
+			
+		} catch (Exception e) {System.out.println(e.getMessage());}
+		
 		return vo;
 	}
 	
 	@Override
 	public List<ResVO> checkDate(String startDate, String returnDate) {
+		// 날짜 체크
+		List<ResVO> resList = new ArrayList<ResVO>();
 		
+		try {
+			resList = resDAO.checkDate(startDate, returnDate);
+			
+		} catch (Exception e) {System.out.println(e.getMessage());}
 		
-		return null;
+		return resList;
 		
 	}
- 
 	
-
 }

@@ -17,10 +17,10 @@ public class E01NetworkTest01 {
 		// cmd ipconfig: 내 ip주소 확인  ping ip주소: 응답확인  ping DNS주소: 응답확인  nslookup DNS주소: 사이트의 ip주소 표시
 		// 프로토콜: 통신규약 - 정보 전달하는 규약
 		// 					상호 간의 접속방식, 데이터 형식, 오류 검출 방식등을 규정
-		// 					HTTP, HTTPS, FTP, TCP/IP, UDP ...
+		// 					HTTP, HTTPS, FTP(FileTransferProtocol), TCP/IP(오류체크o), UDP(오류체크x) ...
 		// 포트번호: 0~65535 (0~1023까지 사용)
 		// 네트워크  OSI 7계층으로 표현 (OSI 7 Layer)
-		
+		// 인터넷 : TCP/IP베이스
 		
 		// InetAddresss: IP주소와 관련된 기능을 제공하는 클래스
 		// SocketAddress: InetAddress클래스의 기능을 그대로 제공하면서 포트번호관리 기능을 제공
@@ -42,14 +42,14 @@ public class E01NetworkTest01 {
 		System.out.println("------------------");
 		System.out.println("https://www.egovframe.go.kr/home/sub.do?menuNo=9");
 		System.out.println("------------------");
-		System.out.println("authority: "+url.getAuthority());
-		System.out.println("content: "+url.getContent());
-		System.out.println("protocol: "+url.getProtocol());
-		System.out.println("host: "+url.getHost());
-		System.out.println("port: "+url.getPort());
-		System.out.println("path: "+url.getPath());
-		System.out.println("file: "+url.getFile());
-		System.out.println("query: "+url.getQuery());
+		System.out.println("getAuthority: "+url.getAuthority());
+		System.out.println("getContent: "+url.getContent());
+		System.out.println("getProtocol: "+url.getProtocol());
+		System.out.println("getHost: "+url.getHost());
+		System.out.println("getPort: "+url.getPort());
+		System.out.println("getPath: "+url.getPath());
+		System.out.println("getFile: "+url.getFile());
+		System.out.println("getQuery: "+url.getQuery());
 		
 		
 	}
