@@ -109,6 +109,7 @@ DROP TABLE t_car;
 
 SELECT * FROM t_car WHERE carNumber = '20다4562';
 SELECT * FROM t_car WHERE carNumber = '2222';
+SELECT * FROM t_member WHERE memId = '122';
 UPDATE t_car 
 SET carName = '5555',
 	 displacement = 1111,
