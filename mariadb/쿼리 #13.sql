@@ -122,8 +122,9 @@ UPDATE t_member SET memPassword = '5555', memName = '5555', memAddress = '5555',
 
 
 -- SELECT * FROM t_res WHERE not(('2024-4-2' <= startDate and startDate < '2024-4-9')OR('2024-4-2' < returnDate and returnDate <= '2024-4-9')); 반납일에도 시작 가능  반납일에 시작할 경우 시간으로 세분화
-SELECT * FROM t_res WHERE not(('2024-11-17' <= startDate and startDate <= '2024-11-19')OR('2024-11-17' <= returnDate and returnDate <= '2024-11-19'));  -- 반납일에 시작 불가능
+SELECT * FROM t_res WHERE not(('2024-1-5' <= startDate and startDate <= '2024-1-6')OR('2024-1-5' <= returnDate and returnDate <= '2024-1-6'));  -- 반납일에 시작 불가능
 
+SELECT * FROM t_res;
 SELECT * FROM t_member WHERE memId = 'hong600';
 SELECT * FROM t_member;
 SELECT * FROM t_car;

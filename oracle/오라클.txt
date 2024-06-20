@@ -1,0 +1,60 @@
+ojdbc11
+sqldeveloper-23.1.1.345.2114-x64
+OracleXE184_Win64(18버전)   11버전 추천
+
+Oracle 18c
+localhost:1521/XEPDB1
+https://localhost:5500/em
+
+cmd
+sqlplus
+
+아이디system
+비번1234	
+
+ create user c##user identified by 1234   // 아이디 생성  c##해야 잘됨
+  2  default tablespace users  // 테이블 생성
+  3  quota unlimited on users;  // 용량 제한 없음
+
+grant resource, connect to c##user;     // c##user에 resource 권한
+
+
+
+https://javappo.tistory.com/153
+
+1. cmd 들어가기
+2. sqlplus
+3. (기본이 SYSTEM) (기본 설정암호)
+​
+4. create user 'user이름' identified by 'user비밀번호'; //유저 생성
+5. alter user 'user이름' account unlock; //만들었을 때 user account에 lock이 걸려있을지 모르므로 unlock시켜줌
+6. grant resource, connect to 'user이름'
+grant dba to 'user이름' //권한 설정
+
+
+// 계정생성create user [USERNAME] identified by [PASSWORD];
+// 계정비밀번호 변경ALTER USER [USERNAME] IDENTIFIED BY [NEW PASSWORD]; 
+// 권한할당 GRANT CREATE 권한명 TO 계정;
+----------------------------------------------------
+시스템 권한 종류
+create user : 데이터 베이스 유저 생성 권한
+select any table : 모든 유저의 테이블 조회 권한
+create any table : 모든 유저의 테이블 생성 권한
+create session : 테이터베이스 접속 권한
+create table : 테이블 생성 권한
+create view : 뷰 생성 권한
+create proced user : 프로시저 생성 권한
+create sequence : 시퀀스 생성 권한
+sysdba : 테이버베이스를 관리하는 최고 권한
+sysoper : 테이터베이스를 관리하는 권한
+---------------------------------------------------- 
+// 권한제거revoke 권한명 (시스템 명령 또는 SQL 명령) ON 테이블명 FROM 계정; 
+// 계정삭제DROP USER 계정명 CASCADE; 
+// 현재연결된계정보기show user
+
+
+select * from ALL_users;    // 모든 계정에 대한 정보 확인
+select * from DBA_users;    // 모든 계정에 대한 정보 확인
+select username from ALL_users;    // 모든 계정에 대한 이름 확인
+select username from DBA_users;    // 모든 계정에 대한 이름 확인
+

@@ -1,6 +1,6 @@
 import './App.css';
-import {useRef, useReducer} from 'react';
-
+import {useCallback, useState, useRef, useReducer} from 'react';
+import React from 'react';
 import Header from './component/header.js';
 import TodoEditor from './component/TodoEditor.js';
 import TodoList from './component/TodoList.js';
@@ -31,6 +31,8 @@ function reducer (state, action) {  // state = todo
 
 }
 
+// const MyContext = react.createContext(defaultValue);
+
 function App() {
   // 변수(상태)
   const [todo, dispatch] = useReducer (reducer, mockTodo);  // useReducer(실행할 함수, 기본값)
@@ -38,7 +40,7 @@ function App() {
   // const [todo, setTodo] = useState(mockTodo);
   const idRef = useRef(3);  // 변수 역할  todo 추가시 id: 3부터 해서 추가
 
-  // 함수(기능)
+  // 함수(기능) : useReducer를 이용할 경우 함수형 업데이트 기능을 사용하지 않아도 된다.
   const onCreate = (content)=> {
 
     /*  useReducer로 대체
@@ -68,8 +70,8 @@ function App() {
 
   }
 
-
-  const onUpdate = (targetId) => {
+  // 기존 함수에 useCallback(함수,[]) 추가
+  const onUpdate = useCallback ((targetId) => {
     /* useReducer로 대체
     setTodo(
       todo.map((e)=> e.id === targetId ? {...e, isDone: !e.isDone} : e )
@@ -80,9 +82,9 @@ function App() {
       type: "UPDATE",
       targetId
     })
-  }
+  },[]);
 
-  const onDelete = (targetId) => {
+  const onDelete = useCallback ((targetId) => {
     /* useReducer로 대체
     setTodo(
       todo.filter( (e) => e.id !== targetId)  // 조건을 만족하는 값 반환
@@ -92,7 +94,7 @@ function App() {
       type: "DELETE",
       targetId
     })
-  }
+  },[]);
 
   return (
     <div className='container'>

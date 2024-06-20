@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<company>
+	<emp>
+		<firstName>길동</firstName>
+		<lastName>홍</lastName>
+		<nickName>홍</nickName>
+		<salary>월100만원</salary>
+		<car>티코</car>
+	</emp>
+	<emp>
+		<firstName>동길</firstName>
+		<lastName>동</lastName>
+		<nickName>똥</nickName>
+		<salary>월200만원</salary>
+		<car>마티즈</car>
+	</emp>
+	<emp>
+		<firstName>홍길순</firstName>
+		<lastName>홍</lastName>
+		<nickName>순</nickName>
+		<salary>월300만원</salary>
+		<car>아반때</car>
+	</emp>
+	<emp>
+		<firstName>용왕</firstName>
+		<lastName>홍</lastName>
+		<nickName>홍</nickName>
+		<salary>월100만원</salary>
+		<car>티코</car>
+	</emp>
+</company>

@@ -79,6 +79,20 @@ const TodoList = ({todo, onUpdate, onDelete})=> {
                         placeholder="검색어를 입력하세요"/>
                 <button>search</button>
             </div>
+            {/* 
+            할 일 아이템추가 -> App컴포넌트 todo업데이트 -> App컴포넌트 리렌더 -> TodoItem에 전달되는 Pros도 변경되어 리렌더 
+            
+            불필요한 함수 재생성 방지 : useCallback   (props가 있어도 재생성방지)
+            const memorizedFunc = useCallback(콜백함수,의존성배열)
+            의존성 배열에 값이 변경되면 콜백함수 수행
+            의존성 배열을 빈배열로 전달 => 콜백함수를 수행하지 않음
+
+            *****
+            ****
+              const onUpdate = useCallback ((targetId) => {},[]);
+
+            */}
+
             <div className='list_wrapper'>
                 {/* {todo.map((e)=> <did>{e.content}</did>)} */}
                 
@@ -88,7 +102,11 @@ const TodoList = ({todo, onUpdate, onDelete})=> {
                 <TodoItem id={id}, isDone={isDone}, content={content}, createdDate={createdDate} />
                 */}
 
-                {getSearchResult().map((e)=> (<TodoItem key={e.id}{...e} onUpdate={onUpdate} onDelete={onDelete}/>))}
+                {getSearchResult().map((e)=> (<TodoItem 
+                                                key={e.id}{...e} 
+                                                onUpdate={onUpdate} 
+                                                onDelete={onDelete}
+                                                />))}
                 {/* <TodoItem/>
                 <TodoItem/> */}
             </div>

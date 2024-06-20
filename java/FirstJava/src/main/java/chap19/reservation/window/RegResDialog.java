@@ -5,8 +5,12 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -287,6 +291,12 @@ public class RegResDialog extends JDialog {
 				String startDate = tfStartSearch.getText().trim();
 				String returnDate = tfReturnSearch.getText().trim();
 				
+				LocalDate now = LocalDate.now();
+				
+				tfResDate.setText(String.valueOf(now));
+				tfStartDate.setText(startDate);
+				tfReturnDate.setText(returnDate);
+				
 				carList = new ArrayList<CarVO>();
 				resList = new ArrayList<ResVO>();
 				
@@ -324,6 +334,44 @@ public class RegResDialog extends JDialog {
 			} else if (e.getSource() == btnRegister && idCheck == 1) {  // 등록 
 				// 등록 버튼 클릭할 경우
 				// 화면에 있는 값을 변수로 저장
+				ResVO vo = new ResVO() ;
+				
+				// 랜덤한 예약 번호 생성
+				Random random = new Random();
+				String resNumber = "";
+				while(true) {
+					for(int i=0; i<=15; i++) {
+						
+			        	int j = (int)(Math.random()*2);
+			        	if (j==0)
+			        		resNumber += String.valueOf(random.nextInt(10));
+			        	if (j==1) {
+				        	int d = (int)(Math.random()*2);
+				        	if (d==1) {
+			        		resNumber += String.valueOf((char)(random.nextInt(26)+65));
+				        	}
+				        	if (d==0) {
+			        		resNumber += String.valueOf((char)(random.nextInt(26)+97));
+				        	}
+			        	}
+			        }
+					// 중복된 예약번호 체크
+					vo = resController.checkRes("resNumber", resNumber);
+					if (resNumber != vo.getResNumber() || resNumber == null)
+						break;
+				}
+				
+				vo.setResNumber(resNumber);
+				vo.setResDate(Date.valueOf(tfResDate.getText()));
+				vo.setStartDate(Date.valueOf(tfStartDate.getText()));
+				vo.setReturnDate(Date.valueOf(tfReturnDate.getText()));
+				vo.setResCarNumber(tfResCarNumber.getText());
+				vo.setResUserId(tfResUserId.getText());
+				
+				resController.regRes(vo);
+				
+				message("예약을 완료했습니다!");
+				dispose();
 				
 			} else if (e.getSource() == btnCancel) {  // 취소 
 				// 취소 버튼 클릭할 경우
