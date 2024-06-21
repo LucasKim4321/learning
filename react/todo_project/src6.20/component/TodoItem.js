@@ -1,17 +1,9 @@
-
+import React from 'react';
 import './TodoItem.css';
-import React, { useContext} from 'react';
-// import {TodoContext} from "../App";
-import {TodoDispatchContext} from "../App";
 
+const TodoItem = ({id, content, isDone, createdDate, onUpdate, onDelete})=> {
 
-
-// const TodoItem =  ( {id, content, isDone, createdDate, onUpdate, onDelete}) => { // Props로 통해 값을 전달 받음
-const TodoItem =  ( {id, content, isDone, createdDate}) => {  
- 
-    // const { onUpdate, onDelete } = useContext(TodoContext);
-    const { onUpdate, onDelete } = useContext(TodoDispatchContext);
-    console.log(`TodoItem 컴포넌트: ${id} - 업데이트`);
+    console.log("ddddddd")
 
     
     const onChangeCheckbox = ()=> {onUpdate(id)}
@@ -47,4 +39,4 @@ const TodoItem =  ( {id, content, isDone, createdDate}) => {
     )
 }
 
-export default  React.memo(TodoItem);
+export default React.memo(TodoItem);

@@ -8,8 +8,20 @@ npx create-react-app sample_counter
 
 npm install react-bootstrap bootstrap  // react bootstrap 설치
 
+
+
+README.md 참조  실행가능한 명령어 목록
 ctrl + c // 중지
 npm run start  // 실행
+npm start 실행
+
 
 
 cmd에 mkdir 경로  경로에 폴더 생성
+
+
+npm install bootStrap@  // bootStrap 설치
+npm install bootStrap@5.3.3  // bootStrap 5.3.3 버전 설치
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+npm i react-router-dom  // 라우터 설치

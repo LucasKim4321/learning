@@ -1,0 +1,18 @@
+.inputBox {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;  /* row : 수평방향 */
+    gap: 5px;
+}
+.inputBox input {
+    flex: 1;
+}
+.inputBox input, .inputBox button {
+    padding: 3px 10px;
+    border-radius: 5px;
+    opacity: 0.6;
+}
+
+.inputBox input:focus {
+    box-shadow: 0 0 4px 4px lightcoral;
+}

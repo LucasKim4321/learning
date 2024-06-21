@@ -8,7 +8,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>  // 호환성 관련.  없어도 됨
+  </React.StrictMode>
 );
 
 /*

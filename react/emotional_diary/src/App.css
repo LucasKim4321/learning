@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+
+/* .myStyle {
+  margin: 0;
+  font-family: "Dongle", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: lightyellow;
+  text-align: center;
+} */
+
+
+code {
+  font-family: "Dongle", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.title {
+    font-size: 60px;
+}
+
+/*
+html에 <style>태그에 쓸 시
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+</style>
+
+html에 링크 할 시
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
+
+스타일시트css에 쓸 시
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+
+스타일 시트 또는 <style>태그에 적용
+Dongle: CSS class
+.dongle-regular {
+  font-family: "Dongle", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+*/

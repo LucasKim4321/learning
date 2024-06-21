@@ -1,0 +1,35 @@
+.list_wrapper {
+    margin-top: 15px;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    
+}
+.TodoItem {
+    display: flex;
+    gap: 10px;
+}
+.TodoItem .title_col {
+    flex: 1;
+    overflow: hidden;  /* 내용이 크기를 초과하면 숨김 */
+}
+
+/* 부트 스트랩 효과 제거 */
+.TodoItem input:focus {
+    /* outline: lightcoral; */
+    box-shadow: 0 0 4px 4px lightcoral;
+    border-color: lightcoral;
+    
+}
+
+.TodoItem input:checked {
+    background-color: lightcoral;
+    border-color: lightcoral;
+}
+
+.TodoItem input, .TodoItem button {
+    padding: 3px 10px;
+    border-radius: 5px;
+    opacity: 0.6;
+}
