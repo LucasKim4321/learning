@@ -18,6 +18,7 @@ const TopUI = ()=> {
                 <div><button>삭제</button></div>
             </div>
             <div className="ms-auto">로그인</div>
+            <div className="">회원가입</div>
             <MenuUI/>
         </div>
     )
