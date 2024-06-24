@@ -6,6 +6,10 @@ import emotion3 from "./img/emotion3.png";
 import emotion4 from "./img/emotion4.png";
 import emotion5 from "./img/emotion5.png";
 
+
+
+
+// 이미지 리소스 추출하는 함수
 export const getEmotionImgById = (e) => {
 
     /*
@@ -26,4 +30,22 @@ export const getEmotionImgById = (e) => {
         default:
             return null;
     }
+
+}
+
+// 처음 렌더링할 때 오늘 날짜를 yyyy-mm-dd형식으로 출력
+export const getFormattedDate = (targetDate)=> {
+    let year = targetDate.getFullYear();
+    let month = targetDate.getMonth()+1;
+    let date = targetDate.getDate();
+
+    if (month < 10) {
+        month = `0${month}`
+    }
+    
+    if (date < 10) {
+        date = `0${date}`
+    }
+    return `${year}-${month}-${date}`;
+
 }

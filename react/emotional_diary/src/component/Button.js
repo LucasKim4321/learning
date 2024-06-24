@@ -9,6 +9,7 @@ const Button = ({text, type, onClick})=> {
     return <button 
         // className="btn btn-warning btn-sm"
         className={ ["btn", `btn-${btnType}`, "btn-sm", "px-3", "btn_style"].join(" ") }
+        // onClick={()=>{alert("하이!!!")}}
         onClick={onClick}>
             {text}</button>
 };

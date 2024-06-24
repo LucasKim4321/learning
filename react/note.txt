@@ -24,4 +24,5 @@ npm install bootStrap@  // bootStrap 설치
 npm install bootStrap@5.3.3  // bootStrap 5.3.3 버전 설치
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-npm i react-router-dom  // 라우터 설치
+npm i react-router-dom  // 라우터 설치  i(install)
+npm install react-router-dom  // 이렇게도 가능

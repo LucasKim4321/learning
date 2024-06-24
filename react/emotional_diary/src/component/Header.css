@@ -1,0 +1,16 @@
+.Header{
+    border-bottom: 1px solid lightsalmon;
+    margin-bottom: 20px;
+}
+.header_left {
+    flex: 1;
+    font-size: 25px;
+}
+.header_center {
+    flex: 5;
+    font-size: 50px;
+}
+.header_right {
+    flex: 1;
+    font-size: 25px;
+}

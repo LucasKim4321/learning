@@ -15,6 +15,14 @@ root.render(
 
 );
 
+/*
+import {BrowserRouter} from "react-router-dom";
+<BrowserRouter>
+<App />
+</BrowserRouter>
+App Component에서 라우터 작동
+*/
+
 // 페이지 컴포넌트 만들기
 /*
 Home : 인덱스 페이지
