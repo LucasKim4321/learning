@@ -50,10 +50,15 @@ const Home = ()=> {
                     type={"primary"}
                     onClick={()=>{alert("primary!!!")}}/>
                     <div>Home 페이지</div> */}
-            <Editor onSubmit={
-                ()=>{alert("작성완료 버튼 클릭")}
-                // onSubmitSend()
-                }/>
+            <Editor 
+                initData= {
+                    {date: new Date().getTime(), emotionId:1, content:"이전에 작성했던 일기"}
+                }
+                onSubmit= {
+                    ()=>{alert("작성완료 버튼 클릭")}
+                    // onSubmitSend()
+                }
+            />
         </div>
     )
 }

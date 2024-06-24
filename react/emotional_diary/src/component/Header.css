@@ -1,6 +1,7 @@
 .Header{
     border-bottom: 1px solid lightsalmon;
-    margin-bottom: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
 }
 .header_left {
     flex: 1;

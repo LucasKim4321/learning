@@ -33,6 +33,15 @@ export const getEmotionImgById = (e) => {
 
 }
 
+export const emotionList = [
+    {id:1, name:"완전 좋음",img: getEmotionImgById(1)},
+    {id:2, name:"좋음",img: getEmotionImgById(2)},
+    {id:3, name:"그저그럼",img: getEmotionImgById(3)},
+    {id:4, name:"나쁨",img: getEmotionImgById(4)},
+    {id:5, name:"끔찍함",img: getEmotionImgById(5)},
+]
+
+
 // 처음 렌더링할 때 오늘 날짜를 yyyy-mm-dd형식으로 출력
 export const getFormattedDate = (targetDate)=> {
     let year = targetDate.getFullYear();

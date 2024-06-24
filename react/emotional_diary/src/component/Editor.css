@@ -9,7 +9,7 @@
     font-size: 30px;
 }
 .Editor input, textarea {
-    background-color: rgba(255, 255, 255, 0.445);
+    background-color: rgba(255, 255, 255, 0.301);
     border: 1px solid lightsalmon;
     border-radius: 5px;
     padding: 20px;
@@ -20,4 +20,10 @@
 
 .Editor textarea {
     width: 100%;
+    min-height: 200px;
+}
+.Editor .emotion_list_wrapper {
+    display: flex;
+    justify-content: space-around;
+    gap: 3%;
 }

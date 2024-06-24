@@ -1,0 +1,43 @@
+.EmotionItem {
+    cursor : pointer;
+    border-radius: 15px;
+    /* border: 1px solid lightsalmon; */
+
+    display: flex;  /*row(기본값) -> 수평 방향으로 배치*/
+    flex-direction: column;
+    /*수평 가운데 정렬*/
+    justify-content: center;  
+    /* text-align: center; */
+    /*수직 가운데 정렬*/
+    align-items: center;  
+    padding: 20px 0;
+    margin-bottom: 20px;
+
+}
+
+.EmotionItem span {
+    font-size: 1.5em;
+    color: lightcoral;
+}
+.EmotionItem img {
+    width: 50%;
+}
+
+.EmotionItem_off {
+    background-color: #ecececb2;
+}
+.EmotionItem_on_1{
+    background-color: lightgreen;
+}
+.EmotionItem_on_2{
+    background-color: rgb(184, 255, 184);
+}
+.EmotionItem_on_3{
+    background-color: rgb(247, 247, 139);
+}
+.EmotionItem_on_4{
+    background-color: rgb(255, 206, 115);
+}
+.EmotionItem_on_5{
+    background-color: rgb(255, 152, 152);
+}
