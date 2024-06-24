@@ -3,7 +3,7 @@ import {Routes, Route} from "react-router-dom"
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import NoteMain from './pages/NoteMain.js'
+import NoteMain from "./pages/NoteMain.js"
 // import Setting from './pages/Setting.js'
 // import Sign_up from './pages/Sign_up.js'
 // import Theme from './pages/Theme.js'

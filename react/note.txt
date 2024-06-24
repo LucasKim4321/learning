@@ -22,6 +22,9 @@ cmd에 mkdir 경로  경로에 폴더 생성
 
 npm install bootStrap@  // bootStrap 설치
 npm install bootStrap@5.3.3  // bootStrap 5.3.3 버전 설치
+npm i bootstrap
+npm install bootstrap@v5.3.3
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 npm i react-router-dom  // 라우터 설치  i(install)

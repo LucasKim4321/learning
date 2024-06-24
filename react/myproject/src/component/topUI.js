@@ -1,6 +1,4 @@
 import "./TopUI.css"
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 
 const TopUI = ()=> {
     return (
@@ -10,14 +8,17 @@ const TopUI = ()=> {
                 <div>테마</div>
                 <div>설정</div>
                 <div>
-                    <DropdownButton id="dropdown-basic-button" title="dd">
-                    <Dropdown.Item href="#/action-1">광고 제거</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">후원</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">듀토리얼</Dropdown.Item>
-                    <Dropdown.Item href="#/action-4">프로그램</Dropdown.Item>
-                    </DropdownButton>
+                    <ul>
+                        <li><a href="#">광고 제거</a>
+                        </li>
+                        <li><a href="#">후원</a>
+                        </li>
+                        <li><a href="#">듀토리얼</a>
+                        </li>
+                        <li><a href="#">듀토리얼</a>
+                        </li>
+                    </ul>
                 </div>
-                
             </div>
         </div>
     )
