@@ -1,25 +1,24 @@
 import "./TopUI.css"
+import MenuUI from '../component/MenuUI.js'
 
 const TopUI = ()=> {
     return (
-        <div>
-            <div className="d-flex">
-                <div className="ms-auto">로그인</div>
-                <div>테마</div>
-                <div>설정</div>
-                <div>
-                    <ul>
-                        <li><a href="#">광고 제거</a>
-                        </li>
-                        <li><a href="#">후원</a>
-                        </li>
-                        <li><a href="#">듀토리얼</a>
-                        </li>
-                        <li><a href="#">듀토리얼</a>
-                        </li>
-                    </ul>
-                </div>
+        <div className="top_ui d-flex">
+            
+            <div className="">폴더메뉴</div>
+            <div className="">기본폴더</div>
+            <div className="ms-auto d-flex">
+                <div><input type="search"/></div>
+                <div><button>검색</button></div>
+                <div><button>메모추가</button></div>
+                <div><button>불러오기</button></div>
+                <div><button>선택</button></div>
+                <div><button>전체선택</button></div>
+                <div><button>이동</button></div>
+                <div><button>삭제</button></div>
             </div>
+            <div className="ms-auto">로그인</div>
+            <MenuUI/>
         </div>
     )
 }

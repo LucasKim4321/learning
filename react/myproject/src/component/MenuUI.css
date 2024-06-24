@@ -1,0 +1,56 @@
+/* ul li태그에 리스트 스타일을 없앰 */
+
+.mymenu ul, .mymenu li{
+    list-style: none;   
+    margin: 0;
+    padding: 0;  
+}
+/* a태그에 텍스트 밑줄을 없애고 색상을 #333 */
+.mymenu a {
+    text-decoration: none;
+    color:#333; 
+}
+/* 글자크기를 16px 맑은 고딕 굵게하고 width넓이 700, 높이 50만큼 배경색은 #ccc, 글자색은 검정색, 라인높이50px
+menu박스 가운데정렬, 글자가운데 정렬 */
+.mymenu {
+    font:bold 16px "malgun gothic";
+    /* width:200px; */
+    height:25px;    
+    background: #ccc;
+    color:black;
+    text-align: center;
+}
+
+/* menu태그 자식의 ul의 자식 li를 왼쪽정렬과 넓이 140설정 */
+.mymenu > ul > li {
+    float:left;
+    width:50px;
+    position:relative;
+}
+
+.mymenu > ul > li > ul {
+    top: 20px;
+    left:-50px;
+    width:100px;
+    /* display:none; */
+    opacity: 0;
+    position: absolute;
+    font-size:14px;
+    background: skyblue;
+}
+.mymenu > ul > li > ul a {
+    display: none;
+}
+.mymenu > ul > li:hover > ul a {
+    display: block;
+}
+.mymenu > ul > li:hover > ul {
+    /* display:block; */
+    opacity: 1;
+    transition: all 1s;
+}
+
+.mymenu > ul > li > ul > li:hover {
+    background: orange;
+    transition: ease 1s;
+}
