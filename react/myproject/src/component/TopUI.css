@@ -1,0 +1,32 @@
+/* .btn {
+    background-color: white;
+    color: black;
+    border: none;
+}
+.btn:hover {
+    background-color: white;
+    color: black;
+    border: none;
+}
+.btn:active {
+    background-color: white;
+    color: black;
+    border: none;
+}
+
+.btn:active, .btn:focus {
+    outline:none !important;
+    box-shadow:none !important;} */
+/* .btn, .btn:hover,.btn:focus, .btn:active{
+    all:unset;
+}
+.show, .dropdown, .dropdown:active {
+    
+    all:unset;
+} */
+.btn, .btn:hover, .btn:active, .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+    /* color: var(--bs-btn-active-color);
+    background-color: var(--bs-btn-active-bg);
+    border-color: var(--bs-btn-active-border-color); */
+    all:unset;
+}

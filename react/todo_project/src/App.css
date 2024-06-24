@@ -5,6 +5,8 @@
   box-sizing: border-box;
   padding: 20px;
   border: 1px solid lightsalmon;
+  background-color: rgb(255, 227, 216);
+  /* background-color: lightsalmon; */
 
   display:flex;
   flex-direction: column;

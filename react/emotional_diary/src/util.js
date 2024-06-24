@@ -55,6 +55,7 @@ export const getFormattedDate = (targetDate)=> {
     if (date < 10) {
         date = `0${date}`
     }
+    // console.log(year, month, date)
     return `${year}-${month}-${date}`;
 
 }

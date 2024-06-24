@@ -84,7 +84,7 @@ const Editor = ({initData, onSubmit})=> {
                     {
                         emotionList.map ((e)=>
                             // <img key={e.id} alt={`emotion${e.id}`} src={e.img}/>
-                            <EmotionItem 
+                            <EmotionItem
                                 key={e.id}
                                 {...e}  // e.id, e.img, e.name 전달
                                 onClick={handleChangeEmotion}
