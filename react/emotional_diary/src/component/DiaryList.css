@@ -24,3 +24,21 @@
     background-color: rgb(255, 143, 98);
     border: none;
 }
+.DiaryList select {
+    all:unset;
+    /* border: none; */
+    width: 100%;
+    height: 100%;
+}
+.DiaryList option {
+    background-color: lightsalmon;
+
+}
+.list_wrapper {
+    margin-top: 20px;
+}
+.diaryItem {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 30px;
+}
