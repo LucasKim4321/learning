@@ -1,0 +1,26 @@
+.DiaryList {
+    text-align: left;
+}
+
+.DiaryList .menu_wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5em;
+}
+
+.DiaryList .left{
+    flex: 1;
+
+    border: none;
+    border-radius: 5px;
+    background-color: lightsalmon;
+}
+
+.DiaryList .right{
+    flex: 9;
+}
+.DiaryList .right button {
+    width: 100%;
+    background-color: rgb(255, 143, 98);
+    border: none;
+}

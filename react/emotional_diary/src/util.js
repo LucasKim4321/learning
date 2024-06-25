@@ -59,3 +59,14 @@ export const getFormattedDate = (targetDate)=> {
     return `${year}-${month}-${date}`;
 
 }
+
+// 날짜의 범위
+export const getMonthRangeByDate = (date)=> {
+    // 시작 시간
+    const beginTimeStamp = new Date(date.getFullYear(), date.getMonth(), 1).getTime();
+
+    // 이달의 가장 늦은 시간 0일 23시 59분 59초
+    const endTimeStamp = new Date(date.getFullYear(), date.getMonth()+1, 0,23,59,59).getTime();
+
+    return {beginTimeStamp, endTimeStamp}
+}
