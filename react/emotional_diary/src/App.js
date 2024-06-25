@@ -59,7 +59,7 @@ function reducer(state, action) {  // state==data  action.type="CREATE","UPDATE"
         it(state).emotionId = action.emotionId
         it(state).date = action.date
       }
-        */
+      */
        
     }
     case "DELETE": {
