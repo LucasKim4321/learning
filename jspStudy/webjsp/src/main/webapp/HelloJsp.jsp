@@ -5,6 +5,8 @@
 String str1 = "JSP";
 String name = "홍길동";
 %>
+<% // jsp안에서 java 사용가능 %>
+
 <!DOCTYPE html>
 <html>
 <head>
