@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ex01.sam02.dto.AddCalc;
+import ex01.sam02.dao.AddCalc;
 
 @SuppressWarnings("serial")
 @WebServlet("/calc")
