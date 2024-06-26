@@ -1,5 +1,10 @@
+import {onClickCreateMemo} from '../hooks/util.js'
+
 import "./TopUI.css"
+
 import MenuUI from '../component/MenuUI.js'
+
+
 
 const TopUI = ()=> {
     return (
@@ -10,7 +15,7 @@ const TopUI = ()=> {
             <div className="ms-auto d-flex">
                 <div><input type="search"/></div>
                 <div><button>검색</button></div>
-                <div><button>메모추가</button></div>
+                <div><button onClick={onClickCreateMemo}>메모추가</button></div>
                 <div><button>불러오기</button></div>
                 <div><button>선택</button></div>
                 <div><button>전체선택</button></div>

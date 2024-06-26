@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useState } from 'react'
-import {mockData} from "../MockData.js"
+import {mockData} from "../hooks/MockData.js"
 
 import './NoteMain.css'
 
@@ -7,6 +7,7 @@ import TopUI from '../component/TopUI.js'
 import Header from '../component/Header.js'
 import NotePanel from '../component/NotePanel.js'
 import Advertisement from '../component/Advertisement.js'
+import CreateNote from './funcPages/CreateNote.js'
 
 
 export const NotesStateContext = React.createContext();  // Context생성
@@ -49,6 +50,7 @@ const NoteMain = ()=> {
                         <NotePanel/>
                     </div>
                     <Advertisement/>
+                    <CreateNote/>
                 </div>
             </NotesStateContext.Provider>
         )

@@ -37,6 +37,7 @@ menu박스 가운데정렬, 글자가운데 정렬 */
     position: absolute;
     font-size:14px;
     background: skyblue;
+    z-index: 6;
 }
 .mymenu > ul > li > ul a {
     display: none;
