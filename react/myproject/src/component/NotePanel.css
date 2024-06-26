@@ -5,4 +5,19 @@
     height: 70vh;
     overflow: hidden;
     border-radius: 15px;
+    position: relative;
+}
+.btn_left {
+    position: absolute;
+    /* 세로 가운데 정렬 */
+    /* top값을 50% 한 후 margin-top을 요소 크기의 절반하면 가운데 */
+    /* top값을 50% 한 후 transform: translate(0, -50%) */
+    top: 50%;
+    transform: translate(0, -50%);
+}
+.btn_right{
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translate(-100%, -50%);
 }
