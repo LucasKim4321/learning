@@ -1,6 +1,7 @@
 package ex01.sam02;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -41,8 +42,16 @@ public class E01LoginServletResponse extends HttpServlet {
 		
 		// 응답: Response 처리
 		resp.setContentType("text/html; charset=utf-8");
-		String data = "";
-		data += "<html>";
-		data += "</html>";
+		PrintWriter out = resp.getWriter();
+		
+		String 	data = "";
+				data += "<html>";
+				data += "	<body>";
+				data += "		아이디: "+id;
+				data += "		패스워드: "+pw;
+				data += "	</body>";
+				data += "</html>";
+		
+		out.print(data);
 	}
 }
