@@ -77,9 +77,9 @@ public class MemberDAOImpl implements MemberDAO{
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();  // 실행한 쿼리 값을 rs에 저장
 			
-//			System.out.println(rs.next());  // 권한 설정 문제시 불러오지 못하면서 false
+			System.out.println(rs.next());  // 권한 설정 문제시 불러오지 못하면서 false
 
-			while(rs.next()) {
+			while(rs.next()) {  // rs.next() rs의 다음 값이 존재하는 동안 true  // next() 값을불러오고 값이 존재하면 true 그리고 다시 실행시 그 다음 값을 불러옴.
 				String id = rs.getString("id");
 				String pwd = rs.getString("pwd");
 				String name = rs.getString("name");

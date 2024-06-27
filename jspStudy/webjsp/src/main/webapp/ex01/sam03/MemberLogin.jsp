@@ -38,8 +38,8 @@
 					<div class="ms-1"><input type="reset" value="다시입력" class="btn btn-outline-danger"/></div>
 				</div>
 			</form>
-			<form>
-				<input type="submit">
+			<form action="/webjsp/member">
+				<input type="submit" value="회원목록 조회" class="btn btn-outline-secondary">
 			</form>
 		</div>
 	</div>
