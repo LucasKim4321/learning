@@ -70,3 +70,9 @@ tomcat  (톰켓(서버))
 
 
 오라클 드라이버
+
+servers에 설정
+context.xml 공용으로 같이 씀
+
+개인 project폴더/src/main/webapp/META-INF에 설정
+context.xml 해당 프로젝트만 씀
