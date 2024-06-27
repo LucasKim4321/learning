@@ -1,3 +1,14 @@
 .createNote{
-    /* display: none; */
+    position: absolute;
+    width: 700px;  /* 높이의 비율로 들어가야함 나중에 */
+    /* min-height: 95%; */
+    height: 95%;
+    overflow:scroll;
+    border: 2px solid lightseagreen;
+    background-color: lightcoral;
+    
+    top: 2%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 99;
 }

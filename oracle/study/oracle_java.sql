@@ -22,9 +22,16 @@ insert into t_member
 values ('hong6','1234','ПыПе2','hong@gmail.com',sysdate);
 insert into t_member (id,pwd,email,joinDate)
 values ('hong7','1234','hong@gmail.com',sysdate);
+insert into t_member
+values ('hong8','1234','ПыПе3','hong@gmail.com',sysdate);
+
 
 select * from t_member;
+
+delete from t_member where id='4444';
 
 delete from t_member;
 
 drop table t_member;
+
+grant select on t_member to c##user;

@@ -26,6 +26,14 @@ grant select on t_member to c##user;  유저에게 해당 테이블에 대한 �
 권한 설정 문제시 안될 수 있음.
 
 
+오라클
+명령문 실행 시마다 커밋을 해주거나
+오토 커밋 설정을 해주거나 해야 데이터가 실제로 반영됨
+
+마리아db
+오토 커밋이 기본 설정
+
+
 https://javappo.tistory.com/153
 
 1. cmd 들어가기

@@ -72,6 +72,9 @@ public class MemberDAOImpl implements MemberDAO{
 			// 2-3
 			conn = dataSource.getConnection();  // 커넥션 풀 적용
 			
+//		    conn.commit()이 옵션 넣었다가 autocommit오류나서 빼도 안되서 conn.setAutoCommit(false); 이거 쓰니까 되고 또 주석 처리해도 됨.... ㅡㅡ;
+//			conn.setAutoCommit(false);  
+			
 			String sql = "select * from t_member";
 			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);

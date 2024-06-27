@@ -12,12 +12,12 @@
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
   <!-- url와 서블릿 맵핑 -->
-  
+ <!--  
   <servlet>
   	<servlet-name>aaa</servlet-name>
   	<servlet-class>ex01.sam01.E01FirstServlet</servlet-class>
   </servlet>
-  <!-- /webjsp/first url로 들어올시 aaa -> ex01.sam01.E01FirstServlet -->
+  /webjsp/first url로 들어올시 aaa -> ex01.sam01.E01FirstServlet
   <servlet-mapping>
   	<servlet-name>aaa</servlet-name>
   	<url-pattern>/first</url-pattern>
@@ -30,6 +30,6 @@
   <servlet-mapping>
   	<servlet-name>bbb</servlet-name>
   	<url-pattern>/second</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping> -->
   
 </web-app>
