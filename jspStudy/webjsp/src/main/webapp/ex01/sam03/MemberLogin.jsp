@@ -21,8 +21,8 @@
 					<input type="text" name="user_id" id="u_id" class="form-control">
 				</div>
 				<div>
-					<label for="u_pw">비밀번호:</label>
-					<input type="password" name="user_pw" id="u_pw" class="form-control">
+					<label for="u_pwd">비밀번호:</label>
+					<input type="password" name="user_pwd" id="u_pwd" class="form-control">
 				</div>
 				<div>
 					<label for="u_name">이름:</label>
@@ -34,9 +34,12 @@
 				</div>
 				<hr>
 				<div class="d-flex justify-content-center">
-					<div><input type="submit" value="로그인" class="btn btn-outline-success"/></div>
+					<div><input type="submit" value="등록" class="btn btn-outline-success"/></div>
 					<div class="ms-1"><input type="reset" value="다시입력" class="btn btn-outline-danger"/></div>
 				</div>
+			</form>
+			<form>
+				<input type="submit">
 			</form>
 		</div>
 	</div>

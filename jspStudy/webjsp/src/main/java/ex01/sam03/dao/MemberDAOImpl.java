@@ -2,12 +2,13 @@ package ex01.sam03.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import ex01.sam03.vo.MemberVO;
@@ -20,9 +21,9 @@ public class MemberDAOImpl implements MemberDAO{
 //	private static final String url = "jdbc:mariadb://localhost:3306/webdb(DB이름)";  // mariadb
 	
 	// oracle 연결  //  커넥션 풀 적용시 미사용됨.
-	private static final String url = "jdbc:oracle:thin:@//localhost:1521/xe";  // oracledb
-	private static final String user = "c##user";
-	private static final String pwd = "1234";
+//	private static final String url = "jdbc:oracle:thin:@//localhost:1521/xe";  // oracledb
+//	private static final String user = "c##user";
+//	private static final String pwd = "1234";
 	
 	private Connection conn;
 	private PreparedStatement pstmt;
@@ -34,15 +35,15 @@ public class MemberDAOImpl implements MemberDAO{
 	public MemberDAOImpl() {
 		//  커넥션 풀 적용시 미사용됨.
 		// DB연결하는 메서드 호출
-		connDB();  //  커넥션 풀 적용시 미사용됨.
+//		connDB();  //  커넥션 풀 적용시 미사용됨.
 		
 		// 2. 커넥션 풀 사용
-//		try {
-//			Context ctx = new InitialContext();
-//			Context envContext = (Context) ctx.lookup("java:comp/env");
-//			dataSource = (DataSource) envContext.lookup("jdbc/oracle");
-//			
-//		} catch (Exception e) {System.out.println(e.getMessage());}
+		try {
+			Context ctx = new InitialContext();
+			Context envContext = (Context) ctx.lookup("java:comp/env");
+			dataSource = (DataSource) envContext.lookup("jdbc/oracle");
+			
+		} catch (Exception e) {System.out.println(e.getMessage());}
 	}
 	
 	// DB연결하기
@@ -52,7 +53,7 @@ public class MemberDAOImpl implements MemberDAO{
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			System.out.println("oracle 드라이브 로딩 성공");
 			
-			conn = DriverManager.getConnection(url,user,pwd);  //  커넥션 풀 적용시 미사용됨.
+//			conn = DriverManager.getConnection(url,user,pwd);  //  커넥션 풀 적용시 미사용됨.
 			System.out.println("Oracle Connection 성공");
 			System.out.println("------------------");
 			
@@ -63,30 +64,28 @@ public class MemberDAOImpl implements MemberDAO{
 	// 회원 목록 조회
 	@Override
 	public List<MemberVO> listMembers() {
+		
 		System.out.println("조회 실행");
 		List<MemberVO> list = new ArrayList<MemberVO>();
 		
 		try {
 			// 2-3
-//			conn = dataSource.getConnection();  // 커넥션 풀 적용
+			conn = dataSource.getConnection();  // 커넥션 풀 적용
 			
-			System.out.println("1");
 			String sql = "select * from t_member";
+			System.out.println(sql);
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();  // 실행한 쿼리 값을 rs에 저장
 			
-			System.out.println(rs);
+//			System.out.println(rs.next());  // 권한 설정 문제시 불러오지 못하면서 false
 
-			System.out.println("2");
 			while(rs.next()) {
-				System.out.println("3");
 				String id = rs.getString("id");
 				String pwd = rs.getString("pwd");
 				String name = rs.getString("name");
 				String email = rs.getString("email");
 				Date joinDate = rs.getDate("joinDate");
 
-				System.out.println("4");
 				MemberVO vo = new MemberVO();
 				vo.setId(id);
 				vo.setPwd(pwd);
@@ -94,7 +93,6 @@ public class MemberDAOImpl implements MemberDAO{
 				vo.setEmail(email);
 				vo.setJoinDate(joinDate);
 
-				System.out.println("5");
 				list.add(vo);
 				System.out.println("------------------");
 
@@ -107,7 +105,7 @@ public class MemberDAOImpl implements MemberDAO{
 		} catch (Exception e) {
 			System.out.println("목록 불러오기 실패");
 			System.out.println(e.getMessage());}
-		list.forEach(System.out::println);
+		
 		return list;
 	}
 	
@@ -119,7 +117,7 @@ public class MemberDAOImpl implements MemberDAO{
 		String sql = "";
 		try {
 			conn = dataSource.getConnection();
-			sql = "select into t_member (id,pwd,name,email) values (?,?,?,?)"; // 날짜 안쓰면 기본날짜
+			sql = "insert into t_member (id,pwd,name,email) values (?,?,?,?)"; // 날짜 안쓰면 기본날짜
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberVO.getId());

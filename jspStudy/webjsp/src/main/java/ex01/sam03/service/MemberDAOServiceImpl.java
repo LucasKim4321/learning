@@ -19,7 +19,7 @@ public class MemberDAOServiceImpl implements MemberDAOService{
 	}
 
 	@Override
-	public int registerMember(MemberVO memberVO) {
+	public int regMember(MemberVO memberVO) {
 		int result = dao.regMember(memberVO);
 		return result;
 	}

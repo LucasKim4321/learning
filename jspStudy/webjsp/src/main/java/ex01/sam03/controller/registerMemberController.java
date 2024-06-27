@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ex01.sam03.service.MemberDAOServiceImpl;
+import ex01.sam03.vo.MemberVO;
+
 @SuppressWarnings("serial")
 @WebServlet("/registerMember")
 public class registerMemberController extends HttpServlet {
@@ -27,5 +30,24 @@ public class registerMemberController extends HttpServlet {
 		System.out.println("==> MemberController Servlet");
 		
 		req.setCharacterEncoding("utf-8");
+		
+		String id = req.getParameter("user_id");
+		String pwd = req.getParameter("user_pwd");
+		String name = req.getParameter("user_name");
+		String email = req.getParameter("user_email");
+		
+		System.out.println("id: "+id);
+		
+		MemberVO vo = new MemberVO(id, pwd, name, email, null);
+		MemberDAOServiceImpl memberDAOServiceImpl = new MemberDAOServiceImpl();
+
+		int result = memberDAOServiceImpl.regMember(vo);
+		if (result>0) {
+			System.out.println("회원 등록 완료");
+		} else {
+			System.out.println("회원 등록 실패");
+		}
+		
+		
 	}
 }
