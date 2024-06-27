@@ -9,7 +9,7 @@ create table t_member (
 
 -- È¸¿ø Á¤º¸ Ãß°¡
 insert into t_member
-values ('hong','1234','È«±æµ¿','hong@gmail.com',sysdate);
+values ('hong1','1234','È«±æµ¿','hong@gmail.com',sysdate);
 insert into t_member
 values ('hong2','1234','È«±æ¼ø','hong@gmail.com',sysdate);
 insert into t_member
@@ -24,3 +24,7 @@ insert into t_member (id,pwd,email,joinDate)
 values ('hong7','1234','hong@gmail.com',sysdate);
 
 select * from t_member;
+
+delete from t_member;
+
+drop table t_member;
