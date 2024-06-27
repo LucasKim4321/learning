@@ -39,13 +39,13 @@ public class MemberController extends HttpServlet {
 		MemberDAOServiceImpl memberDAOServiceImpl = new MemberDAOServiceImpl();
 
 		List<MemberVO> list = memberDAOServiceImpl.listMembers();
-//		list.stream().forEach(member-> {
-//			System.out.println(member.getId());
-//			System.out.println(member.getPwd());
-//			System.out.println(member.getName());
-//			System.out.println(member.getEmail());
-//			System.out.println(member.getJoinDate());
-//		});
+		list.stream().forEach(member-> {
+			System.out.println(member.getId());
+			System.out.println(member.getPwd());
+			System.out.println(member.getName());
+			System.out.println(member.getEmail());
+			System.out.println(member.getJoinDate());
+		});
 		
 		resp.setCharacterEncoding("utf-8");
 		resp.setContentType("text/html; charset=utf-8");

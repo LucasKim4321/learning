@@ -94,9 +94,9 @@ public class MemberDAOImpl implements MemberDAO{
 				vo.setJoinDate(joinDate);
 
 				list.add(vo);
-				System.out.println("------------------");
 
 			}
+			System.out.println("------------------");
 			
 			rs.close();
 			pstmt.close();
