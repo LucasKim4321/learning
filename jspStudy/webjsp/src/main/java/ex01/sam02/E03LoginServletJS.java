@@ -27,6 +27,6 @@ public class E03LoginServletJS extends HttpServlet{
 		String id = req.getParameter("user_id");
 		String pw = req.getParameter("user_pw");
 		
-		System.out.println(id+pw);
+		System.out.println("id: "+id+"\npw: "+pw);
 	}
 }

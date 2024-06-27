@@ -11,7 +11,7 @@
 <!-- http://localhost:8080/webjsp/ex01/sam02/E04gugudan.jsp -->
 	<div class=container>
 		<div class=mybox>
-			<form name="frmLogin" action="/webjsp/gugudan" method="get" class="d-flex">
+			<form name="formLogin" action="/webjsp/gugudan" method="get" class="d-flex">
 				<div>
 					<label for="dan">구구단</label>
 					<input type="text" name="dan" placeholder="단수 입력 :b" id="dan" class="">
@@ -29,14 +29,14 @@
 	<script type="text/javascript">
 
 	function fn_validate(){
-		if(dan!=""){
-			frmLogin.submit();
+		var formLogin = document.formLogin;
+		var dan = formLogin.dan.value;
+		if( (dan.length==0 || dan=="")||(dan.length==0 || dan=="")) {
+			alert("단수를 입력해주세요~")
 		} else {
-			alert("입력");
+			formLogin.submit();
 		}
 	}
 	</script>
-	
-	
 </body>
 </html>

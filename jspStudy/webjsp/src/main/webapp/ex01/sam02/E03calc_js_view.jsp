@@ -16,14 +16,14 @@
 			<form name="formLogin" action="/webjsp/login3" method="get">
 				<div>
 					<label>아이디:</label>
-					<input type="text" name="user_id" id="user_id" class="form-control">
+					<input type="text" name="user_id" class="form-control">
 				</div>
 				<div>
 					<label>비밀번호:</label>
-					<input type="password" name="user_pw" id="user_pw" class="form-control">
+					<input type="password" name="user_pw" class="form-control">
 				</div>
 				<div class="d-flex justify-content-center">
-					<div class="ms-1"><input type="button" onClick="fn_validate()" value="로그인" class="btn btn-outline-success"></div>
+					<div class="ms-1"><input type="button" onClick=fn_validate() value="로그인" class="btn btn-outline-success"></div>
 					<div class="ms-1"><input type="reset" value="다시입력" class="btn btn-outline-danger"></div>
 					<div class="ms-1"><inupt type="hidden" name="user_address" value="부산시"></div>
 				</div>
@@ -39,12 +39,11 @@
 			var formLogin = document.formLogin;
 			var user_id = formLogin.user_id.value;
 			var user_pw = formLogin.user_pw.value;
-			
 			if( (user_id.length==0 || user_id=="")||(user_pw.length==0 || user_pw=="")) {
 				alert("아이디와 비밀번호는 필수")
 			} else {
 				formLogin.method ="post";
-				formLogin.actioni="webjsp/login3;
+				formLogin.action="/webjsp/login3";
 				formLogin.submit();
 			}
 		}
