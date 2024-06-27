@@ -16,8 +16,11 @@ sqlplus
   2  default tablespace users  // 테이블 생성
   3  quota unlimited on users;  // 용량 제한 없음
 
-grant resource, connect to c##user;     // c##user에 resource 권한
+grant resource, connect to c##user;     // c##user에 resource, connect  권한
+grant DBA to c##user;
 
+grant all privileges to c##user;  유저에게 모든 권한 설정
+grant select on t_member to c##user;  유저에게 해당 테이블에 대한 권한 설정
 
 
 https://javappo.tistory.com/153
@@ -76,3 +79,5 @@ context.xml 공용으로 같이 씀
 
 개인 project폴더/src/main/webapp/META-INF에 설정
 context.xml 해당 프로젝트만 씀
+
+oracle 설정 commit 검색 자동커밋 체크(원래는 하면 안됨)
