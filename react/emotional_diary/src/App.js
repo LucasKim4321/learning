@@ -21,19 +21,19 @@ const mockData = [
     id: "mock1",
     date: new Date().getTime()-100,  // 현재 시간에서 1000분의 1초를 뺀 값
     content: "mock1",
-    emtionId: 1
+    emotionId: 1
   },
   {
     id: "mock2",
     date: new Date().getTime()-200,
     content: "mock2",
-    emtionId: 2
+    emotionId: 2  
   },
   {
     id: "mock3",
     date: new Date().getTime()-300,
     content: "mock3",
-    emtionId: 3
+    emotionId: 3
   },
 ];
 

@@ -10,7 +10,7 @@ import emotion5 from "./img/emotion5.png";
 
 
 // 이미지 리소스 추출하는 함수
-export const getEmotionImgById = (e) => {
+export const getEmotionImgById = (emotionId) => {
 
     /*
     페이지 라우팅: 요청에 따라 적절한 페이지를 반환하는 일련의 과정
@@ -18,7 +18,7 @@ export const getEmotionImgById = (e) => {
     클라이언트 사이드(Client Side)렌더링  - 페이지 라우팅 전용라이브러리를 이용
     */
 
-    const targetEmotionId = String(e);
+    const targetEmotionId = String(emotionId);
 
     switch (targetEmotionId) {
         case "1": return emotion1;

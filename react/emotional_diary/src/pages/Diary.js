@@ -1,4 +1,5 @@
 import {useParams, useSearchParams} from "react-router-dom";
+import useDiary from "../hooks/useDiary"
 
 const Diary = ()=> {
     // const params = useParams();
@@ -6,7 +7,8 @@ const Diary = ()=> {
 
     // http://localhost:3000/diary/100?name=Kim&age=20
 
-    const {id} = useParams();  // url path에 설정된 
+    // -------------------------------------------
+    const {id} = useParams();  // url path에 설정된 id값을 가져옴
     const [searchParams, setSearchParams] = useSearchParams();
 
     const name = searchParams.get("name");
@@ -16,15 +18,21 @@ const Diary = ()=> {
     console.log("Dairy 컴포넌트 URL 파라미터 값 가져오기:",id)
     console.log("쿼리 스트링 값 추출하기: ", searchParams.get("name"))
     console.log("쿼리 스트링 값 추출하기: ", searchParams.get("age"))
+    //--------------------------------------------
 
-    return (
-        <div>
-            <div>{id}번 일기</div>
-            <div>{name}님, {age}세</div>
-            <div>Diray 페이지입니다.</div>
-            <div>Message: {message}</div>
-        </div>
-    )
+
+    // const {id} = useParams();  // url path에 설정된 id값을 가져옴
+    const data = useDiary(id);  // 설정된 id를 검색
+    console.log (data)
+
+        return (
+            <div>
+                <div>{id}번 일기</div>
+                <div>{name}님, {age}세</div>
+                <div>Diray 페이지입니다.</div>
+                <div>Message: {message}</div>
+            </div>
+        )
 }
 
 export default Diary;
