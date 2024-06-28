@@ -10,30 +10,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet("/secondServlet")
-public class E01SecondServlet extends HttpServlet {
+@WebServlet("/forthServlet")
+public class E01ForthServletDispatch extends HttpServlet {
+	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("second doGet()호출");
+		System.out.println("forth doGet()호출");
 		doHandler(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("second doPost()호출");
+		System.out.println("forth doPost()호출");
 		doHandler(req, resp);
 	}
 	
 	protected void doHandler(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("second doHandler()가 모두 처리~");
+		System.out.println("forth doHandler()가 모두 처리~");
+		
 		req.setCharacterEncoding("utf-8");
 		
+		String address = (String)req.getAttribute("address");
+		int age = Integer.valueOf((String)req.getAttribute("age"));
+
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter writer = resp.getWriter();
 		
-		writer.println("<html><body>");
-		writer.println("sendRedirect를 이용한 redirect");
-		writer.println("</body></html>");
+		writer.println("<html><body><p>");
+		writer.println("전송받은 데이터(주소): "+address);
+		writer.println("</p><p>전송받은 데이터(나이): "+(age+1));
+		writer.println("</p></body></html>");
 		
 	}
 

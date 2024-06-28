@@ -10,29 +10,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @SuppressWarnings("serial")
-@WebServlet("/secondServlet")
-public class E01SecondServlet extends HttpServlet {
+@WebServlet("/thirdServlet")
+public class E01ThirdServlet extends HttpServlet {
+	
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("second doGet()호출");
+		System.out.println("third doGet()호출");
 		doHandler(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("second doPost()호출");
+		System.out.println("third doPost()호출");
 		doHandler(req, resp);
 	}
 	
 	protected void doHandler(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("second doHandler()가 모두 처리~");
+		System.out.println("third doHandler()가 모두 처리~");
+		
 		req.setCharacterEncoding("utf-8");
+		String name = req.getParameter("name");
 		
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter writer = resp.getWriter();
 		
 		writer.println("<html><body>");
-		writer.println("sendRedirect를 이용한 redirect");
+		writer.println("전송받은 데이터: "+name);
 		writer.println("</body></html>");
 		
 	}

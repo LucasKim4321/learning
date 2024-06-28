@@ -12,12 +12,14 @@
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
   <!-- url와 서블릿 맵핑 -->
- <!--  
+  
+  
+  <!-- /webjsp/first url로 들어올시 aaa -> ex01.sam01.E01FirstServlet  -->
+  <!-- 
   <servlet>
   	<servlet-name>aaa</servlet-name>
   	<servlet-class>ex01.sam01.E01FirstServlet</servlet-class>
   </servlet>
-  /webjsp/first url로 들어올시 aaa -> ex01.sam01.E01FirstServlet
   <servlet-mapping>
   	<servlet-name>aaa</servlet-name>
   	<url-pattern>/first</url-pattern>
@@ -30,6 +32,40 @@
   <servlet-mapping>
   	<servlet-name>bbb</servlet-name>
   	<url-pattern>/second</url-pattern>
-  </servlet-mapping> -->
+  </servlet-mapping>
+   -->
+   <servlet>
+   
+  	<servlet-name>ccc</servlet-name>
+  	<servlet-class>ex01.sam04.E03initParamServlet2</servlet-class>
+  	<init-param>
+  		<param-name>email</param-name>
+  		<param-value>hong@gmail.com</param-value>
+  	</init-param>
+  	<init-param>
+  		<param-name>tel</param-name>
+  		<param-value>010-1234-1234</param-value>
+  	</init-param>
+   </servlet>
+   <servlet-mapping>
+  	<servlet-name>ccc</servlet-name>
+  	<url-pattern>/sInit3</url-pattern>
+   </servlet-mapping>
+   
+  
+  <context-param>
+  	<param-name>menu_member</param-name>
+  	<param-value>회원등록 회원조회 회원수정 회원탈퇴</param-value>
+  </context-param>
+  
+  <context-param>
+  	<param-name>menu_order</param-name>
+  	<param-value>주문등록 주문조회 주문수정 주문취소</param-value>
+  </context-param>
+  
+  <context-param>
+  	<param-name>menu_goods</param-name>
+  	<param-value>상품등록 상품조회 상품수정 상품삭제</param-value>
+  </context-param>
   
 </web-app>
