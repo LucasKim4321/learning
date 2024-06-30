@@ -5,6 +5,7 @@
     height: 70vh;
     overflow: hidden;
     border-radius: 15px;
+    border-color: rgba(255, 196, 173, 0.6) !important;
     position: relative;
 }
 .btn_left {
@@ -14,10 +15,14 @@
     /* top값을 50% 한 후 transform: translate(0, -50%) */
     top: 50%;
     transform: translate(0, -50%);
+    color: rgba(255, 196, 173, 0.7);
+    padding: 2px;
 }
 .btn_right{
     position: absolute;
     top: 50%;
     left: 100%;
     transform: translate(-100%, -50%);
+    color: rgba(255, 196, 173, 0.7);
+    padding: 2px;
 }

@@ -1,14 +1,42 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css');
+
 .createNote{
-    position: absolute;
     width: 700px;  /* 높이의 비율로 들어가야함 나중에 */
-    /* min-height: 95%; */
     height: 95%;
-    overflow:scroll;
+    /* min-height: 95%; */
+    /* height: 100%; */
+    position: absolute;
     border: 2px solid lightseagreen;
-    background-color: lightcoral;
+    background-color: rgb(255, 224, 174);
     
     top: 2%;
     left: 50%;
     transform: translate(-50%, 0);
     z-index: 99;
+
+}
+.box{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.textBox {
+    height: 100%;
+    /* overflow:scroll; */
+}
+.createNoteUI .scaleX-R{
+    transform: scaleX(-1);
+}
+.createNoteUI .UIbox {
+    background-color: rgba(255, 255, 255, 0.633);
+}
+.createNoteUI button {
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+}
+
+.textBox textarea {
+    all: unset;
+    width: 100%; height: 100%;
+    background-color: rgba(255, 255, 255, 0);
 }

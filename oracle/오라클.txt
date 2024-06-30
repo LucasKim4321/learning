@@ -12,6 +12,10 @@ sqlplus
 아이디system
 비번1234	
 
+oracle 포트 1521 설정
+
+
+
  create user c##user identified by 1234   // 아이디 생성  c##해야 잘됨
   2  default tablespace users  // 테이블 생성
   3  quota unlimited on users;  // 용량 제한 없음

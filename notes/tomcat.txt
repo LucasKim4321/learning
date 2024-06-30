@@ -1,0 +1,15 @@
+톰캣 bin 경로
+cd C:\javaStudy\apache-tomcat-9.0.90-windows-x64\bin
+
+service.bat install
+
+
+startup.bat 서버 열기
+shutdown.bat 서버 닫기
+
+http://127.0.0.1:8080/   기본설정시 톰켓 서버
+
+포트 8080 오라클이랑 겹칠 수 있음
+포트 8000~8005 8081~9
+
+oracle 포트 1521 설정

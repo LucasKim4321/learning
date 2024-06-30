@@ -5,7 +5,7 @@ const MenuUI = ()=> {
         <div className="menu_ui">
             <div id="menu" className="mymenu">
                 <ul>
-                    <li><a href="#">메뉴</a>
+                    <li><a href="#"><i class="fa-solid fa-bars"></i></a>
                         <ul>
                             <li><a href="#">설정</a></li>
                             <li><a href="#">테마</a></li>

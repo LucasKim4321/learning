@@ -1,3 +1,25 @@
 .top_ui {
     margin-top: 10px;
 }
+.top_ui .btn {
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
+    border-radius: 7px;
+
+}
+.top_ui .btn:hover {
+    background-color: rgba(211, 211, 211, 0.467);
+    transition: all 1s;
+}
+.searchBox {
+    border: 1px solid rgba(161, 161, 161, 0.227);
+    border-radius: 7px;
+    overflow: hidden;
+}
+.searchBar ,.searchBtn{
+    padding: 6px 12px; 
+    border:none;
+}
+.searchBar {background-color: rgba(255, 255, 255, 0.7);}
+.searchBtn {background-color: rgba(232, 232, 232, 0.7);}
+.searchBar:focus {outline: none;}
