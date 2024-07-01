@@ -19,6 +19,7 @@ public class E04LoginSession extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		//로그인 유지 기능
 		
 		resp.setCharacterEncoding("utf-8");
 		resp.setContentType("text/html; charset=utf-8");
@@ -53,7 +54,8 @@ public class E04LoginSession extends HttpServlet{
 			if (session_user_id != null && session_user_id.length() != 0) {
 				out.print("안녕하세요 "+session_user_id+"님!!! ;b");
 			} else {
-				out.print("<a href='/webjsp/ex01/sam05/E01login.jsp'>로그인 작업이 필요합니다.</a>");
+				out.print("<a href='/webjsp/ex01/sam05/E01login.jsp'>로그인 작업이 필요합니다</a>");
+				session.invalidate(); // 세션 정보 강제 삭제
 			}
 		}
 		

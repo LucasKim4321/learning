@@ -22,13 +22,13 @@
 </style>
 </head>
 <body>
-	<!-- http://localhost:8080/webjsp/ex01/sam05/E01login.jsp -->
+	<!-- http://localhost:8080/webjsp/ex01/sam06/LoginFilter.jsp -->
 	
 	<div class="container border">
 		<div class="border login mx-auto">
-			<h3>로그인 Session (로그인 유지 기능)</h3>
+			<h3>로그인 Filter</h3>
 			<hr>
-			<form action="/webjsp/loginSession" method="get">  <!-- method="post"  요청 방식 변경   생략시 기본값 get-->
+			<form action="/webjsp/loginFilter" method="get">  <!-- method="post"  요청 방식 변경   생략시 기본값 get-->
 				<div>
 					<label for="u_id">아이디:</label>
 					<input type="text" name="user_id" id="u_id" class="form-control">
