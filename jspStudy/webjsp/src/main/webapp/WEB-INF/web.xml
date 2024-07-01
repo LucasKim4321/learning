@@ -84,4 +84,9 @@
   	<param-value>상품등록 상품조회 상품수정 상품삭제</param-value>
   </context-param>
   
+  <!-- 세션 설정하기 -->
+  <!-- <session-config>
+  	<session-timeout>10</session-timeout>
+  </session-config> -->
+  
 </web-app>
