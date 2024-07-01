@@ -1,10 +1,35 @@
 package ex01.sam06;
 
+import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 
 public class E02LoginBindingListenerImpl implements HttpSessionBindingListener {
 	
+	String user_id;
+	String user_pw;
 	
+	static int total_user=0;
+	
+	public E02LoginBindingListenerImpl() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public E02LoginBindingListenerImpl(String id, String pw) {
+		this.user_id = id;
+		this.user_pw = pw;
+	}
+	
+	@Override
+	public void valueBound(HttpSessionBindingEvent event) {  // 세션에 저장 시 마다, 접속자 수를 증가
+		System.out.println("사용자 접속: "+user_id);
+		++total_user;
+	}
+	
+	@Override
+	public void valueUnbound(HttpSessionBindingEvent event) {
+		System.out.println("사용자 접속 해제: "+user_id);
+		--total_user;
+	}
 
 }
 
