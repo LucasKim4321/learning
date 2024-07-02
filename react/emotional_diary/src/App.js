@@ -20,19 +20,19 @@ const mockData = [
   {
     id: "mock1",
     date: new Date().getTime()-100,  // 현재 시간에서 1000분의 1초를 뺀 값
-    content: "mock1",
+    content: "Velit do nostrud ullamco amet officia proident dolor ipsum. Id eiusmod exercitation officia qui officia occaecat amet amet nulla mollit sit aute nisi incididunt. Duis consequat labore sit laboris anim. Mollit voluptate laborum do reprehenderit.",
     emotionId: 1
   },
   {
     id: "mock2",
     date: new Date().getTime()-200,
-    content: "mock2",
+    content: "Qui nulla est dolore tempor ut nulla quis commodo sunt. Nostrud labore ad reprehenderit fugiat. Elit ut cupidatat officia exercitation velit reprehenderit laborum quis nisi proident labore ut. Eu consequat ex proident ullamco nisi laboris aute fugiat excepteur. Fugiat proident aliquip amet minim excepteur. Veniam do ullamco laborum proident do consectetur aliqua ipsum. Consectetur non nulla nisi sit.",
     emotionId: 2  
   },
   {
     id: "mock3",
     date: new Date().getTime()-300,
-    content: "mock3",
+    content: "Do non excepteur ex esse dolor commodo dolore Lorem labore pariatur. Voluptate officia fugiat incididunt sit eiusmod qui labore exercitation sint velit laborum est. Sunt ut dolore anim reprehenderit exercitation aliqua reprehenderit elit.",
     emotionId: 3
   },
 ];
@@ -52,7 +52,7 @@ function reducer(state, action) {  // state==data  action.type="CREATE","UPDATE"
       return[action.data, ...state]  // 기존에 있는 data에 action.data추가(새로운 값을 기존 데이터와 병합)  // state(data) = action.data + state
     }
     case "UPDATE": {  // 기존의 data를 불러와서 데이터를 수정
-      return state.map((it)=> String(it.id)=== String(action.id)?{...action.data}:it);  // id가 일치하면 action.data값들을 저장  아니면 그대로
+      return state.map((it)=> String(it.id)=== String(action.data.id)?{...action.data}:it);  // id가 일치하면 action.data값들을 저장  아니면 그대로
       /*  맵핑방식(위에거랑 같음)
       if (String(action.id) === String(state.id)) {
         it(state).content = action.content
@@ -164,11 +164,11 @@ function App() {
                 {/* path 설정 */}
                 <Routes>
                   <Route path="/" element= {<Home/>} />
-                  <Route path="/new" element= {<New/>} />
+                  <Route path="/new/" element= {<New/>} />
                   {/* 동적 경로 설정 */}
                   {/* :id 하면 해당 자리에 다른 값이 입력되면 해당 페이지에서 읽음 */}
                   <Route path="/diary/:id" element= {<Diary/>} />
-                  <Route path="/edit" element= {<Edit/>} />
+                  <Route path="/edit/:id" element= {<Edit/>} />
                 </Routes>
               </div>
             </div>

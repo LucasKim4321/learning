@@ -16,7 +16,7 @@ public class E04Alarm {
 			h=23;
 			m=60+m;
 		}
-		System.out.println(h+":"+m);
+		System.out.println(h+" "+m);
 	}
 
 }

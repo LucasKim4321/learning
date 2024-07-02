@@ -69,7 +69,7 @@ const Home = ()=> {
                 title={`Home ${headerTitleDate}`}
                 leftChild={
                     <Button
-                        text={"<"}
+                        text={"<"}  
                         type={"danger"}
                         // onClick={()=>{alert("하이!!!")}}
                         onClick={onDecreaseMonth}
@@ -84,7 +84,7 @@ const Home = ()=> {
                 }
             />
             <DiaryList data={filteredDate}/>
-            <Editor 
+            {/* <Editor 
                 initData= {
                     {date: new Date().getTime(), emotionId:1, content:"이전에 작성했던 일기"}
                 }
@@ -92,7 +92,7 @@ const Home = ()=> {
                     ()=>{alert("작성완료 버튼 클릭")}
                     // onSubmitSend()
                 }
-            />
+            /> */}
         </div>
     )
 }

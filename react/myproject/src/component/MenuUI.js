@@ -1,3 +1,5 @@
+// 부모 TopUI
+
 import "./MenuUI.css"
 
 const MenuUI = ()=> {

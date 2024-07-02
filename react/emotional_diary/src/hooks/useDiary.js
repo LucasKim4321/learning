@@ -35,11 +35,11 @@ const useDiary = (id)=> {
 
     useEffect( ()=> {
         const matchDiary = data.find( (it)=> String(it.id) == String(id) )  // id가 일치하면
-        if (matchDiary) {
+        if (matchDiary) {  // 찾고자 하는 데이터가 있으면 State객체 보관
             setDiary(matchDiary)  // 일치하는 값 셋팅
         } else {
             alert("일기가 존재하지 않습니다.")
-            navigate("/",{replace:true})
+            navigate("/",{replace:true})  // 두번째 인자 브라우저의 되돌아가기 비활성
 
         }
     },[id,data])  // id,data 값이 바뀌면 함수 실행

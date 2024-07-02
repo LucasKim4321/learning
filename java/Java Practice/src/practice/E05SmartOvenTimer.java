@@ -17,7 +17,7 @@ public class E05SmartOvenTimer {
 			a=a-24;
 			
 		}
-		System.out.println(a+":"+b);
+		System.out.println(a+" "+b);
 		
 		
 	}
