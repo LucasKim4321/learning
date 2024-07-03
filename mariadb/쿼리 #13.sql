@@ -100,7 +100,8 @@ resDate ADDDATE(resDate,INTERVAL 1 DAY),
 startDate ADDDATE(startDate,INTERVAL 1 DAY),
 returnDate ADDDATE(returnDate,INTERVAL 1 DAY)
 WHERE resNumber = '1234';
-	
+
+SHOW COLUMNS FROM t_member;
 SELECT * FROM t_member;
 SELECT * FROM t_car;
 	

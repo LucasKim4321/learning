@@ -29,11 +29,11 @@ public class E07ChatClientTest {
 		
 		
 		try {
-//			socket = new Socket("localHost",8888); 
+			socket = new Socket("localHost",8888); 
 //			socket = new Socket("127.0.0.1",8888);  // localHost(본인컴퓨터) 접속   // "http://www.naver.com:80" 이런거 의미
 //			cmd ipconfig IPv4 주소 . . . . . . . . . : 192.168.0.146 
 //			socket = new Socket("192.168.0.146 ",8888);  외부에서 접속가능한 내 서버 주소
-			socket = new Socket("192.168.0.12",8888);  // 강사님
+//			socket = new Socket("192.168.0.12",8888);  // 강사님
 //			socket = new Socket("192.168.0.21",8888);  // 진우
 			
 			if(socket != null) {
