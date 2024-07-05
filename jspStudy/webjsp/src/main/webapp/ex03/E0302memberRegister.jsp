@@ -22,11 +22,15 @@
 </head>
 <body>
 	<jsp:useBean id="member" class="ex03.vo.MemberBean" scope="page"></jsp:useBean>
-	<jsp:setProperty property="id" name="member" value="<%=id%>"/>
+	<jsp:setProperty property="id" name="member" value="<%=id %>"/>
 	<jsp:setProperty property="pw" name="member" value="<%=pw%>"/>
 	<jsp:setProperty property="name" name="member" value="<%=name%>"/>
 	<jsp:setProperty property="email" name="member" value="<%=email%>"/>
-	<div class="container border">
+	
+<!-- 전송된 매개 변수 이름과 빈 속성이름이 동일한 경우 자동으로 설정 (property==value 일때) -->
+		<%-- <jsp:setProperty property="*" name="member"/>  --%>
+
+ 	<div class="container border">
 		<h1>useBean 테스트</h1>
 		<hr>
 		<div>
