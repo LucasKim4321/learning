@@ -54,6 +54,7 @@
 		</dependency>
 
 		
+		<!-- springboot 3.xx 이후 설정 -->
 		<!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-jasper -->
 		<dependency>
 		    <groupId>org.apache.tomcat.embed</groupId>

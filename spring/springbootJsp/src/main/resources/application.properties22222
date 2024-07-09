@@ -2,7 +2,6 @@ spring.application.name=springbootJsp
 
 
 # 톰캣 서버 설정
-
 server.port = 8099
 
 # springboot에서 jsp view 인식 => 뷰리졸버 설정
