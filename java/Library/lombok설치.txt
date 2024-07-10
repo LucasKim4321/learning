@@ -1,0 +1,20 @@
+cmd 들어가서
+java -jar 경로\파일
+
+실행화면 뜨면
+설치할 곳 설정  eclipse.exe 또는 SpringToolSuite4.exe 등등 실행파일
+
+설치 그냥하면됨
+
+maven라이브러리에서 pom.xml 수정
+<dependencies> 여기 안에
+ 	<dependency> 이거  maven에서 받은거
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.34</version>
+		    <scope>provided</scope>
+	</dependency>
+</dependencies>
+
+롬복 설치 전에 pom.xml 수정하면 안됨.
+이미 했으면 수정 전으로 돌리고 다시 수정
