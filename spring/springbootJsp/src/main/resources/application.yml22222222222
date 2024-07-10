@@ -1,0 +1,25 @@
+###### 첫 시작시 서버 설정 #####
+# 톰캣 서버 설정
+server:
+   port: 8098
+
+
+# springboot에서 jsp view 인식 => 뷰리졸버 설정
+spring:
+   mvc:
+      view:
+         prefix: /WEB-INF/views/
+         suffix: .jsp
+        
+##### DB설정 ######
+# DB Driver set
+# MariaDB
+# Oracle
+#sprint:         
+#   datasource:
+#      driver-class-name: oracle.jdbc.driver.OracleDriver
+#      url: jdbc:oracle:thin:@localhost:1521/xe
+#      username: c##user
+#      password: 1234
+
+
