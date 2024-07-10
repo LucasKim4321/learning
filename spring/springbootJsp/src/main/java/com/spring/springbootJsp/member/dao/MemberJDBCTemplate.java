@@ -45,7 +45,7 @@ public class MemberJDBCTemplate {
 	
 	
 	// 3. 회원삭제
-	public int jdbcMemberUpdate(String id) {
+	public int jdbcMemberDelete(String id) {
 		int isOK = 0;
 		
 		String sql = "delete from t_member where id = ?";
@@ -57,7 +57,7 @@ public class MemberJDBCTemplate {
 	
 	
 	// 4. 회원수정
-	public int jdbcMemberDelete(MemberVO vo) {
+	public int jdbcMemberUpdate(MemberVO vo) {
 		int isOK = 0;
 
 //		String sql = "update t_member set pwd=?,name=?,email=? where id=?";
