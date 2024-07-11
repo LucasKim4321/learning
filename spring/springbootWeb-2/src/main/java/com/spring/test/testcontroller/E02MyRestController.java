@@ -20,7 +20,7 @@ import com.spring.test.testcontroller.vo.MemberVO;
 
 @RestController
 @RequestMapping("/restapi/*")
-public class MyRestController {
+public class E02MyRestController {
 	
 	// ----------------------------- //
 	// 다양한 형태로 데이터 전달 : JSON형식

@@ -16,5 +16,6 @@ public class ArticleVO {
 	private String title;
 	private String content;
 	private String writer;
+	private Date writeDate;
 		
 }
