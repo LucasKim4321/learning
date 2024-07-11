@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spring.test.testcontroller.vo.ArticleVO;
 
 @RestController
-@RequestMapping("/boards2")
+@RequestMapping("/boards")
 public class E03BoardController {
 	static Logger logger = LoggerFactory.getLogger(E03BoardController.class);
 	
@@ -40,7 +40,7 @@ public class E03BoardController {
 	}
 	
 	// 게시글 등록 /POST
-	@RequestMapping(value="/add", method = RequestMethod.POST)
+	@RequestMapping(value="", method = RequestMethod.POST)
 	public ResponseEntity<String>  addArticle(@RequestBody ArticleVO articleVO) {
 		ResponseEntity<String> resEntity = null;
 		try {
@@ -58,7 +58,7 @@ public class E03BoardController {
 	
 	// 게시글 조회 /GET
 	// url=> "http://localhost:8099/boards/114"
-	@RequestMapping(value="/find/{articleNO}", method = RequestMethod.GET)
+	@RequestMapping(value="/{articleNO}", method = RequestMethod.GET)
 	public  ResponseEntity<ArticleVO> findArticle(
 							@PathVariable("articleNO") Integer articleNO ) {  // Integer articleNO path에서 받음
 		logger.info("=> findArticle() 메서드 호출");
@@ -74,7 +74,7 @@ public class E03BoardController {
 	}
 	
 	// 게시글 수정 /PUT
-	@RequestMapping(value="/mod/{articleNO}", method = RequestMethod.PUT)
+	@RequestMapping(value="/{articleNO}", method = RequestMethod.PUT)
 	public ResponseEntity<String>  modArticle(
 							@PathVariable("articleNO") Integer articleNO,  // 경로에서 값을 받음
 							@RequestBody ArticleVO articleVO) {  // 넘겨받은 data(JSON형식문자열)값
@@ -95,7 +95,7 @@ public class E03BoardController {
 	}
 	
 	// 글 삭제 /DELETE
-	@RequestMapping(value="/remove/{articleNO}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/{articleNO}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> removeArticle(
 						@PathVariable("articleNO") Integer articleNO){
 		

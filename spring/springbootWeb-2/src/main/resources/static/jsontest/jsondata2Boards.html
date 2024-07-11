@@ -29,15 +29,30 @@
 				id="articleDelete" 
 				value="글 삭제하기 /DELETE">
 		<hr>
-		<div>text(data)</div>
+		<div>
+			<h2>Axios: node.js와 브라우저를 위한 Promise기반 HTTP클라이언트</h2>
+			<input type="button"  class="btn btn-success mb-3"
+				onClick="articleView()"
+				value="조회하기 (비동기 처리)">
+			<input type="button"  class="btn btn-success mb-3"
+				onClick="articleView2()"
+				value="조회하기 (async/await: 동기 처리)">
+		</div>
+		<hr>
+		<div>
+			<input type="button"  class="btn btn-success mb-3"
+				onClick="addArticle()"
+				value="등록하기 (async/await: 동기 처리)">
+		</div>
+		<hr>
+		<div>data</div>
 		<div id="result" class="border p-3 alert alert-success"></div>
 		<hr>
-		<div>text(JSON.stringify(data))</div>
+		<div>JSON.stringify(data)</div>
 		<div id="result2" class="border p-3 alert alert-success"></div>
 		<div>서버 로그 창 참조</div>
 	</div>
 	
-
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -88,7 +103,7 @@ $(function() {
 		
 		$.ajax({
 			type:"post",
-			url: "/boards/add",
+			url: "/boards",
 			contentType: "application/json",
 			data: JSON.stringify(articleVO),
 			
@@ -121,7 +136,7 @@ $(function() {
 		
 		$.ajax({
 			type:"get",
-			url: "/boards/find/"+articleNO,
+			url: "/boards/"+articleNO,
 			contentType: "application/json",
 			
 			success: function(data){  // data: 리턴받은 데이터
@@ -162,7 +177,7 @@ $(function() {
 			
 			// PUT방식으로 요청: 수정 작업
 			type: "put",
-			url: "/boards/mod/114",
+			url: "/boards/114",
 			contentType: "application/json",
 			data: JSON.stringify(articleVO),
 			
@@ -196,7 +211,7 @@ $(function() {
 		
 		$.ajax({
 			type:"delete",
-			url: "/boards/remove/"+articleNO,
+			url: "/boards/"+articleNO,
 			contentType: "application/json",
 			
 			success: function(data){  // data: 리턴받은 데이터
@@ -216,5 +231,107 @@ $(function() {
 	});
 })
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<!-- Axios -->
+<script>
+var result = document.querySelector('#result')
+var result2 = document.querySelector('#result2')
+
+// 비동기 처리
+function articleView() {
+	console.log("articleView()");
+	
+	let articleNO = 116;
+	
+	axios({
+		method: 'get',
+		url: '/boards/'+articleNO
+	})
+	
+	.then((response)=> {
+		console.log("서버로부터 응답 받은 객체: ",response);
+		console.log("서버로부터 응답 받은 객체 data속성: ",response.data);
+		console.log("서버로부터 응답 받은 객체 data속성에 있는 값: ",response.data.articleNO);
+		
+		result.innerHTML = response.data;
+		result2.innerHTML = JSON.stringify(response.data);
+	})
+	
+}
+
+
+//동기 처리하는 함수 정의
+const getArticle = async (paramData)=> {
+	
+	const response = await axios.get("/boards/"+paramData);
+
+	console.log("서버로부터 응답 받은 객체: ",response);
+	console.log("서버로부터 응답 받은 객체 data속성: ",response.data);
+	console.log("서버로부터 응답 받은 객체 data속성에 있는 값: ",response.data.articleNO);
+	
+	return response;
+	
+}
+// 동기처리하는 함수 호출
+function articleView2() {
+	console.log("articleView2()");
+	
+	let articleNO = 116;
+	
+	getArticle(articleNO)
+		.then((result)=> {
+			console.log("success ...");
+			
+			console.log("result data: ", result);
+
+			result.innerHTML = result.data;
+			result2.innerHTML = JSON.stringify(result.data);
+			
+			
+		}).catch( e=> {console.log("error ...")});
+	
+}
+
+
+
+const regArticle = async (paramData)=> {
+	const response = await axios.post(
+			"/boards", //요청할 주소
+			paramData,  // 보낼 값(객체)
+			{
+				'Content-type': 'application/json',
+				'Accept': 'application/json'
+			}
+			);
+	return response;
+}
+// 게시글 등록하기 요청
+function addArticle() {
+	console.log("addArticle()");
+
+	var articleVO = {
+			articleNO: "118",
+			title: "Hello118",
+			write: "홍길동118",
+			content: "상품 소개 글 입니다.118"
+	}
+	
+	regArticle(articleVO)
+		.then( (result)=>{
+			console.log("success ...");
+			
+			console.log("게시글 등록 결과: ", result)
+			
+			result.innerHTML = result.data;
+			result2.innerHTML = JSON.stringify(result.data);
+			
+		}).catch(e=> {console.log("error ...")})
+}
+
+</script>
+
+
 </body>
 </html>
