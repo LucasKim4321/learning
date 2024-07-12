@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JSON data send</title>
+<!-- bootstrap CDN연결 -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
+<!--  local 연결 -->
+<link href="/bootstrap_5_3/css/bootstrap.min.css" rel="stylesheet" >
+
+</head>
+<body>	
+	<div class="container">
+		<h1>JSON data 보내기2</h1>
+		<hr>
+		<input type="button"  class="btn btn-success mb-3"
+				id="checkJson" 
+				value="게시글 목록 /GET">
+		<input type="button"  class="btn btn-success mb-3"
+				id="aritcleView" 
+				value="게시글 조회하기 /GET">
+		<input type="button"  class="btn btn-success mb-3"
+				id="articleWrite" 
+				value="글 쓰기 /POST">
+		<input type="button"  class="btn btn-success mb-3"
+				id="articleModify" 
+				value="글 수정하기 /PUT">
+		<input type="button"  class="btn btn-success mb-3"
+				id="articleDelete" 
+				value="글 삭제하기 /DELETE">
+		<hr>
+		<div>
+			<h2>Axios: node.js와 브라우저를 위한 Promise기반 HTTP클라이언트</h2>
+			<input type="button"  class="btn btn-success mb-3"
+				onClick="articleView()"
+				value="조회하기 (비동기 처리)">
+			<input type="button"  class="btn btn-success mb-3"
+				onClick="articleView2()"
+				value="조회하기 (async/await: 동기 처리)">
+		</div>
+		<hr>
+		<div>
+			<input type="button"  class="btn btn-success mb-3"
+				onClick="addArticle()"
+				value="등록하기 (async/await: 동기 처리)">
+			<input type="button"  class="btn btn-success mb-3"
+				onClick="deleteArticle()"
+				value="삭제하기 (async/await: 동기 처리)">
+			<input type="button"  class="btn btn-success mb-3"
+				onClick="modifyArticle()"
+				value="수정하기 (async/await: 동기 처리)">
+			<input type="button"  class="btn btn-success mb-3"
+				onClick="allArticle()"
+				value="목록 (async/await: 동기 처리)">
+		</div>
+		<hr>
+		<div>data</div>
+		<div id="result" class="border p-3 alert alert-success"></div>
+		<hr>
+		<div>JSON.stringify(data)</div>
+		<div id="result2" class="border p-3 alert alert-success"></div>
+		<hr>
+		<div id="result3" class="border p-3 alert alert-success"></div>
+		<div>서버 로그 창 참조</div>
+	</div>
+	
+<!-- JSON관련 라이브러리 객체를 json으로 자동 변환해주는 라이브러리 사용 -->	
+<!-- gradle은 build.gradle maven은 pom.xml에 maven에서 찾은 라이브러리 import -->
+<!-- implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2' -->
+	
+<!-- ajax -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<!-- 게시글 목록 -->
+<script type="text/javascript">
+$(function(){
+	// 게시글 목록
+	$("#checkJson").click(function(){
+		console.log("게시글 목록");
+		
+		$.ajax({
+			type: "get",
+			url: "/boards/all",
+			contentType: "application/json",
+			
+			success: function(data){  // data: 리턴받은 데이터
+				console.log("success");
+
+				console.log(data);
+				
+				$("#result").text(data);
+				$("#result2").text(JSON.stringify(data));
+				
+			},
+			error: function(){
+				console.log("error")
+			},
+			complete: function(){
+				console.log("compolete")
+			}
+		});
+	});
+	
+});  
+</script>
+
+<!-- 게시글 등록 -->
+<script>
+$(function() {
+	// 게시글 등록
+	$("#articleWrite").click(function(){
+		console.log("게시글 등록")
+		var articleVO = {
+				articleNO: "114",
+				title: "Hello",
+				write: "홍길동114",
+				content: "상품 소개 글 입니다."
+		}
+		
+		$.ajax({
+			type:"post",
+			url: "/boards",
+			contentType: "application/json",
+			data: JSON.stringify(articleVO),
+			
+			success: function(data){  // data: 리턴받은 데이터
+				console.log("success");
+				
+				$("#result").text(data);
+				$("#result2").text(JSON.stringify(data));
+				
+			},
+			error: function(){
+				console.log("error")
+			},
+			complete: function(){
+				console.log("compolete")
+			}
+		});
+	});	
+})
+</script>
+
+<!-- 게시글 조회 -->
+<script>
+$(function() {
+	// 게시글 조회
+	$("#aritcleView").click(function(){
+		console.log("게시글 조회");
+		var articleNO = "116";
+		
+		
+		$.ajax({
+			type:"get",
+			url: "/boards/"+articleNO,
+			contentType: "application/json",
+			
+			success: function(data){  // data: 리턴받은 데이터
+				console.log("success");
+		
+				console.log(data);
+
+				$("#result").text(data);
+				$("#result2").text(JSON.stringify(data));
+				
+			},
+			error: function(){
+				console.log("error")
+			},
+			complete: function(){
+				console.log("compolete")
+			}
+		});
+	});
+});
+</script>
+
+<!-- 게시글 수정 -->
+<script>
+$(function() {
+	// 게시글 수정
+	$("#articleModify").click(function(){
+		console.log("게시글 수정");
+		var articleVO = {
+				articleNO: "114",
+				title: "Hello",
+				write: "홍길동114",
+				content: "상품 소개 글 입니다."
+		}
+		
+		//console.log("JSON객체:",articleVO)
+		//console.log("JSON객체 문자열:",JSON.stringify(articleVO))
+		
+		$.ajax({
+			
+			// PUT방식으로 요청: 수정 작업
+			type: "put",
+			url: "/boards/114",
+			contentType: "application/json",
+			data: JSON.stringify(articleVO),
+			
+			success: function(data){  // data: 리턴받은 데이터
+				console.log("success");
+
+				console.log(data);
+			
+				$("#result").text(data);
+				$("#result2").text(JSON.stringify(data));
+				
+			},
+			error: function(){
+				console.log("error")
+			},
+			complete: function(){
+				console.log("compolete")
+			}
+		});
+	});
+		
+})
+</script>
+
+<!-- 게시글 삭제 -->
+<script>
+$(function() {
+	// 게시글 삭제
+	$("#articleDelete").click(function(){
+		console.log("게시글 삭제")
+		var articleNO = "114";
+		
+		
+		$.ajax({
+			type:"delete",
+			url: "/boards/"+articleNO,
+			contentType: "application/json",
+			
+			success: function(data){  // data: 리턴받은 데이터
+				console.log("success");
+
+				console.log(data);
+
+				$("#result").text(data);
+				$("#result2").text(JSON.stringify(data));
+				
+			},
+			error: function(){
+				console.log("error")
+			},
+			complete: function(){
+				console.log("compolete")
+			}
+		});
+	});
+})
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<!-- Axios -->
+<script>
+var result = document.querySelector('#result')
+var result2 = document.querySelector('#result2')
+
+// 비동기 처리
+function articleView() {
+	console.log("articleView()");
+	
+	let articleNO = 116;
+	
+	axios({
+		method: 'get',
+		url: '/boards/'+articleNO
+	})
+	
+	.then((response)=> {
+		console.log("서버로부터 응답 받은 객체: ",response);
+		console.log("서버로부터 응답 받은 객체 data속성: ",response.data);
+		console.log("서버로부터 응답 받은 객체 data속성에 있는 값: ",response.data.articleNO);
+		
+		result.innerHTML = response.data;
+		result2.innerHTML = JSON.stringify(response.data);
+	})
+	
+}
+
+
+//동기 처리하는 함수 정의
+// 게시글 조회 axios 요청
+const getArticle = async (paramData)=> {
+	
+	const response = await axios.get("/boards/"+paramData);
+
+	console.log("서버로부터 응답 받은 객체: ",response);
+	console.log("서버로부터 응답 받은 객체 data속성: ",response.data);
+	console.log("서버로부터 응답 받은 객체 data속성에 있는 값: ",response.data.articleNO);
+	
+	return response;
+	
+}
+// 동기처리하는 함수 호출
+function articleView2() {
+	console.log("articleView2()");
+	
+	let articleNO = 116;
+	
+	getArticle(articleNO)
+		.then((response)=> {
+			console.log("success ...");
+			
+			console.log("결과 값: ", response);
+
+			result.innerHTML = response.data;
+			result2.innerHTML = JSON.stringify(response.data);
+			
+		}).catch( e=> {console.log("error ...")});
+	
+}
+
+
+
+//게시글 등록 axios 요청
+const regArticle = async (paramData)=> {
+	const response = await axios.post(
+			"/boards", //요청할 주소
+			paramData,  // 보낼 값(객체)
+			{
+				'Content-type': 'application/json',
+				'Accept': 'application/json'
+			}
+			);
+	return response;
+}
+function addArticle() {
+	console.log("addArticle()");
+
+	var articleVO = {
+			articleNO: "118",
+			title: "Hello118",
+			write: "홍길동118",
+			content: "상품 소개 글 입니다.118"
+	}
+	
+	regArticle(articleVO)
+		.then( (response)=>{
+			console.log("success ...");
+			
+			console.log("게시글 등록 결과: ", response)
+			
+			result.innerHTML = response.data;
+			result2.innerHTML = JSON.stringify(response.data);
+			
+		}).catch(e=> {console.log("error ...")})
+}
+
+// 게시글 삭제 axios 요청
+const removeArticle = async (paramData) => {  // {articleNO:200} 객체를 매개 변수로 전달
+	const response  = await axios.delete("/boards/"+paramData.articleNO);
+	return response;
+}
+function deleteArticle() {
+	console.log("deleteArticle() 메서드 호출")
+	let articleId = {articleNO:200}
+	
+	// 게시글 삭제 요청하는 axios 함수 호출
+	removeArticle(articleId)
+		.then((response)=> {
+			console.log("게시글 삭제 결과: ", response)
+			
+			result.innerHTML = response.data;
+			result2.innerHTML = JSON.stringify(response.data);
+			
+		}).catch((e)=>{console.log("delete error error error!")});
+}
+
+// 게시글 수정 axios 요청
+const updateArticle = async (paramData)=> {
+	const response = await axios.put(
+			"/boards/"+paramData.articleNO,		// 요청할 주소(url)
+			paramData,			// 보낼 값(객체)
+			{					// data 형식
+				'content-type': 'application/json',
+				'Accept':'application/json'}
+			
+			);
+	return response;
+}
+function modifyArticle() {
+	console.log("modifyArticle() 호출");
+	
+	let articleVO = {
+		articleNO: "300",
+		title: "Hello300",
+		write: "홍길동300",
+		content: "상품 소개 글 입니다.300"
+	}
+	
+	updateArticle(articleVO)
+		.then((response)=> {
+			console.log("success!");
+			
+			console.log("게시글 수정 결과: ",response);
+
+			result.innerHTML = response.data;
+			result2.innerHTML = JSON.stringify(response.data);
+			
+		})
+		.catch(e=> {"update error error error!"});
+}
+
+// 게시글 목록 axios 요청
+const listArticle = async ()=> {
+	const response = await axios.get('/boards/all');
+	return response;
+}
+function allArticle() {
+	console.log("allArticle() 호출");
+	listArticle()
+	.then((response)=> {
+		console.log("success! :b");
+		
+		console.log("list : ",response);
+		
+		let members = response.data;  // 배열구조 데이터
+		
+		for (i=0; i<members.length; i++) {
+			console.log(members[i].articleNO);
+			console.log(members[i].title);
+			console.log(members[i].content);
+			console.log(members[i].writer);
+			console.log(members[i].writeDate);
+		}
+		
+		result.innerHTML = response.data;
+		result2.innerHTML = JSON.stringify(response.data);
+		result3.innerHTML = "";
+		
+	}).catch((e)=>{console.log("list error error error!")});
+}
+
+</script>
+
+
+</body>
+</html>

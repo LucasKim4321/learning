@@ -17,8 +17,8 @@ import com.spring.test.testcontroller.vo.ArticleVO;
 
 @RestController
 @RequestMapping("/boards")
-public class E03BoardController {
-	static Logger logger = LoggerFactory.getLogger(E03BoardController.class);
+public class E03BoardRestController {
+	static Logger logger = LoggerFactory.getLogger(E03BoardRestController.class);
 	
 	// 게시글 목록 /GET
 	@RequestMapping(value="/all", method = RequestMethod.GET)
@@ -52,7 +52,6 @@ public class E03BoardController {
 		} catch (Exception e) {
 			resEntity = new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);  // 400번 에러 출력
 		}
-		
 		return resEntity;
 	}
 	

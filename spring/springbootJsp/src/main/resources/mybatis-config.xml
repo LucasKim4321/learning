@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type=""/>
+	</typeAliases>
+</configuration>
+
+<!-- sprintboot 3.xx이후 : https => HTTP로 설정 -->
+
+<!-- mapper xml 맵핑 설정 -->
+<!-- application.properties에 이미 설정했음
+<configuration>
+	<mappers>
+		<mapper resource="mapper/board/*.xml"/>
+	</mappers>
+</configuration>
+ -->

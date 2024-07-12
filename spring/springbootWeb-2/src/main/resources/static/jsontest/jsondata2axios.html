@@ -43,6 +43,15 @@
 			<input type="button"  class="btn btn-success mb-3"
 				onClick="addArticle()"
 				value="등록하기 (async/await: 동기 처리)">
+			<input type="button"  class="btn btn-success mb-3"
+				onClick="deleteArticle()"
+				value="삭제하기 (async/await: 동기 처리)">
+			<input type="button"  class="btn btn-success mb-3"
+				onClick="modifyArticle()"
+				value="수정하기 (async/await: 동기 처리)">
+			<input type="button"  class="btn btn-success mb-3"
+				onClick="allArticle()"
+				value="목록 (async/await: 동기 처리)">
 		</div>
 		<hr>
 		<div>data</div>
@@ -50,11 +59,16 @@
 		<hr>
 		<div>JSON.stringify(data)</div>
 		<div id="result2" class="border p-3 alert alert-success"></div>
+		<hr>
+		<div id="result3" class="border p-3 alert alert-success"></div>
 		<div>서버 로그 창 참조</div>
 	</div>
 	
-
-
+<!-- JSON관련 라이브러리 객체를 json으로 자동 변환해주는 라이브러리 사용 -->	
+<!-- gradle은 build.gradle maven은 pom.xml에 maven에서 찾은 라이브러리 import -->
+<!-- implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2' -->
+	
+<!-- ajax -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <!-- 게시글 목록 -->
@@ -71,6 +85,8 @@ $(function(){
 			
 			success: function(data){  // data: 리턴받은 데이터
 				console.log("success");
+
+				console.log(data);
 				
 				$("#result").text(data);
 				$("#result2").text(JSON.stringify(data));
@@ -141,6 +157,8 @@ $(function() {
 			
 			success: function(data){  // data: 리턴받은 데이터
 				console.log("success");
+		
+				console.log(data);
 
 				$("#result").text(data);
 				$("#result2").text(JSON.stringify(data));
@@ -183,7 +201,9 @@ $(function() {
 			
 			success: function(data){  // data: 리턴받은 데이터
 				console.log("success");
-				
+
+				console.log(data);
+			
 				$("#result").text(data);
 				$("#result2").text(JSON.stringify(data));
 				
@@ -216,6 +236,8 @@ $(function() {
 			
 			success: function(data){  // data: 리턴받은 데이터
 				console.log("success");
+
+				console.log(data);
 
 				$("#result").text(data);
 				$("#result2").text(JSON.stringify(data));
@@ -263,6 +285,7 @@ function articleView() {
 
 
 //동기 처리하는 함수 정의
+// 게시글 조회 axios 요청
 const getArticle = async (paramData)=> {
 	
 	const response = await axios.get("/boards/"+paramData);
@@ -281,14 +304,13 @@ function articleView2() {
 	let articleNO = 116;
 	
 	getArticle(articleNO)
-		.then((result)=> {
+		.then((response)=> {
 			console.log("success ...");
 			
-			console.log("result data: ", result);
+			console.log("결과 값: ", response);
 
-			result.innerHTML = result.data;
-			result2.innerHTML = JSON.stringify(result.data);
-			
+			result.innerHTML = response.data;
+			result2.innerHTML = JSON.stringify(response.data);
 			
 		}).catch( e=> {console.log("error ...")});
 	
@@ -296,6 +318,7 @@ function articleView2() {
 
 
 
+//게시글 등록 axios 요청
 const regArticle = async (paramData)=> {
 	const response = await axios.post(
 			"/boards", //요청할 주소
@@ -307,7 +330,6 @@ const regArticle = async (paramData)=> {
 			);
 	return response;
 }
-// 게시글 등록하기 요청
 function addArticle() {
 	console.log("addArticle()");
 
@@ -319,15 +341,100 @@ function addArticle() {
 	}
 	
 	regArticle(articleVO)
-		.then( (result)=>{
+		.then( (response)=>{
 			console.log("success ...");
 			
-			console.log("게시글 등록 결과: ", result)
+			console.log("게시글 등록 결과: ", response)
 			
-			result.innerHTML = result.data;
-			result2.innerHTML = JSON.stringify(result.data);
+			result.innerHTML = response.data;
+			result2.innerHTML = JSON.stringify(response.data);
 			
 		}).catch(e=> {console.log("error ...")})
+}
+
+// 게시글 삭제 axios 요청
+const removeArticle = async (paramData) => {  // {articleNO:200} 객체를 매개 변수로 전달
+	const response  = await axios.delete("/boards/"+paramData.articleNO);
+	return response;
+}
+function deleteArticle() {
+	console.log("deleteArticle() 메서드 호출")
+	let articleId = {articleNO:200}
+	
+	// 게시글 삭제 요청하는 axios 함수 호출
+	removeArticle(articleId)
+		.then((response)=> {
+			console.log("게시글 삭제 결과: ", response)
+			
+			result.innerHTML = response.data;
+			result2.innerHTML = JSON.stringify(response.data);
+			
+		}).catch((e)=>{console.log("delete error error error!")});
+}
+
+// 게시글 수정 axios 요청
+const updateArticle = async (paramData)=> {
+	const response = await axios.put(
+			"/boards/"+paramData.articleNO,		// 요청할 주소(url)
+			paramData,			// 보낼 값(객체)
+			{					// data 형식
+				'content-type': 'application/json',
+				'Accept':'application/json'}
+			
+			);
+	return response;
+}
+function modifyArticle() {
+	console.log("modifyArticle() 호출");
+	
+	let articleVO = {
+		articleNO: "300",
+		title: "Hello300",
+		write: "홍길동300",
+		content: "상품 소개 글 입니다.300"
+	}
+	
+	updateArticle(articleVO)
+		.then((response)=> {
+			console.log("success!");
+			
+			console.log("게시글 수정 결과: ",response);
+
+			result.innerHTML = response.data;
+			result2.innerHTML = JSON.stringify(response.data);
+			
+		})
+		.catch(e=> {"update error error error!"});
+}
+
+// 게시글 목록 axios 요청
+const listArticle = async ()=> {
+	const response = await axios.get('/boards/all');
+	return response;
+}
+function allArticle() {
+	console.log("allArticle() 호출");
+	listArticle()
+	.then((response)=> {
+		console.log("success! :b");
+		
+		console.log("list : ",response);
+		
+		let members = response.data;  // 배열구조 데이터
+		
+		for (i=0; i<members.length; i++) {
+			console.log(members[i].articleNO);
+			console.log(members[i].title);
+			console.log(members[i].content);
+			console.log(members[i].writer);
+			console.log(members[i].writeDate);
+		}
+		
+		result.innerHTML = response.data;
+		result2.innerHTML = JSON.stringify(response.data);
+		result3.innerHTML = "";
+		
+	}).catch((e)=>{console.log("list error error error!")});
 }
 
 </script>
