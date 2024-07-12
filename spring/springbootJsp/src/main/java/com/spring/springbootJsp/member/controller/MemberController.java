@@ -5,13 +5,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.springbootJsp.member.dao.E02MemberDAOMybatis;
@@ -67,7 +63,6 @@ public class MemberController {
 	}
 	
 	// 회원 등록
-	// 등록이 되긴 되는데 에러
 	// http://localhost:8099/member/insert?id=hong99&pwd=2222&name=홍홍홍&email=honghong@gmail.com
 	@GetMapping("/insert")
 	public String memberRegister(HttpServletRequest req) {
