@@ -47,4 +47,26 @@ public class E02MemberDAOMybatis {
 		
 	}
 	
+	// 회원 삭제
+		public void deleteMember(String id) {
+			memberXmlSqlDAO.deleteMember(id);
+//			session.selectOne("deleteMember", id);
+//			session.commit();
+			return;
+		}
+		
+
+	// 회원 수정
+	public void updateMember(MemberVO vo) {
+		memberXmlSqlDAO.updateMember(vo);
+//		session.selectOne("updateMember", vo);
+//		session.commit();
+	}
+	
+	// 중복 아이디 체크
+	public String idCheck(String id) {
+		
+		return memberXmlSqlDAO.idCheck(id);
+	}
+		
 }

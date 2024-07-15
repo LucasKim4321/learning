@@ -21,10 +21,20 @@ public interface MemberXmlSQLMapperInterface {
 	
 	// 2. 회원 등록
 	public void insertMember(MemberVO vo);
+	
 	// 3. 회원 수정
+	public void updateMember(MemberVO vo);
+	
 	// 4. 회원 삭제
+	public void deleteMember(@Param("id") String id);
+	
 	// 5. 회원 조회
 	public MemberVO getMemberView(@Param("id") String id);  // @Param("id")  #{id} 인식
-	// 6. 회원 검색
+	
+	// 6. 아이디 중복체크
+	public String idCheck(@Param("id") String id);
+	
+	// 7. 회원 검색
+	
 	
 }

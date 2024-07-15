@@ -81,5 +81,44 @@ public class MemberController {
 		return "member/memberRegister";
 	}
 	
+	// 회원 삭제
+	@GetMapping("/remove")
+	public String removeMember(HttpServletRequest req) {
+		String id = req.getParameter("id");
+		logger.info("=> member/remove id: "+id);
+		
+		memberDAO.deleteMember(id);
+		return "member/memberDelete";
+	}
 	
+	// 회원 수정
+	@GetMapping("/modify")
+	public String modifyMember(HttpServletRequest req) {
+		MemberVO vo = MemberVO.builder()
+				.id(req.getParameter("id"))
+				.pwd(req.getParameter("pwd"))
+				.name(req.getParameter("name"))
+				.email(req.getParameter("email"))
+				.build();
+		logger.info("=> member/modify: "+vo);
+		
+		memberDAO.updateMember(vo);
+		
+		return "redirect:/member/list";
+		
+	}
+	
+
+
+	// 중복 아이디 체크
+	@GetMapping("/idcheck")
+	public String idCheck(HttpServletRequest req) {
+		String id = req.getParameter("id");
+		logger.info("=> member/idcheck id: "+id);
+		
+		String isOK = memberDAO.idCheck(id);
+		logger.info("=> idCheck result: "+isOK);logger.info("=> "+(isOK.equals("true")?"이미 사용중인 아이디입니다.":"사용가능한 아이디입니다!"));
+		
+		return "redirect:/member/list";
+	}
 }
