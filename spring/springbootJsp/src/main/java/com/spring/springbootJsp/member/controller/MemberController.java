@@ -55,7 +55,8 @@ public class MemberController {
 	@GetMapping("/view")
 	public String getView(Model model, HttpServletRequest req) {
 		String id = req.getParameter("id");
-		logger.info("=> member/view id: "+id);
+//		System.out.println(); 애플리케이션에 해당 기능이 포함됨. 프로그램 덩치가 커짐.
+		logger.info("=> member/view id: "+id);  // 포함되지 않음.
 		
 		model.addAttribute("member",memberDAO.getMemberView(id));
 		
