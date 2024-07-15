@@ -2,7 +2,6 @@ package com.spring.springbootJsp.member.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -57,7 +56,7 @@ public final class E03MemberDAOJavaSQL {
 
 
 	// 회원 등록
-	public String insertMember(MemberVO vo) {
+	public int insertMember(MemberVO vo) {
 //		member = session.getMapper(E02MemberJavaSQLMapperInterface.class);
 		
 		return member.insertMember(vo);

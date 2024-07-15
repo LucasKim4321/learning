@@ -3,6 +3,7 @@ package com.spring.springbootJsp.member.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.DeleteProvider;
+import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -12,7 +13,7 @@ import org.apache.ibatis.annotations.UpdateProvider;
 import com.spring.springbootJsp.member.vo.MemberVO;
 import com.spring.springbootJsp.sql.MemberSQL;
 
-@Mapper
+@Mapper 
 public interface E02MemberJavaSQLMapperInterface {
 	// 동적SQL => Groovy class일 경우 적용됨.
 	// mapping: SQL문 실행할 함수와 SQL문 작성함수 1:1맵핑
@@ -38,12 +39,13 @@ public interface E02MemberJavaSQLMapperInterface {
 	// 1-5
 	@SelectProvider(type=MemberSQL.class, method = "getMemberList3")
 	public List<MemberVO> getMemberList3();
-
+	
 	// 2. 회원등록
 	// Insert: Auto Increment설정으로 PK, @Options어노테이션
 //	@Options(useGeneratedKeys = true, keyProperty = "id")
-	@SelectProvider(type=MemberSQL.class, method = "insertMember")
-	public String insertMember(MemberVO vo);
+//	@SelectProvider(type=MemberSQL.class, method = "insertMember")
+	@InsertProvider(type=MemberSQL.class, method = "insertMember")
+	public int insertMember(MemberVO vo);
 	
 	// 3. 회원수정
 	@UpdateProvider(type=MemberSQL.class, method = "updateMember")

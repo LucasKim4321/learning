@@ -78,4 +78,5 @@ public class MemberSQL {
 				.WHERE("id=#{id}")
 				.toString();
 	}
+	
 }

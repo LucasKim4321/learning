@@ -94,7 +94,7 @@ public class MemberJavaSQLController {
 		
 		logger.info("=> member/insert: "+vo);
 		
-		memberDAOJavaSQL.insertMember(vo);
+		int isOK = memberDAOJavaSQL.insertMember(vo);
 		
 		return "redirect:/member/sqlclass/list";
 	}
