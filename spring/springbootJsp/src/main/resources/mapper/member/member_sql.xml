@@ -56,12 +56,99 @@
 	<!-- select * from t_member where name=#{name} order by joindate desc -->
 	<select id="getMemberListIf" resultType="MemberVO">
 		select * from t_member
-		<where> <!-- if 조건(test결과)에 따라 처리 --> <!-- test == true or false -->
+		<where>
+		
+			<!-- if 사용 -->
+			<!-- if 조건(test결과)에 따라 처리 --> <!-- test == true or false -->
+			<!-- 
 			<if test="name !='' and name != null">name=#{name}</if>
 			<if test="email !='' and email != null">and email=#{email}</if>
+			 -->
+			 
+			<!-- choose 사용 -->
+			<choose>
+				<when test="name !='' and name != null and email !='' and email != null">
+					name=#{name} and email=#{email}
+				</when>
+				<when test="name !='' and name != null">
+					name=#{name}
+				</when>
+				<when test="email !='' and email != null">
+					email=#{email}
+				</when>
+				<when test="id !='' and id != null">
+					id like '%#{id}%' <!-- 안됨 -->
+				</when>
+				<otherwise>name like '%홍%'</otherwise>
+			</choose>
 		</where>
 		order by joindate desc
 	</select>
+	
+	<!-- include -->
+	<sql id="selectAll">
+		select * from t_member
+	</sql>
+	
+	
+	<select id="getForEachSelect" parameterType="java.util.Map" resultType="MemberVO">
+		<!-- select * from t_member where name in ('홍길동', '동순이',...) -->
+		
+		<include refid="selectAll"/>  <!-- select * from t_member -->
+		
+		where name in
+			<!-- 받은 리스트를 ('홍길동', '동순이',...) 이 형식으로 만들어줌 -->
+			<foreach item="item" collection="list" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+	</select>
+	
+
+	<select id="setForEachInsert" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="insert all" separator=" " close="select * from dual">
+			into t_member(id, pwd, name, email)
+			values
+			(
+				#{item.id},
+				#{item.pwd},
+				#{item.name},
+				#{item.email}
+			)
+		</foreach>
+	</select>
+
+	<!-- insert, update, delete 사용시 반환 값은 성공한 행의 개수 반환 (없다면 0) -->
+	<!-- Oracle 적용. 전체 문장을 반복 -->
+	<!-- insert가 작동해서 데이터가 들어는 가지만 결국 에러남 select로 하면 괜찮음 -->
+<!--
+	<insert id="setForEachInsert" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="insert all" separator=" " close="select * from dual">
+			into t_member(id, pwd, name, email)
+			values
+			(
+				#{item.id},
+				#{item.pwd},
+				#{item.name},
+				#{item.email}
+			)
+		</foreach>
+	</insert>
+ -->
+<!-- MySQL/MariaDB 적용.  오라클에서 insert의 values를 반복해서 사용할 경우 오류
+	<insert id="setForEachInsert" parameterType="java.util.Map">
+		insert into t_member(id, pwd, name, email)
+		values
+		<foreach item="item" collection="list">
+			(
+				#{item.id},
+				#{item.pwd},
+				#{item.name},
+				#{item.email}
+			)
+		</foreach>
+	</insert>
+ -->
+	
 	
 	
 </mapper>

@@ -70,7 +70,7 @@ public class MemberSQL {
 				.toString();
 	}
 	
-	// 5. 중복아이디체크
+	// 6. 중복아이디체크
 	public String idCheck() {
 		return new SQL()
 				.SELECT("decode(count(*), 1, 'true', 'false') as isCheck")
@@ -79,4 +79,20 @@ public class MemberSQL {
 				.toString();
 	}
 	
+	// Mybatis 동적 SQL문
+	public String getMemberListIf(final String name, final String email) {
+		return new SQL() {{
+			SELECT("*");
+			FROM("t_member");
+			if (name != null) {
+				WHERE("name=#{name}");
+			}
+			if (name != null && email != null) {
+				WHERE("email=#{email}");  // and가 자동으로 붙음 and넣으면 오류
+			}
+			if (name == null && email != null) {
+				WHERE("email=#{email}");
+			}
+		}}.toString();
+	}
 }

@@ -37,8 +37,16 @@ public interface MemberXmlSQLMapperInterface {
 	
 	// 동적 SQL 활용
 	// 7. (조건에 맞는)회원 검색
-	public List<MemberVO> getMemberListIf(	@Param("name") String name, 
+	// where ~if, where ~ choose when
+	public List<MemberVO> getMemberListIf(	@Param("id") String id, 
+											@Param("name") String name,
 											@Param("email") String email);
+	
+	// forEach
+	public List<MemberVO> getForEachSelect(@Param("list") List<String> list);
+	
+	public List<MemberVO> setForEachInsert(@Param("list") List<MemberVO> list);
+	
 	
 	
 }

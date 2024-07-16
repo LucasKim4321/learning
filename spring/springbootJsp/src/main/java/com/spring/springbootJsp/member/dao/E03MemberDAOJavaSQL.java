@@ -94,4 +94,10 @@ public final class E03MemberDAOJavaSQL {
 		
 		return member.idCheck(id);
 	}
+	
+	// 동적 SQL
+	// 조건 검색
+	public List<MemberVO> getMemberListIf(String name, String email) {
+		return member.getMemberListIf(name, email);
+	}
 }

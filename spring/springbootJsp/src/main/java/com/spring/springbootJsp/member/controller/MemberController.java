@@ -1,7 +1,9 @@
 package com.spring.springbootJsp.member.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tomcat.util.json.JSONFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.spring.springbootJsp.member.dao.E02MemberDAOMybatis;
 import com.spring.springbootJsp.member.vo.MemberVO;
 
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -66,6 +67,13 @@ public class MemberController {
 	
 	// 회원 등록
 	// http://localhost:8099/member/insert?id=hong99&pwd=2222&name=홍홍홍&email=honghong@gmail.com
+	// 회원 등록 입력 폼 요청
+	@GetMapping("/registerMember")
+	public String registerMember() {
+		
+		return "member/registerMember";
+	}
+	// 회원 정보 데이터 처리 요청
 	@GetMapping("/insert")
 	public String memberRegister(HttpServletRequest req) {
 		MemberVO vo = MemberVO.builder()
@@ -130,11 +138,43 @@ public class MemberController {
 	// 조건 검색하는 DAO기능 요청
 	@GetMapping("/searchMember")
 	public String searchMember(Model model, HttpServletRequest req) {
+		String id = req.getParameter("id");
 		String name = req.getParameter("name");
 		String email = req.getParameter("email");
 		
-		model.addAttribute("members", memberDAO.getMemberListIf(name, email)) ;
+		model.addAttribute("members", memberDAO.getMemberListIf(id, name, email)) ;
 		return "member/memberList";  //포워딩 방식으로 리턴. 서버에서 요청에서 요청받은 주소로 바꿔줌
 	}
+	
+	@GetMapping("/forEachMemberSelect")
+	public String forEachMember(Model model) {
+		List<String> nameList = new ArrayList<>();
+		nameList.add("홍길동");
+		nameList.add("이순신");
+		nameList.add("강감찬");
+		
+		model.addAttribute("members", memberDAO.getForEachSelect(nameList));
+		
+		return "member/memberList";
+	}
+	
+	@GetMapping("/forEachMemberInsert")
+	public String forEachInsert(Model model) {
+		List<MemberVO> memberList = new ArrayList<>();
+		for (int i=100; i<105; i++) {
+			MemberVO vo = MemberVO.builder()
+					.id("m"+i).pwd("1"+i).name("길순"+i).email("m"+i+"@test.com")
+					.build();
+			memberList.add(vo);
+		}
+		
+//		model.addAttribute("members", memberDAO.setForEachInsert(memberList));
+		
+		memberDAO.setForEachInsert(memberList);
+		model.addAttribute("members", memberList);
+		
+		return "member/memberList";
+	}
+	
 	
 }

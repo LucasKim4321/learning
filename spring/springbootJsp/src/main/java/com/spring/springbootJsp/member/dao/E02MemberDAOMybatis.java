@@ -74,9 +74,20 @@ public class E02MemberDAOMybatis {
 	// 동적 SQL 활용
 	// ------------------------------------- //
 	// 조건 검색
-	public List<MemberVO> getMemberListIf(String name, String email) {
+	public List<MemberVO> getMemberListIf(String id, String name, String email) {
 		
-		return memberXmlSql.getMemberListIf(name, email);
+		return memberXmlSql.getMemberListIf(id, name, email);
+	}
+	
+	public List<MemberVO> getForEachSelect(List<String> list) {
+
+		return memberXmlSql.getForEachSelect(list);
+	}
+	
+
+	public List<MemberVO> setForEachInsert(List<MemberVO> list) {
+
+		return memberXmlSql.setForEachInsert(list);
 	}
 	
 }

@@ -62,6 +62,10 @@ public interface E02MemberJavaSQLMapperInterface {
 	// 6. 중복아이디 체크
 	@SelectProvider(type=MemberSQL.class, method = "idCheck")
 	public String idCheck(@Param("id") String id);
+
+	// 7.조회
+	@SelectProvider(type=MemberSQL.class, method = "getMemberListIf")
+	public List<MemberVO> getMemberListIf(@Param("name") String name, @Param("email") String email);
 	
 }
 

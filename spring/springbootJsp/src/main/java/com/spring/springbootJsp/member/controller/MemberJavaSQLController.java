@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -156,5 +155,18 @@ public class MemberJavaSQLController {
 		return "member/memberList";
 	}
 	
+	// 동적 SQL
+	// 조건 검색 // 이름, 이메일 체크
+	@GetMapping("/getMemberListIf")
+	public String getMemberListIf(Model model, HttpServletRequest req) {
+		String name = req.getParameter("name");
+		String email = req.getParameter("email");
+		
+//		List<MemberVO> members = memberDAOJavaSQL.getMemberListIf(name, email);
+//		logger.info("=> getMemberListIf: "+members);
+		model.addAttribute("members", memberDAOJavaSQL.getMemberListIf(name, email));
+		
+		return "member/memberList";
+	}
 	
 }
