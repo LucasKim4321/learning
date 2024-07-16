@@ -18,11 +18,20 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/member/sqlclass")
 public class MemberJavaSQLController {
+	// MemberJavaSQLController.class에 대한 로그를 띄우겠다고 설정 미설정시 추후 로그 띄울때 에러
 	static Logger logger = LoggerFactory.getLogger(MemberJavaSQLController.class);
 	
-	@Autowired
-	private E03MemberDAOJavaSQL memberDAOJavaSQL;
-	// 서비스 객체 선언
+//	@Autowired
+//	private E03MemberDAOJavaSQL memberDAOJavaSQL;
+	
+	// @Autowired 미사용 시
+	private final E03MemberDAOJavaSQL memberDAOJavaSQL;
+	
+	// 생성자를 통해 의존성 주입
+	public MemberJavaSQLController(E03MemberDAOJavaSQL memberDAOJavaSQL) {
+		this.memberDAOJavaSQL = memberDAOJavaSQL;
+		logger.info("<===============생성자===============>");
+	}
 	
 	// 회원 목록
 	// http://localhost:8099/member/list

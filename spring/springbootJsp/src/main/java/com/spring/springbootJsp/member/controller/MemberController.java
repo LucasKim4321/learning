@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.spring.springbootJsp.member.dao.E02MemberDAOMybatis;
 import com.spring.springbootJsp.member.vo.MemberVO;
 
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -121,4 +122,19 @@ public class MemberController {
 		
 		return "redirect:/member/list";
 	}
+	
+
+	// ------------------------------------- //
+	// 동적 SQL 활용
+	// ------------------------------------- //
+	// 조건 검색하는 DAO기능 요청
+	@GetMapping("/searchMember")
+	public String searchMember(Model model, HttpServletRequest req) {
+		String name = req.getParameter("name");
+		String email = req.getParameter("email");
+		
+		model.addAttribute("members", memberDAO.getMemberListIf(name, email)) ;
+		return "member/memberList";  //포워딩 방식으로 리턴. 서버에서 요청에서 요청받은 주소로 바꿔줌
+	}
+	
 }

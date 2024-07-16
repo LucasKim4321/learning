@@ -68,5 +68,15 @@ public class E02MemberDAOMybatis {
 		
 		return memberXmlSql.idCheck(id);
 	}
+	
+	
+	// ------------------------------------- //
+	// 동적 SQL 활용
+	// ------------------------------------- //
+	// 조건 검색
+	public List<MemberVO> getMemberListIf(String name, String email) {
 		
+		return memberXmlSql.getMemberListIf(name, email);
+	}
+	
 }

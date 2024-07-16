@@ -52,4 +52,16 @@
 	</select>
 	<!-- 여기서 sql문장 끝에 ; 붙이면 안됨! -->
 	
+	<!-- Mybatis 동적 SQL문 -->
+	<!-- select * from t_member where name=#{name} order by joindate desc -->
+	<select id="getMemberListIf" resultType="MemberVO">
+		select * from t_member
+		<where> <!-- if 조건(test결과)에 따라 처리 --> <!-- test == true or false -->
+			<if test="name !='' and name != null">name=#{name}</if>
+			<if test="email !='' and email != null">and email=#{email}</if>
+		</where>
+		order by joindate desc
+	</select>
+	
+	
 </mapper>

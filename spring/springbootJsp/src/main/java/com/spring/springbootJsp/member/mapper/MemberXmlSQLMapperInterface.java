@@ -34,7 +34,11 @@ public interface MemberXmlSQLMapperInterface {
 	// 6. 아이디 중복체크
 	public String idCheck(@Param("id") String id);
 	
-	// 7. 회원 검색
+	
+	// 동적 SQL 활용
+	// 7. (조건에 맞는)회원 검색
+	public List<MemberVO> getMemberListIf(	@Param("name") String name, 
+											@Param("email") String email);
 	
 	
 }

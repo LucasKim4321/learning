@@ -13,17 +13,27 @@ import com.spring.springbootJsp.member.vo.MemberVO;
 @Component // 컴포넌트에 등록 후 사용
 public final class E03MemberDAOJavaSQL {
 	
-	@Autowired
-	E02MemberJavaSQLMapperInterface member;
-
-	@Autowired
-	private SqlSession session;
+//	@Autowired
+//	E02MemberJavaSQLMapperInterface member;
+//	
+//	@Autowired
+//	private SqlSession session;
 	
+	// @Autowired 미사용 시
+	private final E02MemberJavaSQLMapperInterface member;
+    private final SqlSession session;
+    
+    // 생성자를 통해 의존성 주입
+    public E03MemberDAOJavaSQL(E02MemberJavaSQLMapperInterface member, SqlSession session) {
+        this.member = member;
+        this.session = session;
+        
+    }
 
 	// 1. 어노테이션 적용
 	// 1-1 회원 목록
 	public List<MemberVO> getMemberList() {
-		member = session.getMapper(E02MemberJavaSQLMapperInterface.class);
+//		member = session.getMapper(E02MemberJavaSQLMapperInterface.class);
 		
 		return member.getMemberList();
 	}
