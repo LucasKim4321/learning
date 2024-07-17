@@ -28,3 +28,4 @@ public class MemberDTO {
 	private String uuid;
 	
 }
+// DTO (Data Transfer Object)
