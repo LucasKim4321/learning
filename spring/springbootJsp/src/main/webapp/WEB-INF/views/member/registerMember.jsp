@@ -6,13 +6,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <%@ include file="/include/bs_header.jsp" %>
+<style>
+	#message {
+		font-size: 10px; color: lightsalmon;
+	}
+</style>
 </head>
 <body>
 	<div class="container">
 		<h1>회원 등록</h1>
 		<hr>
 		<div>
-			<form>
+			<form id="memberForm" >
 				<div class="mb-3 row">
 					<label for="id" class="col-sm-2 col-form-label">ID</label>
 					<div class="col-sm-8">
@@ -21,8 +26,28 @@
 					<div class="col">
 						<button type="button" class="btn btn-outline-primary" id="idCheck">ID Check</button>
 					</div>
-					<div class="form-text">4자이상. 숫자, 영문자 혼용. 첫자는 영문</div>
+					<div class="d-flex">
+						<div class="form-text">4자이상. 숫자, 영문자 혼용. 첫자는 영문</div>
+						<div class="ms-auto" id="message"></div>
+					</div>
 				</div>
+				
+				<div class="mb-3 row">
+					<label for="pwd" class="col-sm-2 col-form-label">Password</label>
+					<div class="col-sm-10">
+					    <input type="password" class="form-control" id="pwd" name="pwd">
+					</div>
+					<div class="form-text">비밀번호 입력</div>
+				</div>
+				
+				<div class="mb-3 row">
+					<label for="name" class="col-sm-2 col-form-label">name</label>
+					<div class="col-sm-10">
+					    <input type="text" class="form-control" id="name" name="name">
+					</div>
+					<div class="form-text">이름 입력</div>
+				</div>
+				
 				<div class="mb-3 row">
 					<label for="email" class="col-sm-2 col-form-label">Email</label>
 					<div class="col-sm-10">
@@ -31,20 +56,13 @@
 					<div class="form-text">이메일 입력</div>
 				</div>
 				
-				<div class="mb-3 row">
-					<label for="pwd" class="col-sm-2 col-form-label">Password</label>
-					<div class="col-sm-10">
-					    <input type="password" class="form-control" id="pwd" name="pwd">
-					</div>
-				</div>
-				
 				<div class="mb-3 form-check">
 					<input class="form-check-input" type="checkbox" value="" id="remember" name="remember">
 					<label class="form-check-label" for="remember">remember me</label>
 				</div>
 				
 				<div>
-					<button type="submit" class="btn btn-outline-success">submit</button>
+					<button type="button" id="send" class="btn btn-outline-success">submit</button>
 				</div>
 			</form>
 		</div>
@@ -53,10 +71,103 @@
 	
 	<jsp:include page="/include/bs_footer.jsp"/>
 	<script type="text/javascript">
+		member_form = document.querySelector('#memberForm')
+		
+		$("#id").focus(function() {
+			$('#message').text("");
+		})
 		$("#idCheck").click(function() {
-			let id = $("#id").val();  //html태그의 #id의 value값을 let id에 저장
+			let idValue = $("#id").val();  //html태그의 #id의 value값을 let id에 저장
 			console.log('id: ', id)
-			// 서버에 전송 중복체크(등록여부 확인)
+			
+			if(idValue.length==0 || idValue == '') {
+				$('#message').text('아이디를 입력하세요!!');
+				return false;
+				
+			} else if(idValue.length<4) {
+				$('#message').text('아이디를 4자 이상 입력하세요!!');
+				return false;
+				
+			} else {
+				// 서버에 전송 중복체크(등록여부 확인)
+				$.ajax({
+					type:'post',
+					url: '/member/idcheck2',
+					async: false,  // flase 동기식, true: 비동기식
+					data: {id: idValue},  // 전송 받을 데이터 형식: json, xml, text, ....
+					dataType: "text",
+					
+					success: function(data, textStatus){
+						let message="";
+						if (data == "true") {
+							message += "사용중인 아이디입니다.";
+						} else {
+							message += "사용 가능한 아이디입니다.";
+						}
+						
+						$('#message').text(message);
+						console.log("success ~")
+						console.log(data, textStatus)
+						
+					},
+					error: function(data){
+						console.log("error!!!!!!!!!!!!!!")
+						
+					},
+					comeplete:function(data){
+						console.log("complete :b")
+						
+					}
+					
+				})
+			}
+			
+		})
+		
+		
+		$('#send').click(function(e) {
+			e.preventDefault();  // 기본 이벤트 삭제
+			
+			// 유효성 체크
+			let id = $('#id').val();
+			let pwd = $('#pwd').val();
+			let name = $('#name').val();
+			let email = $('#email').val();
+			if(id.length==0 || id == '') {
+				alert('아이디를 입력하세요!!')
+				return false;
+				
+			} else if(id.length<4) {
+				alert('아이디를 4자 이상 입력하세요!!')
+				return false;
+				
+			} else if(pwd.length==0 || pwd == '') {
+				alert('비밀번호를 입력하세요!!')
+				return false;
+				
+			} else if(name.length==0 || name == '') {
+				alert('이름를 입력하세요!!')
+				return false;
+				
+			} else if(email.length==0 || email == '') {
+				alert('이메일를 입력하세요!!')
+				return false;
+				
+			} else {
+				// jquery에서 submit
+				alert('등록 완료되었습니다! :b')
+				$('#memberForm').attr('action', '/member/insert2');
+				$('#memberForm').attr('method', 'post');
+				// 위에 걸 안쓰는 경우 폼 태그에 작성 <form action="/member/insert2" method="post">
+				$('#memberForm').submit();
+				
+				// javascript로 쓸 경우
+				// member_form.action= "/member/insert2";
+				// member_form.method= "post";
+				// member_form.submit();
+			}
+			
+			
 		})
 		
 	</script>

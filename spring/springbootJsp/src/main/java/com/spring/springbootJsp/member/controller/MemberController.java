@@ -7,9 +7,13 @@ import org.apache.tomcat.util.json.JSONFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.springbootJsp.member.dao.E02MemberDAOMybatis;
@@ -176,5 +180,49 @@ public class MemberController {
 		return "member/memberList";
 	}
 	
+	
+	// 웹페이지 연동
+	// registerMember.jsp
+	
+	// 중복아이디 체크
+	@PostMapping("/idcheck2")
+	public ResponseEntity<String> idCheck2(HttpServletRequest req) {
+		String id = req.getParameter("id");
+		
+		String isOK = memberDAO.idCheck(id);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		
+		
+		return new ResponseEntity<String>(isOK, responseHeaders, HttpStatus.CREATED);
+	}
+	
+	// 회원 등록
+	@PostMapping("/insert2")
+	public String memberRegister2(HttpServletRequest req) {
+		MemberVO vo = MemberVO.builder()
+				.id(req.getParameter("id"))
+				.pwd(req.getParameter("pwd"))
+				.name(req.getParameter("name"))
+				.email(req.getParameter("email"))
+				.build();
+		
+		logger.info("=> member/insert: "+vo);
+		
+		memberDAO.insertMember(vo);
+		
+		return "member/memberRegister";
+	}
+
+	// 회원 삭제
+	@GetMapping("/remove2")
+	public String removeMember2(HttpServletRequest req) {
+		String id = req.getParameter("id");
+		logger.info("=> member/remove id: "+id);
+		
+		memberDAO.deleteMember(id);
+		return "redirect:/member/list";
+	}
 	
 }

@@ -9,6 +9,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	.link {  
+	 	text-decoration: none; /* 링크의 밑줄 제거 */ 
+	 	color: inherit; /* 링크의 색상 제거 */
+ 	}
+</style>
 </head>
 <body>
 <!-- 인크루드 -->
@@ -34,7 +40,7 @@
 			  <%-- start --%>
 			  <c:forEach var="member" items="${members}">
 			    <tr>
-			      <th scope="row">${member.id}</th>
+			      <th scope="row"><a class="link" href="/member/view?id=${member.id}">${member.id}</a></th>
 			      <td>${member.name}</td>
 			      <td>${member.email}</td>
 			      <td><fmt:formatDate value="${member.joindate}" pattern="yyyy/MM/dd"/></td>
