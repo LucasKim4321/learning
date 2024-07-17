@@ -3,7 +3,6 @@ package com.spring.springbootJsp.member.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.tomcat.util.json.JSONFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +16,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.springbootJsp.member.dao.E02MemberDAOMybatis;
+import com.spring.springbootJsp.member.dto.PageRequestDTO;
+import com.spring.springbootJsp.member.dto.PageResponseDTO;
+import com.spring.springbootJsp.member.service.MemberService;
 import com.spring.springbootJsp.member.vo.MemberVO;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Controller
 @RequestMapping("/member")
 public class MemberController {
 	static Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
+	private MemberService memberService;
 	
 	@Autowired
 	private E02MemberDAOMybatis memberDAO;
@@ -223,6 +229,51 @@ public class MemberController {
 		
 		memberDAO.deleteMember(id);
 		return "redirect:/member/list";
+	}
+	
+	// 회원 수정
+		@PostMapping("/modify2")
+		public String modifyMember2(HttpServletRequest req, MemberVO vo) {
+			
+			// MemberVO 속성이름과 입력폼에서 전달해준 매개 변수가 같으면 자동으로 만들어줌
+			
+//			MemberVO vo = MemberVO.builder()
+//					.id(req.getParameter("id"))
+//					.pwd(req.getParameter("pwd"))
+//					.name(req.getParameter("name"))
+//					.email(req.getParameter("email"))
+//					.build();
+			logger.info("=> member/modify: "+vo);
+			
+			memberDAO.updateMember(vo);
+			
+			return "redirect:/member/list";
+			
+		}
+
+	// 회원 목록
+	// http://localhost:8099/member/list2
+	@GetMapping("/list2")
+	public String getList2(Model model, PageRequestDTO pageRequestDTO) {
+		
+		log.info("=> list pageRequestDTO: "+pageRequestDTO);
+		
+		if (pageRequestDTO.getTypes() != null) {
+			log.info("=> list pageRequestDTO.getTypes not null: "+pageRequestDTO.getTypes().length);
+			
+		} else {
+			log.info("=> list pageRequestDTO.getTypes is null: "+pageRequestDTO.getTypes().length);
+		}
+		
+		// 페이지 기능 설정
+		PageResponseDTO<MemberVO> responseDTO = memberService.getMemberList(pageRequestDTO);
+		
+//		List<MemberVO> list = memberDAO.getMemberList();
+//		logger.info("=> member list: "+list);
+//		
+//		model.addAttribute("members", list);
+		
+		return "member/memberList";
 	}
 	
 }

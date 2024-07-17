@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.springbootJsp.member.dto.PageRequestDTO;
 import com.spring.springbootJsp.member.mapper.MemberXmlSQLMapperInterface;
 import com.spring.springbootJsp.member.vo.MemberVO;
 
@@ -33,6 +34,7 @@ public class E02MemberDAOMybatis {
 		// Mybatis의 SqlSession 객체를 이용하여 함수 실행
 //		return session.selectList("getMemberList");
 	}
+	
 	
 	// 회원 정보 조회
 	public MemberVO getMemberView(String id) {
@@ -88,6 +90,21 @@ public class E02MemberDAOMybatis {
 	public List<MemberVO> setForEachInsert(List<MemberVO> list) {
 
 		return memberXmlSql.setForEachInsert(list);
+	}
+	
+
+	// 웹 페이지 연동
+
+	// 회원 목록 조회
+	public List<MemberVO> getMemberList2(PageRequestDTO pageRequestDTO) {
+		return memberXmlSql.getMemberList2(pageRequestDTO);
+		
+		// Mybatis의 SqlSession 객체를 이용하여 함수 실행
+//		return session.selectList("getMemberList");
+	}
+	
+	public int getCount(PageRequestDTO pageRequestDTO) {
+		return memberXmlSql.getCount(pageRequestDTO);
 	}
 	
 }

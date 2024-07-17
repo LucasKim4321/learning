@@ -83,11 +83,11 @@
 			console.log("submit!")
 			// 유효성 검사
 			
-			viewForm.action = "/member/modify"
-			viewForm.method = "get"
+			viewForm.action = "/member/modify2"
+			viewForm.method = "post"
 			viewForm.submit();
 			
-		})
+		}) 
 		
 		
 		function fnModify() {

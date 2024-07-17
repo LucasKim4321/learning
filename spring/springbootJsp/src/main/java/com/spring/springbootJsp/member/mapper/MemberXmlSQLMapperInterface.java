@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.spring.springbootJsp.member.dto.PageRequestDTO;
 import com.spring.springbootJsp.member.vo.MemberVO;
 
 @Mapper
@@ -18,6 +19,8 @@ public interface MemberXmlSQLMapperInterface {
 	
 	// 1. 회원 목록 조회
 	public List<MemberVO> getMemberList();
+	public List<MemberVO> getMemberList2(PageRequestDTO pageRequestDTO);
+	public int getCount(PageRequestDTO pageRequestDTO);
 	
 	// 2. 회원 등록
 	public void insertMember(MemberVO vo);
