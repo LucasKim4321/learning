@@ -29,5 +29,9 @@ select count(id) from t_member where id='hong10000';
  select * from dual;
  
  
+ select * from t_member;
+select count(*) from t_member where id='hong2';
+ select decode( count(*), 1, 'true', 2, 'abc', 'false') as result from t_member where id='hong2' or id='hong3';
+ 
  
  
