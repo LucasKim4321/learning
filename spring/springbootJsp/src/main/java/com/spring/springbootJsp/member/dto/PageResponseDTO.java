@@ -24,8 +24,8 @@ public class PageResponseDTO<E> {
 	private int total;
 	
 	// 시작 페이지
-	private int start;  // 해당 블럭(block) 시작 페이지 번호
-	private int end;	// 해당 블럭(block) 마지막 페이지 번호
+	private int start;  // 페이지버튼의 시작 페이지 번호
+	private int end;	// 페이지버튼의 마지막 페이지 번호
 	
 	private boolean prev;  // 이전 페이지의 존재 여부
 	private boolean next;  // 다음 페이지의 존재 여부

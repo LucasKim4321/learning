@@ -29,7 +29,7 @@
 				<div class="col-10"><input type="text" class="w-100" id="search" name="search"></div>
 				<div class="col"><button type="submit" class="btn btn-outline-success">Search</button></div>
 				<div class="col"><button type="reset" class="btn btn-outline-warning">Clear</button></div>
-				<div><input type="hidden" name="page" id="page" value="1"></div>
+				<div id="pageBox"><input type="hidden" name="page" id="page" value="1"></div>
 			</div>
 		</form>
 		
@@ -127,7 +127,7 @@
 		
 		if (${pageResponseDTO.page} != page_num) {
 			// 매개변수로 전달시
-			location.href="/member/list2?page="+page_num;
+			// location.href="/member/list2?page="+page_num;
 			
 			// 객체로 전달시
 			// const formObj = document.querySelector("#searchForm") // 여러개 있을때 id를 지정해서 불러옴
@@ -135,12 +135,9 @@
 			
 			
 			// jQuery
-			//const formObj = $('#searchForm');
-			// formObj.html('<div><input type="hidden" name="page" id="page" value="'+page_num+'"></div>');
-			//formObj.html() += '<div><input type="hidden" name="page" id="page" value="'+page_num+'"></div>';
-			
-			let page = $('#page');
-			page.attr('value') = page_num;
+			const formObj = $('#searchForm');
+			const pagebox = $('#pageBox');
+			pagebox.html('<input type="hidden" name="page" id="page" value="'+page_num+'">');
 			
 			formObj.submit();
 			

@@ -45,7 +45,7 @@ public class PageRequestDTO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate to;
 	
-	// 해당 페이지에 대한 시작 레코드번호 마지막 레코드번호 계산
+	// 해당 페이지에 대한 시작 레코드번호 계산
 	public int getSkip() {
 		// 1 page : 1~10
 		// 2 page : 11~20
@@ -53,10 +53,12 @@ public class PageRequestDTO {
 		// 해당페이지의 시작 레코드번호를 계산
 		// 1page : (1-1)*10=>0+1=>1
 		// 2page : (2-1)*10=>10+1=>11
+		// 3page : (3-1)*10=>20+1=>21
 		
-		return (page-1)*size+1;
+		return (page-1) * size + 1;
 	}
 	
+	// 해당 페이지에 대한 마지막 레코드번호 계산
 	public int getEnd() {
 	    return page * size;
 	}
