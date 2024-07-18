@@ -31,6 +31,7 @@ select count(id) from t_member where id='hong10000';
  
  select * from t_member;
 select count(*) from t_member where id='hong2';
+select count(*) from t_member where id='hong2' or id='hong3';
  select decode( count(*), 1, 'true', 2, 'abc', 'false') as result from t_member where id='hong2' or id='hong3';
  
  -- 사이 값이 나옴
@@ -53,5 +54,15 @@ select count(*) from t_member where id='hong2';
  select rownum as recNum, id, pwd, name, email, joindate from (select * from t_member order by joindate desc);
  select * from (select rownum as recNum, id, pwd, name, email, joindate from (select * from t_member order by joindate desc)) where recnum between 1 and 4;
  
+ 
+ select * from t_member;
+ delete from t_member where id like 'm%';
+ delete from t_member where id like 't%';
+ commit;
+ rollback;
+ 
+ show autocommit;
+ set autocommit off;
+ set autocommit on;
  
  
