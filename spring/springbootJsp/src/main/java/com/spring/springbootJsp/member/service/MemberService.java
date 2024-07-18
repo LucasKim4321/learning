@@ -22,6 +22,8 @@ public class MemberService {
 	
 	// 회원 목록 (페이지 기능 추가)
 	public PageResponseDTO<MemberVO> getMemberList(PageRequestDTO pageRequestDTO) {
+		log.info("Service pageRequestDTO: "+pageRequestDTO);
+		
 		List<MemberVO> list = memberDAO.getMemberList2(pageRequestDTO);  // 전체 목록 추출
 		
 		// 페이지 처리 기능을 추가

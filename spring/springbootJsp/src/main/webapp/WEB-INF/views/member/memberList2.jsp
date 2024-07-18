@@ -21,15 +21,38 @@
 <%-- <%@ include file="/include/taglib.jsp" %> --%>
 <%-- <jsp:include page="/include/taglib.jsp"/> --%>
 	<div class="container border">
-		<h1> 회원 목록 조회</h1>
+		<h1 class="text-center"> 회원 목록 조회</h1>
+		<%-- <div>pageResponseDTO: ${pageResponseDTO}</div>
+		<hr>
+		<div>pageRequestDTO: ${pageRequestDTO}</div> --%>
 		<div>
 		<!-- 검색 기능 -->
 		<form action="/member/list2" method="get" id="searchForm">
-			<div class="row">
-				<div class="col-10"><input type="text" class="w-100" id="search" name="search"></div>
-				<div class="col"><button type="submit" class="btn btn-outline-success">Search</button></div>
-				<div class="col"><button type="reset" class="btn btn-outline-warning">Clear</button></div>
-				<div id="pageBox"><input type="hidden" name="page" id="page" value="1"></div>
+			<div class="w-75 mx-auto">
+				<div class="d-flex mb-2">
+					<div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="i" id="id" name="id">
+					  <label class="form-check-label" for="id">
+					   	아이디
+					  </label>
+					</div>
+					<div class="form-check ms-2">
+					  <input class="form-check-input" type="checkbox" value="n" id="name">
+					  <label class="form-check-label" for="name">
+					    이름
+					  </label>
+					</div>
+				</div>
+				<div class="d-flex mb-3">
+					<div class="w-50 me-2"><input class="form-control me-2" type="date" /></div>
+					<div class="w-50"><input class="form-control me-2" type="date" /></div>
+				</div>
+				<div class="d-flex justify-content-center w-100">
+					<div class="w-100"><input type="text" class="form-control w-100" id="search" name="search"></div>
+					<div><button type="submit" class="btn btn-outline-success ms-2">Search</button></div>
+					<div><button type="reset" class="btn btn-outline-warning ms-2">Clear</button></div>
+					<div id="pageBox"><!-- <input type="hidden" name="page" value="1"> --></div>
+				</div>
 			</div>
 		</form>
 		
@@ -48,8 +71,9 @@
 			  <c:forEach var="member" items="${pageResponseDTO.memberList}">
 			    <tr>
 			      <th>${member.recnum}</th> <!--  MemberVO랑 MemberDTO에 추가로 recnum 변수 선언-->
-			      <td scope="row"><a class="link" href="/member/view?id=${member.id}">${member.id}</a></td>
-			      <td>${member.id}</td>
+			      <td scope="row">
+			      	<!-- 현재 페이지 정보 유지: get방식 pageRequestDTO.link값을 적용 -->
+			      	<a class="link" href="/member/view2?id=${member.id}&${pageRequestDTO.link}">${member.id}</a></td>
 			      <td>${member.name}</td>
 			      <td>${member.email}</td>
 			      <td><fmt:formatDate value="${member.joindate}" pattern="yyyy/MM/dd"/></td>
@@ -110,11 +134,36 @@
 <script type="text/javascript">
 
 	function register() {
-		location.href="/member/registerMember"
+		location.href="/member/registerMember2"
 	}
+	
 	
 </script>
 
+<!-- 2. javascript 응용 -->
+<script>
+
+	document.querySelector(".pagination").addEventListener('click', (e)=> {
+		e.preventDefault();  // 기본 이벤트 제거
+		e.stopPropagation();  // 버블링 방지: 연쇄적인 이벤트 반응 방지
+		
+		const target = e.target; // 실제 이벤트가 발생 태그 요소의 객체 주소를 넘겨받음
+		if (target.tagName !== 'A') return;
+		
+		const page_num = target.getAttribute('data-num');
+		console.log(page_num);
+		console.log(`${page_num}`);  // 원래 javascript에서 쓰던 문법. jsp에서 안되는 듯. jsp문법으로 인식.
+		
+		const formObj = document.querySelector("#searchForm");
+		const pageBox = document.querySelector("#pageBox");
+		pageBox.innerHTML = '<input type="hidden" name="page" value="'+page_num+'">';
+		formObj.submit();
+		
+	})
+</script>
+
+<!-- 1. jQuery 응용 -->
+<%-- 
 <jsp:include page="/include/bs_footer.jsp"/>
 <script type="text/javascript">
 
@@ -136,8 +185,8 @@
 			
 			// jQuery
 			const formObj = $('#searchForm');
-			const pagebox = $('#pageBox');
-			pagebox.html('<input type="hidden" name="page" id="page" value="'+page_num+'">');
+			const pageBox = $('#pageBox');
+			pageBox.html('<input type="hidden" name="page" value="'+page_num+'">');
 			
 			formObj.submit();
 			
@@ -158,7 +207,7 @@
 	})
 	
 </script>
-
+ --%>
 
 
 

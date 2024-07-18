@@ -107,4 +107,11 @@ public class E02MemberDAOMybatis {
 		return memberXmlSql.getCount(pageRequestDTO);
 	}
 	
+
+//	// 회원 정보 조회
+//	public MemberVO getMemberView2(String id, String search, String page) {
+//		return memberXmlSql.getMemberView(id, search, page);
+////		return session.selectOne("getMemberView", id, search, page);
+//	}
+//	
 }

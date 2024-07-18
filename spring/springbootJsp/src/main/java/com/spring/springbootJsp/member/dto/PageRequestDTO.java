@@ -97,6 +97,8 @@ public class PageRequestDTO {
 			link = builder.toString();
 			
 		}
+		
+		log.info("asdfasdf link: "+link);
 		return link;  // page=1&size=10&types=name&keyword=인코딩된 단어&from=...&to=...
 	}
 	
