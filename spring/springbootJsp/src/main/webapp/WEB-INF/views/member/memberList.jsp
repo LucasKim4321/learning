@@ -21,7 +21,7 @@
 <%-- <%@ include file="/include/taglib.jsp" %> --%>
 <%-- <jsp:include page="/include/taglib.jsp"/> --%>
  	<div class="container">
-		<%-- ${members} --%> <!-- model로 넘어온 값 읽음 -->
+ 		${members}
 	</div>
 	<div class="container border">
 		<h1> 회원 목록 조회</h1>

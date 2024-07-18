@@ -28,7 +28,7 @@ public class PageRequestDTO {
 	// 시작 페이지 번호
 	private int page = 1;
 	
-	// 페이지당 레코드 수
+	// 페이지에 표시할 최대 레코드 수
 	private int size = 10;
 	
 	private String link;
@@ -45,13 +45,20 @@ public class PageRequestDTO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate to;
 	
-	// 페이지 계산
+	// 해당 페이지에 대한 시작 레코드번호 마지막 레코드번호 계산
 	public int getSkip() {
 		// 1 page : 1~10
 		// 2 page : 11~20
 		
 		// 해당페이지의 시작 레코드번호를 계산
-		return (page-1)*10;
+		// 1page : (1-1)*10=>0+1=>1
+		// 2page : (2-1)*10=>10+1=>11
+		
+		return (page-1)*size+1;
+	}
+	
+	public int getEnd() {
+	    return page * size;
 	}
 	
 	public String getLink() {

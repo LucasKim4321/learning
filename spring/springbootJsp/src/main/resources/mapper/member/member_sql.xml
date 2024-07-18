@@ -24,10 +24,11 @@
 		select * from (
 			select rownum as recNum, id, pwd, name, email, joindate 
 			from (
-				select * from t_member order by joindate desc
+				select id, pwd, name, email, joindate from t_member order by joindate desc
 				)
 			)
-			where recnum between #{skip} and #{end};
+			where recnum between #{skip} and #{end}
+			<!-- where recnum between 1 and 10 -->
 	</select>
 	
 	<select id="getCount" resultType="int">

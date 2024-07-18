@@ -30,6 +30,7 @@ import lombok.extern.log4j.Log4j2;
 public class MemberController {
 	static Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
+	@Autowired
 	private MemberService memberService;
 	
 	@Autowired
@@ -141,7 +142,7 @@ public class MemberController {
 		return "redirect:/member/list";
 	}
 	
-
+	
 	// ------------------------------------- //
 	// 동적 SQL 활용
 	// ------------------------------------- //
@@ -262,18 +263,21 @@ public class MemberController {
 			log.info("=> list pageRequestDTO.getTypes not null: "+pageRequestDTO.getTypes().length);
 			
 		} else {
-			log.info("=> list pageRequestDTO.getTypes is null: "+pageRequestDTO.getTypes().length);
+			log.info("=> list pageRequestDTO.getTypes is null: "+pageRequestDTO.getTypes());
 		}
 		
 		// 페이지 기능 설정
-		PageResponseDTO<MemberVO> responseDTO = memberService.getMemberList(pageRequestDTO);
+		PageResponseDTO<MemberVO> pageResponseDTO = memberService.getMemberList(pageRequestDTO);
+		model.addAttribute("pageResponseDTO", pageResponseDTO);
+		
+		
 		
 //		List<MemberVO> list = memberDAO.getMemberList();
 //		logger.info("=> member list: "+list);
 //		
 //		model.addAttribute("members", list);
 		
-		return "member/memberList";
+		return "member/memberList2";
 	}
 	
 }

@@ -12,6 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class MemberVO {
+	// 오라클인 경우 : rownum as recnum
+	// 회원 리스트 조회시 적용되는 필드
+	private int recnum;
+	
+	// 기본 입력 회원 정보 필드
 	private String id;
 	private String pwd;
 	private String name;

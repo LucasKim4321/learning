@@ -44,8 +44,8 @@ public class PageResponseDTO<E> {
 		// 해당 블럭의 페이지 범위 계산 : 1 block : 10페이지
 		// Math.ceil(숫자) : 자리올림/10.0))*10;
 		
-		this.end = (int) (Math.ceil(this.page/10.0))*10;  // 1블럭: 10, 2블럭: 20...
-		this.start = this.end -9;						  // 1블럭: 1, 2블럭: 11...
+		this.end = (int) (Math.ceil(this.page/10.0))*10;  // 끝번호	1블럭: 10, 2블럭: 20...
+		this.start = this.end -9;						  // 시작번호	1블럭: 1, 2블럭: 11...
 		
 		// 1024/10 => 102.4 => 103 page로 계산
 		int last = (int) Math.ceil(total/(double)size);
@@ -57,7 +57,7 @@ public class PageResponseDTO<E> {
 		this.prev = this.start > 1; 
 		
 		// 블럭의 끝 페이지 번호의 총 개수가 전체 레코드 총 개수보다 크면 false, 그렇지 않으면 true
-		this.next = total > this.end*this.size;
+		this.next = total > this.end * this.size;
 		
 		log.info("현재 페이지: "+this.page);
 		
