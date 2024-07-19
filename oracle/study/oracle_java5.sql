@@ -74,7 +74,8 @@ select count(*) from t_member where id='hong2' or id='hong3';
  select * from t_member where id like 'm%';
  select * from t_member where id like 't%';
  select * from t_member where name like '%Äá%';
- select * from t_member where id like '%Hong%';
+ select * from t_member where id like '%Hong123%';
+ select * from t_member where id like upper('%hong123%');
  
  select * from t_member;
  delete from t_member where id like 'm%';
