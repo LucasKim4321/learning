@@ -75,6 +75,7 @@
 			  <tbody>
 			  <%-- start --%>
 			  <c:forEach var="member" items="${pageResponseDTO.memberList}">
+			  	${member.toLocaleDate()} <!-- sql.Date to LocalDate convert -->
 			    <tr>
 			      <th>${member.recnum}</th> <!--  MemberVO랑 MemberDTO에 추가로 recnum 변수 선언-->
 			      <td scope="row">
@@ -82,7 +83,9 @@
 			      	<a class="link" href="/member/view2?id=${member.id}&${pageRequestDTO.link}">${member.id}</a></td>
 			      <td>${member.name}</td>
 			      <td>${member.email}</td>
-			      <td><fmt:formatDate value="${member.joindate}" pattern="yyyy/MM/dd"/></td>
+			      <td><fmt:formatDate value="${member.joindate}" pattern="yyyy/MM/dd"/>
+			      	 => ${member.joinLocalDate} => ${member.joindate.toLocalDate()}
+			      </td>
 			    </tr>
 		      </c:forEach>
 			  </tbody>
@@ -173,8 +176,8 @@
 		const pageBox2 = document.querySelector("#pageBox2");
 		link.action = "/member/list2";
 		link.method = "get";
-		pageBox2.innerHTML += '<input type="hidden" name="types" value="${pageRequestDTO.checkType("i") ? "i" : ""}" >';
-		pageBox2.innerHTML += '<input type="hidden" name="types" value="${pageRequestDTO.checkType("n") ? "n" : ""}" >';
+		pageBox2.innerHTML += '<input type="hidden" name="types" value="i" ${pageRequestDTO.checkType("i") ? "checked" : ""}>';
+		pageBox2.innerHTML += '<input type="hidden" name="types" value="n" ${pageRequestDTO.checkType("n") ? "checked" : ""}>';
 		pageBox2.innerHTML += '<input type="hidden" name="from" value="${pageRequestDTO.from}"/>';
 		pageBox2.innerHTML += '<input type="hidden" name="to" value="${pageRequestDTO.to}" />';
 		pageBox2.innerHTML += '<input type="hidden" name="keyword" value="${pageRequestDTO.keyword}">';

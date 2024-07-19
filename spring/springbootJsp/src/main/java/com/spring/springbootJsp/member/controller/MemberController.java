@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.springbootJsp.member.dao.E02MemberDAOMybatis;
+import com.spring.springbootJsp.member.dto.MemberDTO;
 import com.spring.springbootJsp.member.dto.PageRequestDTO;
 import com.spring.springbootJsp.member.dto.PageResponseDTO;
 import com.spring.springbootJsp.member.service.MemberService;
@@ -273,7 +274,7 @@ public class MemberController {
 		}
 		
 		// 페이지 기능 설정
-		PageResponseDTO<MemberVO> pageResponseDTO = memberService.getMemberList(pageRequestDTO);
+		PageResponseDTO<MemberDTO> pageResponseDTO = memberService.getMemberList(pageRequestDTO);
 		model.addAttribute("pageResponseDTO", pageResponseDTO);
 		
 		
@@ -294,9 +295,8 @@ public class MemberController {
 //		logger.info("=> member/view id: "+id);  // 포함되지 않음.
 		
 		model.addAttribute("member",memberDAO.getMemberView(id));
-		
-//		return "member/memberView";
 		return "member/memberView2";
+		
 	}
 	
 	// 회원 등록
@@ -362,3 +362,5 @@ public class MemberController {
 	
 	
 }
+
+// Spring IOC, DI

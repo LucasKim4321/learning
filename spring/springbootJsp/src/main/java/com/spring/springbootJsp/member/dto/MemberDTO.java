@@ -1,6 +1,7 @@
 package com.spring.springbootJsp.member.dto;
 
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,8 +12,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class MemberDTO {
 	// 오라클인 경우 : rownum as recnum
@@ -24,13 +25,20 @@ public class MemberDTO {
 	private String pwd;
 	private String name;
 	private String email;
-//	private Date joindate;
+	private Date joindate;
 	
 	// mybatis : localdate <-> sql date 형식 변환
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate joindate;
+	private LocalDate joinLocalDate;
 	
 	private String uuid;
 	
+	
+	public void toLocaleDate() {
+		this.joinLocalDate = this.joindate.toLocalDate();
+	}
+	
+	public void toSqlDate() {
+	}
 }
 // DTO (Data Transfer Object)
