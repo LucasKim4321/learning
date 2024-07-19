@@ -83,8 +83,8 @@
 			      	<a class="link" href="/member/view2?id=${member.id}&${pageRequestDTO.link}">${member.id}</a></td>
 			      <td>${member.name}</td>
 			      <td>${member.email}</td>
-			      <td><fmt:formatDate value="${member.joindate}" pattern="yyyy/MM/dd"/>
-			      	 => ${member.joinLocalDate} => ${member.joindate.toLocalDate()}
+			      <td><fmt:formatDate value="${member.joindate}" pattern="yyyy-MM-dd hh:mm:ss"/>
+			      	 => ${member.joinLocalDate}}  <%-- ${member.joindate.toLocalDate() --%>
 			      </td>
 			    </tr>
 		      </c:forEach>
