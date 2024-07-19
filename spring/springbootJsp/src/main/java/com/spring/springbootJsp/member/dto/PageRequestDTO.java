@@ -103,16 +103,27 @@ public class PageRequestDTO {
 	}
 	
 	// 조건 검색
-	public boolean checkType(String[] types) {
-		logger.info("=> Logger type: "+types);
-		log.info("=> Log4j2 type: "+types);
+	public boolean checkType(String type_check) {
+		logger.info("=> Logger type: "+type_check);
+		log.info("=> Log4j2 type: "+type_check);
 		
 		if(types==null || types.length==0) {
 			return false;
 		}
 		
 		// 최소 한 개의 요소가 주어진 조건에 만족하면 true
-		return Arrays.stream(types).anyMatch(types::equals);
+		// types[0] == "n", types[1] == "i", ...
+		
+		return Arrays.stream(types).anyMatch(type_check::equals);
+//		내부 동작
+//		boolean flag = false;
+//		String param = "n";  // or "i"
+//		for (int i=0; i<types.length; i++) {
+//			if (types[i].equals("n")) {
+//				flag true;
+//			}
+//		}
+//		return flag;
 	}
 	
 }

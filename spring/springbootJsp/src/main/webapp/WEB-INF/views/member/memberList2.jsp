@@ -25,36 +25,42 @@
 		<%-- <div>pageResponseDTO: ${pageResponseDTO}</div>
 		<hr>
 		<div>pageRequestDTO: ${pageRequestDTO}</div> --%>
+		<%-- <div>pageRequestDTO.link: ${pageRequestDTO.link}</div> --%>
 		<div>
-		<!-- 검색 기능 -->
-		<form action="/member/list2" method="get" id="searchForm">
-			<div class="w-75 mx-auto">
-				<div class="d-flex mb-2">
-					<div class="form-check">
-					  <input class="form-check-input" type="checkbox" value="i" id="id" name="id">
-					  <label class="form-check-label" for="id">
-					   	아이디
-					  </label>
+			<!-- 검색 기능 : PageRequestDTO객체 속성과 동일한 이름으로 매개변수 설정-->
+			<!-- PageRequestDTO와 search form 매개변수 1:1 자동맵핑 => types, keyword, from , to -->
+			<form action="/member/list2" method="get" id="searchForm">
+				<!-- 검색 조건값 유지 -->
+				<input type="hidden" name="types" value="">
+				<div class="w-75 mx-auto">
+					<div class="d-flex mb-2">
+						<div class="form-check">
+						  <input class="form-check-input" type="checkbox" value="i" id="searchId" name="types">  <%-- ${pageRequestDTO.checkType("i") ? "checked" : ""} --%>
+						  <label class="form-check-label" for="searchId">
+						   	아이디
+						  </label>
+						</div>
+						<div class="form-check ms-2">
+						  <input class="form-check-input" type="checkbox" value="n" id="searchName" name="types">  <%-- ${pageRequestDTO.checkType("n") ? "checked" : ""} --%>
+						  <label class="form-check-label" for="searchName">
+						    이름
+						  </label>
+						</div>
 					</div>
-					<div class="form-check ms-2">
-					  <input class="form-check-input" type="checkbox" value="n" id="name">
-					  <label class="form-check-label" for="name">
-					    이름
-					  </label>
+					<div class="d-flex mb-3">
+						<div class="w-50 me-2"><input class="form-control me-2" type="date" name="from"/></div>  <%-- value="${pageRequestDTO.from}" --%>
+						<div class="w-50"><input class="form-control me-2" type="date" name="to"/></div>  <%-- value="${pageRequestDTO.to}" --%>
+					</div>
+					<div class="d-flex justify-content-center w-100">
+						<div class="w-100"><input type="text" class="form-control w-100" id="search" name="keyword"></div>  <%-- value="${pageRequestDTO.keyword}" --%>
+						<div><button type="submit" class="btn btn-outline-success ms-2">Search</button></div>
+						<div><button type="reset" id="btnReset" class="btn btn-outline-warning ms-2">Clear</button></div>
+						<div id="pageBox"><!-- <input type="hidden" name="page" value="1"> --></div>
 					</div>
 				</div>
-				<div class="d-flex mb-3">
-					<div class="w-50 me-2"><input class="form-control me-2" type="date" /></div>
-					<div class="w-50"><input class="form-control me-2" type="date" /></div>
-				</div>
-				<div class="d-flex justify-content-center w-100">
-					<div class="w-100"><input type="text" class="form-control w-100" id="search" name="search"></div>
-					<div><button type="submit" class="btn btn-outline-success ms-2">Search</button></div>
-					<div><button type="reset" class="btn btn-outline-warning ms-2">Clear</button></div>
-					<div id="pageBox"><!-- <input type="hidden" name="page" value="1"> --></div>
-				</div>
-			</div>
-		</form>
+			</form>
+			
+			<form id="link"><div id="pageBox2"><!-- <input type="hidden" name="page" value="1"> --></div></form>
 		
 			<table class="table">
 			  <thead>
@@ -143,23 +149,52 @@
 <!-- 2. javascript 응용 -->
 <script>
 
+	
 	document.querySelector(".pagination").addEventListener('click', (e)=> {
 		e.preventDefault();  // 기본 이벤트 제거
 		e.stopPropagation();  // 버블링 방지: 연쇄적인 이벤트 반응 방지
+		console.log(e.target);
 		
 		const target = e.target; // 실제 이벤트가 발생 태그 요소의 객체 주소를 넘겨받음
 		if (target.tagName !== 'A') return;
 		
 		const page_num = target.getAttribute('data-num');
 		console.log(page_num);
-		console.log(`${page_num}`);  // 원래 javascript에서 쓰던 문법. jsp에서 안되는 듯. jsp문법으로 인식.
+		//console.log(`${page_num}`);  // 원래 javascript에서 쓰던 문법. jsp에서 안되는 듯. jsp문법으로 인식.
 		
-		const formObj = document.querySelector("#searchForm");
+		// 기존 폼 사용
+		/* const formObj = document.querySelector("#searchForm");
 		const pageBox = document.querySelector("#pageBox");
 		pageBox.innerHTML = '<input type="hidden" name="page" value="'+page_num+'">';
-		formObj.submit();
+		formObj.submit(); */
+		
+		// 안보이는 폼 사용
+		const link = document.querySelector("#link");
+		const pageBox2 = document.querySelector("#pageBox2");
+		link.action = "/member/list2";
+		link.method = "get";
+		pageBox2.innerHTML += '<input type="hidden" name="types" value="${pageRequestDTO.checkType("i") ? "i" : ""}" >';
+		pageBox2.innerHTML += '<input type="hidden" name="types" value="${pageRequestDTO.checkType("n") ? "n" : ""}" >';
+		pageBox2.innerHTML += '<input type="hidden" name="from" value="${pageRequestDTO.from}"/>';
+		pageBox2.innerHTML += '<input type="hidden" name="to" value="${pageRequestDTO.to}" />';
+		pageBox2.innerHTML += '<input type="hidden" name="keyword" value="${pageRequestDTO.keyword}">';
+		pageBox2.innerHTML += '<input type="hidden" name="page" value="'+page_num+'">';
+		link.submit();
 		
 	})
+
+	
+	/*
+	// clear button : 검색 값 초기화
+	const btnReset = document.querySelector('#btnReset').addEventListener('click', (e)=> {
+		e.preventDefault();  // 기본 이벤트 제거
+		e.stopPropagation();  // 버블링 방지: 연쇄적인 이벤트 반응 방지
+		
+		self.location = "/member/list2";  // list2페이지 재요청으로 초기화
+		
+	})
+	*/
+	
 </script>
 
 <!-- 1. jQuery 응용 -->

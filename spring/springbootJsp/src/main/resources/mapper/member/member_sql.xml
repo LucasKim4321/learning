@@ -21,14 +21,33 @@
 	</select>
 	
 	<select id="getMemberList2" resultType="MemberVO"> <!-- getMemberList 호출 시 실행 -->
-		select * from (
+			<!-- 1. 기본 리스트
+			select * from (
 			select rownum as recNum, id, pwd, name, email, joindate 
 			from (
 				select id, pwd, name, email, joindate from t_member order by joindate desc
 				)
 			)
 			where recnum between #{skip} and #{end}
-			<!-- where recnum between 1 and 10 -->
+			테스트 where recnum between 1 and 10
+			-->
+			
+			<!-- 2. 서치 기능 포험 리스트 -->
+			select * from (
+			select rownum as recNum, id, pwd, name, email, joindate 
+			from (
+				select id, pwd, name, email, joindate from t_member 
+				<!-- 조건 검색 기능 -->
+				<!-- 검색 시 들어갈 문장 예시
+				where (name like '%홍%' or id like 'h%')
+					and joindate between '2024/07/10' and '2024/07/16' 
+				-->
+				<include refid="search"></include> <!-- <sql id="search"> 사용 -->
+				order by joindate desc
+				)
+			)
+			where recnum between #{skip} and #{end}
+			
 	</select>
 	
 	<select id="getCount" resultType="int">
@@ -36,8 +55,43 @@
 	</select>
 	
 	<!-- 공동 사용된 sql query -->
+	
+	<!-- 조건 검색 기능 -->
+				<!-- 검색 시 들어갈 문장 예시
+				where (name like '%홍%' or id like 'h%')
+					and joindate between '2024/07/10' and '2024/07/16' 
+				-->
 	<sql id="search">
-		
+		<where>
+			<if test="types != null and types.length > 0">
+				<foreach	collection="types" item="type" index="idx"
+							open="(" close=")" separator="OR">
+							
+					<if test="type=='n'.toString()"> <!-- ( name like '%keyword값%' -->
+						<!-- 대소문자 구분 검색 -->
+						<!-- mariadb: name like concat('%', #{keyword}, '%') -->
+						<!-- oracle: name like concat(concat('%', #{keyword}), '%') -->
+						
+						<!-- 대소문자 구분 없이 검색.-->
+						upper(name) like upper(concat(concat('%', #{keyword}), '%'))
+					</if>	
+						
+					<if test="type=='i'.toString()"> <!-- OR id like '%keyword값%' )-->
+						<!-- 대소문자 구분 검색 -->
+						<!-- id like '%' || #{keyword} || '%' -->
+						
+						<!-- 대소문자 구분 없이 검색. 검색할 값과 검색된 값 모두 대문자 혹은 소문자로 처리후 검색 -->
+						upper(id) like upper('%' || #{keyword} || '%')
+					</if>
+				</foreach>
+			</if>
+			<if test="from != null and to != null">
+			
+				<trim prefix="and"> <!-- and joindate between #{from} and #{to} -->
+					joindate between #{from} and #{to} <!-- oracle from(포함)부터 to(미포함)까지 -->
+				</trim>
+			</if>
+		</where>
 	</sql>
 	
 	<!-- 회원 조회 -->

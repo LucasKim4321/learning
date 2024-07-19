@@ -263,7 +263,7 @@ public class MemberController {
 	@GetMapping("/list2")
 	public String getList2(Model model, PageRequestDTO pageRequestDTO) {
 		
-		log.info("=> list pageRequestDTO: "+pageRequestDTO);
+		log.info("=> 클라이언트로부터 받은 페이지 정보 객체 list pageRequestDTO: "+pageRequestDTO);
 		
 		if (pageRequestDTO.getTypes() != null) {
 			log.info("=> list pageRequestDTO.getTypes not null: "+pageRequestDTO.getTypes().length);
@@ -346,18 +346,18 @@ public class MemberController {
 			
 	}
 	
-//	// 회원 삭제
-//	@GetMapping("/remove3")
-//	public String removeMember3(
-//			//@ModelAttribute("pageReqeustDTO") PageRequestDTO pageRequestDTO,
-//			PageRequestDTO pageRequestDTO,  // @ModelAttribute("pageReqeustDTO") 생략
-//			String id) {
-//		id = req.getParameter("id");
-//		logger.info("=> member/remove id: "+id);
-//		
-//		memberDAO.deleteMember(id);
-//		return "redirect:/member/list";
-//	}
+	// 회원 삭제
+	@GetMapping("/remove3")
+	public String removeMember3(
+			//@ModelAttribute("pageReqeustDTO") PageRequestDTO pageRequestDTO,
+			PageRequestDTO pageRequestDTO,  // @ModelAttribute("pageReqeustDTO") 생략
+			String id) {
+		
+		logger.info("=> member/remove id: "+id);
+		
+		memberDAO.deleteMember(id);
+		return "redirect:/member/list";
+	}
 	
 	
 	

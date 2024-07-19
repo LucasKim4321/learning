@@ -84,7 +84,7 @@
 			console.log("submit!")
 			// 유효성 검사
 			
-			viewForm.action = "/member/modify3${pageRequestDTO.link}"
+			viewForm.action = "/member/modify3?${pageRequestDTO.link}"
 			viewForm.method = "post"
 			viewForm.submit();
 			

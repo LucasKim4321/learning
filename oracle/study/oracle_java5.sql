@@ -54,6 +54,27 @@ select count(*) from t_member where id='hong2' or id='hong3';
  select rownum as recNum, id, pwd, name, email, joindate from (select * from t_member order by joindate desc);
  select * from (select rownum as recNum, id, pwd, name, email, joindate from (select * from t_member order by joindate desc)) where recnum between 1 and 4;
  
+ -- 홍을 포함하고 t101로 시작하고 rownum(recnum)이 1~10 사이의 값
+ select * from (select rownum as recNum, id, pwd, name, email, joindate from (select * from t_member order by joindate desc))
+ where (name like '%홍%' and id like 't101%') and recnum between 1 and 10;
+ 
+ -- between 날짜는 시작날짜부터 마지막전날까지의 값이 나옴   예 2024/07/10포함  2024/07/16미포함
+ select * from (select rownum as recNum, id, pwd, name, email, joindate from (select * from t_member order by joindate desc))
+ where (name like '%홍%' and id like 'h%') and joindate between '2024/07/10' and '2024/07/16';
+ 
+ -- 조건에 맞는 값을 찾은 후 거기에 rownum을 매김
+ select * from (select rownum as recNum, id, pwd, name, email, joindate from 
+ (select * from t_member where (name like '%홍%' and id like 'h%') and joindate between '2024/07/10' and '2024/07/16' order by joindate desc));
+ 
+  -- 조건에 맞는 값을 찾은 후 거기에 rownum을 매긴 후 3부터 6까지의 값을 찾음
+  select * from (select rownum as recNum, id, pwd, name, email, joindate from 
+ (select * from t_member where (name like '%홍%' and id like 'h%') and joindate between '2024/07/10' and '2024/07/16' order by joindate desc))
+ where recnum between 3 and 6;
+ 
+ select * from t_member where id like 'm%';
+ select * from t_member where id like 't%';
+ select * from t_member where name like '%콩%';
+ select * from t_member where id like '%Hong%';
  
  select * from t_member;
  delete from t_member where id like 'm%';
