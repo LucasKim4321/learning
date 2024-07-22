@@ -1,0 +1,44 @@
+maven 사용시
+
+pom.xml 파일에 추가
+
+<dependencies> 
+	<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+		    <version>3.3.2</version>
+	</dependency>
+</dependencies>
+
+
+서버 설정에서 이거 안해줘도 됨
+# springboot에서 jsp view 인식 => 뷰리졸버 설정   E01, E02가 사용시 입력
+#spring.mvc.view.prefix=/WEB-INF/views/
+#spring.mvc.view.suffix=.jsp
+
+
+
+src/main/java/프로젝트 경로/클래스 경로/클래스
+
+컨트롤러 파일 생성
+@Controller
+public class E03ThymeleafViewTestController {
+	
+	@GetMapping("/ex01")
+	public String ThymeleafRoot(Model model) {
+		model.addAttribute("msg", "Hellog Thymeleaf !!");
+		return "thymeleaf/root";
+	}
+}
+
+
+src/main/resources/templates 경로에 html파일 생성
+
+html 형식이랑 비슷
+
+사용하려면 html태그에 추가
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+http://localhost:8099/ex01 브라우저에 입력시 컨트롤러에 설정된 웹문서 출력
+
