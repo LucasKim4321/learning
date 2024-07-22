@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.spring.springbootJsp.member.controller.MemberController;
+import com.spring.springbootJsp.member.controller.E01MemberController;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +23,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class PageRequestDTO {
 
-	static Logger logger = LoggerFactory.getLogger(MemberController.class);
+	static Logger logger = LoggerFactory.getLogger(E01MemberController.class);
 	
 	// 시작 페이지 번호
 	private int page = 1;

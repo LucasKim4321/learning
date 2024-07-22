@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{thymeleaf/layouts/layout1}">
+
+	<script layout:fragment="script" th:inline="javascript">
+		console.log("inline javascripit!!1");
+	</script>
+	
+	<div layout:fragment="content">
+		<div class="container">
+			<h1>Thymeleaf Template Layout</h1>
+		</div>
+	</div>
+	
+	
+	<!-- 현재 페이지에만 적용되는 css의 경우 -->
+	<style layout:fragment="css" th:inline="css">
+		.test{color: red;}
+	</style>
+	
+	
+	<!-- 현재 페이지에만 적용되는 script의 경우 -->
+	<script layout:fragment="script" th:inline="javascript">
+		console.log("inline javascripit!!2");
+		$(function() {
+			console.log("jquery")
+		})
+	</script>
+	
+	
+	
+</html>

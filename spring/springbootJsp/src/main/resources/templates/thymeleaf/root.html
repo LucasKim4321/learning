@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> -->
+<title>Thymeleaf View</title>
+</head>
+<body>
+
+	<h1>타임 리프 서버사이드 템플릿 테스트</h1>
+	<!-- ${msg} 컨트롤러에서 설정한 서버 메시지 출력. 서버 실행시에만 출력 -->
+	<!-- html을 그냥 실행시  -->
+	<p th:text="${msg}">타임 리프 !!!</p>
+</body>
+</html>

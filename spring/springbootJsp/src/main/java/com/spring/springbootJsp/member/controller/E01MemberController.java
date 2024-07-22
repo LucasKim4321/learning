@@ -30,8 +30,8 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @Controller
 @RequestMapping("/member")
-public class MemberController {
-	static Logger logger = LoggerFactory.getLogger(MemberController.class);
+public class E01MemberController {
+	static Logger logger = LoggerFactory.getLogger(E01MemberController.class);
 	
 	@Autowired
 	private MemberService memberService;

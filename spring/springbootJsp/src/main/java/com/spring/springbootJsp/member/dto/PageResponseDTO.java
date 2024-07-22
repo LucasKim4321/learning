@@ -5,7 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.spring.springbootJsp.member.controller.MemberController;
+import com.spring.springbootJsp.member.controller.E01MemberController;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +17,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class PageResponseDTO<E> {
 
-	static Logger logger = LoggerFactory.getLogger(MemberController.class);
+	static Logger logger = LoggerFactory.getLogger(E01MemberController.class);
 	
 	private int page;
 	private int size;
