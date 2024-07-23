@@ -31,7 +31,6 @@
 			<!-- PageRequestDTO와 search form 매개변수 1:1 자동맵핑 => types, keyword, from , to -->
 			<form action="/member/list2" method="get" id="searchForm">
 				<!-- 검색 조건값 유지 -->
-				<input type="hidden" name="types" value="">
 				<div class="w-75 mx-auto">
 					<div class="d-flex mb-2">
 						<div class="form-check">
@@ -176,8 +175,8 @@
 		const pageBox2 = document.querySelector("#pageBox2");
 		link.action = "/member/list2";
 		link.method = "get";
-		pageBox2.innerHTML += '<input type="hidden" name="types" value="i" ${pageRequestDTO.checkType("i") ? "checked" : ""}>';
-		pageBox2.innerHTML += '<input type="hidden" name="types" value="n" ${pageRequestDTO.checkType("n") ? "checked" : ""}>';
+		pageBox2.innerHTML += '<input type="hidden" ${pageRequestDTO.checkType("i") ? "name=types value=i" : ""}>';
+		pageBox2.innerHTML += '<input type="hidden" ${pageRequestDTO.checkType("n") ? "name=types value=n" : ""}>';
 		pageBox2.innerHTML += '<input type="hidden" name="from" value="${pageRequestDTO.from}"/>';
 		pageBox2.innerHTML += '<input type="hidden" name="to" value="${pageRequestDTO.to}" />';
 		pageBox2.innerHTML += '<input type="hidden" name="keyword" value="${pageRequestDTO.keyword}">';

@@ -105,4 +105,20 @@ public class E03ThymeleafViewTestController {
 		
 		return "thymeleaf/member/memberList2";
 	}
+	
+	@GetMapping("/registerMember")
+	public String registerMember() {
+		
+		return "thymeleaf/member/registerMember";
+	}
+	
+	@GetMapping("/memberList2")
+	public String getMemberList2(Model model, PageRequestDTO pageRequestDTO) {
+		
+		// 페이지 기능 설정
+		PageResponseDTO<MemberDTO> pageResponseDTO = memberService.getMemberList(pageRequestDTO);
+		model.addAttribute("pageResponseDTO", pageResponseDTO);
+		
+		return "thymeleaf/member/memberList3";
+	}
 }

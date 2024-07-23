@@ -22,29 +22,29 @@
 		<div>
 			<!-- 검색 기능 : PageRequestDTO객체 속성과 동일한 이름으로 매개변수 설정-->
 			<!-- PageRequestDTO와 search form 매개변수 1:1 자동맵핑 => types, keyword, from , to -->
-			<form action="/thymeleaf/memberList" method="get" id="searchForm">
+			<form action="/thymeleaf/memberList2" method="get" id="searchForm">
 				<!-- 검색 조건값 유지 -->
 				<div class="w-75 mx-auto">
 					<div class="d-flex mb-2">
 						<div class="form-check">
-						  <input class="form-check-input" type="checkbox" value="i" id="searchId" name="types">  <!--  ${pageRequestDTO.checkType("i") ? "checked" : ""}  -->
+						  <input class="form-check-input" type="checkbox" value="i" id="searchId" name="types" th:checked='${pageRequestDTO.checkType("i")}'> <!-- th:checked='${pageRequestDTO.checkType("i")' --> <!--  ${pageRequestDTO.checkType("i") ? "checked" : ""}  -->
 						  <label class="form-check-label" for="searchId">
 						   	아이디
 						  </label>
 						</div>
 						<div class="form-check ms-2">
-						  <input class="form-check-input" type="checkbox" value="n" id="searchName" name="types">  <!-- ${pageRequestDTO.checkType("n") ? "checked" : ""} -->
+						  <input class="form-check-input" type="checkbox" value="n" id="searchName" name="types" th:checked='${pageRequestDTO.checkType("n")}'> <!--  --> <!-- ${pageRequestDTO.checkType("n") ? "checked" : ""} -->
 						  <label class="form-check-label" for="searchName">
 						    이름
 						  </label>
 						</div>
 					</div>
 					<div class="d-flex mb-3">
-						<div class="w-50 me-2"><input class="form-control me-2" type="date" name="from"/></div>  <!-- value="${pageRequestDTO.from}" -->
-						<div class="w-50"><input class="form-control me-2" type="date" name="to"/></div>  <!-- value="${pageRequestDTO.to}"  -->
+						<div class="w-50 me-2"><input class="form-control me-2" type="date" name="from" th:value="${pageRequestDTO.from}"/></div>  <!-- value="${pageRequestDTO.from}" -->
+						<div class="w-50"><input class="form-control me-2" type="date" name="to" th:value="${pageRequestDTO.to}"/></div>  <!-- value="${pageRequestDTO.to}"  -->
 					</div>
 					<div class="d-flex justify-content-center w-100">
-						<div class="w-100"><input type="text" class="form-control w-100" id="search" name="keyword"></div>  <!-- value="${pageRequestDTO.keyword}" -->
+						<div class="w-100"><input type="text" class="form-control w-100" id="search" name="keyword" th:value="${pageRequestDTO.keyword}"></div>  <!-- value="${pageRequestDTO.keyword}" -->
 						<div><button type="submit" class="btn btn-outline-success ms-2">Search</button></div>
 						<div><button type="reset" id="btnReset" class="btn btn-outline-warning ms-2">Clear</button></div>
 						<div id="pageBox"><!-- <input type="hidden" name="page" value="1"> --></div>
@@ -93,7 +93,7 @@
 				    
 				    <!-- 해당 블럭의 시작 페이지 번호와 마지막 번호   시작번호 1 끝번호 10 -->
 				    <!-- th:each="i : ${#numbers.sequence(${pageResponseDTO.start}, ${pageResponseDTO.end}, +1)}" 이렇게 하면 에러 ${}안에 ${}또 넣으면 안됨 -->
-			   		<li th:each="i : ${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end)}" th:class="'page-item ' + ${pageResponseDTO.page==i?'active':''}"> <!--  -->
+			   		<li th:each="i : ${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end, +1)}" th:class="'page-item ' + ${pageResponseDTO.page==i?'active':''}"> <!--  -->
 			    		<a class="page-link" href="#" th:data-num="${i}">[[${i}]]</a>
 			    	</li>
 			    	
@@ -132,8 +132,7 @@
 	</script>
 	
 	<!-- 2. javascript 응용 -->
-	<script th:inline="javascript">
-		
+	<script>		
 		document.querySelector(".pagination").addEventListener('click', (e)=> {
 			e.preventDefault();  // 기본 이벤트 제거
 			e.stopPropagation();  // 버블링 방지: 연쇄적인 이벤트 반응 방지
@@ -147,39 +146,25 @@
 			// console.log(`${page_num}`);  // 원래 javascript에서 쓰던 문법. jsp에서 안되는 듯. jsp문법으로 인식.
 			
 			// 기존 폼 사용
-			/* const formObj = document.querySelector("#searchForm");
+			const formObj = document.querySelector("#searchForm");
 			const pageBox = document.querySelector("#pageBox");
 			pageBox.innerHTML = '<input type="hidden" name="page" value="'+page_num+'">';
-			formObj.submit(); */
+			formObj.submit();
 			
-			// 안보이는 폼 사용
-		 	const link = document.querySelector("#link");
-			const pageBox2 = document.querySelector("#pageBox2");
-			link.action = "/thymeleaf/memberList";
-			link.method = "get";
-
-			pageBox2.innerHTML += '<input type="hidden" '+[[${pageRequestDTO.checkType("i") ? "name=types value=i" : ""}]]+'>';
-			pageBox2.innerHTML += '<input type="hidden" '+[[${pageRequestDTO.checkType("n") ? "name=types value=n" : ""}]]+'>';
-			pageBox2.innerHTML += '<input type="hidden" name="from" value="'+[[${pageRequestDTO.from!=null?pageRequestDTO.from:""}]]+'"/>';
-			pageBox2.innerHTML += '<input type="hidden" name="to" value="'+[[${pageRequestDTO.to!=null?pageRequestDTO.to:""}]]+'" />';
-			pageBox2.innerHTML += '<input type="hidden" name="keyword" value="'+[[${pageRequestDTO.keyword!=null?pageRequestDTO.keyword:""}]]+'">';
-			
-			pageBox2.innerHTML += '<input type="hidden" name="page" value="'+page_num+'">';
-			link.submit();
 			
 		})
 	
 		
-		/*
+		
 		// clear button : 검색 값 초기화
 		const btnReset = document.querySelector('#btnReset').addEventListener('click', (e)=> {
 			e.preventDefault();  // 기본 이벤트 제거
 			e.stopPropagation();  // 버블링 방지: 연쇄적인 이벤트 반응 방지
 			
-			self.location = "/member/list2";  // list2페이지 재요청으로 초기화
+			self.location = "/thymeleaf/memberList2";  // list2페이지 재요청으로 초기화
 			
 		})
-		*/
+		
 		
 	</script>
 
