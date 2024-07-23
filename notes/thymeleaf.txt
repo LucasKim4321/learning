@@ -2,17 +2,24 @@ maven 사용시
 
 pom.xml 파일에 추가
 
-<dependencies> 
-	<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-thymeleaf</artifactId>
-		    <version>3.3.2</version>
-	</dependency>
-</dependencies>
+<!-- 타임리프 -->
+<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    <version>3.3.2</version>
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect -->
+<dependency>
+    <groupId>nz.net.ultraq.thymeleaf</groupId>
+    <artifactId>thymeleaf-layout-dialect</artifactId>
+    <version>3.3.0</version>
+</dependency>
 
 
 서버 설정에서 이거 안해줘도 됨
-# springboot에서 jsp view 인식 => 뷰리졸버 설정   E01, E02가 사용시 입력
+# springboot에서 jsp view 인식 => 뷰리졸버 설정   E01, E02가 사용시 입력   해제 org.springframework.boot  nz.net.ultraq.thymeleaf
 #spring.mvc.view.prefix=/WEB-INF/views/
 #spring.mvc.view.suffix=.jsp
 
@@ -41,4 +48,45 @@ html 형식이랑 비슷
 
 
 http://localhost:8099/ex01 브라우저에 입력시 컨트롤러에 설정된 웹문서 출력
+
+
+
+
+HTML에서 타임리프 사용법
+
+<html xmlns:th="http://www.thymeleaf.org">  이거만 쓰면 HTML문법 + 타임리프문법 가능
+
+기존 태그 속성에 th:만 붙이면 타임리프기능 사용가능
+예
+th:text  th:data  th:value  th:checked 등등 모든 태그 속성에 적용
+th:value="${pageRequestDTO.from}"
+th:checked='${pageRequestDTO.checkType("i")}'
+th:action="@{/subscribe}"
+th:href="@{/product/list}"
+
+텍스트 필드에서 사용
+[[${}]]
+
+${}안에 또 ${}사용 불가능 ${${}} X
+
+배열
+#numbers.sequence(시작숫자, 마지막숫자, 계산식)"  계산식 안넣으면 자동으로 +1
+
+th:with="isok=10" 타임리프에서 변수 활용
+
+th:if="${i==10} 조건식이 맞으면 조건씩이 사용된 태그 반환
+
+foreach
+th:each="변수, status : 배열"  배열의 값을 변수로 리턴
+th:each="i : ${#numbers.sequence(1, 10, +2)}"  계산식 안넣으면 자동으로 +1
+th:each="i : ${#numbers.sequence(pageResponseDTO.start, pageResponseDTO.end, +1)}"
+
+스크립트 사용 시
+<script th:inline="javascript">
+const a = [[${}]];
+const b = 10;
+const c = b+[[${}]]
+pageBox2.innerHTML += '<input type="hidden" '+[[${pageRequestDTO.checkType("n") ? "name=types value=n" : ""}]]+'>';
+pageBox2.innerHTML += '<input type="hidden" name="to" value="'+[[${pageRequestDTO.to!=null?pageRequestDTO.to:""}]]+'" />';
+</script>
 
