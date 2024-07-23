@@ -70,7 +70,7 @@
 			      <th th:text="${member.recnum}"></th> <!--  MemberVO랑 MemberDTO에 추가로 recnum 변수 선언-->
 			      <td scope="row">
 			      	<!-- 현재 페이지 정보 유지: get방식 pageRequestDTO.link값을 적용 -->
-			      	<a class="link" th:href="@{/member/view2(id=${member.id})}">[[${member.id}]]</a></td> <!-- &('${pageRequestDTO.link}) -->
+			      	<a class="link" th:href="@{/thymeleaf/viewMember(id=${member.id})}">[[${member.id}]]</a></td> <!-- &('${pageRequestDTO.link}) -->
 			      <td th:text="${member.name}"></td>
 			      <td th:text="${member.email}"></td>
 			      <td th:text="${member.joindate}"></td>

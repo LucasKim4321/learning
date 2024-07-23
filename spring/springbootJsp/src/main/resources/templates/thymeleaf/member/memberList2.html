@@ -4,6 +4,7 @@
 		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		layout:decorate="~{thymeleaf/layouts/layout1}">
 
+
 <div layout:fragment="content">
 <!-- {pageResponseDTO.memberList.size()} -->
 <!-- 	<div>size: [[${pageResponseDTO.memberList.size()}]]</div>
@@ -16,6 +17,8 @@
 	<div th:text="'total: '+${pageResponseDTO.total}"></div>
 	<div th:text="'pageResponseDTO: '+${pageResponseDTO}"></div> -->
 	<!-- <div>[[${pageResponseDTO.start}]] [[${pageResponseDTO.end}]]</div> -->
+	<div>[[${pageRequestDTO.link}]]</div>
+	<div></div>
 	<div class="container border">
 		<h1 class="text-center"> 회원 목록 조회</h1>
 	
@@ -70,7 +73,7 @@
 			      <th th:text="${member.recnum}"></th> <!--  MemberVO랑 MemberDTO에 추가로 recnum 변수 선언-->
 			      <td scope="row">
 			      	<!-- 현재 페이지 정보 유지: get방식 pageRequestDTO.link값을 적용 -->
-			      	<a class="link" th:href="@{/member/view2(id=${member.id})}">[[${member.id}]]</a></td> <!-- &('${pageRequestDTO.link}) -->
+			      	<a class="link" th:href="@{/thymeleaf/viewMember(id=${member.id},${pageRequestDTO.link})}">[[${member.id}]]</a></td> <!-- &('${pageRequestDTO.link}) -->
 			      <td th:text="${member.name}"></td>
 			      <td th:text="${member.email}"></td>
 			      <td th:text="${member.joindate}"></td>
@@ -123,67 +126,64 @@
 	
 	
 	
-	<script>
+	
+
+</div>
+
+<script th:inline="javascript" layout:fragment="script">
 
 	function register() {
 		location.href="/thymeleaf/registerMember"
 	}
 	
-	</script>
-	
-	<!-- 2. javascript 응용 -->
-	<script th:inline="javascript">
+	document.querySelector(".pagination").addEventListener('click', (e)=> {
+		e.preventDefault();  // 기본 이벤트 제거
+		e.stopPropagation();  // 버블링 방지: 연쇄적인 이벤트 반응 방지
+		console.log(e.target);
 		
-		document.querySelector(".pagination").addEventListener('click', (e)=> {
-			e.preventDefault();  // 기본 이벤트 제거
-			e.stopPropagation();  // 버블링 방지: 연쇄적인 이벤트 반응 방지
-			console.log(e.target);
-			
-			const target = e.target; // 실제 이벤트가 발생 태그 요소의 객체 주소를 넘겨받음
-			if (target.tagName !== 'A') return;
-			
-			const page_num = target.getAttribute('data-num');  // javascript
-			console.log("page_num: "+page_num);
-			// console.log(`${page_num}`);  // 원래 javascript에서 쓰던 문법. jsp에서 안되는 듯. jsp문법으로 인식.
-			
-			// 기존 폼 사용
-			/* const formObj = document.querySelector("#searchForm");
-			const pageBox = document.querySelector("#pageBox");
-			pageBox.innerHTML = '<input type="hidden" name="page" value="'+page_num+'">';
-			formObj.submit(); */
-			
-			// 안보이는 폼 사용
-		 	const link = document.querySelector("#link");
-			const pageBox2 = document.querySelector("#pageBox2");
-			link.action = "/thymeleaf/memberList";
-			link.method = "get";
+		const target = e.target; // 실제 이벤트가 발생 태그 요소의 객체 주소를 넘겨받음
+		if (target.tagName !== 'A') return;
+		
+		const page_num = target.getAttribute('data-num');  // javascript
+		console.log("page_num: "+page_num);
+		// console.log(`${page_num}`);  // 원래 javascript에서 쓰던 문법. jsp에서 안되는 듯. jsp문법으로 인식.
+		
+		// 기존 폼 사용
+		/* const formObj = document.querySelector("#searchForm");
+		const pageBox = document.querySelector("#pageBox");
+		pageBox.innerHTML = '<input type="hidden" name="page" value="'+page_num+'">';
+		formObj.submit(); */
+		
+		// 안보이는 폼 사용
+	 	const link = document.querySelector("#link");
+		const pageBox2 = document.querySelector("#pageBox2");
+		link.action = "/thymeleaf/memberList";
+		link.method = "get";
 
-			pageBox2.innerHTML += '<input type="hidden" '+[[${pageRequestDTO.checkType("i") ? "name=types value=i" : ""}]]+'>';
-			pageBox2.innerHTML += '<input type="hidden" '+[[${pageRequestDTO.checkType("n") ? "name=types value=n" : ""}]]+'>';
-			pageBox2.innerHTML += '<input type="hidden" name="from" value="'+[[${pageRequestDTO.from!=null?pageRequestDTO.from:""}]]+'"/>';
-			pageBox2.innerHTML += '<input type="hidden" name="to" value="'+[[${pageRequestDTO.to!=null?pageRequestDTO.to:""}]]+'" />';
-			pageBox2.innerHTML += '<input type="hidden" name="keyword" value="'+[[${pageRequestDTO.keyword!=null?pageRequestDTO.keyword:""}]]+'">';
-			
-			pageBox2.innerHTML += '<input type="hidden" name="page" value="'+page_num+'">';
-			link.submit();
-			
-		})
-	
+		pageBox2.innerHTML += '<input type="hidden" '+[[${pageRequestDTO.checkType("i") ? "name=types value=i" : ""}]]+'>';
+		pageBox2.innerHTML += '<input type="hidden" '+[[${pageRequestDTO.checkType("n") ? "name=types value=n" : ""}]]+'>';
+		pageBox2.innerHTML += '<input type="hidden" name="from" value="'+[[${pageRequestDTO.from!=null?pageRequestDTO.from:""}]]+'"/>';
+		pageBox2.innerHTML += '<input type="hidden" name="to" value="'+[[${pageRequestDTO.to!=null?pageRequestDTO.to:""}]]+'" />';
+		pageBox2.innerHTML += '<input type="hidden" name="keyword" value="'+[[${pageRequestDTO.keyword!=null?pageRequestDTO.keyword:""}]]+'">';
 		
-		/*
-		// clear button : 검색 값 초기화
-		const btnReset = document.querySelector('#btnReset').addEventListener('click', (e)=> {
-			e.preventDefault();  // 기본 이벤트 제거
-			e.stopPropagation();  // 버블링 방지: 연쇄적인 이벤트 반응 방지
-			
-			self.location = "/member/list2";  // list2페이지 재요청으로 초기화
-			
-		})
-		*/
+		pageBox2.innerHTML += '<input type="hidden" name="page" value="'+page_num+'">';
+		link.submit();
 		
-	</script>
+	})
 
-</div>
+	
+	/*
+	// clear button : 검색 값 초기화
+	const btnReset = document.querySelector('#btnReset').addEventListener('click', (e)=> {
+		e.preventDefault();  // 기본 이벤트 제거
+		e.stopPropagation();  // 버블링 방지: 연쇄적인 이벤트 반응 방지
+		
+		self.location = "/member/list2";  // list2페이지 재요청으로 초기화
+		
+	})
+	*/
+	
+</script>
 
 
 

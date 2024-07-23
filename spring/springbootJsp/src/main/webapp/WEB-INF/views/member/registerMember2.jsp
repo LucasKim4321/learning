@@ -21,7 +21,7 @@
 				<div class="mb-3 row">
 					<label for="id" class="col-sm-2 col-form-label">ID</label>
 					<div class="col-sm-8">
-						<input type="text" class="form-control" id="id" name="id"">
+						<input type="text" class="form-control" id="id" name="id">
 					</div>
 					<div class="col">
 						<button type="button" class="btn btn-outline-primary" id="idCheck">ID Check</button>
