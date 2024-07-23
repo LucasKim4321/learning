@@ -24,3 +24,70 @@
 7. git add *.* (파일추가 => 스테이지 영역)
 8. git commit -m "메시지" => (커밋 생성)
 9. git push origin main (원격 저장소)
+
+
+
+https://dbjh.tistory.com/77  참조
+
+JPA: 자바 진영에서 ORM(Object-Relational Mapping) 기술 표준으로 사용되는 인터페이스의 모음이다. 
+그 말은 즉, 실제적으로 구현된것이 아니라 구현된 클래스와 매핑을 해주기 위해 사용되는 프레임워크이다.
+JPA를 구현한 대표적인 오픈소스로는 Hibernate가 있다.
+
+ORM: 우리가 일반 적으로 알고 있는 애플리케이션 Class와 RDB(Relational DataBase)의 테이블을 매핑(연결)한다는 뜻이며,
+기술적으로는 어플리케이션의 객체를 RDB 테이블에 자동으로 영속화 해주는 것이라고 보면된다.
+
+
+
+자바: 객체 지향 패러다임
+RDB: 데이터 정규화
+
+자바 <- SQL문을 통해 변환 -> 데이터 베이스
+자바 <- ORM -> 데이터 베이스
+
+JPA: ORM기술의 표준 명세로 자바에 제공하는 API
+JPA 구현한 대표적인 구현체 : Hibernate, ElipseLink, DataNucleus, OpenJpa, TopLink 등
+
+JPA 장점
+- 특정 데이터베이스 종속되지 않음 : 추상화된 데이터 접근 계층
+- 데이터베이스 설계 중신의 패러다임을 객체지향적으로 설계
+- 생산성 향상: 테이블과 매핑된 클래스에 필드만 추가, sql을 작성하지 않고 객체를 사용하여 동작, 유지보수 용이
+- 복잡한 쿼리: Native SQL을 통해 기존의 SQL을 사용
+
+단점
+- 객체간의 매핑 설계 잘못되면 성능 저하 발생
+- JPA개념 학습에 긴시간 소요
+
+
+엔티티 매니저(EntityManager)
+영속성 컨텍스트에 접근하여 엔티티에 대한 데이터베이스 작업을 제공
+
+1. find(): 검색, 조회
+2. persist(): 저장
+3. remove(): 삭제
+4. flush(): 반영
+
+엔티티:
+persistcontext:
+
+엔티티 life-cycle
+비영속(new) : new 키워드를 통해 생성된 상태로 영속성 컨텍스트와 관련이 없는 상태
+영속(managed) : 엔티티가 영속성 컨텍스트에 저장된 상태
+준영속상태(detached) : 영속성 컨텍스트에 엔티티가 저장되었다가 분리된 상태
+삭제 상태(removed) : 영속성 컨텍스트와 데이터베이스에서 삭제된 상태
+
+Item item = new Item()  -> 엔티티 생성
+item.setItemNum("테스트 상품")
+
+EntityManager em = EntityManagerFactory.createEntityManager();
+EntityTransaction transaction = em.getTransaction();
+transaction.begin();
+em.persist(item);
+transaction.commit();
+
+em.close();
+transaction.close();
+
+영속성 컨텍스트
+애플리케이션과 데이터베이스사이에 영속성 컨텍스트라는 중간계층을 만들어 버퍼링, 캐싱등의 역할
+
+
