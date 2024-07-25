@@ -130,3 +130,10 @@ SELECT * FROM t_member WHERE memId = 'hong600';
 SELECT * FROM t_member;
 SELECT * FROM t_car;
 SELECT * FROM t_member WHERE memName = '홍길동' ORDER BY memId;
+
+
+USE shopdb;
+SELECT * FROM item;
+DELETE FROM item;
+SELECT * FROM board;
+DELETE FROM board;

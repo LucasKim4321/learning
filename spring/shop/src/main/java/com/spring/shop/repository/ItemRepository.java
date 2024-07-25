@@ -13,7 +13,7 @@ public interface ItemRepository extends JpaRepository<Item, Long>{ // 테이블 
 }
 
 /* 
- * JpaRepository 지원하는 메서드
+ * JpaRepository 지원하는 메서드 (기본적으로 들어있는 기능)
  * <S extends T> save(S entity) : 저장 및 수정
  * void delete(t entity) : 삭제
  * count() : 총 개수 반환

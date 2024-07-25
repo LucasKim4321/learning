@@ -69,18 +69,10 @@ public class ItemRepositoryTest {
 	@DisplayName("상품명 조회 테스트")
 	public void findByItemnmTest() {
 		this.createItemList();
-		
+
+		log.info("조회");
 		List<Item> itemList = itemRepository.findByItemNm("테스트 상품10");
-		log.info("===> "+itemList);
-//		log.info("조회");
-//		List<Item> itemList;
-//		IntStream.rangeClosed(1, 10).forEach(num -> {
-//			itemList.add(itemRepository.findByItemNm("테스트 상품"+num)); 
-//		});
-//		log.info("아이템리스트"+itemList);
-//		for (Item item : itemList) {
-//			log.info("=> 저장 후: "+item);
-//		}
+		log.info("=> 조회 후: "+itemList);
 	}
 	
 }
