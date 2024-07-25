@@ -73,3 +73,7 @@ sourceSets {
 	}
 }
 compileJava.dependsOn('clean')
+
+// 5. JPA queryDSL error => "Attempt to recreate a file" 도메인 중복 발생
+// IntelliJ -> Gradle 변환 or
+// Gradle -> IntelliJ 변환

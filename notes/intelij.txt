@@ -117,10 +117,20 @@ sourceSets {
 compileJava.dependsOn('clean')
 
 
+도메인 생성
+
 우측 gradle아이콘(코끼리)
 other -> compileJava 실행
 entity를 복사해서 Q엔티티로 만들어줌 (build->generated->sources->내프로젝트entity경로이름폴더->Q엔티티)
 
 build -> clean 실행 (초기화)  build폴더 사라짐
+
+오류 발생
+JPA queryDSL error => "Attempt to recreate a file" 도메인 중복 발생
+IntelliJ -> Gradle 변환 or
+Gradle -> IntelliJ 변환
+
+하다가 잘 안되면 clean으로 초기화 후 재생성
+
 
 

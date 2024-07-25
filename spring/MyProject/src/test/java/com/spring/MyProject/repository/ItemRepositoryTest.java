@@ -1,5 +1,6 @@
 package com.spring.MyProject.repository;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.spring.MyProject.constant.ItemSellStatus;
@@ -12,7 +13,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.TestPropertySource;
+import org.thymeleaf.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -151,6 +155,9 @@ class ItemRepositoryTest {
     @Test
     @DisplayName("QueryDSL을 적용해서 조회 기능 테스트")
     public void queryDSLTest() {
+        // 5. JPA queryDSL error => "Attempt to recreate a file" 도메인 중복 발생
+        // IntelliJ -> Gradle 변환 or
+        // Gradle -> IntelliJ 변환
 
         // 상품 등록 현재 메서드만 실행시(테스트 전체를 수행하면 필요없음 or MariaDB에서 테이블 데이터 생성 후 update로 설정하면 필요없음)
         this.insertItemTest();
@@ -162,13 +169,82 @@ class ItemRepositoryTest {
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
         QItem qItem = QItem.item;
 
+        // 동적 query문 작성
         JPAQuery<Item> query = queryFactory
                 .selectFrom(qItem)
                 .where(qItem.itemSellStatus.eq(ItemSellStatus.SELL))
                 .where(qItem.itemDetail.like("%"+"상품 상세 설명"+"%"))
                 .orderBy(qItem.price.desc());
 
-        // 1. List<T> fetch() => 조회한 결과를 반환
+        // 1. List<T> fetch() => query문 실행 (조회한 결과를 반환를 List로 반환)
         List<Item> itemList = query.fetch();
+        log.info("==> item list: .fetch() 메서드 결과");
+        itemList.stream().forEach( item-> log.info("=> Qitem: " +item.getId()+", "+item.getItemDetail()));
+
+        // fetchFirst() 하나만 반환
+        Item itemOne = query.fetchFirst();
+        log.info("==> itemOne: .fetchFirst() 메서드 결과");
+        log.info("=> Qitem: " +itemOne.getId()+", "+itemOne.getItemDetail());
+
+        // fetchCount() 검색된 값 카운트
+        Long total = query.fetchCount();
+        log.info("==> total: .fetchCount() 메서드 결과");
+        log.info("=> total: " +total);
+
+        // 단일 결과 처리  select * from qItem where id=5
+        JPAQuery<Item> query2 = queryFactory.selectFrom(qItem).where(qItem.id.eq(5L));  // eq(equal) : 같은
+        Item itemOne2 = query2.fetchOne();
+        log.info("==> .fetchOne() 조회결과: ");
+        log.info("==> id: "+itemOne2.getId()+", 아이템이름: "+itemOne2.getItemNm());
+
+    }
+
+    // ------------------------------------- //
+    // Spring Q도메인 클래스 적용 : QuerydslPredicateExecutor 테스트
+    // ------------------------------------- //
+
+    @Test
+    @DisplayName("QueryDSL: 조회기능 테스트2")
+    public void queryDSLTest2() {
+        // 상품 등록 현재 메서드만 실행시(테스트 전체를 수행하면 필요없음 or MariaDB에서 테이블 데이터 생성 후 update로 설정하면 필요없음)
+        this.insertItemTest();
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder(); // dsl 조건식 담당
+        QItem item = QItem.item;
+
+        // 조건을 검색 할 대상의 초기값을 설정
+        String itemDetail = "테스트 상품 상세 설명";
+        int price = 10003;
+        String searchItemState = "SELL";
+
+        // query에 필요한 조건 설정
+        booleanBuilder.and(item.itemDetail.like("%"+itemDetail+"%"));
+        booleanBuilder.and(item.price.gt(price));  // gt(greater) : 보다 큰
+
+        // 판매 상태에 대한 검색 키워드가 있으면 판매 상태 조건문 추가
+        if(StringUtils.equals(searchItemState, ItemSellStatus.SELL)) {  // StringUtils thymeleaf에 있는 기능 사용
+            booleanBuilder.and(item.itemSellStatus.eq(ItemSellStatus.SELL));  // where ItemSellStatus = 'SELL';
+        }
+
+        // 페이징
+        Pageable pageable = PageRequest.of(0,5);  // 페이지번호, 페이지당 데이터 개수
+//        List<Item> resultItemList =
+
     }
 }
+
+
+/*
+ * JPAQuery 데이터 변환 메서드
+ * List<T> fetch() : 조회한 결과를 List로 반환
+ * T fetchOne() : 조회 대상이 1건인 경우 제네릭으로 지정한 타입 반환
+ * T fetchFirst() : 조회 대상 중 1건만 반환
+ * Long fetchCount() : 조회 대상 개수 반환
+ *  =>  fetchCount() 메서드 대신 : .fetch().size() 형식으로  변경
+ * QueryResult<T> fetchResults() : 조회한 리스트와 전체 개수를 포함한 QueryResult반환
+ * 
+ * QuerydslPredicateExecutor 적용하여 상품 조회 기능 구현
+ * Predicate : 조건이 맞는지 판별
+ * Repository에서는 Predicate를 파라미터로 전달하가 위해 QuerydslPredicateExecutor 인터페이스를 상속
+ *
+ */
