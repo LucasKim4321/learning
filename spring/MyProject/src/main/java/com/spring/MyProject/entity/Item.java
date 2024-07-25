@@ -24,10 +24,10 @@ public class Item {
 
     private Long id;						// 상품 코드
 
-    @Column(nullable = false, length = 50)
-    private String itemNm;					// 상품 이름
+    @Column(name="item-id", nullable = false, length = 50)  // name 테이블 상에서 이름
+    private String itemNm;					// 상품 이름  // 검색할때는 이 값을 기준으로 매치된 테이블 상의 이름으로 검색함
 
-    @Column(name="price", nullable = false)
+    @Column(name="price2", nullable = false)
     private int price;						// 가격
 
     // db컬럼 정보 직접 기술
