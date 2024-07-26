@@ -6,6 +6,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -89,6 +92,19 @@ class BoardRepositoryTest {
 //            log.info("=> 없는 글번호");
 //        else log.info(result);
 
+
+    }
+
+    //---------------//
+    //   페이징 처리
+    //---------------//
+
+    @Test
+    @DisplayName("ssearch and paging 테스트")
+    public void testSearch() {
+        Pageable pageable = PageRequest.of(1,10, Sort.by("bno").descending());
+
+        boardRepository.search(pageable);
 
     }
 }

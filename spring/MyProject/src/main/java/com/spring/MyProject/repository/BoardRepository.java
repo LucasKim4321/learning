@@ -1,10 +1,13 @@
 package com.spring.MyProject.repository;
 
 import com.spring.MyProject.entity.Board;
+import com.spring.MyProject.repository.search.BoardSearch;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BoardRepository extends JpaRepository<Board, Long> {
+public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch {
 
+    // 메서드 상속 받음 (extends BoardSearch)
+    // Page<Board> search(Pageable pageable);
 }
 
 /*

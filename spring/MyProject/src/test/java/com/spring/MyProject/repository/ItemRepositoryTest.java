@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.TestPropertySource;
@@ -27,9 +28,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Log4j2
-@TestPropertySource(locations="classpath:application-test.properties")  // 환경설정파일 따로 지정
+//@TestPropertySource(locations="classpath:application-test.properties")  // 환경설정파일 따로 지정
 class ItemRepositoryTest {
-    /* H2 기본속성 인듯 ?
+    /* H2 기본 속성 이랑 mariadb 사용 할 때 create 설정했을 때랑 비슷한듯
     spring.jpa.hibernate.ddl-auto=create */
 
 
@@ -184,12 +185,22 @@ class ItemRepositoryTest {
         // fetchFirst() 하나만 반환
         Item itemOne = query.fetchFirst();
         log.info("==> itemOne: .fetchFirst() 메서드 결과");
-        log.info("=> Qitem: " +itemOne.getId()+", "+itemOne.getItemDetail());
+        log.info("==> Qitem: " +itemOne.getId()+", "+itemOne.getItemDetail());
 
         // fetchCount() 검색된 값 카운트
         Long total = query.fetchCount();
         log.info("==> total: .fetchCount() 메서드 결과");
-        log.info("=> total: " +total);
+        log.info("==> total: " +total);
+
+        // fetchSize() 검색 할 때 카운트
+        int total2 = queryFactory
+                .selectFrom(qItem)
+                .where(qItem.itemSellStatus.eq(ItemSellStatus.SELL))
+                .where(qItem.itemDetail.like("%"+"상품 상세 설명"+"%"))
+                .orderBy(qItem.price.desc())
+                .fetch().size();
+        log.info("==> 2: .fetchSize() 메서드 결과");
+        log.info("==> total2: " +total2);
 
         // 단일 결과 처리  select * from qItem where id=5
         JPAQuery<Item> query2 = queryFactory.selectFrom(qItem).where(qItem.id.eq(5L));  // eq(equal) : 같은
@@ -226,12 +237,64 @@ class ItemRepositoryTest {
             booleanBuilder.and(item.itemSellStatus.eq(ItemSellStatus.SELL));  // where ItemSellStatus = 'SELL';
         }
 
-        // 페이징
-        Pageable pageable = PageRequest.of(0,5);  // 페이지번호, 페이지당 데이터 개수
-//        List<Item> resultItemList =
+        // 페이징 처리 : Pageable과 Page<E>타입
+        // Pageable타입의 객체를 구성해서 파라미터로 전달
+        // Pageable은 인터페이스 타입, PageRequest.of()기능을 활용
+
+        // Pageable pageable = PageRequest.of(0,5);  // (페이지번호, 페이지당 데이터 개수(page size))
+        // Pageable pageable = PageRequest.of(0,5);  // (페이지번호, 페이지 사이즈, 정렬(sort))
+        // Pageable pageable = PageRequest.of(0,5);  // (페이지번호, 페이지 사이즈, sort.direction, 속성...) 정렬 타입과 여러 속성 지정
+
+        // 페이징 객체 생성 및 설정
+        // 페이징 기능이 있는 결과 값 타입은 Page<T>
+        Pageable pageable = PageRequest.of(0,5);
+        // booleanBuilder조건 itemDetail에 "테스트 상품 상세 설명" 포함하고 가격이 10003보다 큰값 중에 순서대로 5개 표시
+        Page<Item> itemPagingResult = itemRepository.findAll(booleanBuilder, pageable);
+        // int number => number
+        // Optional<int> number =>  number.get()와 유사 방식
+        // Page => .content()메서드를 사용하여 데이터 읽어오기
+        List<Item> itemList = itemPagingResult.getContent();
+        log.info("==> Paging Result");
+        itemList.forEach(item_data-> log.info("==> Paging item data: "+item_data));
+
+        // 페이징 관련 메서드
+        log.info("------------");
+        log.info("==> 전체 데이터 수 .getTotalElements(): "+itemPagingResult.getTotalElements());
+        log.info("==> 전체 페이지 수 .getTotalPages(): "+itemPagingResult.getTotalPages());
+        log.info("==> 현재 페이지 .getNumber(): "+itemPagingResult.getNumber());
+        log.info("==> 페이지 크기 .getSize(): "+itemPagingResult.getSize());
+        log.info("==> 다음 페이지 여부 .hasNext(): "+itemPagingResult.hasNext());
+        log.info("==> 이전 페이지 여부 .hasPrevious(): "+itemPagingResult.hasPrevious());
+
 
     }
 }
+
+/*
+ * 페이징 관련 메서드(JPA의 Page Interface Method)
+ *
+ * 메서드		                                    설명		                                    반환 타입
+ * getContent()	                                    현재 페이지에 있는 데이터 리스트를 반환	        List<T>
+ * getNumber()	                                    현재 페이지 번호를 반환	                        int
+ * getSize()	                                    페이지 크기를 반환	                            int
+ * getTotalPages()	                                전체 페이지 수를 반환	                        int
+ * getTotalElements()	                            전체 데이터 수를 반환	                        long
+ * hasNext()	                                    다음 페이지가 있는지 여부를 반환	                boolean
+ * hasPrevious()	                                이전 페이지가 있는지 여부를 반환	                boolean
+ * isFirst()	                                    첫 번째 페이지인지 여부를 반환	                boolean
+ * isLast()	                                        마지막 페이지인지 여부를 반환	                boolean
+ * getNumberOfElements()	                        현재 페이지에 포함된 요소의 개수를 반환	        int
+ * getPageable()	                                페이지에 대한 메타데이터를 반환	                Pageable
+ * getSort()	                                    페이지의 정렬 정보를 반환	                    Sort
+ * isEmpty()	                                    페이지가 비어 있는지 여부를 반환	                boolean
+ * iterator()	                                    페이지의 요소를 반복할 수 있는 iterator를 반환	Iterator<T>
+ * subList(int fromIndex, int toIndex)	            페이지의 특정 범위의 요소를 리스트로 반환	        List<T>
+ * stream()	                                        페이지의 요소를 스트림으로 반환	                Stream<T>
+ * map(Function<? super T,? extends R> converter)	페이지의 요소를 변환하여 새로운 페이지로 반환	    Page<R>
+ * nextPageable()	                                다음 페이지의 Pageable을 반환	                Pageable
+ * previousPageable()	                            이전 페이지의 Pageable을 반환	                Pageable
+ *
+ */
 
 
 /*
@@ -248,3 +311,4 @@ class ItemRepositoryTest {
  * Repository에서는 Predicate를 파라미터로 전달하가 위해 QuerydslPredicateExecutor 인터페이스를 상속
  *
  */
+
