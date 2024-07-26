@@ -10,4 +10,6 @@ public interface BoardSearch {
 
     Page<Board> search(Pageable pageable);
 
+    // 검색어가 포함된 페이징, Pageable인자는 마지막에 위치할 것
+    Page<Board> searchAll(String[] types, String keyword, Pageable pageable);
 }
