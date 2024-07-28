@@ -10,7 +10,16 @@
         width: 100%;
         height: 300px;
       }
-      
+      .nav-tab2 {
+        position: relative;
+      }
+      .orderBy {
+        position: absolute;
+      }
+      .tags {
+        height: 50px;
+        line-height: 50px;
+      }
     </style>
   </head>
   <body>
@@ -29,15 +38,27 @@
           <div class="tab-pane fade show active" id="travel-info" role="tabpanel" aria-labelledby="travel-info-tab" tabindex="0">
 
             <div class="d-flex mt-4">
-              <div>전체(1000)</div>
-              <button class="btn btn-outline-primary ms-auto">사진등록하기</button>
+              <div class="">전체(1000)</div>
+              <div  class="input-group w-50 mx-auto text-center">
+                <input class="form-control" type="text" id="search">
+                <button class="btn btn-outline-secondary" type="button">search</button>
+              </div>
+              <div class=""><button class="btn btn-outline-primary">글쓰기</button></div>
             </div>
 
             <!-- 내부 탭 (최신순, 추천순) -->
             <nav> 
-              <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <button class="btn active" id="new1-tab" data-bs-toggle="tab" data-bs-target="#new1" type="button" role="tab" aria-controls="new1" aria-selected="true">최신순</button>
-                <button class="btn" id="recommended1-tab" data-bs-toggle="tab" data-bs-target="#recommended1" type="button" role="tab" aria-controls="recommended1" aria-selected="false">추천순</button>
+              <div class="nav nav-tabs" id="nav-tab2" role="tablist">
+                <div class="orderBy">
+                  <button class="btn active" id="new1-tab" data-bs-toggle="tab" data-bs-target="#new1" type="button" role="tab" aria-controls="new1" aria-selected="true">최신순</button>
+                  <button class="btn" id="recommended1-tab" data-bs-toggle="tab" data-bs-target="#recommended1" type="button" role="tab" aria-controls="recommended1" aria-selected="false">추천순</button>
+                </div>
+                <div class="tags d-flex gap-3 mx-auto">태그:
+                  <div class="tag">맛집</div>
+                  <div class="tag">해수욕장</div>
+                  <div class="tag">축제</div>
+                  <div class="tag">마켓</div>
+                </div>
               </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
