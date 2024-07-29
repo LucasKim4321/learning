@@ -417,3 +417,14 @@ logback-spring.xml 설정
    -->
 
 
+SpringBoot 프로젝트에 Swagger UI 적용하기
+
+참조1:
+https://velog.io/@gmlstjq123/SpringBoot-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%97%90-Swagger-UI-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0
+
+참조2:
+https://leeys.tistory.com/29
+
+Swagger UI는 프론트엔드와 백엔드의 협업에 사용되는 툴입니다. Swagger UI를 사용하면, API를 시각화하는 코드가 자동으로 생성되기 때문에, 보다 간편하게 API를 테스트해 볼 수 있게 됩니다. 또한, API 명세서를 직접 작성할 필요가 없어지므로, API의 유지보수가 간단해진다는 이점도 있습니다.
+
+Swagger UI를 적용하는 방법은 별로 어렵지 않지만, 버전 충돌이 쉽게 발생할 수 있으므로, 이 부분은 유의해주셔야 합니다. 그러면, 지금부터 Swagger UI를 적용하는 방법에 대해 알아보도록 합시다.

@@ -1,0 +1,51 @@
+
+자바 : 객체 지향 패러다임
+RDB: 데이터 정규화 
+
+자바 <- SQL문일 통해 변환 -> 데이터 베이스
+
+자바 <- ORM -> 데이터베이스
+
+JPA: ORM기술의 표준 명세로 자바에 제공하는 API
+JPA구현한 대표적인 구현체 : Hibernate, ElipseLink, DataNucleus, OpenJpa, TopLink 등 
+
+JPA 장점
+- 특정 데이터베이스 종속되지 않음  : 추상화된 데이터 접근 계층
+- 데이터베이스 설계중심의 패러다임을 객체지향적으로 설계
+- 생상성 향상 : 테이블과 배핑된 클래스에 필드만 추가, sql을 작성하지 않고 객체를 사용하여 동작, 유지보수 용이
+- 복잡한 쿼리 : Native SQL 통해 기존의 SQL 을 사용
+단점
+- 객체 간의 매핑 설계 잘못되면 성능 저하 발생
+- JPA개념 학습에 긴시간 소요
+
+엔티티 매니저
+영속성 컨텍스트에 접근하여 엔티티에 대한 데이터베이스 작업을 제공
+
+1. find(): 검색, 조회
+2. persist(): 저장
+3. remove(): 삭제
+4. flush(): 반영
+
+엔티티 생명주기
+비영속(new) : new 키워드를 통해 생성된 상태로 영속성 컨텍스트와 관련이 없는 상태
+영속(managed): 엔티티가 영속성 컨텍스트에 저장된 상태
+준영속상태(detached): 영속성 컨텍스에 엔티티가 저장되었다가 분리된 상태
+삭제 상태(removed): 영속성 컨텍스트와 데이터베이스에서 삭제된 상태
+
+
+Item item = new Item() -> 엔티티 생성
+item.setItemNum("테스트 상품")
+
+Entityㅡanager em = entityManagerFactory.createEntityManager();
+EntityTransaction transaction = em.getTransaction();
+
+transaction.begin();
+em.persiste(item)
+transaction.commit();
+
+em.close()
+transaction .close()
+
+영속성 컨텍스트 사용 시 이점
+애플리케이션과 데이터베이스사이에 영속성 컨텍스트라는 중간 계응을 만들어 버퍼일, 캐싱등의 역할
+

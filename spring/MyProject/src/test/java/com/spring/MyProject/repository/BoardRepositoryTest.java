@@ -41,7 +41,7 @@ class BoardRepositoryTest {
     @DisplayName("board data 조회")
     public void testSelectBoard() {
         // data 생성 후 조회 할 글번호 읽어와서 조회 작업
-//        this.testCreateBoard();  // H2DB로 테스트 후 자동 삭제되서 매번 생성 해줘야함
+        this.testCreateBoard();  // H2DB로 테스트 후 자동 삭제되서 매번 생성 해줘야함
 
         Long bno = 50L;
 
@@ -57,7 +57,7 @@ class BoardRepositoryTest {
     @DisplayName("board data 조회")
     public void testModifyBoard() {
         // data 생성 후 수정 할 글번호 읽어와서 수정 작업
-//        this.testCreateBoard();  // H2DB로 테스트 후 자동 삭제되서 매번 생성 해줘야함
+        this.testCreateBoard();  // H2DB로 테스트 후 자동 삭제되서 매번 생성 해줘야함
 
         Long bno = 49L;
 
@@ -84,7 +84,7 @@ class BoardRepositoryTest {
 
         boardRepository.deleteById(bno);
         Optional<Board> result = boardRepository.findById(bno);
-        Board board = result.orElseThrow();  // orElseThrow() : Optional 객체의 유무를 판단하고 예외를 처리하기 위해 사용
+//        Board board = result.orElseThrow();  // orElseThrow() : Optional 객체의 유무를 판단하고 예외를 처리하기 위해 사용
 //        orElse(존재하지 않을 경우(null)이면 처리할 내용 기술)
 
 //        orElseThrow(존재하지 않을 경우(null)이면 처리할 예외처리 기술)
@@ -105,7 +105,7 @@ class BoardRepositoryTest {
     @DisplayName("ssearch and paging 테스트")
     public void testSearch() {
         // data 생성 후 삭제 할 글번호 읽어와서 삭제 작업
-//        this.testCreateBoard();  // H2DB로 테스트 후 자동 삭제되서 매번 생성 해줘야함
+        this.testCreateBoard();  // H2DB로 테스트 후 자동 삭제되서 매번 생성 해줘야함
 
         // pageNumber 0이 1페이지
         Pageable pageable = PageRequest.of(1,5, Sort.by("bno"));
@@ -123,7 +123,7 @@ class BoardRepositoryTest {
     @DisplayName("search keyword and paging 테스트")
     public void testSearchAll() {
         // data 생성 후 삭제 할 글번호 읽어와서 삭제 작업
-//        this.testCreateBoard();  // H2DB로 테스트 후 자동 삭제되서 매번 생성 해줘야함
+        this.testCreateBoard();  // H2DB로 테스트 후 자동 삭제되서 매번 생성 해줘야함
 
         // paging 정보  pageNumber: 현재 페이지를 설정(실제 만들어진 페이지를 초과하면 각종 오류발생)
         Pageable pageable = PageRequest.of(2,5, Sort.by("bno"));

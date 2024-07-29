@@ -56,6 +56,15 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+	// springboot 3xx 이후 : springfox-swagger-ui: Rest API 테스트 라이브러리
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+	// 유효성 체크
+	implementation 'org.springframework.boot:spring-boot-starter-validation:3.3.2'
+
+
+
+
+
 	// IntelliJ에서 테스트 할 때는 따로 인식 시켜줘야함 (이클립스는 필요없음)
 	// IntelliJ gradle 적용시 필수(
 	testAnnotationProcessor 'org.projectlombok:lombok'

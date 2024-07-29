@@ -82,7 +82,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
     }
 
     @Override
-    public Page<Board> searchAll(String[] types, String keyword, Pageable pageable) {
+    public Page<Board> searchAll(String[] types, String keyword, Pageable pageable) {    // pageable은 항상 마지막에 와야함
 
         QBoard board = QBoard.board;
 
@@ -108,7 +108,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         // paging 추가
         this.getQuerydsl().applyPagination(pageable, query3);
 
-        // query
+        // query 실행
         List<Board> list3 = query3.fetch();
         long count3 = query3.fetchCount();
         // 또는 long count = query3.fetch().size();
