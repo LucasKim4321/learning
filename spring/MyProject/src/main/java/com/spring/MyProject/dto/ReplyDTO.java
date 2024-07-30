@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReplyDTO {
+    // spring-boot-starter-validation: 서버 유효성 검사 라이브러리
 
     private Long rno;
     @NotNull

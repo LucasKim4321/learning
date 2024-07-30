@@ -475,3 +475,9 @@ Anotation	   	제약조건
 @AssertFalse	   	false 여부 검증
 @AssertTrue	   	true 여부 검증
 
+
+simple-sidebar 다운로드
+https://startbootstrap.com/template/simple-sidebar#google_vignette
+
+CustomServeltConfig에
+//@EnableWebMvc  // resource위치를 따로 지정. 때문에 simple sidebar가 작동 안함

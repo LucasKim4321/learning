@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service  // 서비스
 @Log4j2
@@ -84,9 +85,21 @@ public class BoardServiceImpl implements BoardService {
         String keyword = pageRequestDTO.getKeyword();
         Pageable pageable = pageRequestDTO.getPageable("bno");
 
+        // 조건 검색 및 페이징한 결과값 가져오기
         Page<Board> result = boardRepository.searchAll(types, keyword, pageable);
 
-        return null;
+        // page객체에 있는 내용을 List구조 가져오기
+        List<BoardDTO> dtoList = result.getContent().stream()
+                // collection 구조에 있는 entity를 하나씩 dto로 변환하여 List구조에 저장
+                .map(board-> modelMapper.map(board,BoardDTO.class))
+                .collect(Collectors.toList());
+
+        return PageResponseDTO.<BoardDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int)result.getTotalPages())
+                .build();
 
     }
+
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,27 +21,22 @@ public class CustomRestControllerAdvice {
 
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
-    public ResponseEntity<Map<String, String>> handleBindException(BindException e) {
+    public ResponseEntity<Map<String, String>> handleBindException( BindException e ){
+
         log.error(e);
 
         Map<String, String> errorMap = new HashMap<>();
 
-        if (e.hasErrors()) {  // 바인딩에 문제가 있으면
+        if (e.hasErrors()){  //에러가 존재하면.  바인딩에 문제가 있으면
 
             BindingResult bindingResult = e.getBindingResult();
             bindingResult.getFieldErrors().forEach(fieldError -> {
-                // 클라이언트에게 보낼 에러 정보를 담은 Map 객체
+                // 클라이언트에게 보낼 에러정보를 담은 Map객체
                 errorMap.put(fieldError.getField(), fieldError.getCode());
-
             });
-
-
         }
 
         return ResponseEntity.badRequest().body(errorMap);
-
     }
 
 }
-
-

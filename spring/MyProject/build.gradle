@@ -56,20 +56,21 @@ dependencies {
 	
 	// springboot 3xx 이후 : springfox-swagger-ui: Rest API 테스트 라이브러리
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
-	// 유효성 체크
+	// spring-boot-starter-validation: 서버 유효성 검사 라이브러리
 	implementation 'org.springframework.boot:spring-boot-starter-validation:3.3.2'
-	
 
+
+	// modelmapper
 	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
 	implementation 'org.modelmapper:modelmapper:3.2.1'
+	// thymeleaf-layout-dialect": 타입리프 레이아웃 템플릿
+	// https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
-	
+
 	// 테스트 관련
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-	
-
 
 
 	// IntelliJ에서 테스트 할 때는 따로 인식 시켜줘야함 (이클립스는 필요없음)
@@ -77,7 +78,6 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.projectlombok:lombok'
 }
-
 tasks.named('test') {
 	useJUnitPlatform()
 }
