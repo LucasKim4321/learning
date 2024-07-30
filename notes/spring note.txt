@@ -429,3 +429,49 @@ Swagger UI는 프론트엔드와 백엔드의 협업에 사용되는 툴입니�
 
 Swagger UI를 적용하는 방법은 별로 어렵지 않지만, 버전 충돌이 쉽게 발생할 수 있으므로, 이 부분은 유의해주셔야 합니다. 그러면, 지금부터 Swagger UI를 적용하는 방법에 대해 알아보도록 합시다.
 
+
+
+
+/*
+ * 스프링 계층 구조
+ *
+ * 1. 프레젠테이션 계층 (컨트롤러)
+ *  - HTTP요청을 받고 이 요청을 비즈니스 계층으로 전송하는 역할
+ *
+ * 2. 비즈니스 계층 (서비스)
+ *  - 모든 비즈니스 로직 처리 (서비스를 만들기 위한 로직)
+ *
+ * 3. 퍼시스턴스 계층 (리포지토리):Entity가 작업대상
+ *  - 모든 데이터베이스 관련 로직을 처리
+ * 
+ * 4. 데이터베이스 (database)
+ *  - 엔티티와 1:1 맵핑된 테이블은 실제 DB작업을 반영
+ *
+ */
+
+
+@Valid 제약조건 어노테이션 정리
+- JSR 표준 스펙은 다양한 제약 조건 어노테이션을 제공하고 있습니다.
+
+Anotation	   	제약조건
+@NotNull	   	Null 검증
+@Null	  	   	Null 만 입력 가능
+@NotEmpty	   	Null 이 아니고, 빈 스트링("") 이 아닌지 검증(" " 은 허용)
+@NotBlank	   	Null 이 아니고, 공백(""과 " " 모두 포함)이 아닌지 검증
+@Size(min=,max=)	   	해당 값이 주어진 값 사이에 해당하는지 검증(String, Collection, Map, Array 에도 가능)
+@Pattern(regex=)	   	주어진 패턴과 일치하는지 검증
+@Max(숫자)	   	지정 값 이하인지 검증
+@Min(숫자)	   	지정 값 이상인지 검증
+@Future	   		현재 보다 미래인지 검증
+@Past	   		현재 보다 과거인지 검증
+@Positive	   	양수만 가능
+@PositiveOrZero	   	양수와 0만 가능
+@Negative	   	음수만 가능
+@NegativeOrZero	   	음수와 0만 가능
+@Email	   		이메일 형식인지 검증
+@Digits(integer=, fraction= )	대상 수가 지정된 정수와 소수 자리 수 보다 작은지 검증
+@DecimalMax(value=) 	지정된 값(실수) 이하 인지 검증
+@DecimalMin(value=)	지정된 값(실수) 이상 인지 검증
+@AssertFalse	   	false 여부 검증
+@AssertTrue	   	true 여부 검증
+

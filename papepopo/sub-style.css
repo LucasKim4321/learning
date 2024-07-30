@@ -1,0 +1,108 @@
+/* 기본설정 */
+@font-face {
+    font-family: 'NotoSansKR';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/NotoSansKR-Regular.ttf') format('truetype');
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    color: #333;
+    font-family: 'NotoSansKR', sans-serif;
+    font-size: 18px;
+}
+ul, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+a {
+    color: #333;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 38px;
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+h4 {
+    font-size: 14px;
+}
+
+
+.sub-mypage {
+    padding: 70px 0;
+}
+
+/* header */
+header {
+    display: flex;
+}
+@media (min-width: 1400px) {
+    header.container {
+        max-width: 1600px;
+    }
+}
+.menu-list {
+    display: flex;
+    flex: 1 1 40%;
+    justify-content: space-around;
+    margin-bottom: 28px;
+}
+.menu-list>li {
+    padding: 39px 0;
+    font-size: 22px;
+    font-weight: 500;
+}
+.sub-menu01 {
+    display: none;
+}
+.sub-menu01>li>a {
+    font-size: 18px;
+    font-weight: 700;
+}
+.sub-menu02>li>a {
+    font-size: 14px;
+    font-weight: 400;
+}
+.link-box {
+    display: flex;
+    margin-bottom: 28px;
+    gap: 20px;
+}
+.link-box>li {
+    padding: 42px 0;
+}
+.link-box>li>a {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* 마이페이지 스타일 */
+.mypage-top-box img {
+    width: 160px;
+    height: 160px;
+    border-radius: 160px;
+    background-color: #aaa;
+}
+.mypage-link {
+    display: flex;
+    gap: 5px;
+}
+.mypage-link div {
+    background-color: #F2F2F2;
+    padding: 4px 14px;
+    font-size: 14px;
+    border-radius: 14px;
+}
