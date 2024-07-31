@@ -27,7 +27,7 @@ public class BoardServiceTest {
         log.info("==> board register bno: "+boardService.getClass().getName());
 
         // 게시글 더미 데이터 생성
-        IntStream.rangeClosed(1,10).forEach(i-> {
+        IntStream.rangeClosed(1,50).forEach(i-> {
             BoardDTO boardDTO = BoardDTO.builder()
                     .title("sample title"+i)
                     .content("sample content"+i)

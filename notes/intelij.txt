@@ -133,3 +133,4 @@ Gradle -> IntelliJ 변환
 하다가 잘 안되면 clean으로 초기화 후 재생성
 
 
+콘솔 한글 깨질시 설정 참고 https://da-nyee.github.io/posts/intellij-console-encoding-issue/

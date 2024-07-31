@@ -41,11 +41,12 @@ public class PageResponseDTO<E> {
         // 현재 페이지 13: 시작페이지 11, 마지막 페이지 20
 
         this.end = (int) (Math.ceil(this.page/10.0))*10;  // 끝번호	1블럭: 10, 2블럭: 20...
-        this.start = this.end -9;						  // 시작번호	1블럭: 1, 2블럭: 11...
+        this.start = this.end - 9;						  // 시작번호	1블럭: 1, 2블럭: 11...
 
         // 총페이지수 = 총레코드수/10 = 결과값에 대한 자리올림
         // 1024/10 => 102.4 => 103 page로 계산
         int last = (int) Math.ceil(total/(double)size);
+
 
         // 마지막 페이지 번호가 블럭의 끝페이지 번호보다 작으면 마지막 페이지 번호를 블럭의 끝번호로 설정
         this.end = end > last ? last : end;
@@ -60,6 +61,8 @@ public class PageResponseDTO<E> {
 
         log.info("시작 페이지: "+this.start);
         log.info("끝 페이지: "+this.end);
+
+        log.info("last: "+last);
 
         log.info("이전 페이지: "+this.prev);
         log.info("다음 페이지: "+this.next);

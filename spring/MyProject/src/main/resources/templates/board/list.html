@@ -1,24 +1,193 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/basic}"    >
+      layout:decorate="~{layouts/basic}">
 
 
 <!-- 현재 페이지에서만 사용하는 컨텐츠(내용) 정의 -->
 <div layout:fragment="content">
     <h1>안녕하세요오~~~</h1>
     <hr>
-    <div th:text="${responseDTO.dtoList}"></div>
+
+    <!-- 검색 키워드 -->
+    <div>
+        <form action="/board/list" method="get" id="search">
+            <div><input type="hidden" name="size" th:value="${pageRequestDTO.size}"></div>
+            <!-- 타입 -->
+            <div class="d-flex mb-2">
+                <div class="input-group-prepend">
+                    <select class="form-select" name="type">
+                        <option value="">-----</option>
+                        <option value="t" th:selected="${pageRequestDTO.type=='t'}">제목</option>
+                        <option value="c" th:selected="${pageRequestDTO.type=='c'}">내용</option>
+                        <option value="w" th:selected="${pageRequestDTO.type=='w'}">작성자</option>
+                        <option value="tc" th:selected="${pageRequestDTO.type=='tc'}">제목+내용</option>
+                        <option value="tcw" th:selected="${pageRequestDTO.type=='tcw'}">제목+내용+작성자</option>
+                    </select>
+                </div>
+                <!-- 검색 키워드 -->
+                <input type="text" class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}"/>
+
+                <!-- 전송 -->
+                <div><button type="submit" class="btn btn-outline-secondary searchBtn">search</button></div>
+                <div><button type="reset" class="btn btn-outline-secondary clearBtn">clear</button></div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            Board List
+        </div>
+
+        <!-- 게시글 리스트 -->
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Bno</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Writer</th>
+                    <th scope="col">RegDate</th>
+                </tr>
+                </thead>
+
+                <!-- th:with scope 범위의 타임리프 변수 역할 *** -->
+                <tbody th:with="link=${pageRequestDTO.getLink()}">
+                <tr th:each="dto:${responseDTO.dtoList}">
+                    <th scope="row" th:text="${dto.bno}">1</th>
+                    <td> <!-- href='/board/read?bno=11' + '&page=2&size=10...' -->
+                        <a th:text="${dto.title}" href="#" th:href="|@{/board/read(bno=${dto.bno})}&${link}|" class="text-decoration-none opacity-75 link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Title</a></td>
+                    <td>[[${dto.content}]]</td>
+                    <td>[[${dto.writer}]]</td>
+                    <td>[[ ${#temporals.format(dto.regDate, "yyyy-MM-dd") } ]]</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- 페이징 번호 -->
+        <div class="float-end">
+            <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+
+                    <!-- 불러올 이전 페이지가 있으면 활성화 -->
+                    <li th:if="${responseDTO.prev}" class="page-item">
+                        <a class="page-link" href="#" th:data-num="${responseDTO.start-1}">Previous</a>
+                    </li>
+
+                    <!-- 해당 블럭의 시작 페이지 번호와 마지막 번호   시작번호 1 끝번호 10 -->
+                    <!-- th:each="i : ${#numbers.sequence(${pageResponseDTO.start}, ${pageResponseDTO.end}, +1)}" 이렇게 하면 에러 ${}안에 ${}또 넣으면 안됨 -->
+                    <th:block th:each="i : ${#numbers.sequence(responseDTO.start, responseDTO.end, +1)}">
+                    <li class="page-item"
+                        th:classappend="${responseDTO.page==i?'active':''}"> <!--  -->
+                        <a class="page-link" href="#" th:data-num="${i}">[[${i}]]</a>
+                    </li>
+                    </th:block>
+
+                    <!-- 불러올 다음 페이지가 있으면 활성화 -->
+                    <li th:if="${responseDTO.next}" class="page-item">
+                        <a class="page-link" href="#" th:data-num="${responseDTO.end+1}">Next</a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+        </button>
+
+        <!-- Modal start -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        [[${result}]]번 글이 등록 되었습니다~ :b
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:text="'getLink: '+${pageRequestDTO.getLink()}"></div>
+        <div th:text="'page: '+${responseDTO.page}"></div>
+        <div th:text="'size: '+${responseDTO.size}"></div>
+        <div th:text="'total: '+${responseDTO.total}"></div>
+        <div>prev: [[${responseDTO.prev}]]</div>
+        <div>next: [[${responseDTO.next}]]</div>
+        <div>start: [[${responseDTO.start}]]</div>
+        <div>end: [[${responseDTO.end}]]</div>
+        <div th:text="'list: '+${responseDTO.dtoList}"></div>
+
+    </div>
+
 </div>
+
+
 
 <!-- 현재 페이지에서만 사용하는 css 정의 -->
 <style layout:fragment="mystyle" th:inline="css">
     .style_check{color:lightsalmon;}
+    .table{color:lightsalmon;}
 </style>
 
-<!-- 현재 페이지에서만 사용하는 css 정의 -->
+<!-- 현재 페이지에서만 사용하는 script 정의 -->
 <script layout:fragment="myscript" th:inline="javascript">
-    console.log("list javascript");
+
+    console.log("스크립트 실행! :b");
+    document.querySelector('.pagination').addEventListener('click',function(e) {
+        e.preventDefault();  // 기본 이벤트 제거
+        e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+        console.log('e: ',e);
+
+        const target = e.target;
+        if (target.tagName != 'A') {
+            console.log("<a>태그가 아니라고!!");
+            return;  // <a>태그가 아니면 종료
+        }
+
+        const num = target.getAttribute('data-num');  // 현재 클릭된 요소의 data-num을 읽어옴
+
+        // 검색 기능 폼(form)에서 전송
+
+        // document.querySelector('form');  // 폼이 하나면 이렇게 해도 상관없음
+        const formObj = document.querySelector('#search');
+
+<!--        formObj.innerHTML = '<input type="hidden" name="page" value="'+num+'">';-->
+        formObj.innerHTML += `<input type='hidden' name='page' value='${num}'>`
+        formObj.submit();  // 전송
+
+        // location.href="/board/list?page="+num  // 클릭한 페이지 번호
+
+    })
+
+    document.querySelector('.clearBtn').addEventListener('click', function(e) {
+        e.preventDefault();  // 기본 이벤트 제거
+        e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+        location.href="/board/list"
+    })
+
+    // 게시글 등록 성공시 결과값 출력
+    const result = [[${result}]];
+    console.log('result',result);
+
+    // show modall창에 메시지 출력하기
+    const modal = new bootstrap.Modal(document.querySelector('.modal'));
+    if (result) modal.show();
+
 </script>
 
 </html>
