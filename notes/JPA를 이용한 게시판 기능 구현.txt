@@ -1,0 +1,1897 @@
+//-----------------------------//
+  사용된 것들 
+HTML, CSS, JavaScript, Gradle, JAVA, MariaDB, JPA, Spring, Thymeleaf
+  라이브러리
+Spring Web, Lombok, Thymeleaf, Mustache, Spring Data JPA, MariaDB Driver, H2 DataBase, tomcat, modelMapper
+//-----------------------------//
+
+
+설정
+
+//----------------------//
+    build.gradle 설정
+//----------------- ----//
+
+// 프로젝트 복사시 라이브러리 설정만 넘어오고 라이브러리는 안넘어오기 때문에 다시 인식시켜 줘야함.
+// 주석 달고 저장 후 업뎃 주석 풀고 저장 후 업뎃
+
+// 쿼리 관련 설정  1. QueryDsl  2. QueryDsl 관련 라이브러리  3. QueryDsl
+
+// 1. QueryDsl
+buildscript {
+	ext {
+		queryDslVersion = '5.0.0'
+	}
+}
+
+plugins {
+	id 'java'
+	id 'war'
+	id 'org.springframework.boot' version '3.3.2'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.spring'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	annotationProcessor 'org.projectlombok:lombok'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	
+	// 2. QueryDsl 관련 라이브러리
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
+	annotationProcessor(
+			"jakarta.persistence:jakarta.persistence-api",
+			"jakarta.annotation:jakarta.annotation-api",
+			"com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
+	
+	
+	// springboot 3xx 이후 : springfox-swagger-ui: Rest API 테스트 라이브러리
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+	// spring-boot-starter-validation: 서버 유효성 검사 라이브러리
+	implementation 'org.springframework.boot:spring-boot-starter-validation:3.3.2'
+
+
+	// modelmapper
+	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
+	implementation 'org.modelmapper:modelmapper:3.2.1'
+	// thymeleaf-layout-dialect": 타입리프 레이아웃 템플릿
+	// https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
+
+	// 테스트 관련
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+
+	// IntelliJ에서 테스트 할 때는 따로 인식 시켜줘야함 (이클립스는 필요없음)
+	// IntelliJ gradle 적용시 필수(
+	testAnnotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.projectlombok:lombok'
+}
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+
+// 3. QueryDsl
+sourceSets {
+	main {
+		java {
+			srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+		}
+	}
+}
+compileJava.dependsOn('clean')
+
+// 5. JPA queryDSL error => "Attempt to recreate a file" 도메인 중복 발생
+// IntelliJ -> Gradle 변환 or
+// Gradle -> IntelliJ 변환
+
+
+//-----------------------------//
+  application.properties 설정
+//-----------------------------//
+
+spring.application.name=MyProject
+
+# web 서버 설정
+server.port=9090
+server.servlet.encoding.charset=UTF-8
+#server.servlet.context-path=/
+
+#----------DB 설정------------# Mariadb 사용할 경우
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+spring.datasource.url=jdbc:mariadb://localhost:3306/shopdb
+spring.datasource.username=java
+spring.datasource.password=1234
+
+#SQL은 표준 SQL과 DBMS벤더에서 제공하는 SQL
+#JPA 에 SQL 방언을 사용할 수 있게 알려주는 역할
+spring.jpa.database-platform=org.hibernate.dialect.MariaDBDialect
+
+# H2 DB 사용할 경우
+#spring.datasource.driver-class-name=org.h2.Driver
+#spring.datasource.url=jdbc:h2:mem:test
+#spring.datasource.username=sa
+#spring.datasource.password=
+
+#spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+#@GeneratedValue(strategy=GenerationType.AUTO)
+
+#-------------db 실행시 로그----------------
+# 실행되는 쿼리 콘솔 출력
+spring.jpa.properties.hibernate.show_sql=true
+# 콘솔 창에 출력되는 쿼리를 가독성 있게 들여쓰기 하여 표시
+spring.jpa.properties.hibernate.format_sql=true
+#쿼리에 물음표로 출력되는 바인드 파라미터 출력
+logging.level.org.hibernate.type.descriptor.sql=trace
+
+#데이터 베이스 초기화 전략 설정
+#spring.jpa.hibernate.ddl-auto=create
+spring.jpa.hibernate.ddl-auto=update
+
+#none: 사용하지 않음
+#validate: 엔티티와 테이블 정상 매핑 확인
+
+#create: 기존 테이블 삭제 후 테이블 생성
+#create-drop: 기존 테이블 삭제 테이블 생성. 종료 시점에 테이블 삭제
+#update: 변경된 스키마 적용
+
+#-------------------------------------------
+
+#log 레벨 설정
+logging.level.org.SpringFramework=info
+logging.level.org.com.spring.shop=debug
+
+
+#Live Reload기능 활성화
+spring.devtools.livereload.enabled = true
+
+# Properties 파일 - Thymeleaf 설정
+#Thymeleafcache사용중지 : spring.thymeleaf.cache=false
+spring.thymeleaf.cache=false
+
+#생략해도 됨
+#spring.thymeleaf.enabled=true
+#spring.thymeleaf.check-template-location=true
+#spring.thymeleaf.prefix=classpath:/templates/
+#spring.thymeleaf.suffix=.html
+
+
+
+application-test.properties 테스트용 설정
+# H2 DB 사용할 경우
+spring.datasource.driver-class-name=org.h2.Driver
+spring.datasource.url=jdbc:h2:mem:test
+spring.datasource.username=sa
+spring.datasource.password=
+
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+
+#@GeneratedValue(strategy=GenerationType.AUTO)
+
+
+projectApplication.java 설정
+package com.spring.MyProject;  // 프로젝트 경로
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+@EnableJpaAuditing
+@SpringBootApplication
+public class MyProjectApplication {
+
+	public static void main(String[] args) {
+
+		SpringApplication.run(MyProjectApplication.class, args);
+	}
+
+}
+
+/* 
+ * JPA와 DB 설치(MariaDB, Oracle)
+ * DB Test => Entity설계(DB설계), Repository설계(DB동작 저장 수정 삭제 조회), DB드라이브 설정
+ * 
+ * 
+ */
+
+
+
+객체, 인터페이스
+
+//-------------------------------//
+  BaseEntity.java  베이스 엔티티
+//-------------------------------//
+
+package com.spring.MyProject.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
+
+// AuditingEntityListener : 엔티티가 데이터베이스에 추가되거나 변경될 때 자동으로 시간 설정
+
+@MappedSuperclass  // 공동속성처리
+@EntityListeners(value={AuditingEntityListener.class})
+@Setter@Getter
+public abstract class BaseEntity {  // 공동 멤버 변수들은 추상 클래스 정의
+
+    // 엔티티가 생성되어 저장될 때 시간을 자동으로 저장
+    @CreatedDate
+    @Column(name="regdate", updatable=false)  // updatable=false 수정되는 시점에 기능 off
+    private LocalDateTime regDate;
+
+    //엔티티가 값을 변경될 때 시간을 자동으로 저장
+    @LastModifiedDate
+    @Column(name="moddate")
+    private LocalDateTime modDate;
+
+}
+
+
+
+//--------------------------//
+     Board.java 보드 객체
+//--------------------------//
+
+package com.spring.MyProject.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+// Entity 정의 : 테이블에 적용될 구조설계 정의하여 테이블과 entity 1:1 맵핑
+@Table(name="Board")
+@Entity
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Board extends BaseEntity{  //extends BaseEntity 하면 BaseEntity에 있는 변수 여기에 추가
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bno;
+    @Column(length = 500, nullable = false)
+    private String title;
+    @Column(length = 2000, nullable = false)  // length = (max = 16383)
+    private String content;
+    @Column(length = 50, nullable = false)
+    private String writer;
+
+    // 데이터 수정하는 메서드
+    public void change(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    // 첨부파일
+
+}
+
+
+/*
+ * 스프링 계층 구조
+ *
+ * 1. 프레젠테이션 계층 (컨트롤러)
+ *  - HTTP요청을 받고 이 요청을 비즈니스 계층으로 전송하는 역할
+ *
+ * 2. 비즈니스 계층 (서비스)
+ *  - 모든 비즈니스 로직 처리 (서비스를 만들기 위한 로직)
+ *
+ * 3. 퍼시스턴스 계층 (리포지토리):Entity가 작업대상
+ *  - 모든 데이터베이스 관련 로직을 처리
+ * 
+ * 4. 데이터베이스 (database)
+ *  - 엔티티와 1:1 맵핑된 테이블은 실제 DB작업을 반영
+ *
+ */
+
+
+
+//--------------------------//
+  BoardDTO 보드DTO객체
+//--------------------------//
+
+package com.spring.MyProject.dto;
+
+
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class BoardDTO {
+
+    private Long bno;
+
+    @NotEmpty
+    @Size(min=3, max=100)
+    private String title;
+
+    @NotEmpty
+    private String content;
+
+    @NotEmpty
+    private String writer;
+
+    private LocalDateTime regDate;
+    private LocalDateTime modDate;
+    
+    // 첨부파일 이름
+
+}
+
+/*
+
+@Valid 제약조건 어노테이션 정리
+- JSR 표준 스펙은 다양한 제약 조건 어노테이션을 제공하고 있습니다.
+
+Anotation	   	            제약조건
+@NotNull	   	            Null 검증
+@Null	  	   	            Null 만 입력 가능
+@NotEmpty	   	            Null 이 아니고, 빈 스트링("") 이 아닌지 검증(" " 은 허용)
+@NotBlank	   	            Null 이 아니고, 공백(""과 " " 모두 포함)이 아닌지 검증
+@Size(min=,max=)	   	    해당 값이 주어진 값 사이에 해당하는지 검증(String, Collection, Map, Array 에도 가능)
+@Pattern(regex=)	   	    주어진 패턴과 일치하는지 검증
+@Max(숫자)	   	            지정 값 이하인지 검증
+@Min(숫자)	   	            지정 값 이상인지 검증
+@Future	   		            현재 보다 미래인지 검증
+@Past	   		            현재 보다 과거인지 검증
+@Positive	   	            양수만 가능
+@PositiveOrZero	   	        양수와 0만 가능
+@Negative	   	            음수만 가능
+@NegativeOrZero	   	        음수와 0만 가능
+@Email	   		            이메일 형식인지 검증
+@Digits(integer=, fraction= )대상 수가 지정된 정수와 소수 자리 수 보다 작은지 검증
+@DecimalMax(value=) 	    지정된 값(실수) 이하 인지 검증
+@DecimalMin(value=)	        지정된 값(실수) 이상 인지 검증
+@AssertFalse	   	        false 여부 검증
+@AssertTrue	   	            true 여부 검증
+
+*/
+
+
+//---------------------//
+  Reply.java 댓글객체
+//---------------------//
+
+package com.spring.MyProject.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+// @ToString(exclude = "board")  // Board Entity에 존재하는 toString()은 작동 중지
+public class Reply extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private long rno;
+
+    // 현재 댓글의 필드명은 엔티티_필드명으로 자동으로 생성 => board_bno
+    // @ManyToOne 이랑 board는 필수
+    // 아래의 경우 board entity  연결은 즉시 연결이 아닌 필요시에만 연결
+    @ManyToOne(fetch = FetchType.LAZY)  // fetch = FetchType.LAZY 지연 시키는 역할. 즉시 연결이 아닌 필요할 때 board를 로딩
+    private Board board;  // bno가 찍힘  자동으로 FK와 PK관계를 만들어줌
+    
+    private String replyText;
+    private String replyer;
+
+}
+
+
+//--------------------------//
+  ReplyDTO.java  댓글DTO
+//--------------------------//
+
+package com.spring.MyProject.dto;
+
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
+
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ReplyDTO {
+    // spring-boot-starter-validation: 서버 유효성 검사 라이브러리
+
+    private Long rno;
+    @NotNull
+    private Long bno;  // 댓글의 부모
+    @NotEmpty
+    private String replyText;
+    @NotEmpty
+    private String replyer;
+    private LocalDateTime regDate, modDate;
+
+}
+
+
+
+/*
+ * 연관관계 : JPA 연관 관계 판단 기준
+ * - 연관 관계의 기준은 항상 변화가 많은 쪽을 기준으로 결정
+ * - ERD의 FK를 기준으로 결정
+ *
+ * Board Entity  <->  Reply Entity        => 1:n
+ * 게시글                  댓글
+ *
+ * 글번호 PK               글번호 PK
+ * 작성자                  부모글 번호 FK
+ * 글제목                  댓글 내용
+ * 글내용                  댓글 작성자
+ * 작성일자                댓글 작성일자
+ * 수정일자                댓글 수정일자
+ *
+ */
+
+
+
+//----------------------------------------//
+  BoardService.java 보드 서비스 인터페이스
+//----------------------------------------//
+
+package com.spring.MyProject.service;
+
+import com.spring.MyProject.dto.BoardDTO;
+import com.spring.MyProject.dto.PageRequestDTO;
+import com.spring.MyProject.dto.PageResponseDTO;
+import com.spring.MyProject.entity.Board;
+
+public interface BoardService {
+
+    // 게시글 등록 서비스 인터페이스
+    long register(BoardDTO boardDTO);
+
+    // 게시글 조회
+    BoardDTO readOne (Long bno);
+
+    // 게시글 수정
+    Board modify(BoardDTO boardDTO);
+
+    // 게시글 삭제
+    void remove(Long bno);
+
+    // 게시글 목록 : 페이징 처리를 한 게시글 목록
+    PageResponseDTO<BoardDTO> list (PageRequestDTO pageRequestDTO);  // 반환값에 따라 실제 PageResponseDTO의 dtoList 타입이 달라짐
+
+}
+
+
+
+//--------------------------------------//
+  BoardServiceImpl  보드 서비스 구현
+//--------------------------------------//
+
+
+package com.spring.MyProject.service;
+
+import com.spring.MyProject.dto.BoardDTO;
+import com.spring.MyProject.dto.PageRequestDTO;
+import com.spring.MyProject.dto.PageResponseDTO;
+import com.spring.MyProject.entity.Board;
+import com.spring.MyProject.repository.BoardRepository;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Service  // 서비스
+@Log4j2
+@RequiredArgsConstructor
+@Transactional  // transaction단위로 작업
+public class BoardServiceImpl implements BoardService {
+
+    // @RequiredArgsConstructor + final 변수 == @Autowired된 변수랑 똑같음
+    private final ModelMapper modelMapper;
+    private final BoardRepository boardRepository;
+
+    // 게시글 등록
+    @Override
+    public long register(BoardDTO boardDTO) {
+        Board board = modelMapper.map(boardDTO, Board.class);  // boardDTO를 Board클래스에 1:1로 맵핑 시킴
+        // 1:1 맵핑하는 작업을 수작업할 시 Board 변수에 일일이 넣어줘야함
+
+        Long bno = boardRepository.save(board).getBno();  // 보드를 저장하고 정상적으로 작동하면 변수에 값 저장
+
+        return bno;
+    }
+
+    // 게시글 조회
+    @Override
+    public BoardDTO readOne(Long bno) {
+        Optional<Board> result = boardRepository.findById(bno);
+
+        Board board = result.orElseThrow();  // optional -> entity
+
+        BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
+
+        return boardDTO;
+        
+    }
+
+    // 게시글 수정
+    @Override
+    public Board modify(BoardDTO boardDTO) {
+        
+        // 수정할 글번호 유무 체크
+        Optional<Board> result = boardRepository.findById(boardDTO.getBno());
+        Board board = result.orElseThrow();
+        
+        // entity값을 dto값으로 변경
+        board.change(boardDTO.getTitle(), boardDTO.getContent());
+        
+        // 저장하기
+        Board modifiedBoard = boardRepository.save(board);
+
+        return modifiedBoard;  // 수정된 board
+
+    }
+
+    // 게시글 삭제
+    @Override
+    public void remove(Long bno) {
+
+        boardRepository.deleteById(bno);
+
+    }
+
+    @Override
+    public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {
+
+        // 검색 조건에 대한 처리
+        String[] types = pageRequestDTO.getTypes();
+        String keyword = pageRequestDTO.getKeyword();
+        Pageable pageable = pageRequestDTO.getPageable("bno");
+
+        // 조건 검색 및 페이징한 결과값 가져오기
+        Page<Board> result = boardRepository.searchAll(types, keyword, pageable);
+
+        // page객체에 있는 내용을 List구조 가져오기
+        List<BoardDTO> dtoList = result.getContent().stream()
+                // collection 구조에 있는 entity를 하나씩 dto로 변환하여 List구조에 저장
+                .map(board-> modelMapper.map(board,BoardDTO.class))
+                .collect(Collectors.toList());
+
+        // 매개변수로 전달받은 객체(pageRequestDTO)를 가지고 PageResponseDTO.Builder()를 통해
+        // PageRequestDTO객체 생성되어 필요시 스프링이 필요시점에 주입 시켜줌(list에서 pageRequestDTO객체 사용가능함 )
+        return PageResponseDTO.<BoardDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int)result.getTotalElements())
+                .build();
+
+    }
+
+}
+
+//-------------------------------------------//
+   BoardSearch.java  보드 서치 인터페이스
+//-------------------------------------------//
+
+package com.spring.MyProject.repository.search;
+
+
+import com.spring.MyProject.entity.Board;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+// 단순 페이지 처리 기능 설게
+public interface BoardSearch {
+
+    Page<Board> search(Pageable pageable);
+
+    // 검색어가 포함된 페이징, Pageable인자는 마지막에 위치할 것
+    Page<Board> searchAll(String[] types, String keyword, Pageable pageable);
+}
+
+
+
+//----------------------------------------//
+  BoardRepository.java 보드 리포지토리
+//----------------------------------------//
+
+package com.spring.MyProject.repository;
+
+import com.spring.MyProject.entity.Board;
+import com.spring.MyProject.repository.search.BoardSearch;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch {
+
+    // 메서드 상속 받음 (extends BoardSearch)
+    // Page<Board> search(Pageable pageable);
+}
+
+/*
+ * JpaRepository 지원하는 메서드 (기본적으로 들어있는 기능)
+ * <S extends T> save(S entity) : 저장 및 수정
+ * void delete(t entity) : 삭제
+ * count() : 총 개수 반환
+ * Iterable<T> findAll() : 모든 엔티티 조회
+ *
+ * find+(엔티티이름) +By + 변수(필드)명
+ *
+ *
+ */
+
+/* 
+ * JpaRepository 기본 기능 (by ChatGPT)
+ *
+ * 메서드 이름	설명
+ * save(S entity)	주어진 엔티티를 저장하거나 업데이트합니다.
+ * saveAll(Iterable<S> entities)	주어진 엔티티 목록을 모두 저장하거나 업데이트합니다.
+ * findById(ID id)	주어진 ID에 해당하는 엔티티를 반환합니다. (Optional 타입으로 반환)
+ * existsById(ID id)	주어진 ID에 해당하는 엔티티가 존재하는지 확인합니다.
+ * findAll()	모든 엔티티를 반환합니다.
+ * findAllById(Iterable<ID> ids)	주어진 ID 목록에 해당하는 모든 엔티티를 반환합니다.
+ * count()	전체 엔티티의 수를 반환합니다.
+ * deleteById(ID id)	주어진 ID에 해당하는 엔티티를 삭제합니다.
+ * delete(T entity)	주어진 엔티티를 삭제합니다.
+ * deleteAllById(Iterable<? extends ID> ids)	주어진 ID 목록에 해당하는 모든 엔티티를 삭제합니다.
+ * deleteAll(Iterable<? extends T> entities)	주어진 엔티티 목록을 모두 삭제합니다.
+ * deleteAll()	모든 엔티티를 삭제합니다.
+ * 
+ * 
+ */
+
+// JPA Query Method
+// Distinct	findDistinctByLastnameAndFirstname	select distinct …​ where x.lastname = ?1 and x.firstname = ?2
+// And	findByLastnameAndFirstname	… where x.lastname = ?1 and x.firstname = ?2
+// Or	findByLastnameOrFirstname	… where x.lastname = ?1 or x.firstname = ?2
+// Is, Equals	findByFirstname,findByFirstnameIs,findByFirstnameEquals	… where x.firstname = ?1
+// Between	findByStartDateBetween	… where x.startDate between ?1 and ?2
+// LessThan	findByAgeLessThan	… where x.age < ?1
+// LessThanEqual	findByAgeLessThanEqual	… where x.age <= ?1
+// GreaterThan	findByAgeGreaterThan	… where x.age > ?1
+// GreaterThanEqual	findByAgeGreaterThanEqual	… where x.age >= ?1
+// After	findByStartDateAfter	… where x.startDate > ?1
+// Before	findByStartDateBefore	… where x.startDate < ?1
+// IsNull, Null	findByAge(Is)Null	… where x.age is null
+// IsNotNull, NotNull	findByAge(Is)NotNull	… where x.age not null
+// Like	findByFirstnameLike	… where x.firstname like ?1
+// NotLike	findByFirstnameNotLike	… where x.firstname not like ?1
+// StartingWith	findByFirstnameStartingWith	… where x.firstname like ?1 (parameter bound with appended %)
+// EndingWith	findByFirstnameEndingWith	… where x.firstname like ?1 (parameter bound with prepended %)
+// Containing	findByFirstnameContaining	… where x.firstname like ?1 (parameter bound wrapped in %)
+// OrderBy	findByAgeOrderByLastnameDesc	… where x.age = ?1 order by x.lastname desc
+// Not	findByLastnameNot	… where x.lastname <> ?1
+// In	findByAgeIn(Collection<Age> ages)	… where x.age in ?1
+// NotIn	findByAgeNotIn(Collection<Age> ages)	… where x.age not in ?1
+// True	findByActiveTrue()	… where x.active = true
+// False	findByActiveFalse()	… where x.active = false
+// IgnoreCase	findByFirstnameIgnoreCase	… where UPPER(x.firstname) = UPPER(?1)
+
+
+
+
+응답 처리
+
+//----------------------------------------//
+  PageResponseDTO.java  리스폰스DTO
+//----------------------------------------//
+
+package com.spring.MyProject.dto;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
+import lombok.extern.log4j.Log4j2;
+
+import java.util.List;
+
+@Getter@ToString
+@Log4j2
+public class PageResponseDTO<E> {
+
+    private int page;
+    private int size;
+    private int total;
+
+    private int start;  // 시작 페이지 번호
+    private int end;    // 끝 페이지 번호
+
+    private boolean prev;  // 이전 페이지 여부 확인
+    private boolean next;  // 다음 페이지 여부 확인
+
+    private List<E> dtoList;  // 해당페이지에 해당되는 게시글을 DB로부터 읽어와서 저장한 객체
+
+    // 생성자: 페이징 초기화 설정
+    @Builder(builderMethodName = "withAll")
+    public PageResponseDTO(PageRequestDTO pageRequestDTO, List<E> dtoList, int total) {
+
+
+        if (total < 0) return;  // 게시글이 없으면 종료(return)
+
+        this.page = pageRequestDTO.getPage();  // 요청한 현재 페이지
+        this.size = pageRequestDTO.getSize();  // 현재 페이지에 읽어올 데이터 개수
+
+        this.total = total;
+        this.dtoList = dtoList;
+
+        // 해당 블럭의 페이지 범위 계산 : 1 block : 10페이지
+        // Math.ceil(숫자) : 자리올림/10.0))*10;
+        // 현재 페이지 13: 시작페이지 11, 마지막 페이지 20
+
+        this.end = (int) (Math.ceil(this.page/10.0))*10;  // 끝번호	1블럭: 10, 2블럭: 20...
+        this.start = this.end - 9;						  // 시작번호	1블럭: 1, 2블럭: 11...
+
+        // 총페이지수 = 총레코드수/10 = 결과값에 대한 자리올림
+        // 1024/10 => 102.4 => 103 page로 계산
+        int last = (int) Math.ceil(total/(double)size);
+
+
+        // 마지막 페이지 번호가 블럭의 끝페이지 번호보다 작으면 마지막 페이지 번호를 블럭의 끝번호로 설정
+        this.end = end > last ? last : end;
+
+        // 페이지 블럭이 1을 초과시 true, 그렇지 않으면 false
+        this.prev = this.start > 1;
+
+        // 블럭의 끝 페이지 번호의 총 개수가 전체 레코드 총 개수보다 크면 false, 그렇지 않으면 true
+        this.next = total > this.end * this.size;
+
+        log.info("현재 페이지: "+this.page);
+
+        log.info("시작 페이지: "+this.start);
+        log.info("끝 페이지: "+this.end);
+
+        log.info("last: "+last);
+
+        log.info("이전 페이지: "+this.prev);
+        log.info("다음 페이지: "+this.next);
+
+    }
+
+}
+
+
+//--------------------------------------//
+  PageRequestDTO.java 리퀘스트DTO
+//--------------------------------------//
+
+package com.spring.MyProject.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class PageRequestDTO {
+
+    @Builder.Default
+    private int page = 1;
+
+    @Builder.Default
+    private int size = 10;
+
+    private String type;  // 검색 종류 = t,c,w,tc,tw, twc
+    private String keyword;
+
+    // 키워드에 대한 type을 구분하여 배열구조로 반환
+    public String[] getTypes() {
+        if (type== null || type.isEmpty()) return null;
+
+        return type.split("");
+    }
+
+    // 페이징 초기값 설정
+    public Pageable getPageable(String... props) {
+        return PageRequest.of(this.page-1, this.size, Sort.by(props).ascending());
+    }
+
+    // 검색 조건 매개변수 설정과 페이지 조건 매개 변수 설정을 처리하는 문자열
+    private String link;
+    public String getLink() {
+        if (link == null) {
+            StringBuilder builder = new StringBuilder();
+            builder.append("page="+this.page);
+            builder.append("&size="+this.size);
+
+            if (type != null && type.length()>0)  // 타입이 있으면 추가
+                builder.append("&type="+type);
+
+            if (keyword != null && keyword.length()>0) {  // 키워드가 있으면 추가
+                try {
+                    builder.append("&keyword=" + URLEncoder.encode(this.keyword, "UTF-8"));
+                } catch (UnsupportedEncodingException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            // link = page=1&size10&type=twc&keyword=URLEncoder.Encode("홍길동")...
+            link = builder.toString();
+        }
+
+        return link;
+    }
+}
+
+
+
+보드 기능 구현
+
+//--------------------------------------//
+   BoardController.java 보드 컨트롤러
+//--------------------------------------//
+
+package com.spring.MyProject.controller;
+
+import com.spring.MyProject.dto.BoardDTO;
+import com.spring.MyProject.dto.PageRequestDTO;
+import com.spring.MyProject.dto.PageResponseDTO;
+import com.spring.MyProject.entity.Board;
+import com.spring.MyProject.service.BoardService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+@Controller
+@RequestMapping("/board")
+@RequiredArgsConstructor
+@Log4j2
+public class BoardController {
+
+    private final BoardService boardService;
+//    <link href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" 여기선 잘됨
+    @GetMapping("")
+    public String root2() {
+        return "index";
+    }
+
+//    <link href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" 여기선 안됨
+//    <link href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" 절대경로로 바꿔줘야함
+    @GetMapping("/root")
+    public String root() {
+        return "index";
+    }
+
+
+    // 1. 게시글 목록
+    @GetMapping("/list")
+    public String list(PageRequestDTO pageRequestDTO,
+                       Model model){
+        // PageRequestDTO 객체 생성만 했을 경우 기본값 설정
+
+        PageResponseDTO responseDTO = boardService.list(pageRequestDTO);
+        log.info("=> "+responseDTO);
+
+        model.addAttribute("responseDTO", responseDTO);
+        return "board/list";
+    }
+
+    // 2. 게시글 등록
+    @GetMapping("/register")
+    public String registerGet() {
+
+        // 게시글 등록 입력 폼 요청
+        return "board/register";
+
+    }
+    @PostMapping("/register")
+    public String registerPost(@Valid BoardDTO boardDTO,  // @Valid 넘어온 데이터 BoardDTO의 에러 유무 체크
+                               BindingResult bindingResult,  // 감지한 에러 데이터
+                               RedirectAttributes redirectAttributes) {
+
+        // 클라이언트로 부터 전송받은 boardDTO를 @valid에서 문제가 발생했을 경우
+        if(bindingResult.hasErrors()) {
+            log.info("==> has errors...");
+
+            // 1회용 정보유지 : redirect방식으로 요청시 정보관리하는 객체
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());  // 한번 에러값을 보낸 후 없어짐
+
+            // Get방식으로 board/register를 재요청
+            return "redirect:/board/register";
+        }
+        
+        log.info("==> "+boardDTO);
+        // 게시글 등록 서비스 호출(DB에 저장)
+        Long bno = boardService.register(boardDTO);
+
+        redirectAttributes.addFlashAttribute("bno",bno);
+        redirectAttributes.addFlashAttribute("result", "registered");
+
+
+        return "redirect:/board/list";
+
+
+    }
+
+    // 3. 게시글 조회 및 수정 화면 => /board/read or /baord/modify 요청 처리
+    @GetMapping({"/read", "/modify"})  // 두개이상 사용시 {}안에 ,쓰고 하나 더 입력
+    public void readAndModify(Long bno,
+                              PageRequestDTO pageRequestDTO,
+                              Model model) {
+        
+        // 게시글 조회 서비스 요청
+        BoardDTO boardDTO = boardService.readOne(bno);
+        model.addAttribute("dto",boardDTO);
+
+        /*
+        반환값을 void로 할 경우
+        return 생략하면 "board/read" 형태으로 자동 포워딩  (return "board/read";)
+        또는
+        return 생략하면 "board/modify" 형태으로 자동 포워딩  (return "board/modify";)
+        */
+    }
+
+
+    // 4. 게시글 수정
+
+    @PostMapping("/modify")
+    public String modify(@Valid BoardDTO boardDTO,  // @Valid 넘어온 데이터 BoardDTO의 에러 유무 체크
+                               BindingResult bindingResult,  // 감지한 에러 데이터
+                               PageRequestDTO pageRequestDTO,
+                               RedirectAttributes redirectAttributes) {
+
+        // 수정 페이지에서 넘겨받은 페이징 정보
+        String link = pageRequestDTO.getLink();
+
+        // 클라이언트로 부터 전송받은 boardDTO를 @valid에서 문제가 발생했을 경우
+        if(bindingResult.hasErrors()) {
+            log.info("==> has errors...");
+
+            // addFlashAttribute() => 1회용 정보유지 : redirect방식으로 요청시 정보관리하는 객체
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());  // 한번 에러값을 보낸 후 없어짐
+
+            // Get방식으로 board/modify+페이징정보 재요청
+            return "redirect:/board/modify?"+link;
+        }
+
+        // 수정 서비스 요청
+        Board board = boardService.modify(boardDTO);
+
+        redirectAttributes.addFlashAttribute("bno", board.getBno());
+        redirectAttributes.addFlashAttribute("result", "modified");
+
+        // => return
+        redirectAttributes.addAttribute("bno", board.getBno());
+
+        return "redirect:/board/read?"+link;
+
+    }
+
+    // 5. 게시글 삭제
+    @PostMapping("/remove")
+    public String remove(BoardDTO boardDTO,
+                         RedirectAttributes redirectAttributes){
+
+        Long bno = boardDTO.getBno();
+        log.info("remove bno: "+bno);
+
+        // 게시글 삭제 서비스 요청
+        boardService.remove(bno);
+
+        // addFlashAttribute() => 1회용 정보유지 : redirect방식으로 요청시 정보관리하는 객체
+        redirectAttributes.addFlashAttribute("bno",bno);
+        redirectAttributes.addFlashAttribute("result", "removed");
+
+        return "redirect:/board/list";
+    }
+
+}
+
+
+
+웹 페이지(View) 타임리프 사용
+
+//---------------------------------------------//
+  basic.html  기본페이지(모든페이지에 포함)
+//---------------------------------------------//
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout" >
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Simple Sidebar - Start Bootstrap Template</title>
+
+    <!-- 전체페이지에서 공통을 사용되는 css인경우 :  Core theme CSS (includes Bootstrap) -->
+    <link href="css/styles.css"
+          th:href="@{/css/styles.css}" rel="stylesheet" />
+
+    <!-- css import : 특정 페이지에서 사용되는 css인경우 -->
+    <th:block layout:fragment="mystyle"></th:block>
+
+    <style>
+        body{
+            background-image
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar -->
+    <!-- <div th:replace="~{fragments/header::sidebar}"></div> -->
+    <div class="border-end bg-white" id="sidebar-wrapper">
+        <div class="sidebar-heading border-bottom bg-light">Start Bootstrap</div>
+        <div class="list-group list-group-flush">
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
+        </div>
+    </div>
+
+    <!-- Page content wrapper-->
+    <div id="page-content-wrapper">
+
+        <!-- Top navigation-->
+        <!-- <div th:replace="~{fragments/header::navbar}"></div> -->
+        <div th:replace="~{fragments/header::navbar}"></div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <div class="container-fluid">
+                <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                        <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#!">Action</a>
+                                <a class="dropdown-item" href="#!">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#!">Something else here</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page content: 바뀌는 콘텐츠 영역을 불러오기 -->
+        <div class="container-fluid style_check" layout:fragment="content" >
+
+        </div>
+
+
+    </div>
+</div>
+
+<!-- Modal start -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">  <!-- 메시지를 전달하는 부분 -->
+                [[${result}]]번 글이 등록 되었습니다~ :b
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 페이지 전체 공통으로 사용되는 javascript -->
+<!-- Bootstrap core JS-->
+<script src="js/bootstrap.bundle.min.js"
+        th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"
+        th:src="@{/js/scripts.js}"></script>
+
+<!-- javascript import : 특정 페이지에서 사용되는 javascript인경우 -->
+<th:block layout:fragment="myscript"></th:block>
+
+<!-- 메시지 공동 처리 -->
+<script th:inline="javascript">
+    // 게시글 등록 성공시 결과값 출력
+    const result = [[${result}]];
+    const bno = [[${bno}]];
+    console.log('result',result);
+    console.log('bno',bno);
+
+    // show modall창에 메시지 출력하기
+    const modal = new bootstrap.Modal(document.querySelector('.modal'));
+    const modalBody = document.querySelector('.modal-body')  // 메시지를 출력하는 태그
+
+    let message = "";
+    if (result) {
+        if (result=="registered"){
+            message = `${bno}번 글이 등록 되었습니다~ :b`;
+        }
+        if (result=="modified"){
+            message = `${bno}번 글이 수정 되었습니다~ :b`;
+        }
+        if (result=="removed"){
+            message = `${bno}번 글이 삭제 되었습니다~ :b`;
+        }
+
+        modalBody.innerHTML = message;
+
+        modal.show();
+
+    }
+
+
+
+</script>
+
+</body>
+</html>
+
+
+
+//-------------------------//
+   list.html  목록 페이지
+//-------------------------//
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic}">
+
+
+<!-- 현재 페이지에서만 사용하는 컨텐츠(내용) 정의 -->
+<div layout:fragment="content">
+    <h1>안녕하세요오~~~</h1>
+    <hr>
+
+    <!-- 검색 키워드 -->
+    <div>
+        <form action="/board/list" method="get" id="search">
+            <div><input type="hidden" name="size" th:value="${pageRequestDTO.size}"></div>
+            <!-- 타입 -->
+            <div class="d-flex mb-2">
+                <div class="input-group-prepend">
+                    <select class="form-select" name="type">
+                        <option value="">-----</option>
+                        <option value="t" th:selected="${pageRequestDTO.type=='t'}">제목</option>
+                        <option value="c" th:selected="${pageRequestDTO.type=='c'}">내용</option>
+                        <option value="w" th:selected="${pageRequestDTO.type=='w'}">작성자</option>
+                        <option value="tc" th:selected="${pageRequestDTO.type=='tc'}">제목+내용</option>
+                        <option value="tcw" th:selected="${pageRequestDTO.type=='tcw'}">제목+내용+작성자</option>
+                    </select>
+                </div>
+                <!-- 검색 키워드 -->
+                <input type="text" class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}"/>
+
+                <!-- 전송 -->
+                <div><button type="submit" class="btn btn-outline-secondary searchBtn">search</button></div>
+                <div><button type="reset" class="btn btn-outline-secondary clearBtn">clear</button></div>
+            </div>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            Board List
+        </div>
+
+        <!-- 게시글 리스트 -->
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Bno</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Writer</th>
+                    <th scope="col">RegDate</th>
+                </tr>
+                </thead>
+
+                <!-- th:with scope 범위의 타임리프 변수 역할 *** -->
+                <tbody th:with="link=${pageRequestDTO.getLink()}">
+                <tr th:each="dto:${responseDTO.dtoList}">
+                    <th scope="row" th:text="${dto.bno}">1</th>
+                    <td> <!-- href='/board/read?bno=11' + '&page=2&size=10...' -->
+                        <a th:text="${dto.title}" href="#" th:href="|@{/board/read(bno=${dto.bno})}&${link}|" class="text-decoration-none opacity-75 link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Title</a></td>
+                    <td>[[${dto.content}]]</td>
+                    <td>[[${dto.writer}]]</td>
+                    <td>[[ ${#temporals.format(dto.regDate, "yyyy-MM-dd") } ]]</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+
+            <div class="col-4">
+                <a th:href="|@{/board/list?}${link}|" class="link-underline-none">
+                    <button type="button" id="List" class="btn btn-outline-danger opacity-50 listBtn">List</button>
+                </a>
+            </div>
+
+            <!-- 페이징 번호 -->
+            <div class="float-end col-4">
+                <nav aria-label="...">
+                    <ul class="pagination justify-content-center">
+
+                        <!-- 불러올 이전 페이지가 있으면 활성화 -->
+                        <li th:if="${responseDTO.prev}" class="page-item">
+                            <a class="page-link" href="#" th:data-num="${responseDTO.start-1}">Previous</a>
+                        </li>
+
+                        <!-- 해당 블럭의 시작 페이지 번호와 마지막 번호   시작번호 1 끝번호 10 -->
+                        <!-- th:each="i : ${#numbers.sequence(${pageResponseDTO.start}, ${pageResponseDTO.end}, +1)}" 이렇게 하면 에러 ${}안에 ${}또 넣으면 안됨 -->
+                        <th:block th:each="i : ${#numbers.sequence(responseDTO.start, responseDTO.end, +1)}">
+                            <li class="page-item"
+                                th:classappend="${responseDTO.page==i?'active':''}"> <!--  -->
+                                <a class="page-link" href="#" th:data-num="${i}">[[${i}]]</a>
+                            </li>
+                        </th:block>
+
+                        <!-- 불러올 다음 페이지가 있으면 활성화 -->
+                        <li th:if="${responseDTO.next}" class="page-item">
+                            <a class="page-link" href="#" th:data-num="${responseDTO.end+1}">Next</a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-4 d-flex">
+                <a href="/board/register" th:href="@{/board/register}" class="ms-auto">
+                    <button id="write" class="btn btn-outline-danger opacity-50">write</button>
+                </a>
+            </div>
+
+        </div>
+
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+        </button>
+
+        <!-- Modal start -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        [[${result}]]번 글이 등록 되었습니다~ :b
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:text="'getLink: '+${pageRequestDTO.getLink()}"></div>
+        <div th:text="'page: '+${responseDTO.page}"></div>
+        <div th:text="'size: '+${responseDTO.size}"></div>
+        <div th:text="'total: '+${responseDTO.total}"></div>
+        <div>prev: [[${responseDTO.prev}]]</div>
+        <div>next: [[${responseDTO.next}]]</div>
+        <div>start: [[${responseDTO.start}]]</div>
+        <div>end: [[${responseDTO.end}]]</div>
+        <div th:text="'list: '+${responseDTO.dtoList}"></div>
+
+    </div>
+
+</div>
+
+
+
+<!-- 현재 페이지에서만 사용하는 css 정의 -->
+<style layout:fragment="mystyle" th:inline="css">
+    .style_check{color:lightsalmon;}
+    .table{color:lightsalmon;}
+</style>
+
+<!-- 현재 페이지에서만 사용하는 script 정의 -->
+<script layout:fragment="myscript" th:inline="javascript">
+    console.log("스크립트 실행! :b");
+
+    // 페이징 번호 클릭시 처리하는 함수
+    document.querySelector('.pagination').addEventListener('click',function(e) {
+        e.preventDefault();  // 기본 이벤트 제거
+        e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+        console.log('e: ',e);
+
+        const target = e.target;
+        if (target.tagName != 'A') {
+            console.log("<a>태그가 아니라고!!");
+            return;  // <a>태그가 아니면 종료
+        }
+
+        const num = target.getAttribute('data-num');  // 현재 클릭된 요소의 data-num을 읽어옴
+
+        // 검색 기능 폼(form)에서 전송
+
+        // document.querySelector('form');  // 폼이 하나면 이렇게 해도 상관없음
+        const formObj = document.querySelector('#search');
+
+<!--        formObj.innerHTML = '<input type="hidden" name="page" value="'+num+'">';-->
+        formObj.innerHTML += `<input type='hidden' name='page' value='${num}'>`
+        formObj.submit();  // 전송
+
+        // location.href="/board/list?page="+num  // 클릭한 페이지 번호
+
+    })
+
+    // 클리어 버튼
+    document.querySelector('.clearBtn').addEventListener('click', function(e) {
+        e.preventDefault();  // 기본 이벤트 제거
+        e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+        location.href="/board/list"
+    })
+
+
+</script>
+
+</html>
+
+
+
+
+//-------------------------//
+register.html 등록 페이지
+//-------------------------//
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic}">
+
+
+<!-- 현재 페이지에서만 사용하는 컨텐츠(내용) 정의 -->
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            board register
+        </div>
+
+        <!-- 게시글 리스트 -->
+        <div class="card-body">
+            <form action="/board/register" method="post" id="createBoardForm">
+                <div class="mb-3 row">
+                    <label for="title" class="col-form-label ps-4">title</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="title" name="title">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="content" class="col-form-label ps-4">content</label>
+                    <div class="col">
+                        <textarea class="form-control" id="content" name="content"></textarea>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="writer" class="col-form-label ps-4">writer</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="writer" name="writer">
+                    </div>
+                </div>
+
+                <div class="mt-3 d-flex">
+                    <a th:href="|@{/board/list?}${link}|" class="link-underline-none">
+                        <button type="button" id="List" class="btn btn-outline-danger opacity-50 listBtn">List</button>
+                    </a>
+                    <div class="ms-auto">
+                        <button type="submit" id="submit" class="btn btn-outline-danger opacity-50 submitBtn">submit</button>
+                        <button type="reset" id="reset" class="btn btn-outline-danger opacity-50 clearBtn">clear</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- 현재 페이지에서만 사용하는 css 정의 -->
+<style layout:fragment="mystyle" th:inline="css">
+    #content{
+        height:500px;
+    }
+    .col-form-label {
+        width:100px;
+    }
+</style>
+
+<!-- 현재 페이지에서만 사용하는 script 정의 -->
+<script layout:fragment="myscript" th:inline="javascript">
+    const errors = [[${errors}]];
+    console.log('errors',errors);
+    console.log('errors.length',errors.length);
+
+    let errorMsg="";
+
+    if(errors) {  // 서버로부터 응답받은 에러 메시지가 있으면
+        for(let i=0; i<errors.length; i++) {
+            errorMsg += `${errors[i].field}은(는) ${errors[i].code}\n`;
+        }
+            alert(errorMsg);
+    }
+
+
+    document.querySelector('.submitBtn').addEventListener('click', function(e) {
+        e.preventDefault();  // 기본 이벤트 제거
+        e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+        const formObj = document.querySelector('form');
+        const title = document.querySelector('#title');
+        const content = document.querySelector('#content');
+        const writer = document.querySelector('#writer');
+        console.log(title.value);
+
+        if ((title.value.length < 1 || title.value == "")&&(content.value.length < 1 || content.value == "")) {
+            alert("제목과 내용이 비어있습니다!! 😡😡");
+            return;
+
+        } else if (title.value.length < 1 || title.value == "") {
+            alert("제목이 비어있습니다! 😡");
+            return;
+
+        } else if (content.value.length < 1 || content.value == "") {
+            alert("내용이 비어있습니다! 😡");
+            return;
+
+        }
+
+        if (title.value.length < 3 || title.value.length > 100) {
+            alert("3자 이상 100자 이내에 제목을 써주세요 bitch :b");
+            title.focus();
+            return;
+
+        }
+
+        if (content.value.length < 3 || content.value.length > 1000) {
+            alert("3자 이상 1000자 이내에 글을 써주세요 bitch :b");
+            content.focus();
+            return;
+
+        }
+
+        // 값에 이상이 없으면 서버에 전송
+        formObj.submit();
+
+    })
+
+
+    document.querySelector('.clearBtn').addEventListener('click', function(e) {
+        e.preventDefault();  // 기본 이벤트 제거
+        e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+        location.href="/board/register";
+    })
+
+</script>
+
+</html>
+
+
+
+//-----------------------//
+  read.html 보기 페이지
+//-----------------------//
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic}">
+
+
+<!-- 현재 페이지에서만 사용하는 컨텐츠(내용) 정의 -->
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            board read
+        </div>
+
+        <!-- 게시글 리스트 -->
+        <div class="card-body">
+            <form id="readForm">
+
+                <div class="mb-3 row">
+                    <label for="bno" class="col-form-label ps-4">bno</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="bno" name="bno"
+                               th:value="${dto.bno}" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="title" class="col-form-label ps-4">title</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="title" name="title"
+                               th:value="${dto.title}" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="content" class="col-form-label ps-4">content</label>
+                    <div class="col">
+                        <textarea class="form-control" id="content" name="content"
+                                  th:text="${dto.content}" readonly></textarea>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="writer" class="col-form-label ps-4">writer</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="writer" name="writer"
+                               th:value="${dto.writer}" readonly>
+                    </div>
+                </div>
+
+                <!-- 4. 게시글 등록일, 수정일 -->
+                <div class="mb-3 row">
+                    <label for="regDate" class="col-form-label ps-4">regDate</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="regDate" name="regDate"
+                               th:value="${dto.regDate}" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="modDate" class="col-form-label ps-4">modDate</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="modDate" name="modDate"
+                               th:value="${dto.modDate}" readonly>
+                    </div>
+                </div>
+
+                <!-- 5. list, modify 버튼 -->
+                <div class="mt-3 d-flex" th:with="link=${pageRequestDTO.getLink()}">  <!-- class="float-end" 끝에 배치 -->
+                    <!-- 현 글번호에 대한 페이징 정보를 넘겨받아서 list요청시 페이징 정보와 같이 요청하면
+                         현재 글번호가 해당되는 list페이지가 추출됨 -->
+                    <a th:href="|@{/board/list?}${link}|" class="link-underline-none">
+                        <button type="button" id="List" class="btn btn-outline-danger opacity-50 listBtn">list</button>
+                    </a>
+
+                    <button type="button" id="Remove" class="btn btn-outline-danger opacity-50 removeBtn ms-auto">remove</button>
+
+                    <a th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="link-underline-none ms-1">
+                        <button type="button" id="Modify" class="btn btn-outline-danger opacity-50 modifyBtn">modify</button>
+                    </a>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- 현재 페이지에서만 사용하는 css 정의 -->
+<style layout:fragment="mystyle" th:inline="css">
+    #content{
+        height:500px;
+    }
+    .col-form-label {
+        width:110px;
+    }
+</style>
+
+<!--/* 현재 페이지에서만 사용하는 script 정의 */-->
+<script layout:fragment="myscript" th:inline="javascript">
+    document.querySelector('.removeBtn').addEventListener('click', function(e) {
+        e.preventDefault();  // 기본 이벤트 제거
+        e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+        let doubleChk = confirm('삭제하시겠습니까?');
+        if (doubleChk) {
+            const formObj = document.querySelector('form');
+            formObj.action = "/board/remove?"+[[${dto.bno}]];
+            formObj.method = "post";
+            formObj.submit();
+        }
+    })
+</script>
+
+</html>
+
+
+
+//-----------------------------//
+   modify.html 수정 페이지
+//-----------------------------//
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic}">
+
+
+<!-- 현재 페이지에서만 사용하는 컨텐츠(내용) 정의 -->
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            board modify
+        </div>
+
+        <!-- 게시글 리스트 -->
+        <div class="card-body">
+            <form>  <!-- action="/board/modify" th:action="@{/board/modify}" method="post" id="f1" -->
+
+                <div class="mb-3 row">
+                    <label for="title" class="col-form-label ps-4">bno</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="bno" name="bno"
+                               th:value="${dto.bno}" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="title" class="col-form-label ps-4">title</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="title" name="title"
+                               th:value="${dto.title}">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="content" class="col-form-label ps-4">content</label>
+                    <div class="col">
+                        <textarea class="form-control" id="content" name="content"
+                                  th:text="${dto.content}"></textarea>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="writer" class="col-form-label ps-4">writer</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="writer" name="writer"
+                               th:value="${dto.writer}" readonly>
+                    </div>
+                </div>
+
+                <!-- 4. 게시글 등록일, 수정일 -->
+                <div class="mb-3 row" id="regDateBox">
+                    <label for="regDate" class="col-form-label ps-4">regDate</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="regDate" name="regDate"
+                               th:value="${dto.regDate}" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3 row" id="modDateBox">
+                    <label for="modDate" class="col-form-label ps-4">modDate</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="modDate" name="modDate"
+                               th:value="${dto.modDate}" readonly>
+                    </div>
+                </div>
+
+                <!-- 5. list, modify 버튼 -->
+                <div class="mt-3 d-flex" th:with="link=${pageRequestDTO.getLink()}">
+                    <div><button type="button" id="list" class="btn btn-outline-danger opacity-50 listBtn">list</button></div>
+                    <!-- 현 글번호에 대한 페이징 정보를 넘겨받아서 list요청시 페이징 정보와 같이 요청하면
+                         현재 글번호가 해당되는 list페이지가 추출됨 -->
+                    <div class="ms-auto">
+                        <button type="button" id="cancel" class="btn btn-outline-danger opacity-50 cancelBtn">cancel</button>
+                        <button type="button" id="confirm" class="btn btn-outline-danger opacity-50 confirmBtn">confirm</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- 현재 페이지에서만 사용하는 css 정의 -->
+<style layout:fragment="mystyle" th:inline="css">
+    #content{
+        height:500px;
+    }
+    .col-form-label {
+        width:110px;
+    }
+</style>
+
+<!--/* 현재 페이지에서만 사용하는 script 정의 */-->
+<script layout:fragment="myscript" th:inline="javascript">
+
+
+
+// 리스트 버튼
+document.querySelector('.listBtn').addEventListener('click', function(e) {
+    e.preventDefault();  // 기본 이벤트 제거
+    e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+    location.href ="/board/list?"+[[${pageRequestDTO.getLink()}]];
+})
+
+// 취소 버튼
+document.querySelector('.cancelBtn').addEventListener('click', function(e) {
+    e.preventDefault();  // 기본 이벤트 제거
+    e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+    location.href ="/board/read?bno="+[[${dto.bno}]]+"&"+[[${pageRequestDTO.getLink()}]];
+})
+
+// 수정 버튼
+document.querySelector('.confirmBtn').addEventListener('click', function(e) {
+    e.preventDefault();  // 기본 이벤트 제거
+    e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+    const link = [[${pageRequestDTO.getLink()}]];
+    const formObj = document.querySelector('form');
+    const title = document.querySelector('#title');
+    const content = document.querySelector('#content');
+    const writer = document.querySelector('#writer');
+    console.log(title.value);
+
+    // 서버로 부터 응답받은 메시지: db처리한 후 결과 값 전송한 객체
+    const errors = [[${errors}]];
+    console.log('errors',errors);
+
+    let errMessage="";
+    if (errors) {  // 서버로부터 응답 에러 메시지 처리
+        for (let i=0; i<errors.length; i++) {
+            errMessage += `${errors[i].field}은 ${errors[i].code}\n`;
+
+        }
+        // 웹브라우저의 세션 기록을 관리하는 JavaScript의 History API메서드
+        // 브라우저의 세션 기록을 수정하거 대체하는 역할
+        // history.replaceState({},null, null);
+
+        alert(errMessage)
+    }
+
+    // 에러 체크
+
+    if ((title.value.length < 1 || title.value == "")&&(content.value.length < 1 || content.value == "")) {
+        alert("제목과 내용이 비어있습니다!! 😡😡");
+        return;
+
+    } else if (title.value.length < 1 || title.value == "") {
+        alert("제목이 비어있습니다! 😡");
+        return;
+
+    } else if (content.value.length < 1 || content.value == "") {
+        alert("내용이 비어있습니다! 😡");
+        return;
+
+    }
+
+    if (title.value.length < 3 || title.value.length > 100) {
+        alert("3자 이상 100자 이내에 제목을 써주세요 bitch :b");
+        title.focus();
+        return;
+
+    }
+
+    if (content.value.length < 3 || content.value.length > 1000) {
+        alert("3자 이상 1000자 이내에 글을 써주세요 bitch :b");
+        content.focus();
+        return;
+
+    }
+
+    // 에러 체크 후 정상일때 처리
+
+    // self .location= `board/modify?${link}`  // Get방식(수정페이지 요청)
+
+    formObj.action = `/board/modify?${link}`  // 전송할 링크 설정
+    formObj.method = 'post';  // 전송 방식 설정  // 설정 안하면 기본값 Get
+
+    //const modDateBox = document.querySelector('#modDateBox');
+    //modDateBox.innerHTML = '<>';
+
+    // submit() : 폼 전송 기능   reset() : 폼 리셋 기능
+
+    formObj.submit();
+})
+</script>
+
+</html>
+
+<!--
+
+  사용목적 요약
+
+    - 현재 페이지의 URL을 새로운 URL로 변경
+    - 이에 따라 페이지의 상태 정보도 업데이트
+    - 실제로 페이지의 리로드나 네트워크 요청은 발생하지 않음
+    - 사용자 경험을 개선하면서도 페이지 간 전환이나 상태 관리를 자유롭게 제어
+
+    ex(
+    // 현재 URL: http://example.com/page1
+    const newState = { data: 'some data' };
+    // 현재 URL과 상태를 새로운 URL과 상태로 변경
+    history.replaceState(newState, '', 'http://example.com/page2');
+
+-->
+
+
