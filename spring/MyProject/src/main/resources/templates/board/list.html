@@ -67,34 +67,50 @@
             </table>
         </div>
 
+        <div class="row">
 
-        <!-- 페이징 번호 -->
-        <div class="float-end">
-            <nav aria-label="...">
-                <ul class="pagination justify-content-center">
+            <div class="col-4">
+                <a th:href="|@{/board/list?}${link}|" class="link-underline-none">
+                    <button type="button" id="List" class="btn btn-outline-danger opacity-50 listBtn">List</button>
+                </a>
+            </div>
 
-                    <!-- 불러올 이전 페이지가 있으면 활성화 -->
-                    <li th:if="${responseDTO.prev}" class="page-item">
-                        <a class="page-link" href="#" th:data-num="${responseDTO.start-1}">Previous</a>
-                    </li>
+            <!-- 페이징 번호 -->
+            <div class="float-end col-4">
+                <nav aria-label="...">
+                    <ul class="pagination justify-content-center">
 
-                    <!-- 해당 블럭의 시작 페이지 번호와 마지막 번호   시작번호 1 끝번호 10 -->
-                    <!-- th:each="i : ${#numbers.sequence(${pageResponseDTO.start}, ${pageResponseDTO.end}, +1)}" 이렇게 하면 에러 ${}안에 ${}또 넣으면 안됨 -->
-                    <th:block th:each="i : ${#numbers.sequence(responseDTO.start, responseDTO.end, +1)}">
-                    <li class="page-item"
-                        th:classappend="${responseDTO.page==i?'active':''}"> <!--  -->
-                        <a class="page-link" href="#" th:data-num="${i}">[[${i}]]</a>
-                    </li>
-                    </th:block>
+                        <!-- 불러올 이전 페이지가 있으면 활성화 -->
+                        <li th:if="${responseDTO.prev}" class="page-item">
+                            <a class="page-link" href="#" th:data-num="${responseDTO.start-1}">Previous</a>
+                        </li>
 
-                    <!-- 불러올 다음 페이지가 있으면 활성화 -->
-                    <li th:if="${responseDTO.next}" class="page-item">
-                        <a class="page-link" href="#" th:data-num="${responseDTO.end+1}">Next</a>
-                    </li>
+                        <!-- 해당 블럭의 시작 페이지 번호와 마지막 번호   시작번호 1 끝번호 10 -->
+                        <!-- th:each="i : ${#numbers.sequence(${pageResponseDTO.start}, ${pageResponseDTO.end}, +1)}" 이렇게 하면 에러 ${}안에 ${}또 넣으면 안됨 -->
+                        <th:block th:each="i : ${#numbers.sequence(responseDTO.start, responseDTO.end, +1)}">
+                            <li class="page-item"
+                                th:classappend="${responseDTO.page==i?'active':''}"> <!--  -->
+                                <a class="page-link" href="#" th:data-num="${i}">[[${i}]]</a>
+                            </li>
+                        </th:block>
 
-                </ul>
-            </nav>
+                        <!-- 불러올 다음 페이지가 있으면 활성화 -->
+                        <li th:if="${responseDTO.next}" class="page-item">
+                            <a class="page-link" href="#" th:data-num="${responseDTO.end+1}">Next</a>
+                        </li>
+
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="col-4 d-flex">
+                <a href="/board/register" th:href="@{/board/register}" class="ms-auto">
+                    <button id="write" class="btn btn-outline-danger opacity-50">write</button>
+                </a>
+            </div>
+
         </div>
+
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -144,8 +160,9 @@
 
 <!-- 현재 페이지에서만 사용하는 script 정의 -->
 <script layout:fragment="myscript" th:inline="javascript">
-
     console.log("스크립트 실행! :b");
+
+    // 페이징 번호 클릭시 처리하는 함수
     document.querySelector('.pagination').addEventListener('click',function(e) {
         e.preventDefault();  // 기본 이벤트 제거
         e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
@@ -173,6 +190,7 @@
 
     })
 
+    // 클리어 버튼
     document.querySelector('.clearBtn').addEventListener('click', function(e) {
         e.preventDefault();  // 기본 이벤트 제거
         e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
@@ -180,13 +198,6 @@
         location.href="/board/list"
     })
 
-    // 게시글 등록 성공시 결과값 출력
-    const result = [[${result}]];
-    console.log('result',result);
-
-    // show modall창에 메시지 출력하기
-    const modal = new bootstrap.Modal(document.querySelector('.modal'));
-    if (result) modal.show();
 
 </script>
 

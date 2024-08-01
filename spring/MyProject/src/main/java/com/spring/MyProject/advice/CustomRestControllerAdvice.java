@@ -19,6 +19,7 @@ import java.util.Map;
 @Log4j2
 public class CustomRestControllerAdvice {
 
+    // BindException 예외가 발생하면 처리하는 메서드
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
     public ResponseEntity<Map<String, String>> handleBindException( BindException e ){
@@ -31,7 +32,7 @@ public class CustomRestControllerAdvice {
 
             BindingResult bindingResult = e.getBindingResult();
             bindingResult.getFieldErrors().forEach(fieldError -> {
-                // 클라이언트에게 보낼 에러정보를 담은 Map객체
+                // 클라이언트에게 보낼 에러정보를 담은 Map객체(상태코드,응답코드를 보냄)
                 errorMap.put(fieldError.getField(), fieldError.getCode());
             });
         }

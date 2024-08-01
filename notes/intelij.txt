@@ -134,3 +134,6 @@ Gradle -> IntelliJ 변환
 
 
 콘솔 한글 깨질시 설정 참고 https://da-nyee.github.io/posts/intellij-console-encoding-issue/
+idea64.exe.vmoptions에 설정
+-Dfile.encoding=UTF-8
+-Dconsole.encoding=UTF-8

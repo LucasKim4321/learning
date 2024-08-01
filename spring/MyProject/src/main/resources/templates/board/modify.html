@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic}">
+
+
+<!-- 현재 페이지에서만 사용하는 컨텐츠(내용) 정의 -->
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            board modify
+        </div>
+
+        <!-- 게시글 리스트 -->
+        <div class="card-body">
+            <form>  <!-- action="/board/modify" th:action="@{/board/modify}" method="post" id="f1" -->
+
+                <div class="mb-3 row">
+                    <label for="title" class="col-form-label ps-4">bno</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="bno" name="bno"
+                               th:value="${dto.bno}" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="title" class="col-form-label ps-4">title</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="title" name="title"
+                               th:value="${dto.title}">
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="content" class="col-form-label ps-4">content</label>
+                    <div class="col">
+                        <textarea class="form-control" id="content" name="content"
+                                  th:text="${dto.content}"></textarea>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="writer" class="col-form-label ps-4">writer</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="writer" name="writer"
+                               th:value="${dto.writer}" readonly>
+                    </div>
+                </div>
+
+                <!-- 4. 게시글 등록일, 수정일 -->
+                <div class="mb-3 row" id="regDateBox">
+                    <label for="regDate" class="col-form-label ps-4">regDate</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="regDate" name="regDate"
+                               th:value="${dto.regDate}" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3 row" id="modDateBox">
+                    <label for="modDate" class="col-form-label ps-4">modDate</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="modDate" name="modDate"
+                               th:value="${dto.modDate}" readonly>
+                    </div>
+                </div>
+
+                <!-- 5. list, modify 버튼 -->
+                <div class="mt-3 d-flex" th:with="link=${pageRequestDTO.getLink()}">
+                    <div><button type="button" id="list" class="btn btn-outline-danger opacity-50 listBtn">list</button></div>
+                    <!-- 현 글번호에 대한 페이징 정보를 넘겨받아서 list요청시 페이징 정보와 같이 요청하면
+                         현재 글번호가 해당되는 list페이지가 추출됨 -->
+                    <div class="ms-auto">
+                        <button type="button" id="cancel" class="btn btn-outline-danger opacity-50 cancelBtn">cancel</button>
+                        <button type="button" id="confirm" class="btn btn-outline-danger opacity-50 confirmBtn">confirm</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- 현재 페이지에서만 사용하는 css 정의 -->
+<style layout:fragment="mystyle" th:inline="css">
+    #content{
+        height:500px;
+    }
+    .col-form-label {
+        width:110px;
+    }
+</style>
+
+<!--/* 현재 페이지에서만 사용하는 script 정의 */-->
+<script layout:fragment="myscript" th:inline="javascript">
+
+
+
+// 리스트 버튼
+document.querySelector('.listBtn').addEventListener('click', function(e) {
+    e.preventDefault();  // 기본 이벤트 제거
+    e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+    location.href ="/board/list?"+[[${pageRequestDTO.getLink()}]];
+})
+
+// 취소 버튼
+document.querySelector('.cancelBtn').addEventListener('click', function(e) {
+    e.preventDefault();  // 기본 이벤트 제거
+    e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+    location.href ="/board/read?bno="+[[${dto.bno}]]+"&"+[[${pageRequestDTO.getLink()}]];
+})
+
+// 수정 버튼
+document.querySelector('.confirmBtn').addEventListener('click', function(e) {
+    e.preventDefault();  // 기본 이벤트 제거
+    e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+    const link = [[${pageRequestDTO.getLink()}]];
+    const formObj = document.querySelector('form');
+    const title = document.querySelector('#title');
+    const content = document.querySelector('#content');
+    const writer = document.querySelector('#writer');
+    console.log(title.value);
+
+    // 서버로 부터 응답받은 메시지: db처리한 후 결과 값 전송한 객체
+    const errors = [[${errors}]];
+    console.log('errors',errors);
+
+    let errMessage="";
+    if (errors) {  // 서버로부터 응답 에러 메시지 처리
+        for (let i=0; i<errors.length; i++) {
+            errMessage += `${errors[i].field}은 ${errors[i].code}\n`;
+
+        }
+        // 웹브라우저의 세션 기록을 관리하는 JavaScript의 History API메서드
+        // 브라우저의 세션 기록을 수정하거 대체하는 역할
+        // history.replaceState({},null, null);
+
+        alert(errMessage)
+    }
+
+    // 에러 체크
+
+    if ((title.value.length < 1 || title.value == "")&&(content.value.length < 1 || content.value == "")) {
+        alert("제목과 내용이 비어있습니다!! 😡😡");
+        return;
+
+    } else if (title.value.length < 1 || title.value == "") {
+        alert("제목이 비어있습니다! 😡");
+        return;
+
+    } else if (content.value.length < 1 || content.value == "") {
+        alert("내용이 비어있습니다! 😡");
+        return;
+
+    }
+
+    if (title.value.length < 3 || title.value.length > 100) {
+        alert("3자 이상 100자 이내에 제목을 써주세요 bitch :b");
+        title.focus();
+        return;
+
+    }
+
+    if (content.value.length < 3 || content.value.length > 1000) {
+        alert("3자 이상 1000자 이내에 글을 써주세요 bitch :b");
+        content.focus();
+        return;
+
+    }
+
+    // 에러 체크 후 정상일때 처리
+
+    // self .location= `board/modify?${link}`  // Get방식(수정페이지 요청)
+
+    formObj.action = `/board/modify?${link}`  // 전송할 링크 설정
+    formObj.method = 'post';  // 전송 방식 설정  // 설정 안하면 기본값 Get
+
+    //const modDateBox = document.querySelector('#modDateBox');
+    //modDateBox.innerHTML = '<>';
+
+    // submit() : 폼 전송 기능   reset() : 폼 리셋 기능
+
+    formObj.submit();
+})
+</script>
+
+</html>
+
+<!--
+
+  사용목적 요약
+
+    - 현재 페이지의 URL을 새로운 URL로 변경
+    - 이에 따라 페이지의 상태 정보도 업데이트
+    - 실제로 페이지의 리로드나 네트워크 요청은 발생하지 않음
+    - 사용자 경험을 개선하면서도 페이지 간 전환이나 상태 관리를 자유롭게 제어
+
+    ex(
+    // 현재 URL: http://example.com/page1
+    const newState = { data: 'some data' };
+    // 현재 URL과 상태를 새로운 URL과 상태로 변경
+    history.replaceState(newState, '', 'http://example.com/page2');
+
+-->
