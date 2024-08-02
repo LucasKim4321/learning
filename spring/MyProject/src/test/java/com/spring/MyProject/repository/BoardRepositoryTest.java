@@ -1,5 +1,6 @@
 package com.spring.MyProject.repository;
 
+import com.spring.MyProject.dto.BoardListReplyCountDTO;
 import com.spring.MyProject.entity.Board;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 import java.util.Optional;
@@ -148,6 +150,31 @@ class BoardRepositoryTest {
         // 비교판단 Assert  junit라이브러리
         // AssertThat(result3.hasPrevious()).isEqualTo(0);
     }
+
+
+    // 조건 검색 결과에 대한 댓글 개수
+    @Test@DisplayName("검색 결과에 대한 댓글 개수 테스트")
+    public void testSearchReplyCount() {
+
+        // given
+        Pageable pageable = PageRequest.of(0,5, Sort.by("bno").descending());
+
+        // 키워드, 타입
+        String[] types= {"t","c","w"};
+        String keyword = "1";
+
+        Page<BoardListReplyCountDTO> result = boardRepository.searchWithReplyCount(types, keyword, pageable);
+
+        log.info("==> total page: "+result.getTotalPages());
+        log.info("==> page size: "+result.getSize());
+        log.info("==> pageNumber: "+result.getNumber());
+        log.info("==> prev: "+result.hasPrevious());
+        log.info("==> next: "+result.hasNext());
+        log.info("===================");
+        result.getContent().forEach(board-> log.info("==> board: "+board));
+
+    }
+
 }
 
  /** Pageable설정 PageRequest

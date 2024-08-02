@@ -47,7 +47,6 @@
                 <tr>
                     <th scope="col">Bno</th>
                     <th scope="col">Title</th>
-                    <th scope="col">Content</th>
                     <th scope="col">Writer</th>
                     <th scope="col">RegDate</th>
                 </tr>
@@ -58,83 +57,64 @@
                 <tr th:each="dto:${responseDTO.dtoList}">
                     <th scope="row" th:text="${dto.bno}">1</th>
                     <td> <!-- href='/board/read?bno=11' + '&page=2&size=10...' -->
-                        <a th:text="${dto.title}" href="#" th:href="|@{/board/read(bno=${dto.bno})}&${link}|" class="text-decoration-none opacity-75 link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Title</a></td>
-                    <td>[[${dto.content}]]</td>
+                        <a th:text="${dto.title}" href="#" th:href="|@{/board/read(bno=${dto.bno})}&${link}|" class="text-decoration-none opacity-75 link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Title</a>
+                        <sapn th:if="${dto.replyCount}>0">+[[${dto.replyCount}]]</sapn>
+                    </td>
+                    <!--/*<td>[[${dto.content}]]</td>*/-->
                     <td>[[${dto.writer}]]</td>
                     <td>[[ ${#temporals.format(dto.regDate, "yyyy-MM-dd") } ]]</td>
                 </tr>
                 </tbody>
             </table>
-        </div>
 
-        <div class="row">
+            <div class="row">
 
-            <div class="col-4">
-                <a th:href="|@{/board/list?}${link}|" class="link-underline-none">
-                    <button type="button" id="List" class="btn btn-outline-danger opacity-50 listBtn">List</button>
-                </a>
-            </div>
-
-            <!-- 페이징 번호 -->
-            <div class="float-end col-4">
-                <nav aria-label="...">
-                    <ul class="pagination justify-content-center">
-
-                        <!-- 불러올 이전 페이지가 있으면 활성화 -->
-                        <li th:if="${responseDTO.prev}" class="page-item">
-                            <a class="page-link" href="#" th:data-num="${responseDTO.start-1}">Previous</a>
-                        </li>
-
-                        <!-- 해당 블럭의 시작 페이지 번호와 마지막 번호   시작번호 1 끝번호 10 -->
-                        <!-- th:each="i : ${#numbers.sequence(${pageResponseDTO.start}, ${pageResponseDTO.end}, +1)}" 이렇게 하면 에러 ${}안에 ${}또 넣으면 안됨 -->
-                        <th:block th:each="i : ${#numbers.sequence(responseDTO.start, responseDTO.end, +1)}">
-                            <li class="page-item"
-                                th:classappend="${responseDTO.page==i?'active':''}"> <!--  -->
-                                <a class="page-link" href="#" th:data-num="${i}">[[${i}]]</a>
-                            </li>
-                        </th:block>
-
-                        <!-- 불러올 다음 페이지가 있으면 활성화 -->
-                        <li th:if="${responseDTO.next}" class="page-item">
-                            <a class="page-link" href="#" th:data-num="${responseDTO.end+1}">Next</a>
-                        </li>
-
-                    </ul>
-                </nav>
-            </div>
-
-            <div class="col-4 d-flex">
-                <a href="/board/register" th:href="@{/board/register}" class="ms-auto">
-                    <button id="write" class="btn btn-outline-danger opacity-50">write</button>
-                </a>
-            </div>
-
-        </div>
-
-
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
-        </button>
-
-        <!-- Modal start -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        [[${result}]]번 글이 등록 되었습니다~ :b
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+                <div class="col-4">
+                    <a th:href="|@{/board/list?}${link}|" class="link-underline-none">
+                        <button type="button" id="List" class="btn btn-outline-danger opacity-50 listBtn">List</button>
+                    </a>
                 </div>
+
+                <!-- 페이징 번호 -->
+                <div class="float-end col-4">
+                    <nav aria-label="...">
+                        <ul class="pagination justify-content-center">
+
+                            <!-- 불러올 이전 페이지가 있으면 활성화 -->
+                            <li th:if="${responseDTO.prev}" class="page-item">
+                                <a class="page-link" href="#" th:data-num="${responseDTO.start-1}">Previous</a>
+                            </li>
+
+                            <!-- 해당 블럭의 시작 페이지 번호와 마지막 번호   시작번호 1 끝번호 10 -->
+                            <!-- th:each="i : ${#numbers.sequence(${pageResponseDTO.start}, ${pageResponseDTO.end}, +1)}" 이렇게 하면 에러 ${}안에 ${}또 넣으면 안됨 -->
+                            <th:block th:each="i : ${#numbers.sequence(responseDTO.start, responseDTO.end, +1)}">
+                                <li class="page-item"
+                                    th:classappend="${responseDTO.page==i?'active':''}"> <!--  -->
+                                    <a class="page-link" href="#" th:data-num="${i}">[[${i}]]</a>
+                                </li>
+                            </th:block>
+
+                            <!-- 불러올 다음 페이지가 있으면 활성화 -->
+                            <li th:if="${responseDTO.next}" class="page-item">
+                                <a class="page-link" href="#" th:data-num="${responseDTO.end+1}">Next</a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="col-4 d-flex">
+                    <a href="/board/register" th:href="@{/board/register}" class="ms-auto">
+                        <button id="write" class="btn btn-outline-danger opacity-50">write</button>
+                    </a>
+                </div>
+
             </div>
+
         </div>
+
+
+
 
         <div th:text="'getLink: '+${pageRequestDTO.getLink()}"></div>
         <div th:text="'page: '+${responseDTO.page}"></div>

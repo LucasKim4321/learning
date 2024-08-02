@@ -1,9 +1,12 @@
 package com.spring.MyProject.repository.search;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
+import com.spring.MyProject.dto.BoardListReplyCountDTO;
 import com.spring.MyProject.entity.Board;
 import com.spring.MyProject.entity.QBoard;
+import com.spring.MyProject.entity.QReply;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
@@ -103,7 +106,8 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
             } // end for
 
             query3.where(booleanBuilder);
-        }
+
+        } // end if
 
         // paging 추가
         this.getQuerydsl().applyPagination(pageable, query3);
@@ -114,6 +118,70 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         // 또는 long count = query3.fetch().size();
 
         return new PageImpl<>(list3, pageable, count3);
+    }
+
+    // 특정 게시글에 대한 댓글 개수 계산하는 인터페이스 구현
+    @Override
+    public Page<BoardListReplyCountDTO> searchWithReplyCount(String[] types, String keyword, Pageable pageable) {
+        QBoard board = QBoard.board;
+        QReply reply = QReply.reply;
+
+        // 1. query 작성
+        JPQLQuery<Board> query = from(board);
+        // left(reply)를 기준으로 일치하는 보드 값을 추가로 표시.  reply는 다 나옴.
+        query.leftJoin(reply).on(reply.board.eq(board));  // reply.board.eq(board) : reply.board_bno == board.bno
+
+        // 그룹핑
+        query.groupBy(board);  // group by board.bno
+
+        // 조건문 추가
+        if ((types != null && types.length>0) && keyword != null) {  // 검색 키워드가 있으면
+            // 조건문을 작성하는 클래스
+            BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+            for (String type : types) {
+                switch (type) {
+                    case "t":
+                        booleanBuilder.or(board.title.contains(keyword)); break;
+                    case "c":
+                        booleanBuilder.or(board.content.contains(keyword)); break;
+                    case "w":
+                        booleanBuilder.or(board.writer.contains(keyword)); break;
+                }
+            } // end for
+
+            query.where(booleanBuilder);
+
+        } // end if
+
+        // bno > 0 : board테이블에 자료가 존재하면
+        query.where(board.bno.gt(0L));  // gt(값): greater than 값
+        
+        // Projection.bean(): JPA에서 프로젝션: JPQL의 결과를 바로 DTO로 처리하는 기능
+        JPQLQuery<BoardListReplyCountDTO> dtoQuery =
+                query.select(Projections.bean(
+                        BoardListReplyCountDTO.class,  // DTO 타입 선언
+                        
+                        board.bno,
+                        board.title,
+                        board.writer,
+                        board.regDate,
+
+                        // reply테이블에서 그룹핑 기준으로 reply개수 계산
+                        reply.count().as("replyCount")
+
+                ));
+
+        // 2. paging 추가
+        this.getQuerydsl().applyPagination(pageable, query);
+
+        // 3. query 실행
+        List<BoardListReplyCountDTO> dtoList = dtoQuery.fetch();
+        long count = dtoQuery.fetchCount();
+
+
+
+        return new PageImpl<>(dtoList, pageable, count);
     }
 }
 

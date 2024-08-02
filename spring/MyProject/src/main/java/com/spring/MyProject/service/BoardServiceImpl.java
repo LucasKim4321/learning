@@ -1,6 +1,7 @@
 package com.spring.MyProject.service;
 
 import com.spring.MyProject.dto.BoardDTO;
+import com.spring.MyProject.dto.BoardListReplyCountDTO;
 import com.spring.MyProject.dto.PageRequestDTO;
 import com.spring.MyProject.dto.PageResponseDTO;
 import com.spring.MyProject.entity.Board;
@@ -99,6 +100,27 @@ public class BoardServiceImpl implements BoardService {
         return PageResponseDTO.<BoardDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList)
+                .total((int)result.getTotalElements())
+                .build();
+
+    }
+
+    @Override
+    public PageResponseDTO<BoardListReplyCountDTO> listWithReplyCount(PageRequestDTO pageRequestDTO) {
+
+        // 검색 조건에 대한 처리
+        String[] types = pageRequestDTO.getTypes();
+        String keyword = pageRequestDTO.getKeyword();
+        Pageable pageable = pageRequestDTO.getPageable("bno");
+
+        // 조건 검색 및 페이징한 결과값 가져오기
+        Page<BoardListReplyCountDTO> result = boardRepository.searchWithReplyCount(types, keyword, pageable);
+
+        // 매개변수로 전달받은 객체(pageRequestDTO)를 가지고 PageResponseDTO.Builder()를 통해
+        // PageRequestDTO객체 생성되어 필요시 스프링이 필요시점에 주입 시켜줌(list에서 pageRequestDTO객체 사용가능함 )
+        return PageResponseDTO.<BoardListReplyCountDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(result.getContent()) // Projection.bean(): JPQL의 결과를 바로 DTO로 처리한 결과를 입력 **
                 .total((int)result.getTotalElements())
                 .build();
 
