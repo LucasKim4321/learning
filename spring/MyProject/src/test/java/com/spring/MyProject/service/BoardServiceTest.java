@@ -34,6 +34,7 @@ public class BoardServiceTest {
                     .writer("userVoid"+i)
                     .build();
 
+
             Long bno = boardService.register(boardDTO);  // 정상 작동시 등록된 bno를 변수에 저장
 
             log.info("\n==> bno: "+bno);

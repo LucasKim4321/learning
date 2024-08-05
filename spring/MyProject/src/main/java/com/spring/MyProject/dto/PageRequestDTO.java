@@ -36,7 +36,7 @@ public class PageRequestDTO {
 
     // 페이징 초기값 설정
     public Pageable getPageable(String... props) {
-        return PageRequest.of(this.page-1, this.size, Sort.by(props).ascending());
+        return PageRequest.of(this.page-1, this.size, Sort.by(props).descending());
     }
 
     // 검색 조건 매개변수 설정과 페이지 조건 매개 변수 설정을 처리하는 문자열

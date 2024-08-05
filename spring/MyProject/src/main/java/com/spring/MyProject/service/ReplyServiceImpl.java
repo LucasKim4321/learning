@@ -35,12 +35,19 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public Long register(ReplyDTO replyDTO) {
 
+        /*
         // 게시글 번호 => board Entity 읽기 //  ReplyDTO에서 bno를 쓰기위한 임시방편
         Board board = boardRepository.findById(replyDTO.getBno()).orElseThrow();
         replyDTO.setBoard(board);
 
         // 1.1 dto -> entity
         Reply reply = modelMapper.map(replyDTO, Reply.class);
+        Long rno = replyRepository.save(reply).getRno();
+        */
+
+        // dto -> entity
+        Reply reply = dtoToEntity(replyDTO);
+        // entity -> DB에 반영
         Long rno = replyRepository.save(reply).getRno();
 
         return rno;
@@ -94,13 +101,14 @@ public class ReplyServiceImpl implements ReplyService {
         List<ReplyDTO> dtoList =
                 result.getContent()
                         .stream()
-                        .map(reply -> modelMapper.map(reply, ReplyDTO.class))
+                        // .map(reply -> modelMapper.map(reply, ReplyDTO.class))  1:1 맵핑을 해줌
+                        .map(reply -> entityToDTO(reply))
                         .collect(Collectors.toList());
 
         return PageResponseDTO.<ReplyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList)
-                .total((int)result.getTotalPages())
+                .total((int)result.getTotalElements())
                 .build();
     }
 

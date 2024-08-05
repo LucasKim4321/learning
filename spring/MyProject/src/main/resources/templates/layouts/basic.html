@@ -104,14 +104,11 @@
 <script src="js/scripts.js"
         th:src="@{/js/scripts.js}"></script>
 
-<!-- javascript import : 특정 페이지에서 사용되는 javascript인경우 -->
-<th:block layout:fragment="myscript"></th:block>
-
 <!-- 메시지 공동 처리 -->
 <script th:inline="javascript">
     // 게시글 등록 성공시 결과값 출력
-    const result = [[${result}]];
-    const bno = [[${bno}]];
+    let result = [[${result}]];
+    let bno = [[${bno}]];
     console.log('result',result);
     console.log('bno',bno);
 
@@ -137,9 +134,10 @@
 
     }
 
-
-
 </script>
+
+<!-- javascript import : 특정 페이지에서 사용되는 javascript인경우 -->
+<th:block layout:fragment="myscript"></th:block>
 
 </body>
 </html>

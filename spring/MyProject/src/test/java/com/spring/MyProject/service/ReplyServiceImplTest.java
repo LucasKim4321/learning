@@ -1,5 +1,6 @@
 package com.spring.MyProject.service;
 
+import com.spring.MyProject.dto.PageRequestDTO;
 import com.spring.MyProject.dto.ReplyDTO;
 import com.spring.MyProject.entity.Board;
 import lombok.extern.log4j.Log4j2;
@@ -20,13 +21,14 @@ class ReplyServiceImplTest {
     @Test@DisplayName("댓글 등록")
     public void testRegisterReply() {
 
-        Board board = Board.builder().bno(1L).build();
+        //Board board = Board.builder().bno(1L).build();
+        Long bno = 8L;
 
         // 클라이언트에 넘겨받은 값을 ReplyDTO 객체에 저장
         ReplyDTO replyDTO = ReplyDTO.builder()
                 .replyText("ReplyDTO Text")
                 .replyer("replyer")
-                .board(board)
+                .bno(bno)
                 .build();
 
         // 댓글 등록 서비스 호출하여 실행
@@ -41,6 +43,20 @@ class ReplyServiceImplTest {
 
         // 댓글 조회 서비스 호출하여 실행
         log.info("==> 댓글 조회: "+replyService.read(rno));
+    }
+
+    @Test@DisplayName("댓글 조회")
+    public void testGetListBoard() {
+        // 더미 페이징 설정
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .size(10)
+                .build();
+
+        Long bno = 1L;
+
+        // 댓글 조회 서비스 호출하여 실행
+        log.info("==> 댓글 조회: "+replyService.getListBoard(bno,pageRequestDTO));
     }
 
 }

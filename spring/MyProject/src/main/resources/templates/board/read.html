@@ -64,6 +64,41 @@
                     </div>
                 </div>
 
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <div class="my-4">
+                            <button class="btn btn-outline-info opacity-50 addReplyBtn">Add reply</button>
+                        </div>
+                        <div>
+                            <ul class="list-group replyList">
+                                댓글리스트
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 댓글 페이징 -->
+                <div class="row mb-3">
+                    <div class="col">
+                        <ul class="pagination replyPaging">
+                            댓글 페이징 번호
+                        </ul>
+                    </div>
+                </div>
+<!--
+                 Modal UI start
+                <div class="modal" tabindex="-1">
+
+
+                </div>
+                 Modal UI end-->
+
+                <!-- Axios 라이브러리 연결 -->
+                <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+                <script src="/js/reply.js"></script>
+
+                <hr>
+
                 <!-- 5. list, modify 버튼 -->
                 <div class="mt-3 d-flex" th:with="link=${pageRequestDTO.getLink()}">  <!-- class="float-end" 끝에 배치 -->
                     <!-- 현 글번호에 대한 페이징 정보를 넘겨받아서 list요청시 페이징 정보와 같이 요청하면
@@ -100,9 +135,124 @@
 
 <!--/* 현재 페이지에서만 사용하는 script 정의 */-->
 <script layout:fragment="myscript" th:inline="javascript">
+    console.log('bno3',bno);
+    const reply_bno = [[${dto.bno}]];
+    console.log('reply_bno: ',reply_bno);
+
+
+    // -------------------------------------------------//
+    // 특정 게시글에 대한 댓글 조회 : axios(비동기) 요청 테스트
+    // -------------------------------------------------//
+    // 비동기 처리 방식
+    /*
+    getReply(reply_bno)
+    .then(data => {
+    console.log("data: ",data);
+    console.log("data.list: ",data.list);
+    })
+    .catch(e =>{console.log(e)})
+    */
+    // -------------------------------------------------//
+
+    const replyBnoList = document.querySelector('.replyList');  // 댓글 목록 DOM
+    const replyPaging = document.querySelector('.replyPaging');  // 페이지 목록 DOM
+
+    // 4. 페이징 처리 **수정필요
+    function printPages(data) {
+        console.log("paging: " ,data);
+        // pagination
+        let pageStr = '';
+
+        // 이전
+        if(data.prev) {
+            pageStr +=`<li class="page-item"><a class="page-link" data-page="${data.start-1}">이전</a></li>`;
+        }
+
+        // 페이지 번호
+        for (let i=data.start; i<=data.end; i++) {
+            pageStr +=`<li class="page-item ${i==data.page?'active':''}"><a class="page-link" data-page="${i}">${i}</a></li>`;
+        }
+        // 다음
+        if(data.next) {
+            pageStr +=`<li class="page-item"><a class="page-link" data-page="${data.end+1}">다음</a></li>`;
+        }
+
+        replyPaging.innerHTML = pageStr;
+    }
+
+    // 3. 서버로부터 받아온 댓글을 DOM을 구성할 수 있는 문자열 생성 및 DOM생성
+    function printList(replyList) {
+    let str='';
+
+        // 댓글이 1개 이상이면 처리
+        if(replyList && replyList.length > 0) {
+
+            for(const dto of replyList) {
+            str += `
+                <li class="list-group-item d-flex gap-4 replyItem">
+                <span class="">${dto.rno}</span>
+                <span class="col" data-rno="${dto.rno}">${dto.replyText}</span>
+                <span class="">${dto.replyer}</span>
+                <span class="">${dto.regDate}</span>
+                </li>`;
+
+            } // endfor
+
+        } // end if
+
+        console.log("list: ",str);
+        replyBnoList.innerHTML = str;
+
+    } // end function
+
+    // 2. 게시글에 대한 댓글 서버에 요청해서 data받아오기
+    function printReplies(page,size, goLast) {
+
+        // 비동기 처리 함수 호출
+        getList(reply_bno, page, size, goLast)
+            .then(data=> {
+                // console.log("data.list: ",data.list, { params: {page, size} });
+                console.log("data.dtoList: ",data.dtoList, { params: {page, size} });
+
+                printList(data.dtoList);  // 댓글 목록 처리하는 함수 호출
+                printPages(data); // 페이징
+            }).catch();
+    }
+
+    // 1. 게시글에 대한 댓글을 요청하는 함수 실행(호출)
+    let page = 1;
+    let size = 3;
+    printReplies(page, size, true);
+
+    // 5. 댓글 등록 모달
+    // 6. 이벤트 처리
+    // 6-1 페이지 번호 클릭
+
+
+    replyPaging.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const target = e.target;
+        if (target.tagName != 'A') {
+            return;
+        }
+
+        // <a> 태그일 경우만 처리
+        // 현재 클릭한 태그 요소의 페이지 번호 추출
+        const pageNum = target.getAttribute("data-page");
+        page = pageNum;
+
+        printReplies(page, size);
+
+
+    });
+
     document.querySelector('.removeBtn').addEventListener('click', function(e) {
         e.preventDefault();  // 기본 이벤트 제거
         e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+        // **
 
         let doubleChk = confirm('삭제하시겠습니까?');
         if (doubleChk) {

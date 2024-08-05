@@ -19,7 +19,7 @@ import java.util.stream.IntStream;
 
 @Log4j2
 @SpringBootTest
-@TestPropertySource(locations="classpath:application-test.properties")  // 환경설정파일 따로 지정
+//@TestPropertySource(locations="classpath:application-test.properties")  // 환경설정파일 따로 지정
 class ReplyRepositoryTest {
 
 	@Autowired
@@ -44,28 +44,29 @@ class ReplyRepositoryTest {
 
 	@Test@DisplayName("Reply객체(댓글) 생성하기")
 	public void testInsertReply() {
-		this.testCreateBoard();  // h2에서 테스트시 필요 // 전체 실행하면 필요 없음
+//		this.testCreateBoard();  // h2에서 테스트시 필요 // 전체 실행하면 필요 없음
 
-		//게시글 생성
-		Long bno = 1L;
+		//  댓글 300개 생성하기
+		IntStream.rangeClosed(1,300).forEach(i-> {
+			// 게시글 번호 무작위 선정
+			long bno = (long)(Math.random()*20)+1;
 
+			Optional<Board> result = boardRepository.findById(bno);
+			Board board = result.orElseThrow();
 
-//		Board board = Board.builder().bno(bno).build();
-		Optional<Board> result = boardRepository.findById(bno);
-		Board board = result.orElseThrow();
+			// 특정 게시글에 대한 댓글 생성(특정 게시글과 댓글과 연관관계 설정 후 생성)
+			Reply reply = Reply.builder()
+					// board_bno 필드만 생성하여 board의 pk필드 bno값을 설정하고 join상태 설정
+					// 보드의 bno값을 참조해서 만듬 bno값이 들어감  // 값을 읽어 올 수 없는 경우 생성 시 에러
+					.board(board)  // .board_bno(board.getBno())
+					.replyText("댓글"+i)
+					.replyer("replyer"+i)
+					.build();
 
+			// DB처리
+			replyRepository.save(reply);
 
-		// 특정 게시글에 대한 댓글 생성(특정 게시글과 댓글과 연관관계 설정 후 생성)
-		Reply reply = Reply.builder()
-				// board_bno 필드만 생성하여 board의 pk필드 bno값을 설정하고 join상태 설정
-				// 보드의 bno값을 참조해서 만듬 bno값이 들어감  // 값을 읽어 올 수 없는 경우 생성 시 에러
-				.board(board)  // .board_bno(board.getBno())
-				.replyText("댓글")
-				.replyer("replyer1")
-				.build();
-
-		// DB처리
-		replyRepository.save(reply);
+		});
 
 	}
 
@@ -85,6 +86,5 @@ class ReplyRepositoryTest {
 			log.info("==> reply: "+reply);
 		});
 	}
-
 
 }

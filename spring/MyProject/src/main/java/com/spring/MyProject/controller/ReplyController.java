@@ -3,37 +3,44 @@ package com.spring.MyProject.controller;
 import com.spring.MyProject.dto.PageRequestDTO;
 import com.spring.MyProject.dto.PageResponseDTO;
 import com.spring.MyProject.dto.ReplyDTO;
-import com.spring.MyProject.entity.Board;
 import com.spring.MyProject.repository.BoardRepository;
 import com.spring.MyProject.service.ReplyService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-// **
+
+// REST방식 : 주로 XML, JSON형태의 문자열을 전송하고 이를 컨트롤러에서 처리하는 방식
+@Tag(name = "예제 API", description = "Swagger 테스트용 API")
 @RestController
 @RequestMapping("/replies")
 @Log4j2
+@RequiredArgsConstructor
 public class ReplyController {
 
-    private ReplyService replyService;
-    private BoardRepository boardRepository;
+    private final ReplyService replyService;  // 댓글 서비스 객체
 
-    @Operation(summary = "Replies POST", description = "POST방식으로 전송")
+    // 댓글 등록
+    @Operation(summary = "Replies POST", description = "POST방식으로 게시글 댓글 등록")
     @PostMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Map<String, Long>  register(  // @Valid 제약조건 유효성 검사
-            @Valid @RequestBody ReplyDTO replyDTO, // replyDTO랑 똑같은 이름의 클래스가 있으면 자동으로 값이 들어옴
-            BindingResult bindingResult  // 유효성 검사 결과가 들어있음. 객체값 검증
+                                         @Valid @RequestBody ReplyDTO replyDTO, // replyDTO랑 똑같은 이름의 클래스가 있으면 자동으로 값이 들어옴
+                                         BindingResult bindingResult  // 유효성 검사 결과가 들어있음. 객체값 검증
             ) throws BindException {  //  에러가 존재하면 bindingResult에서 값을 받아서 리턴
 
         log.info("==> replyDTO: "+replyDTO);
         log.info("==> bindingResult: "+bindingResult.toString());
-        log.info("==> ReplyDTO.get: "+replyDTO.getRno()+","+replyDTO.getBoard()+","+replyDTO.getReplyText()+","+replyDTO.getReplyer()+","+replyDTO.getRegDate()+","+replyDTO.getModDate());
+        log.info("==> ReplyDTO.get: "+replyDTO.getRno()+","+replyDTO.getBno()+","+replyDTO.getReplyText()+","+replyDTO.getReplyer()+","+replyDTO.getRegDate()+","+replyDTO.getModDate());
 
         if (bindingResult.hasErrors()) {  // 에러가 존재하면 bindingResult에서 값을 받아서 BindException으로 리턴
             throw new BindException(bindingResult);
@@ -42,8 +49,9 @@ public class ReplyController {
         Long rno = replyService.register(replyDTO);
 
 
-        Board board = Board.builder().bno(replyDTO.getBoard().getBno()).build();
-        Map<String, Long> resultMap = Map.of("rno", 111L);
+        //Board board = Board.builder().bno(replyDTO.getBno()).build();
+
+        Map<String, Long> resultMap = Map.of("rno", rno);
 //        Map<String, String> resultMap = Map.of("bno", String.valueOf(replyDTO.getBno()), "replyText" , replyDTO.getReplyText(), "replyer", replyDTO.getReplyer());
 //        resultMap.put("rno",300L);  // 에러 발생
 
@@ -54,15 +62,55 @@ public class ReplyController {
 
     }
 
-    @Operation(summary = "Replies of Board", description = "Post방식으로 특정 게시물의 댓글 목록")
-    @PostMapping(value="/list/{bno}")
-    public PageResponseDTO<ReplyDTO> getList (@PathVariable("bno") Long bno,
+    // 2. 특정 게시물의 댓글 목록
+    @Operation(summary = "Replies of Board", description = "Get방식으로 특정 게시물의 댓글 목록 조회")
+    @GetMapping(value="/list/{bno}")
+    public PageResponseDTO<ReplyDTO> getList (@PathVariable("bno") Long bno, // 경로에서 bno값을 받음
                                               PageRequestDTO pageRequestDTO) {
 
-        PageResponseDTO<ReplyDTO> responseDTO = replyService.getListBoard(bno, pageRequestDTO);
-        responseDTO.getDtoList().stream().forEach(reply-> log.info("==> reply: "+reply));
+        log.info("==> pageRequestDTO: "+pageRequestDTO);
+        log.info("==> bno: "+bno);
 
+        PageResponseDTO<ReplyDTO> responseDTO = replyService.getListBoard(bno, pageRequestDTO);
+        // 서버쪽에 클라이언트에 보내는 데이터: 페이징 객체, 댓글 리스트 ...
         return responseDTO;
+
+//        responseDTO.getDtoList().stream().forEach(reply-> log.info("==> reply: "+reply));
+//        Map<String, List<ReplyDTO>> resultMap = Map.of("list", responseDTO.getDtoList());
+//        return resultMap;
+
+    }
+
+    // 댓글 수정
+    @Operation(summary = "Replies Modified", description = "Put방식으로 댓글 수정")
+    @PutMapping(value="/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE) // 전송받은 data 종류
+    public Map<String, Long> modify (@PathVariable("rno") Long rno, // 경로에서 rno값을 받음
+                                     @RequestBody ReplyDTO replyDTO) {
+
+        replyDTO.setRno(rno);  // 매개변수로 넘어온 댓글 번호를 replyDTO에 설정
+        replyService.modify(replyDTO);
+
+        // 클라이언트에게 보낼 data 정보 및 메시지
+        Map<String, Long> resultMap = new HashMap<>();
+        resultMap.put("rno", rno);
+
+        return resultMap;
+
+    }
+
+
+    // 댓글 삭제
+    @Operation(summary = "Replies Modified", description = "Delete방식으로 댓글 삭제")
+    @DeleteMapping(value="/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE) // 전송받은 **
+    public Map<String, Long> remove (@PathVariable("rno") Long rno) {  // 경로에서 rno값을 받음
+
+        replyService.remove(rno);
+
+        // 클라이언트에게 보낼 data 정보 및 메시지
+        Map<String, Long> resultMap = new HashMap<>();
+        resultMap.put("rno", rno);
+
+        return resultMap;
 
     }
 
