@@ -85,13 +85,7 @@
                         </ul>
                     </div>
                 </div>
-<!--
-                 Modal UI start
-                <div class="modal" tabindex="-1">
 
-
-                </div>
-                 Modal UI end-->
 
                 <!-- Axios 라이브러리 연결 -->
                 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -115,11 +109,62 @@
 
                 </div>
             </form>
+
         </div>
 
     </div>
 
-</div>
+    <!-- 등록화면 모달창 -->
+    <div class="modal modalRegister" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Reply Text</span>
+                        <input type="text" class="input-control replyText">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">replyer </span>
+                        <input type="text" class="input-control replyer">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary registerBtn">Register</button>
+                    <button type="button" class="btn btn-secondary closeRegisterBtn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 댓글 조회 모달창 -->
+    <div class="modal modalModify" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title replyHeader">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Reply Text</span>
+                        <input type="text" class="input-control modifyText">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary removeReplyBtn">Delete</button>
+                    <button type="button" class="btn btn-primary modifyReplyBtn">Modify</button>
+                    <button type="button" class="btn btn-secondary closeModifyBtn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>  <!-- end fragment="content"-->
 
 
 
@@ -157,7 +202,7 @@
     const replyBnoList = document.querySelector('.replyList');  // 댓글 목록 DOM
     const replyPaging = document.querySelector('.replyPaging');  // 페이지 목록 DOM
 
-    // 4. 페이징 처리 **수정필요
+    // 4. 페이징 처리
     function printPages(data) {
         console.log("paging: " ,data);
         // pagination
@@ -262,6 +307,180 @@
             formObj.submit();
         }
     })
+
+
+    //-----------------------//
+    // 댓글 등록 모달창
+    //-----------------------//
+
+    const modalRegister = new bootstrap.Modal(document.querySelector('.modalRegister'));
+    const registerBtn = document.querySelector('.registerBtn');
+    const closeRegisterBtn = document.querySelector('.closeRegisterBtn');
+
+    const replyText = document.querySelector('.replyText');
+    const replyer = document.querySelector('.replyer');
+
+    // 모달 창 띄우기
+    document.querySelector('.addReplyBtn').addEventListener('click', function(e) {
+        e.preventDefault();  // 기본 이벤트 제거
+        e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+        modalRegister.show();
+    })
+
+    // 모달 댓글 등록 버튼
+    registerBtn.addEventListener('click', function(e) {
+        e.preventDefault();  // 기본 이벤트 제거
+        e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+        console.log('register click');
+
+        // 전송할 data를 JSON객체로 선언
+        const replyObj = {
+            bno: reply_bno,                   // 댓글에 대한 게시글 번호
+            replyText: replyText.value, // 댓글 내용
+            replyer: replyer.value      // 댓글 작성자
+        }
+        console.log("전송할 JSON객체: ", replyObj);
+
+        // 비동기 처리방식으로 data 서버에 보내기
+        addReply(replyObj).then(result=> {
+            console.log("result: ",result);
+            console.log("result.rno: ",result.rno);
+            alert(result.rno);
+
+            modalRegister.hide();   // 모달 창 닫기
+            replyText.value='';     // 댓글 내용 clear
+            replyer.value='';       // 댓글 작성자 clear
+
+            // 댓글 등록한 후 댓글 List 호출
+            printReplies(1, 10, true) // true를 설정하면 마지막 페이지를 불러옴
+
+        }).catch(e=> alert("에러났다옹!\n\n"+e));
+
+    })
+
+    // 모달창 닫기 버튼
+    closeRegisterBtn.addEventListener('click', function(e) {
+        e.preventDefault();  // 기본 이벤트 제거
+        e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
+
+        modalRegister.hide();
+    })
+
+
+    //-----------------------//
+    // 댓글 조회 및 수정 모달창
+    //-----------------------//
+
+    const modalModify = new bootstrap.Modal(document.querySelector('.modalModify'));
+    const replyList = document.querySelector('.replyList');
+
+    const replyHeader = document.querySelector('.replyHeader');  // 모델창의 제목
+    const modifyText = document.querySelector('.modifyText');    // 댓글 내용
+
+    const removeReplyBtn = document.querySelector('.removeReplyBtn');  // 삭제버튼
+    const modifyReplyBtn = document.querySelector('.modifyReplyBtn');  // 수정버튼
+    const closeModifyBtn = document.querySelector('.closeModifyBtn');  // 창 닫기 버튼
+
+    replyList.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+         const target = e.target;
+        if (target.tagName != 'SPAN') {
+            return;
+        }
+
+        // <span> 태그일 경우만 처리
+        // 현재 클릭한 태그 요소의 댓글 번호(rno) 추출
+        const rno = target.getAttribute("data-rno");
+        if(!rno) {  // 값이 없으면, 비어있으면
+            return;
+        }
+
+        // 댓글 번호가 있으면 처리
+        getReply(rno)
+        .then(reply => {
+            console.log("reply: ",reply);
+
+            replyHeader.innerHTML = reply.rno+"번 댓글";
+            modifyText.value = reply.replyText;
+
+            console.log(modalModify);
+            modalModify.show();  // 수정 모달창 표시
+
+
+        }).catch(e=> alert('에러다옹!\n'+e));
+
+    })
+
+    // 댓글 수정 버튼
+    modifyReplyBtn.addEventListener('click', function(e) {
+        console.log("modify");
+
+        const replyObj = {
+            bno: reply_bno,                 // 댓글에 대한 게시글 번호
+            rno: replyHeader.innerHTML,     // 댓글 번호
+            replyText: modifyText.value     // 댓글 내용
+        }
+
+        // 비동기 처리 요청
+        modifyReply(replyObj)
+        .then(result=> {
+            alert(result.rno+"댓글이 수정되었다옹~");
+
+            modalModify.hide();
+            replyText.value = "";
+
+            // 첫 페이지부터 댓글 List 조회
+            page = 1;
+            printReplies(page, size);
+
+        }).catch(e=>alert("또 에러냐옹?"+e));
+
+    })
+
+    // 댓글 삭제 버튼
+    removeReplyBtn.addEventListener('click', function(e) {
+        console.log("remove");
+
+        let isOK = confirm("정말 삭제하겠나옹?");
+        if (!isOK) return;
+
+        // 삭제여부(isOK)가 확인(true)이면 처리
+        let rno = replyHeader.innerHTML;
+
+        // 비동기 처리 요청
+        removeReply(rno)
+        .then(result=> {
+            alert(result.rno+"댓글이 수정되었다옹~");
+
+            modalModify.hide();
+            replyText.value = "";
+
+            // 첫 페이지부터 댓글 List 조회
+            // page = 1;
+            // printReplies(page, size);
+
+            // 마지막 페이지부터 조회
+            printReplies(page, size, true);
+
+        }).catch(e=>alert("또 에러냐옹?"+e));
+
+    })
+
+    // 창 닫기 버튼
+    closeModifyBtn.addEventListener('click', function(e) {
+        console.log("close");
+        modalModify.hide();
+
+    })
+
+
+
+
+
 </script>
 
 </html>

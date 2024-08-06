@@ -19,6 +19,17 @@
         background-color: white;
         border: none;
     }
+    .postImgBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 300px;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;  /*maintaining its original ratio.*/
+        }
+    }
   </style>
   <body>
     <div class="container">
@@ -96,7 +107,7 @@
         <div class="postsBox d-flex row mb-5">
                 <!-- 게시글 (가로4 * 세로3) -->
                 <div class="post text-center col-3 px-4 mt-3">
-                    <div class="border">
+                    <div class="postBox border">
                       <div class="postImgBox"><img src="../images/busan1.jpg" alt="사진"></div>
                       <div class="postTag">태그</div>
                       <div class="postTitle">제목</div>
@@ -104,7 +115,7 @@
                     </div>
                 </div>
                 <div class="post text-center col-3 px-4 mt-3">
-                    <div class="border">
+                    <div class="postBox border">
                       <div class="postImgBox"><img src="../images/busan2.jpg" alt="사진"></div>
                       <div class="postTag">태그</div>
                       <div class="postTitle">제목</div>
@@ -112,7 +123,7 @@
                     </div>
                 </div>
                 <div class="post text-center col-3 px-4 mt-3">
-                    <div class="border">
+                    <div class="postBox border">
                       <div class="postImgBox"><img src="../images/busan3.jpg" alt="사진"></div>
                       <div class="postTag">태그</div>
                       <div class="postTitle">제목</div>
@@ -120,7 +131,7 @@
                     </div>
                 </div>
                 <div class="post text-center col-3 px-4 mt-3">
-                    <div class="border">
+                    <div class="postBox border">
                       <div class="postImgBox"><img src="../images/gwanganli1.jpg" alt="사진"></div>
                       <div class="postTag">태그</div>
                       <div class="postTitle">제목</div>
@@ -128,7 +139,7 @@
                     </div>
                 </div>
                 <div class="post text-center col-3 px-4 mt-3">
-                    <div class="border">
+                    <div class="postBox border">
                       <div class="postImgBox"><img src="../images/gwanganli2.jpg" alt="사진"></div>
                       <div class="postTag">태그</div>
                       <div class="postTitle">제목</div>
@@ -136,7 +147,7 @@
                     </div>
                 </div>
                 <div class="post text-center col-3 px-4 mt-3">
-                    <div class="border">
+                    <div class="postBox border">
                       <div class="postImgBox"><img src="../images/gwanganli3.jpg" alt="사진"></div>
                       <div class="postTag">태그</div>
                       <div class="postTitle">제목</div>

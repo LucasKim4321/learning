@@ -33,10 +33,10 @@ public class ReplyController {
     // 댓글 등록
     @Operation(summary = "Replies POST", description = "POST방식으로 게시글 댓글 등록")
     @PostMapping(value="/", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Map<String, Long>  register(  // @Valid 제약조건 유효성 검사
+    public Map<String, String>  register(  // @Valid 제약조건 유효성 검사
                                          @Valid @RequestBody ReplyDTO replyDTO, // replyDTO랑 똑같은 이름의 클래스가 있으면 자동으로 값이 들어옴
                                          BindingResult bindingResult  // 유효성 검사 결과가 들어있음. 객체값 검증
-            ) throws BindException {  //  에러가 존재하면 bindingResult에서 값을 받아서 리턴
+                                         ) throws BindException {  //  에러가 존재하면 bindingResult에서 값을 받아서 리턴
 
         log.info("==> replyDTO: "+replyDTO);
         log.info("==> bindingResult: "+bindingResult.toString());
@@ -51,13 +51,20 @@ public class ReplyController {
 
         //Board board = Board.builder().bno(replyDTO.getBno()).build();
 
-        Map<String, Long> resultMap = Map.of("rno", rno);
+        // 1
 //        Map<String, String> resultMap = Map.of("bno", String.valueOf(replyDTO.getBno()), "replyText" , replyDTO.getReplyText(), "replyer", replyDTO.getReplyer());
 //        resultMap.put("rno",300L);  // 에러 발생
-
 //        return ResponseEntity.ok(resultMap);  // ResponseEntity.ok()  200성공 코드 + 반환값
 //        return new ResponseEntity(resultMap, HttpStatus.OK);  // 같음
 //        return ResponseEntity.ok(replyDTO);
+
+        // 2
+//        Map<String, Long> resultMap = Map.of("rno", rno);
+//        return resultMap;
+
+        // 3
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("rno", rno+"번 댓글이 등록되었습니다옹~");
         return resultMap;
 
     }
@@ -101,7 +108,7 @@ public class ReplyController {
 
     // 댓글 삭제
     @Operation(summary = "Replies Modified", description = "Delete방식으로 댓글 삭제")
-    @DeleteMapping(value="/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE) // 전송받은 **
+    @DeleteMapping(value="/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE) // 전송받은 data 종류 명시
     public Map<String, Long> remove (@PathVariable("rno") Long rno) {  // 경로에서 rno값을 받음
 
         replyService.remove(rno);
@@ -112,6 +119,16 @@ public class ReplyController {
 
         return resultMap;
 
+    }
+
+    // 5. 댓글 조회
+    @Operation(summary = "Read Reply", description = "Get방식으로 특정 댓글 조회")
+    @GetMapping(value="/{rno}") // 전송받은 data 종류 명시
+    public ReplyDTO getReplyDTO(@PathVariable("rno") Long rno) {
+
+        ReplyDTO replyDTO = replyService.read(rno);
+
+        return replyDTO;
     }
 
 }

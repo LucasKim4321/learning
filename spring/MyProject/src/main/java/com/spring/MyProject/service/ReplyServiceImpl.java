@@ -59,7 +59,8 @@ public class ReplyServiceImpl implements ReplyService {
         Optional<Reply> replyOptional = replyRepository.findById(rno);
         Reply reply = replyOptional.orElseThrow();
         
-        return modelMapper.map(reply, ReplyDTO.class);
+//        return modelMapper.map(reply, ReplyDTO.class);
+        return entityToDTO(reply);  // entity -> dto 전환 후 반환
     }
 
     // 3. 댓글 수정

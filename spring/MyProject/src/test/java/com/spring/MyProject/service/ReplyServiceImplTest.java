@@ -22,7 +22,7 @@ class ReplyServiceImplTest {
     public void testRegisterReply() {
 
         //Board board = Board.builder().bno(1L).build();
-        Long bno = 8L;
+        Long bno = 73L;
 
         // 클라이언트에 넘겨받은 값을 ReplyDTO 객체에 저장
         ReplyDTO replyDTO = ReplyDTO.builder()

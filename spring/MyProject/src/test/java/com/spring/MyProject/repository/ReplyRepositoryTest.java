@@ -49,7 +49,7 @@ class ReplyRepositoryTest {
 		//  댓글 300개 생성하기
 		IntStream.rangeClosed(1,300).forEach(i-> {
 			// 게시글 번호 무작위 선정
-			long bno = (long)(Math.random()*20)+1;
+			long bno = (long)(Math.random()*20)+51;
 
 			Optional<Board> result = boardRepository.findById(bno);
 			Board board = result.orElseThrow();

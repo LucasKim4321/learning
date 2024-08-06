@@ -44,7 +44,6 @@
 
         <!-- Top navigation-->
         <!-- <div th:replace="~{fragments/header::navbar}"></div> -->
-        <div th:replace="~{fragments/header::navbar}"></div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
             <div class="container-fluid">
                 <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>
@@ -76,8 +75,8 @@
     </div>
 </div>
 
-<!-- Modal start -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- 메시지 모달창 -->
+<div class="modal modalMessage fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -113,7 +112,7 @@
     console.log('bno',bno);
 
     // show modall창에 메시지 출력하기
-    const modal = new bootstrap.Modal(document.querySelector('.modal'));
+    const modalMessage = new bootstrap.Modal(document.querySelector('.modalMessage'));
     const modalBody = document.querySelector('.modal-body')  // 메시지를 출력하는 태그
 
     let message = "";
@@ -130,7 +129,7 @@
 
         modalBody.innerHTML = message;
 
-        modal.show();
+        modalMessage.show();
 
     }
 

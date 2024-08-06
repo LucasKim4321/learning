@@ -28,4 +28,28 @@ async function getList(bno, page, size, goLast) {
     return result.data;
 }
 
+// 2. 게시글 등록
+async function addReply(replyObj) {
+    const response = await axios.post(`/replies/`, replyObj);
 
+    console.log("addReply response: ", response.data);
+    return response.data;
+}
+
+// 3. 게시글에 대한 댓글 조회
+async function getReply(rno) {
+    const response = await axios.get(`/replies/${rno}`);
+    return response.data;
+}
+
+// 4. 게시글에 대한 댓글 수정
+async function modifyReply(replyObj) {
+    const response = await axios.put(`/replies/${replyObj.rno}`,replyObj);
+    return response.data;
+}
+
+// 5. 게시글에 대한 댓글 삭제
+async function removeReply(rno) {
+    const response = await axios.delete(`/replies/${rno}`);
+    return response.data;
+}
