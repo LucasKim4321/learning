@@ -89,7 +89,7 @@ public class ReplyController {
     }
 
     // 댓글 수정
-    @Operation(summary = "Replies Modified", description = "Put방식으로 댓글 수정")
+    @Operation(summary = "Modify Reply", description = "Put방식으로 댓글 수정")
     @PutMapping(value="/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE) // 전송받은 data 종류
     public Map<String, Long> modify (@PathVariable("rno") Long rno, // 경로에서 rno값을 받음
                                      @RequestBody ReplyDTO replyDTO) {
@@ -107,7 +107,7 @@ public class ReplyController {
 
 
     // 댓글 삭제
-    @Operation(summary = "Replies Modified", description = "Delete방식으로 댓글 삭제")
+    @Operation(summary = "Delete Reply", description = "Delete방식으로 댓글 삭제")
     @DeleteMapping(value="/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE) // 전송받은 data 종류 명시
     public Map<String, Long> remove (@PathVariable("rno") Long rno) {  // 경로에서 rno값을 받음
 

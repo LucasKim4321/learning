@@ -10,15 +10,13 @@
     .dates > li > a , .days > li > a {
         border: none;
     }
-    .postImgBox img{
-        width: 100%;
-        height: 300px;
-    }
     .mybtn {
         padding: 5px;
         background-color: white;
         border: none;
     }
+
+/* 박스안 이미지 가득차게 수평 수직 가운데 정렬 1 */
     .postImgBox {
         display: flex;
         align-items: center;
@@ -27,9 +25,24 @@
         img {
             width: 100%;
             height: 100%;
-            object-fit: cover;  /*maintaining its original ratio.*/
+            object-fit: cover;
         }
     }
+
+/*  박스안 이미지 가득차게 수평 수직 가운데 정렬 2
+    .postImgBox {
+        position: relative;
+        overflow: hidden;
+        height: 300px;
+
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+  */
   </style>
   <body>
     <div class="container">
@@ -51,8 +64,11 @@
                 </li>
             </ul>
         </div>
+
+        <!-- 달 버튼, 현재 달 -->
         <div class="d-flex">
             <button class="btn">이전달</button>
+            <!-- 달력 띄워서 선택할 수 있으면 좋을 듯 -->
             <div class="col text-center"><h3>2024년 8월</h3></div>
             <button class="btn">다음달</button>
         </div>
@@ -108,7 +124,7 @@
                 <!-- 게시글 (가로4 * 세로3) -->
                 <div class="post text-center col-3 px-4 mt-3">
                     <div class="postBox border">
-                      <div class="postImgBox"><img src="../images/busan1.jpg" alt="사진"></div>
+                      <div class="postImgBox"><img src="./busan1.jpg" alt="사진"></div>
                       <div class="postTag">태그</div>
                       <div class="postTitle">제목</div>
                       <div class="postRegDate">날짜</div>
@@ -116,7 +132,7 @@
                 </div>
                 <div class="post text-center col-3 px-4 mt-3">
                     <div class="postBox border">
-                      <div class="postImgBox"><img src="../images/busan2.jpg" alt="사진"></div>
+                      <div class="postImgBox"><img src="./busan2.jpg" alt="사진"></div>
                       <div class="postTag">태그</div>
                       <div class="postTitle">제목</div>
                       <div class="postRegDate">날짜</div>
@@ -124,7 +140,7 @@
                 </div>
                 <div class="post text-center col-3 px-4 mt-3">
                     <div class="postBox border">
-                      <div class="postImgBox"><img src="../images/busan3.jpg" alt="사진"></div>
+                      <div class="postImgBox"><img src="./busan3.jpg" alt="사진"></div>
                       <div class="postTag">태그</div>
                       <div class="postTitle">제목</div>
                       <div class="postRegDate">날짜</div>
@@ -132,7 +148,7 @@
                 </div>
                 <div class="post text-center col-3 px-4 mt-3">
                     <div class="postBox border">
-                      <div class="postImgBox"><img src="../images/gwanganli1.jpg" alt="사진"></div>
+                      <div class="postImgBox"><img src="./gwanganli1.jpg" alt="사진"></div>
                       <div class="postTag">태그</div>
                       <div class="postTitle">제목</div>
                       <div class="postRegDate">날짜</div>
@@ -140,7 +156,7 @@
                 </div>
                 <div class="post text-center col-3 px-4 mt-3">
                     <div class="postBox border">
-                      <div class="postImgBox"><img src="../images/gwanganli2.jpg" alt="사진"></div>
+                      <div class="postImgBox"><img src="./gwanganli2.jpg" alt="사진"></div>
                       <div class="postTag">태그</div>
                       <div class="postTitle">제목</div>
                       <div class="postRegDate">날짜</div>
@@ -148,13 +164,15 @@
                 </div>
                 <div class="post text-center col-3 px-4 mt-3">
                     <div class="postBox border">
-                      <div class="postImgBox"><img src="../images/gwanganli3.jpg" alt="사진"></div>
+                      <div class="postImgBox"><img src="./gwanganli3.jpg" alt="사진"></div>
                       <div class="postTag">태그</div>
                       <div class="postTitle">제목</div>
                       <div class="postRegDate">날짜</div>
                     </div>
                 </div>
         </div>
+
+        <!-- 페이지 버튼 -->
         <div class="mb-5">
             <nav aria-label="Page navigation example just">
                 <ul class="pagination justify-content-center">

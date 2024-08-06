@@ -1895,3 +1895,6 @@ document.querySelector('.confirmBtn').addEventListener('click', function(e) {
 -->
 
 
+썸네일 thumbnail 구현
+
+
