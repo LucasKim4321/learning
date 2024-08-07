@@ -47,6 +47,7 @@ public class ReplyController {
         }
 
         Long rno = replyService.register(replyDTO);
+        log.info("==> rno: "+rno);
 
 
         //Board board = Board.builder().bno(replyDTO.getBno()).build();
@@ -88,49 +89,50 @@ public class ReplyController {
 
     }
 
-    // 댓글 수정
-    @Operation(summary = "Modify Reply", description = "Put방식으로 댓글 수정")
-    @PutMapping(value="/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE) // 전송받은 data 종류
-    public Map<String, Long> modify (@PathVariable("rno") Long rno, // 경로에서 rno값을 받음
-                                     @RequestBody ReplyDTO replyDTO) {
+    // 3. 댓글 수정
+    @Operation(summary="Modify Reply", description="PUT방식으로 특정 댓글 수정")
+    @PutMapping(value="/{rno}",consumes = MediaType.APPLICATION_JSON_VALUE )// 전송받은 data 종류 명시
+    public Map<String, Long> modify(@PathVariable("rno") Long rno,  // 경로에서 rno값을 받음
+                                    @RequestBody ReplyDTO replyDTO){
+        log.info("==> modify 동작확인");
 
-        replyDTO.setRno(rno);  // 매개변수로 넘어온 댓글 번호를 replyDTO에 설정
+        log.info("==> rno: "+rno);
+        log.info("==> replyDTO: "+replyDTO);
+        log.info("==> replyDTO.getRno(): "+replyDTO.getRno());
+
+        replyDTO.setRno(rno);// 매개변수로 넘어온 댓글번호을 replyDTO에 설정
         replyService.modify(replyDTO);
 
         // 클라이언트에게 보낼 data 정보 및 메시지
         Map<String, Long> resultMap = new HashMap<>();
-        resultMap.put("rno", rno);
+        resultMap.put("rno",rno);
 
         return resultMap;
-
     }
 
+    // 4. 댓글 삭제
+    @Operation(summary="Delete Reply", description="DELETE방식으로 특정 댓글 삭제")
+    @DeleteMapping(value="/{rno}" )// 전송받은 data 종류 명시
+    public Map<String, Long> remove(@PathVariable("rno") Long rno){  // 경로에서 rno값을 받음
 
-    // 댓글 삭제
-    @Operation(summary = "Delete Reply", description = "Delete방식으로 댓글 삭제")
-    @DeleteMapping(value="/{rno}", consumes = MediaType.APPLICATION_JSON_VALUE) // 전송받은 data 종류 명시
-    public Map<String, Long> remove (@PathVariable("rno") Long rno) {  // 경로에서 rno값을 받음
 
         replyService.remove(rno);
 
         // 클라이언트에게 보낼 data 정보 및 메시지
         Map<String, Long> resultMap = new HashMap<>();
-        resultMap.put("rno", rno);
+        resultMap.put("rno",rno);
 
         return resultMap;
-
     }
 
     // 5. 댓글 조회
-    @Operation(summary = "Read Reply", description = "Get방식으로 특정 댓글 조회")
-    @GetMapping(value="/{rno}") // 전송받은 data 종류 명시
-    public ReplyDTO getReplyDTO(@PathVariable("rno") Long rno) {
+    @Operation(summary="Read Reply", description="GET방식으로 특정 댓글 조회")
+    @GetMapping(value="/{rno}" )// 전송받은 data 종류 명시
+    public ReplyDTO getReplyDTO(@PathVariable("rno") Long rno){
 
         ReplyDTO replyDTO = replyService.read(rno);
-
         return replyDTO;
     }
-
 }
 
 

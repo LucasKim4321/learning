@@ -21,7 +21,7 @@ public interface ReplyService {
     void remove (Long rno);
 
     // 5. 댓글 목록(페이징 기능이 있는 List)
-    PageResponseDTO<ReplyDTO> getListBoard (Long bno, PageRequestDTO requestDTO);
+    PageResponseDTO<ReplyDTO> getListBoard (Long bno, PageRequestDTO pageRequestDTO);
 
     // 원래는 상속자가 본체를 만들어야 하지만 업데이트 되면서 default 사용하면 interface에 본체를 쓰는게 가능
     // ReplyDTO -> Entity : Board entity 객체 처리

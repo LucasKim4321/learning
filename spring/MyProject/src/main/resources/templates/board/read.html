@@ -145,7 +145,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title replyHeader">Modal title</h5>
+                    <h5 class="modal-title replyHeader d-flex"><div class='rnoNum'></div></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -383,6 +383,7 @@
     const modifyReplyBtn = document.querySelector('.modifyReplyBtn');  // 수정버튼
     const closeModifyBtn = document.querySelector('.closeModifyBtn');  // 창 닫기 버튼
 
+
     replyList.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -395,6 +396,7 @@
         // <span> 태그일 경우만 처리
         // 현재 클릭한 태그 요소의 댓글 번호(rno) 추출
         const rno = target.getAttribute("data-rno");
+        console.log("rno: ",rno);
         if(!rno) {  // 값이 없으면, 비어있으면
             return;
         }
@@ -404,7 +406,7 @@
         .then(reply => {
             console.log("reply: ",reply);
 
-            replyHeader.innerHTML = reply.rno+"번 댓글";
+            replyHeader.innerHTML = "<div class='rnoNum'>"+reply.rno+"</div>번 댓글";
             modifyText.value = reply.replyText;
 
             console.log(modalModify);
@@ -418,10 +420,11 @@
     // 댓글 수정 버튼
     modifyReplyBtn.addEventListener('click', function(e) {
         console.log("modify");
+        const rnoNum = document.querySelector('.rnoNum');  // 모델창의 제목의 rno
 
         const replyObj = {
             bno: reply_bno,                 // 댓글에 대한 게시글 번호
-            rno: replyHeader.innerHTML,     // 댓글 번호
+            rno: rnoNum.innerHTML,     // 댓글 번호
             replyText: modifyText.value     // 댓글 내용
         }
 
@@ -444,12 +447,13 @@
     // 댓글 삭제 버튼
     removeReplyBtn.addEventListener('click', function(e) {
         console.log("remove");
+        const rnoNum = document.querySelector('.rnoNum');  // 모델창의 제목의 rno
 
         let isOK = confirm("정말 삭제하겠나옹?");
         if (!isOK) return;
 
         // 삭제여부(isOK)가 확인(true)이면 처리
-        let rno = replyHeader.innerHTML;
+        let rno = rnoNum.innerHTML;
 
         // 비동기 처리 요청
         removeReply(rno)

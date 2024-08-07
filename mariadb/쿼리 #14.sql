@@ -12,6 +12,10 @@ SELECT * FROM reply;
 DELETE FROM reply;
 DROP TABLE reply;
 
+SELECT * FROM member;
+DELETE FROM member;
+DROP TABLE member;
+
 -- 검색한 결과 반환
 SELECT * from board
 WHERE writer LIKE '%user1%'
@@ -62,3 +66,4 @@ or item_detail LIKE '%설명8%';
             or b1_0.writer LIKE 1 escape '!'
         ) 
         and b1_0.bno>0
+member

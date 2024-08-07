@@ -3,7 +3,6 @@ package com.spring.MyProject.service;
 import com.spring.MyProject.dto.PageRequestDTO;
 import com.spring.MyProject.dto.PageResponseDTO;
 import com.spring.MyProject.dto.ReplyDTO;
-import com.spring.MyProject.entity.Board;
 import com.spring.MyProject.entity.Reply;
 import com.spring.MyProject.repository.BoardRepository;
 import com.spring.MyProject.repository.ReplyRepository;
@@ -26,9 +25,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReplyServiceImpl implements ReplyService {
 
+    private final BoardRepository boardRepository;
     private final ReplyRepository replyRepository;
     private final ModelMapper modelMapper;
-    private final BoardRepository boardRepository;
 
 
     // 1. 댓글 등록
@@ -80,6 +79,7 @@ public class ReplyServiceImpl implements ReplyService {
     // 4. 댓글 삭제
     @Override
     public void remove(Long rno) {
+        log.info("reply remove rno:"+rno);
         replyRepository.deleteById(rno);
 
     }
@@ -87,10 +87,10 @@ public class ReplyServiceImpl implements ReplyService {
     // 5. 댓글 목록(페이징 기능이 있는 List)
     @Override
     public PageResponseDTO<ReplyDTO> getListBoard(Long bno, PageRequestDTO pageRequestDTO) {
-        
-        // PageREquest.of(0,10, 설정 옵션)
+
+        //  PageRequest.of(0, 10, 정렬옵션)
         Pageable pageable = PageRequest.of(
-                pageRequestDTO.getPage() <= 0 ? 0 : pageRequestDTO.getPage() -1,
+                pageRequestDTO.getPage() <= 0 ? 0: pageRequestDTO.getPage() -1,
                 pageRequestDTO.getSize(),
                 Sort.by("rno").ascending());
 

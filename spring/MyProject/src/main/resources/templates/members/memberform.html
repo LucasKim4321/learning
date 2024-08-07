@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic}">
+
+<!-- 현재 페이지에서만 사용하는 컨텐츠(내용) 정의 -->
+<div layout:fragment="content">
+    <div class="container mt-4">
+        <h1>회원 등록</h1>
+        <hr>
+        <div>
+            <!-- 상위 태그에서 th:object="${memberDTO}" 를 쓰면 하위 태그에서 memberDTO를 *로 생략 (예 *{email} ) -->
+            <form id="memberForm" action="/members/new" method="post" th:object="${memberDTO}" >
+
+                <!-- 이메일 -->
+                <div class="mb-3 row">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10 d-flex">
+                        <input type="text" class="form-control me-4" id="email" name="email"
+                               th:field="*{email}">
+                        <div class="emailCheckBtnBox"><button type="button" class="btn btn-outline-secondary ms-auto" id="emailCheckBtn">EmailCheck</button></div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="form-text col-2">이메일 입력</div>
+                        <!-- 서버에서 필드에 대한 유효성 검사 후 에러 메세지 처리하는 div -->
+                        <div id="emailCheckMsg" class="fieldError"></div>
+                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError"></div>
+                    </div>
+                </div>
+
+                <!-- 비밀번호 -->
+                <div class="mb-3 row">
+                    <label for="pwd" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="pwd" name="pwd"
+                               th:field="*{password}">
+                    </div>
+                    <div class="d-flex">
+                        <div class="form-text col-2">비밀번호 입력</div>
+                        <!-- 서버에서 필드에 대한 유효성 검사 후 에러 메세지 처리하는 div -->
+                        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></div>
+                    </div>
+                </div>
+
+                <!-- 이름 -->
+                <div class="mb-3 row">
+                    <label for="name" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="name" name="name"
+                               th:field="*{name}">
+                    </div>
+                    <div class="d-flex">
+                        <div class="form-text col-2">이름 입력</div>
+                        <!-- 서버에서 필드에 대한 유효성 검사 후 에러 메세지 처리하는 div -->
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError"></div>
+                    </div>
+                </div>
+
+                <!-- 주소 -->
+                <div class="mb-3 row">
+                    <label for="address" class="col-sm-2 col-form-label">Address</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="address" name="address"
+                               th:field="*{address}">
+                    </div>
+                    <div class="d-flex">
+                        <div class="form-text col-2">주소 입력</div>
+                        <!-- 서버에서 필드에 대한 유효성 검사 후 에러 메세지 처리하는 div -->
+                        <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="fieldError"></div>
+                    </div>
+                </div>
+
+
+
+<!--                <div class="mb-3 row">-->
+<!--                    <label for="id" class="col-sm-2 col-form-label">ID</label>-->
+<!--                    <div class="col-sm-8">-->
+<!--                        <input type="text" class="form-control" id="id" name="id">-->
+<!--                    </div>-->
+<!--                    <div class="col">-->
+<!--                        <button type="button" class="btn btn-outline-primary" id="idCheck">ID Check</button>-->
+<!--                    </div>-->
+<!--                    <div class="d-flex">-->
+<!--                        <div class="form-text col-2">4자이상. 숫자, 영문자 혼용. 첫자는 영문</div>-->
+<!--                        <div class="ms-auto" id="message"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <div class="d-flex">
+                    <button type="button" id="cancel" class="btn btn-outline-danger ms-auto">cancel</button>
+                    <button type="submit" id="submit" class="btn btn-outline-success ms-3">submit</button>
+                </div>
+
+                <!--  CSRF 토큰: Cross-site Request Forgery (크로스 사이트간 요청 위조) -->
+<!--                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>-->
+            </form>
+        </div>
+
+        <hr>
+        <h2>MemberController에서 생성된 memberDTO: [[${memberDTO}]]</h2>
+
+    </div> <!-- end class="container" -->
+
+</div> <!-- end fragment="content" -->
+
+<!-- 현재 페이지에서만 사용하는 css 정의 -->
+<style layout:fragment="mystyle" th:inline="css">
+    .fieldError{
+        color: lightsalmon;
+        font-size: 0.7em;
+    }
+    .emailCheckBtnBox {
+        width: 110px;
+    }
+    /*.col-form-label {*/
+    /*    width: 130px;*/
+    /*}*/
+</style>
+
+<!-- 현재 페이지에서만 사용하는 script 정의 -->
+<script layout:fragment="myscript" th:inline="javascript">
+    // var emailCheckBtn = document.querySelector('#emailCheckBtn');
+    var emailCheckMsg = document.querySelector('#emailCheckMsg');
+    var errorMessage = [[${errorMessage}]]  // 서버에서 전송한 에러 메시지
+    if(errorMessage!="" || errorMessage.length > 0) {
+        emailCheckMsg.innerHTML = errorMessage;
+        console.log(errorMessage);
+    }
+</script>
+
+</html>

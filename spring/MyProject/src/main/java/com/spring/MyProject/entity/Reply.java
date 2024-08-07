@@ -20,7 +20,7 @@ public class Reply extends BaseEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
 //    @GeneratedValue(strategy= GenerationType.AUTO)
-    private long rno;
+    private Long rno;
 
     // 현재 댓글의 필드명은 엔티티_필드명(PK)으로 자동으로 생성 => board_bno
     // @ManyToOne 이랑 board는 필수
