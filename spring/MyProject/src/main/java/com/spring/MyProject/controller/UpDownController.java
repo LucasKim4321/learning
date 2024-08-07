@@ -21,9 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @Log4j2
@@ -112,8 +110,35 @@ public class UpDownController {
         return ResponseEntity.ok().headers(headers).body(resource);
     }
 
-    // image view
-//    @Operation(summary="remove 파일", description="DELETE방식으로 첨부파일 삭제")
-//    @GetMapping(value="/remove/{fileName}")
+    // image remove: 첨부파일 삭제
+    @Operation(summary="remove 파일", description="DELETE방식으로 첨부파일 삭제")
+    @GetMapping(value="/remove/{fileName}")
+    public Map<String, Boolean> removeFile(@PathVariable String fileName) {
+
+        Resource resource = new FileSystemResource(uploadPath+ File.separator+fileName);
+        // "C:\\javaStudy\\upload"+"\\"+"a.jpg"
+        String resourcename = resource.getFilename();
+
+        Map<String, Boolean> resultMap = new HashMap<>();
+        boolean removed = false;
+
+        try {
+            String contentType = Files.probeContentType(resource.getFile().toPath());
+            removed = resource.getFile().delete();
+
+            // 썸네일이 존재하면
+            log.info("==> contentType: "+contentType);
+            if(contentType.startsWith("image")) {
+                File thumbnilfile = new File((uploadPath+File.separator+"s_"+fileName));
+                thumbnilfile.delete();
+            }
+
+        } catch(Exception e) {
+            log.error(e.getMessage());
+        }
+
+        resultMap.put("result", removed);
+        return resultMap;
+    }
 
 }

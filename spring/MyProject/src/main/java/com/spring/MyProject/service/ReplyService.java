@@ -30,6 +30,7 @@ public interface ReplyService {
         Board board = Board.builder().bno(replyDTO.getBno()).build();
 
         Reply reply = Reply.builder()
+                .rno(replyDTO.getRno())
                 .replyText(replyDTO.getReplyText())
                 .replyer(replyDTO.getReplyer())
                 .board(board)
@@ -43,9 +44,11 @@ public interface ReplyService {
 
         ReplyDTO replyDTO = ReplyDTO.builder()
                 .rno(reply.getRno())
+
                 .replyText(reply.getReplyText())
                 .replyer(reply.getReplyer())
                 .bno(reply.getBoard().getBno())
+
                 .regDate(reply.getRegDate())
                 .modDate(reply.getModDate())
                 .build();

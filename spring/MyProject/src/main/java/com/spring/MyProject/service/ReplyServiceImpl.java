@@ -70,7 +70,7 @@ public class ReplyServiceImpl implements ReplyService {
         Reply reply = replyOptional.orElseThrow();
         
         // 댓글 내용 수정
-        reply. changeText(replyDTO.getReplyText());
+        reply.changeText(replyDTO.getReplyText());
 
         // DB 반영
         replyRepository.save(reply);
