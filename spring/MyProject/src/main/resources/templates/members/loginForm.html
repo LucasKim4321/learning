@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic}">
+
+<!-- 현재 페이지에서만 사용하는 컨텐츠(내용) 정의 -->
+<div layout:fragment="content">
+    <div class="container">
+        <div class="formBox mx-auto">
+            <form action="/members/login" method="post" id="loginForm">
+                <h2 class="my-5 mb-3 text-center">로그인</h2>
+                <!-- 이메일 -->
+                <div class="row my-5 mb-3">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="email" name="email">
+                    </div>
+                    <div class="d-flex">
+                        <div class="form-text col-2">이메일 입력</div>
+                    </div>
+                </div>
+                <!-- 비밀번호 -->
+                <div class="mb-3 row">
+                    <label for="password" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <div class="d-flex">
+                        <div class="form-text col-2">비밀번호 입력</div>
+                    </div>
+                </div>
+
+                <!-- 로그인 실패시 서버에 전송 에러 메시지 출력 -->
+                <p th:if="${loginErrorMsg}" class="fieldError" th:text="${loginErrorMsg}">Incorrect data</p>
+
+                <!-- 아이디 기억하기 체크 -->
+                <div class="mb-3 ">
+                <input type="checkbox" class="form-checkbox"
+                       name="remember-me" id="auto"></input>
+                <label for="auto">Remember me</label>
+                </div>
+
+                <div>
+                    <div><button type="submit" class="btn btn-outline-success opacity-50 w-100 mb-3">Login</button></div>
+                    <div><button type="button" class="btn btn-outline-primary opacity-50 w-100 mb-3">SignUp</button></div>
+                    <div><button type="button" class="btn btn-outline-danger opacity-50 w-100 mb-3">Cancel</button></div>
+                </div>
+                <!--
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                -->
+            </form>
+        </div>
+
+    </div>
+</div> <!-- end fragment="content" -->
+
+<!-- 현재 페이지에서만 사용하는 css 정의 -->
+<style layout:fragment="mystyle" th:inline="css">
+    .formBox {
+        width: 650px;
+    }
+    .form-text {
+        font-size: 0.7em;
+    }
+    .fieldError {
+        color: lightsalmon;
+        font-size: 0.7em;
+    }
+</style>
+
+<!-- 현재 페이지에서만 사용하는 script 정의 -->
+<script layout:fragment="myscript" th:inline="javascript">
+</script>
+
+</html>

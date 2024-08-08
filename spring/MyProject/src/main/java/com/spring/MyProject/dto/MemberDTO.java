@@ -18,7 +18,7 @@ public class MemberDTO {
     @Email(message = "이메일 형식으로 입력해라옹~")
     private String email;
     @NotBlank(message = "비밀번호는 필수 입력 값이다옹~")
-    @Length(min=8, max=16, message = "비밀번호는 8자 이상 16자 이하로 입력해라옹~")
+    @Length(min=4, max=16, message = "비밀번호는 4자 이상 16자 이하로 입력해라옹~")
     private String password;
     @NotBlank(message = "주소는 필수 입력 값이다옹~")
     private String address;

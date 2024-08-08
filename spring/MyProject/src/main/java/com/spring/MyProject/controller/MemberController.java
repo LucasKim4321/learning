@@ -1,10 +1,8 @@
 package com.spring.MyProject.controller;
 
 import com.spring.MyProject.dto.MemberDTO;
-import com.spring.MyProject.entity.Member;
 import com.spring.MyProject.service.MemberService;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +25,7 @@ public class MemberController {
 
     // 회원 등록 : GET POST
     @GetMapping(value="/new")
-    public String memberRegisterform(Model model) {
+    public String memberRegisterForm(Model model) {
 
         // 데이터가 없는 memberDTO to 생성: form에 입력한 데이터와 1:1 맵핑
         model.addAttribute("memberDTO", new MemberDTO());
@@ -44,7 +42,7 @@ public class MemberController {
 
         log.info("==> memberDTO: "+memberDTO);
 
-        if (bindingResult.hasErrors()) {  // 유효성 검사 결과 1개 이상 에러가 있으면 처리
+        if (bindingResult.hasErrors()) {  // 유효성 검사결과 1개이상 에러가 있으면 처리
             log.info("\n에러다옹!!!\n==> bindingResult.toString: "+bindingResult.toString());
 
             return "members/memberForm";
@@ -60,6 +58,7 @@ public class MemberController {
             memberService.saveMember2(memberDTO);
 
         } catch (Exception e) {  // 중복된 이메일 등록시 예외 발생되는 Exception 처리
+            // validateDuplicateMember(Member member)에서 발생한 에러 메시지를 보내줌
             model.addAttribute("errorMessage",e.getMessage());
             return "members/memberForm";  // 입력폼으로 포워딩
         }
@@ -67,5 +66,28 @@ public class MemberController {
         return "redirect:/board/list";
     }
 
+    //----------------------- //
+    // 로그인, 로그아웃 처리
+    //----------------------- //
+
+    // 1. 로그인 처리
+    @GetMapping(value="/login")
+    public String loginMember(String error, String logout) {
+        log.info("==> login ");
+
+        return "/members/loginForm";
+    }
+
+    // 1-1. 로그인 실패시 처리할 url
+    @GetMapping("/login/error")
+    public String loginError(Model model) {
+        log.info("==> loginError");
+
+        model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해라옹~");
+
+        return "/members/loginForm";
+    }
+
+    // 로그아웃 처리
 
 }

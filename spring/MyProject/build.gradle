@@ -39,7 +39,7 @@ repositories {
 dependencies {
 	// 로그인 제약 라이브러리 spring-boot-starter-security  기본제공 아이디 user 비밀번호 로그창에 랜덤하게 생성
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security
-	implementation 'org.springframework.boot:spring-boot-starter-security:3.3.2'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -48,21 +48,10 @@ dependencies {
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	
-	// 2. QueryDsl 관련 라이브러리
-	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
-	annotationProcessor(
-			"jakarta.persistence:jakarta.persistence-api",
-			"jakarta.annotation:jakarta.annotation-api",
-			"com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
-	
-	
-	// springboot 3xx 이후 : springfox-swagger-ui: Rest API 테스트 라이브러리
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+
+
 	// spring-boot-starter-validation: 서버 유효성 검사 라이브러리
 	implementation 'org.springframework.boot:spring-boot-starter-validation:3.3.2'
-
-
 	// modelmapper
 	// https://mvnrepository.com/artifact/org.modelmapper/modelmapper
 	implementation 'org.modelmapper:modelmapper:3.2.1'
@@ -70,25 +59,46 @@ dependencies {
 	// https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
+
+	// springboot 3xx 이후 : springfox-swagger-ui: Rest API 테스트 라이브러리
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 	// 썸네일
 	// https://mvnrepository.com/artifact/net.coobird/thumbnailator
 	implementation 'net.coobird:thumbnailator:0.4.20'
+	// CSRF토큰: thymelef에서 인증 관련 라이브러리
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.2.RELEASE'
+
+
+	// spring-boot-devtools
+	//implementation 'org.springframework.boot:spring-boot-devtools:3.3.2'
 
 
 	// 테스트 관련
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-
 	// IntelliJ에서 테스트 할 때는 따로 인식 시켜줘야함 (이클립스는 필요없음)
 	// IntelliJ gradle 적용시 필수(
 	testAnnotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.projectlombok:lombok'
+	// 보안 테스트
+	// https://mvnrepository.com/artifact/org.springframework.security/spring-security-test
+	testImplementation 'org.springframework.security:spring-security-test:6.3.1'
+
+
+	// 2. QueryDsl 관련 라이브러리
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
+	annotationProcessor(
+			"jakarta.persistence:jakarta.persistence-api",
+			"jakarta.annotation:jakarta.annotation-api",
+			"com.querydsl:querydsl-apt:${queryDslVersion}:jakarta")
+
 }
+
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
 
 // 3. QueryDsl
 sourceSets {

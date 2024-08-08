@@ -23,11 +23,11 @@ public class Member {
     private String email;
     private String password;
     private String address;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)  // enum 사용시
     private Role role;
 
     // Member Entity 생성자
-    // createMember(): dto -> Entity
+    // 1.방법 : createMember():  dto -> entity
     public static Member createMember(MemberDTO memberDTO,
                                       PasswordEncoder passwordEncoder) {  // PasswordEncoder 페스워드 인코더 처리가능한 객체
         Member member = new Member();
@@ -41,6 +41,6 @@ public class Member {
         member.setPassword(password);
         member.setRole(Role.USER);
 
-        return null;
+        return member;
     }
 }
