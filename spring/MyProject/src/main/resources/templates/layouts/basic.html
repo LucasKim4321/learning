@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout">
@@ -31,6 +32,9 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- 메뉴 -->
+            <!-- sec:authorize 속성을 통해 특정 요소(태그)를 활성화, 비활성화 설정 -->
+            <!-- 변경 전 sec:authorize ="hasAnyAuthority('ROLE_USER')" -->
+            <!-- 변경 후 sec:authorize ="hasAnyAuthority('USER')" -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
@@ -39,27 +43,27 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/item/new"
-                           sec:authorize ="hasAnyAuthority('ADMIN')"
+                           sec:authorize ="hasAnyAuthority('ROLE_ADMIN')"
                            th:href="@{/admin/item/new}">상품등록</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin/items"
-                           sec:authorize ="hasAnyAuthority('ADMIN')"
+                           sec:authorize ="hasAnyAuthority('ROLE_ADMIN')"
                            th:href="@{/admin/items}">상품관리</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/cart"
+                        <a class="nav-link" href="/guest/cart"
                            sec:authorize ="isAnonymous()"
                            th:href="@{/cart}">(비회원)장바구니</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/cart"
-                           sec:authorize ="hasAnyAuthority('USER')"
+                        <a class="nav-link" href="/user/cart"
+                           sec:authorize ="hasAnyAuthority('ROLE_USER')"
                            th:href="@{/cart2}">(유저)장바구니</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/orders"
-                           sec:authorize ="hasAnyAuthority('USER')"
+                        <a class="nav-link" href="/user/orders"
+                           sec:authorize ="hasAnyAuthority('ROLE_USER')"
                            th:href="@{/orders}">구매이력</a>
                     </li>
                     <li class="nav-item">
@@ -78,7 +82,7 @@
                            th:href="@{/members/logout}">로그아웃</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"
+                        <a class="nav-link" href="/members/read"
                            sec:authorize ="isAuthenticated()">회원정보수정</a>
                     </li>
 
@@ -157,7 +161,7 @@
         </nav>
 
         <!-- Page content: 바뀌는 콘텐츠 영역을 불러오기 -->
-        <div class="container-fluid style_check" layout:fragment="content" >
+        <div class="container-fluid style_check myContent" layout:fragment="content" >
 
         </div>
 

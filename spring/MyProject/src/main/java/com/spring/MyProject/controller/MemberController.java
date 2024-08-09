@@ -5,14 +5,13 @@ import com.spring.MyProject.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -75,6 +74,7 @@ public class MemberController {
     public String loginMember(String error, String logout) {
         log.info("==> login ");
 
+        // 로그인 페이지로 포워딩
         return "/members/loginForm";
     }
 
@@ -88,6 +88,9 @@ public class MemberController {
         return "/members/loginForm";
     }
 
-    // 로그아웃 처리
+    // 로그아웃 처리 CustomSecurityConfig에서 설정함
+
+
+
 
 }

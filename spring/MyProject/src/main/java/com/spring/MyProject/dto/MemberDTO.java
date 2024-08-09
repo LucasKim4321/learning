@@ -1,5 +1,6 @@
 package com.spring.MyProject.dto;
 
+import com.spring.MyProject.constant.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -22,5 +23,9 @@ public class MemberDTO {
     private String password;
     @NotBlank(message = "주소는 필수 입력 값이다옹~")
     private String address;
+
+    // 사용자 정의 User 객체(AuthMemberDTO) 생성해서 사용
+    // Role data 임시 저장 용
+    private Role role;
 
 }

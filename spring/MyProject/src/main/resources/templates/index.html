@@ -1,75 +1,211 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Simple Sidebar - Start Bootstrap Template</title>
 
-<html lang="ko"
-      xmlns:th="http://www.thymeleaf.org">
+    <!-- 전체페이지에서 공통을 사용되는 css인경우 :  Core theme CSS (includes Bootstrap) -->
+    <link href="css/styles.css"
+          th:href="@{/css/styles.css}" rel="stylesheet" />
 
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Simple Sidebar - Start Bootstrap Template</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
-    </head>
-    <body>
-        <div class="d-flex" id="wrapper">
-            <!-- Sidebar-->
-            <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light">Start Bootstrap</div>
-                <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
+    <!-- css import : 특정 페이지에서 사용되는 css인경우 -->
+    <th:block layout:fragment="mystyle"></th:block>
+
+    <style>
+    </style>
+
+</head>
+
+<body>
+    <!-- Navigation bar 상단 메뉴바-->
+    <div class="fixed-top">  <!-- 최상단 고정 fixed-top, 최하단 고정 fixed-bottom -->
+        <nav class="navbar navbar-expand-lg bg-light navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">MyShop</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <!-- 메뉴 -->
+                <!-- sec:authorize 속성을 통해 특정 요소(태그)를 활성화, 비활성화 설정 -->
+                <!-- 변경 전 sec:authorize ="hasAnyAuthority('ROLE_USER')" -->
+                <!-- 변경 후 sec:authorize ="hasAnyAuthority('USER')" -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/"
+                               th:href="@{/}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/item/new"
+                               sec:authorize ="hasAnyAuthority('ROLE_ADMIN')"
+                               th:href="@{/admin/item/new}">상품등록</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/items"
+                               sec:authorize ="hasAnyAuthority('ROLE_ADMIN')"
+                               th:href="@{/admin/items}">상품관리</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/guest/cart"
+                               sec:authorize ="isAnonymous()"
+                               th:href="@{/cart}">(비회원)장바구니</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/cart"
+                               sec:authorize ="hasAnyAuthority('ROLE_USER')"
+                               th:href="@{/cart2}">(유저)장바구니</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/orders"
+                               sec:authorize ="hasAnyAuthority('ROLE_USER')"
+                               th:href="@{/orders}">구매이력</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/members/new"
+                               sec:authorize ="isAnonymous()"
+                               th:href="@{/members/new}">회원가입</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/members/login"
+                               sec:authorize ="isAnonymous()"
+                               th:href="@{/members/login}">로그인</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/members/logout"
+                               sec:authorize ="isAuthenticated()"
+                               th:href="@{/members/logout}">로그아웃</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/members/read"
+                               sec:authorize ="isAuthenticated()">회원정보수정</a>
+                        </li>
+
+                        <!-- sec:authorize ="hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')" -->
+                        <!-- sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" -->
+
+                        <!-- 드롭다운 메뉴
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
+                        -->
+                        <!-- 비활성화 메뉴
+                        <li class="nav-item">
+                            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        </li>
+                        -->
+                    </ul>
+                    <!-- 검색 창 -->
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </form>
                 </div>
             </div>
-            <!-- Page content wrapper-->
-            <div id="page-content-wrapper">
-                <!-- Top navigation-->
-                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                    <div class="container-fluid">
-                        <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                                <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Action</a>
-                                        <a class="dropdown-item" href="#!">Another action</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#!">Something else here</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-                <!-- Page content-->
-                <div class="container-fluid">
-                    <h1 class="mt-4">Simple Sidebar</h1>
-                    <h1>Thymeleaf Index</h1>
-                    <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-                    <p>
-                        Make sure to keep all page content within the
-                        <code>#page-content-wrapper</code>
-                        . The top navbar is optional, and just for demonstration. Just create an element with the
-                        <code>#sidebarToggle</code>
-                        ID which will toggle the menu when clicked.
-                    </p>
-                </div>
+        </nav>
+    </div>
+    <!-- start bootstrap simple sidebar -->
+    <div class="d-flex" id="wrapper">
+        <!-- Sidebar 왼쪽메뉴바 -->
+        <!-- <div th:replace="~{fragments/header::sidebar}"></div> -->
+        <div class="border-end bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading border-bottom bg-light">Start Bootstrap</div>
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/members}" href="/members">회원관리</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" th:href="@{/board/list}" href="/board/list">게시판</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
             </div>
         </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js" th:src="@{/js/scripts.js}"></script>
+
+        <!-- Page content wrapper-->
+        <div id="page-content-wrapper">
+
+            <!-- Top navigation-->
+            <!-- <div th:replace="~{fragments/header::navbar}"></div> -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <div class="container-fluid">
+                    <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+                        <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                            <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#!">Action</a>
+                                    <a class="dropdown-item" href="#!">Another action</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#!">Something else here</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- content -->
+            <div class="container-fluid myContent">
+                <div sec:authorize="isAuthenticated()">
+                    <h1>[[${#authentication.principal.username}]]님 안녕하세요오~~~</h1>
+                </div>
+                <hr>
+                <div sec:authorize="isAuthenticated()">  <!-- 권한이 없으면 아예 없는 태그로 침 -->
+           <!-- <div th:if="${#authentication.principal != 'anonymousUser'}"> --> <!-- 미등록 사용자가 아니면 -->
+                    <h2>스프링 시큐리티를 사용하는 경우 Authentication 타입을 이용해서 사용자 정보 불러오기</h2>
+                    <h3>Authentication 정보 추출</h3>
+                    <div th:text="${#authentication}"></div>
+                    <h3>Authentication.principal 정보 추출</h3>
+                    <div th:text="${#authentication.principal}"></div>
+                    <h3>Authentication.principal.authorities 정보 추출</h3>
+                    <!-- 로그인 상태가 아닐 시 authorities 값이 undefined가 되서 에러가 남-->
+                    <div th:text="${#authentication.principal.authorities}"></div>
+                    <h3>Authentication.principal.username 정보 추출</h3>
+                    <div th:text="${#authentication.principal.username}"></div>
+                    <h3>Authentication.principal.password 정보 추출</h3>
+                    <div th:text="${#authentication.principal.password}"></div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <div th:replace="~{fragments/footer::footer}"></div>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js" th:src="@{/js/scripts.js}"></script>
+
+    <script th:inline="javascript">
+        console.log("index.html");
+        // ---------------------------------------------------------------------- //
+        // 스프링 시큐리티를 사용하는 경우 Authentication 타입을 이용해서 사용자 정보를 추출
+        // ---------------------------------------------------------------------- //
+        const auth = [[${#authentication}]]
+        console.log("authentication : ",auth);  // authentication 정보 출력
+        console.log("authentication.principal : ",auth.principal);  // 로그인 시 로그인 사용자 정보가 나옴
+        console.log("authentication.principal.authorities : ",auth.principal.authorities);  // 사용자가 가진 권한이 배열 구조로 표시되고 정보가 자세히 보임
+        // ---------------------------------------------------------------------- //
+    </script>
+
+
     </body>
 </html>

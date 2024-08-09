@@ -20,6 +20,11 @@ SELECT * FROM member;
 DELETE FROM member;
 DROP TABLE member;
 
+SHOW COLUMNS FROM member_role_set;
+SELECT * FROM member_role_set;
+DELETE FROM member_role_set;
+DROP TABLE member_role_set;
+
 -- 검색한 결과 반환
 SELECT * from board
 WHERE writer LIKE '%user1%'

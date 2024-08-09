@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -21,9 +23,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import java.io.IOException;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity // 스프링 시큐리티 필터가 스프링 필터체인에 등록이 됨.
 @Log4j2
 @RequiredArgsConstructor
+//@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)  // 바뀌기전 어노테이션 (언제 사라질지 모름)
+//@EnableGlobalMethodSecurity가 @EnableMethodSecurity로 바뀜  Global만 빼면됨
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 // 사용자 지정 로그인 설정
 public class CustomSecurityConfig {
 
@@ -47,7 +52,7 @@ public class CustomSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .formLogin(login -> {
                     login.loginPage("/members/login")             // 로그인 처리할 url 설정
-                            .defaultSuccessUrl("/board/list")                   // 로그인 성공시 url 설정
+                            .defaultSuccessUrl("/")                   // 로그인 성공시 url 설정
                             .usernameParameter("email")               // 웹의 username의  매개변수이름 설정
                             .passwordParameter("password")            // 웹의 password의  매개변수이름 설정
                             //.loginProcessingUrl("/members/login")   // 웹 로그인창의 form action값 설정
@@ -59,7 +64,7 @@ public class CustomSecurityConfig {
                                 @Override
                                 public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                                     log.info("==> authentication: "+authentication.getName());
-                                    response.sendRedirect("/board/list");
+                                    response.sendRedirect("/");
                                 }
                             })
                             .failureHandler(new AuthenticationFailureHandler(){
