@@ -21,12 +21,15 @@ public class AuthMemberDTO extends User {
     private String address;
 
     // <? extends GrantedAuthority>  GrantedAuthority를 상속받은 모은 하위요소
-    public AuthMemberDTO(
-            String name,
-            String address,
-            String username,
-            String password,
-            Collection<? extends GrantedAuthority> authorities
+    public AuthMemberDTO(  // 생성자에 전달 받는 매개변수와 인자값 // customUserDetailsService에서 사용
+            // 새로 추가하는 값
+            String name,        // member.getName()
+            String address,     // member.getAddress()
+                          
+            // 기본적으로 필요한 값
+            String username,    // member.getEmail()
+            String password,    // member.getPassword()
+            Collection<? extends GrantedAuthority> authorities  // member.getRoleSet()
             ) {
 
 

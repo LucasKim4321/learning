@@ -5,7 +5,9 @@ import com.spring.MyProject.dto.BoardListReplyCountDTO;
 import com.spring.MyProject.dto.PageRequestDTO;
 import com.spring.MyProject.dto.PageResponseDTO;
 import com.spring.MyProject.entity.Board;
+import com.spring.MyProject.entity.Reply;
 import com.spring.MyProject.repository.BoardRepository;
+import com.spring.MyProject.repository.ReplyRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -27,6 +29,7 @@ public class BoardServiceImpl implements BoardService {
     // @RequiredArgsConstructor + final 변수 == @Autowired된 변수랑 똑같음
     private final ModelMapper modelMapper;
     private final BoardRepository boardRepository;
+    private final ReplyRepository replyRepository;
 
     // 게시글 등록
     @Override
@@ -74,6 +77,8 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void remove(Long bno) {
 
+//        replyRepository.listOfBoard2(bno);
+//        replyRepository.deleteAllById();
         boardRepository.deleteById(bno);
 
     }

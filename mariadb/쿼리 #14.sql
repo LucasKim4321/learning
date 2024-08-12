@@ -25,6 +25,19 @@ SELECT * FROM member_role_set;
 DELETE FROM member_role_set;
 DROP TABLE member_role_set;
 
+SHOW COLUMNS FROM persistent_logins;
+SELECT * FROM persistent_logins;
+DELETE FROM persistent_logins;
+DROP TABLE persistent_logins;
+
+CREATE TABLE persistent_logins (
+	username 	VARCHAR(64) NOT NULL,
+	series 		VARCHAR(64) PRIMARY KEY,
+	token 		VARCHAR(64) NOT NULL,
+	last_used	TIMESTAMP 	NOT NULL
+);
+
+ALTER TABLE persistent_login RENAME persistent_logins;
 
 -- 검색한 결과 반환
 SELECT * from board

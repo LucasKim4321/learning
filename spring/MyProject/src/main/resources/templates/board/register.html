@@ -31,7 +31,8 @@
                 <div class="mb-3 row">
                     <label for="writer" class="col-form-label ps-4">writer</label>
                     <div class="col">
-                        <input type="text" class="form-control" id="writer" name="writer">
+                        <input type="text" class="form-control" id="writer" name="writer" readonly
+                        th:value="${#authentication.principal.name}">
                     </div>
                 </div>
 

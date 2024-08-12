@@ -119,6 +119,8 @@ public class BoardController {
                                PageRequestDTO pageRequestDTO,
                                RedirectAttributes redirectAttributes) {
 
+        log.info("==> boardDTO: "+boardDTO);  // 갑자기 값이 비어있음
+
         // 수정 페이지에서 넘겨받은 페이징 정보
         String link = pageRequestDTO.getLink();
 
@@ -128,6 +130,7 @@ public class BoardController {
 
             // addFlashAttribute() => 1회용 정보유지 : redirect방식으로 요청시 정보관리하는 객체
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());  // 한번 에러값을 보낸 후 없어짐
+            redirectAttributes.addAttribute("bno", boardDTO.getBno());
 
             // Get방식으로 board/modify+페이징정보 재요청
             return "redirect:/board/modify?"+link;
@@ -135,6 +138,7 @@ public class BoardController {
 
         // 수정 서비스 요청
         Board board = boardService.modify(boardDTO);
+        log.info("==> bno123: "+board.getBno());
 
         redirectAttributes.addFlashAttribute("bno", board.getBno());
         redirectAttributes.addFlashAttribute("result", "modified");

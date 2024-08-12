@@ -1,5 +1,6 @@
 package com.spring.MyProject.config;
 
+import com.spring.MyProject.service.CustomUserDetailsService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,8 +19,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import javax.sql.DataSource;
 import java.io.IOException;
 
 @Configuration
@@ -31,6 +35,10 @@ import java.io.IOException;
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 // 사용자 지정 로그인 설정
 public class CustomSecurityConfig {
+
+    // 4-1 자동 로그인에 필요한 객체 설정
+    private final DataSource dataSource;
+    private final CustomUserDetailsService customUserDetailsService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -45,6 +53,19 @@ public class CustomSecurityConfig {
 
         // 1. CSRF요청 비활성화: 개발 테스트 비활성화
 //        http.csrf(c->c.disable());  // 권환 설정 비활성화
+
+        // 4-2 자동 로그인에 필요한 설정
+
+        http.rememberMe(rememberMe->
+                rememberMe
+                        .key("12345678")
+                        .tokenRepository(persistentTokenRepository())  // rememberMe 쿠키의 값을 인코딩하기 위한 키(key), 필요한 정보를 저장하는 tokenRepository를 지정
+                        .userDetailsService(customUserDetailsService)
+//                        .tokenValiditySeconds(10)  // 10초
+                        .tokenValiditySeconds(60*60*24*30)  // 30일 유효(초*분*시간*일)
+//                        .rememberMeParameter("remember")  // 생략시 기본파라미터 명은 "remember-me", <input type='checked' name='파라미터명'>
+//                        .alwaysRemember(true)  // 리멤버 미 기능이 활성화되지 않아도 항상 실행
+        );
 
         // 2. 인증 과정 처리
 
@@ -103,6 +124,15 @@ public class CustomSecurityConfig {
 //        .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
 //  }
 
+    // 4-3 자동 로그인: 토큰
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+        repo.setDataSource(dataSource);
+
+        return repo;
+    }
+
 }
 
 /*
@@ -147,3 +177,24 @@ public class CustomSecurityConfig {
  *
  */
 
+
+/* 어노테이션 권한 설정
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,  // @Secured어노테이션 확성화 여부
+        prePostEnabled = true   // @PreAuthorized, @PostAuthorized 어노테이션 활성화 여부
+        )
+ */
+
+
+/*
+ * 자동 로그인 설정
+ * 자동 로그인 : 데이터베이스 적용=> 테이블 이름은 "persistent_logins" 으로 사용해야함.
+ *
+ CREATE TABLE persistent_logins (
+ 	username VARCHAR(64) NOT NULL,
+ 	series 	VARCHAR(64) PRIMARY KEY,
+ 	token 	VARCHAR(64) NOT NULL ,
+ 	last_used TIMESTAMP 	NOT NULL
+ );
+ *
+ */

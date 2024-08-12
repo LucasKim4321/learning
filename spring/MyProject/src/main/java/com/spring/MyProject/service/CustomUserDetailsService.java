@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;  // 자동 로그인 설정할 때 이거 때문에 에러남
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

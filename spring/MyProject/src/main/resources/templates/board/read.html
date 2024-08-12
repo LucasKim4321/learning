@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/basic}">
 
@@ -101,11 +102,12 @@
                         <button type="button" id="List" class="btn btn-outline-danger opacity-50 listBtn">list</button>
                     </a>
 
-                    <button type="button" id="Remove" class="btn btn-outline-danger opacity-50 removeBtn ms-auto">remove</button>
-
-                    <a th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="link-underline-none ms-1">
-                        <button type="button" id="Modify" class="btn btn-outline-danger opacity-50 modifyBtn">modify</button>
-                    </a>
+                    <th:block sec:authorize="${isAuthenticated()}" th:if="${dto.writer == #authentication.principal.name}">
+                        <button type="button" id="Remove" class="btn btn-outline-danger opacity-50 removeBtn ms-auto">remove</button>
+                        <a th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="link-underline-none ms-1">
+                            <button type="button" id="Modify" class="btn btn-outline-danger opacity-50 modifyBtn">modify</button>
+                        </a>
+                    </th:block>
 
                 </div>
             </form>

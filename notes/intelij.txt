@@ -1,5 +1,10 @@
 intellij setting
 
+plugins
+lombok
+spring boot assistant
+jpa buddy
+
 utf-8 check
 Editor-> File Encodings -> utf-8
 
@@ -7,7 +12,7 @@ build->compiler->annotation processors
 enable annotation processing
 
 이 설정 뭔가 문제있음 기본값 gradle로
-build->buildTools->gradle 
+build->buildTools->gradle
 build and run using intellij IDEA
 run tests using intellij IDEA
 
