@@ -13,9 +13,9 @@ import java.util.Set;
 @Table(name="member")  // 생략시 클래스명과 동일
 @Getter@Setter
 @ToString(exclude = "roleSet")
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Member {
 
     @Id
@@ -36,6 +36,7 @@ public class Member {
 
     // 사용자 정의 User 객체(AuthMemberDTO) 생성해서 사용
     // User 객체 및 Authentication 기능
+    // @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL})
     @ElementCollection(fetch = FetchType.LAZY)
     @Builder.Default
     private Set<Role> roleSet = new HashSet<>();

@@ -162,7 +162,7 @@
             <!-- content -->
             <div class="container-fluid myContent">
                 <div sec:authorize="isAuthenticated()">
-                    <h1>[[${#authentication.principal.username}]]님 안녕하세요오~~~</h1>
+                    <h1>[[${#authentication.principal.name}]]님 안녕하세요오~~~</h1>
                 </div>
                 <hr>
                 <div sec:authorize="isAuthenticated()">  <!-- 권한이 없으면 아예 없는 태그로 침 -->

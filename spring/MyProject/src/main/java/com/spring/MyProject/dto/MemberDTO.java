@@ -6,8 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
-@Getter@Setter
-@ToString
+@Getter@Setter@ToString
 @AllArgsConstructor
 @NoArgsConstructor  // 데이터가 없는 상태로 객체 생성함
 @Builder

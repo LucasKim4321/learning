@@ -84,7 +84,7 @@ public class CustomSecurityConfig {
 //        http.logout(Customizer.withDefaults());
         http.logout(logout -> {
             logout.logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
-                    .logoutSuccessUrl("/board/list")
+                    .logoutSuccessUrl("/")
                     .invalidateHttpSession(true); // 세션값 삭제
         });
 

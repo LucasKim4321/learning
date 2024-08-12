@@ -22,14 +22,16 @@ public interface MemberService {
         String password = passwordEncoder.encode(memberDTO.getPassword());
         member.setPassword(password);
 
+        // 1. 권한 설정이 1개 일 경우
         // 가입된 회원 권한 설정
         // Set<Role> 사용 전  (사용자 정의 User객체 만들기 전)
 //        member.setRole(Role.USER);
         //member.setRole(Role.ADMIN);
 //        member.setRole("ROLE_ADMIN");
 
+        // 2. 권한설정이 여러개 일 경우
         // Set<Role> 사용 후  (사용자 정의 User객체 만들기 전)
-        member.addRole(memberDTO.getRole());
+        member.addRole(Role.USER);
 
         return member;
     }

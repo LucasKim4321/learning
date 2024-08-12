@@ -42,6 +42,7 @@
                            th:href="@{/}">Home</a>
                     </li>
                     <li class="nav-item">
+                        <!-- ROLE_ADMIN을 소문자로 써도 대문자로 인식함 -->
                         <a class="nav-link" href="/admin/item/new"
                            sec:authorize ="hasAnyAuthority('ROLE_ADMIN')"
                            th:href="@{/admin/item/new}">상품등록</a>

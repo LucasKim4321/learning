@@ -22,6 +22,7 @@ public class AuthMemberDTO extends User {
 
     // <? extends GrantedAuthority>  GrantedAuthority를 상속받은 모은 하위요소
     public AuthMemberDTO(
+            String name,
             String address,
             String username,
             String password,
@@ -33,6 +34,7 @@ public class AuthMemberDTO extends User {
 
         this.email = username;
         this.address = address;
+        this.name = name;
 
     }
 

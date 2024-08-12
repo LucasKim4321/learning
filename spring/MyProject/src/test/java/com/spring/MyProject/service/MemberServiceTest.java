@@ -10,17 +10,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@Transactional
-//@TestPropertySource(locations="classpath:application-test.properties")  // 환경설정파일 따로 지정
+@Transactional //transaction begin, commit을 자동 수행해준다. 예외를 발생시키면, rollback 처리를 자동 수행해준다.
+//@Commit  // rollback 때문에 강제로 커밋
+@TestPropertySource(locations="classpath:application-test.properties")  // 환경설정파일 따로 지정
 @Log4j2
 public class MemberServiceTest {
 
@@ -79,7 +82,7 @@ public class MemberServiceTest {
 
     @Test
     @DisplayName("중복 회원 가입 테스트")
-    public void saveDuplicateMemberTest() {
+    public void saveDuplicateMemberTest() {  // 커밋 설정시 에러
 
         // 회원1
         Member member1 = createMember();
@@ -92,7 +95,10 @@ public class MemberServiceTest {
             memberService.saveMember(member2);  // 이메일 유무 체크에 걸려서 에러 발생
         });
 
-        assertEquals("이미 가입된 회원입니다.", e.getMessage());
+        // 예외 발생 메시지 동일 여부 확인
+//        assertEquals("이미 가입된 회원 입니다.",      e.getMessage());  // 틀린값으로 비교
+        assertEquals("이미 가입된 회원이다옹~",      e.getMessage());  // 맞는값으로 비교
+        log.info("=> e.getMessage():"+e.getMessage());
 
     }
 
@@ -102,7 +108,7 @@ public class MemberServiceTest {
         // 더미 data MemberDTO 생성
 
         MemberDTO memberDTO = MemberDTO.builder()
-                .email("test@email.com")
+                .email("test001@email.com")
                 .name("홍길동")
                 .address("부산시 진구")
                 .password("1234")
@@ -125,25 +131,30 @@ public class MemberServiceTest {
     @Test
     @DisplayName("Member Entity 생성 테스트")
     public void createMember3() {
+        //**
         // 클라이언트로부터 전달받은
         // 더미 data MemberDTO 생성
-        IntStream.rangeClosed(1, 10).forEach(i -> {
+        IntStream.rangeClosed(1, 20).forEach(i -> {
             Member member = Member.builder()
-                    .email("test"+i+"@email.com")
+                    .email("test"+i+"@gmail.com")
                     .name("홍길동"+i)
                     .address("부산시 진구")
                     .password(passwordEncoder.encode("1234"))
                     .build();
 
-            if (i < 6) {
-                member.addRole(Role.USER);
+            if (i >= 6 && i <= 10 ) {
+                member.addRole(Role.ADMIN);
             } else {
+                member.addRole(Role.USER);
+            }
+
+            if (i >= 16){
                 member.addRole(Role.ADMIN);
             }
 
             log.info("==> member.getRoleSet: "+member.getRoleSet());
 
-            // Member savedMember = memberRepository.save(member);
+            memberService.saveMember(member);
 
         });
 
@@ -161,6 +172,8 @@ public class MemberServiceTest {
         //Member member = Member.createMember(memberDTO, passwordEncoder);
 
         // 2. dto -> entity: MeberService 인터페이스 활용
+        // 저장 기능을 테스트 하기 위해 저장 전과 저장 후 값을 비교
+
         // save전 entity
         Member member = memberService.dtoToEntity(memberDTO, passwordEncoder );
         // save후 entity
@@ -170,10 +183,11 @@ public class MemberServiceTest {
         assertEquals(member.getEmail(),     savedMember.getEmail());
         assertEquals(member.getName(),     savedMember.getName());
         assertEquals(member.getAddress(),   savedMember.getAddress());
+        
         // 거의 동일한 로직이 적용 됬음에도 비밀번호 비교시 에러.
         // 패스워드 인코더가 같은 숫자라도 그때 그때 다르게 인코딩하는듯.
 //        assertEquals(member.getPassword(),  savedMember.getPassword());  // 인코딩 후 값을 놓고 비교해서 에러 걸림
-        assertEquals(member.getPassword(),  savedMember.getPassword());
+
 
         // Set<Role> 사용전  (사용자 정의 User객체 만들기 전)
 //        assertEquals(member.getRole(),      savedMember.getRole());
@@ -185,7 +199,7 @@ public class MemberServiceTest {
 
     @Test
     @DisplayName("중복 회원 가입 테스트")
-    public void saveMemberTest2(){
+    public void saveMemberTest2(){  // 커밋 설정시 에러남
 
         // 회원1
         MemberDTO memberDTO1 = createMember2();
@@ -206,4 +220,24 @@ public class MemberServiceTest {
         assertEquals("이미 가입된 회원이다옹~",      e.getMessage());  // 맞는값으로 비교
         log.info("=> e.getMessage():"+e.getMessage());
     }
+
+    // 회원 조회
+    @Test
+    @DisplayName("회원 조회 테스트")
+    public void insertMemberRead() {
+        // h2 테스트 시 필요
+        createMember3();
+        
+        IntStream.rangeClosed(14, 18).forEach(i-> {
+            String username = "test"+i+"@gmail.com";
+            log.info("==> username: "+username);
+
+            Member member = memberRepository.findByEmail(username);
+            log.info("member.getEmail: "+member.getEmail());
+
+            member.getRoleSet().forEach(role-> log.info("==> member role: "+role.name()));
+
+        });
+    }
+
 }

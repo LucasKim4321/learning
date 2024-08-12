@@ -71,13 +71,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         log.info("==> Member info: "+member);
 
         AuthMemberDTO authMemberDTO = new AuthMemberDTO(
+                member.getName(),
                 member.getAddress(),
                 member.getEmail(),
                 member.getPassword(),
                 member.getRoleSet()
                         .stream()
                         .map(role->
-                                new SimpleGrantedAuthority("Role_"+role.name())
+                                new SimpleGrantedAuthority("ROLE_"+role.name())  // 반드시 대문자로 설정
                         ).collect(Collectors.toList())
         );
 

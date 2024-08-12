@@ -6,6 +6,7 @@
     <title>mainPage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+        /* 기본틀 설정 */
         .myContainer {
             width: 100%;
         }
@@ -16,6 +17,13 @@
             overflow: hidden;
         }
 
+        /* 이미지 설정 */
+        .imgBox { overflow: hidden;}
+        .x_img { width: 100%;}
+        .y_img { height: 100%;}
+
+
+        /* 지금 부산에 가면 */
         .festivalList {
             width: 100%; height: 100%;
             display: flex;
@@ -28,6 +36,9 @@
         .f_rightImgBox {
             flex: 65%;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         .f_sliderBox {
             width:1800px;
@@ -47,7 +58,8 @@
             width: 100%;
         }
 
-        
+
+        /* 찾아가는 명소 */
         .goodPlaces {
             width: 100%; height: 100%;
             background-color: #E2F2FF;
@@ -61,6 +73,9 @@
         }
         .g_imgLine {
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
         }
         .line1 {
             width: 30%;
@@ -72,6 +87,8 @@
             width: 20%;
         }
 
+
+        /* 가이드 메뉴 */
         .guideMenu {
             width: 100%; height: 100%;
         }
@@ -81,6 +98,7 @@
         }
 
 
+        /* 부산 여행 사진집 */
         .travelPictures {
             width: 100%; height: 100%;
             padding: 80px 0;
@@ -95,7 +113,7 @@
         }
             
 
-        
+        /* 색다른 테마여행 */
         .outOfOrdinary {
             width: 100%; height: 100%;
             padding: 80px 0;
@@ -140,7 +158,7 @@
                     <div class="f_sliderBox d-flex">
                         <div class="f_post post1">
                             <!-- 이미지 position 셋팅 해서 가운데 꽉차게 -->
-                            <div class="f_img"><img src="images/f_img1.png"></div>
+                            <div class="imgBox f_img"><img class="y_img" src="images/f_img1.png"></div>
                             <!-- 이미지 위로 position 셋팅 -->
                             <div class="f_textBox">
                                 <div class="f_period">기간 2024.7.26(금) 2024.7.28(일)</div>
@@ -151,7 +169,7 @@
                             </div>
                         </div>
                         <div class="f_post post2">
-                            <div class="f_img"><img src="images/f_img2.gif"></div>
+                            <div class="imgBox f_img"><img class="y_img" src="images/f_img2.gif"></div>
                             <div class="f_textBox">
                                 <div class="f_period">기간 2024.7.27(토)</div>
                                 <div class="f_imgTitle">
@@ -161,7 +179,7 @@
                             </div>
                         </div>
                         <div class="f_post post3">
-                            <div class="f_img"><img src="images/f_img3.jpg"></div>
+                            <div class="imgBox f_img"><img class="y_img" src="images/f_img3.jpg"></div>
                             <div class="f_textBox">
                                 <div class="f_period">기간 2024.7.27(토) ~ 2024.9.22</div>
                                 <div class="f_imgTitle">
@@ -185,16 +203,16 @@
                 <div class="g_imgBox d-flex gap-5 justify-content-center">
                     <div class="g_imgLine line1">
                         <!-- 이미지 position 셋팅 해서 가운데 꽉차게 -->
-                        <div><img src="images/line1-1.jpg"></div>
-                        <div><img src="images/line2-1.jpg"></div>
+                        <div class="imgBox"><img class="x_img" src="images/line1-1.jpg"></div>
+                        <div class="imgBox"><img class="x_img" src="images/line2-1.jpg"></div>
                     </div>
                     <div class="g_imgLine line2">
-                        <div><img src="images/line2-1.jpg"></div>
-                        <div><img src="images/line2-2.png"></div>
+                        <div class="imgBox"><img class="x_img" src="images/line2-1.jpg"></div>
+                        <div class="imgBox"><img class="x_img" src="images/line2-2.png"></div>
                     </div>
                     <div class="g_imgLine line3">
-                        <div><img src="images/line3-1.png"></div>
-                        <div><img src="images/line3-2.png"></div>
+                        <div class="imgBox"><img class="x_img" src="images/line3-1.png"></div>
+                        <div class="imgBox"><img class="x_img" src="images/line3-2.png"></div>
                     </div>
                 </div>
             </div> <!-- goodPlaces -->
@@ -204,7 +222,7 @@
         <div class="myBox">
             <div class="guideMenu">
                 <!-- 이미지 position 셋팅 해서 가운데 꽉차게 -->
-                <div class="guide_imgBox"><img class="h-100" src="images/food.jpg"></div>
+                <div class="imgBox guide_imgBox"><img class="x_img" src="images/food.jpg"></div>
                 <!-- 이미지 위로 position 셋팅 -->
                 <div class="guide_text w-50">
                     <div>restaurant</div>
@@ -224,12 +242,12 @@
                 <div class="t_imgBox">
                     <div>
                         <!-- 이미지 position 셋팅 해서 가운데 꽉차게 -->
-                        <div><img src="images/cloudStroe.jpg"></div>
+                        <div class="imgBox"><img class="x_img" src="images/cloudStroe.jpg"></div>
                         <div>Buy 부산, bye 부산: 부산의 추억을 담아갈 수 있는 소품샵 3곳...</div>
                         <div>2024.07.12</div>
                     </div>
                     <div>
-                        <div><img src="images/breadShop.jpg"></div>
+                        <div class="imgBox"><img class="x_img" src="images/breadShop.jpg"></div>
                         <div>옵스(옵스)</div>
                         <div>2024.07.12</div>
                     </div>
@@ -251,12 +269,12 @@
                     <!-- 슬라이더 position 셋팅필요-->
                     <div class="o_imgSlide">
                         <!-- 이미지 position 셋팅 해서 가운데 꽉차게 -->
-                        <div><img src="images/o_img1.jpg"></div>
-                        <div><img src="images/o_img2.jpg"></div>
-                        <div><img src="images/o_img3.jpg"></div>
-                        <div><img src="images/o_img4.jpg"></div>
-                        <div><img src="images/o_img5.jpg"></div>
-                        <div><img src="images/o_img6.jpg"></div>
+                        <div class="imgBox"><img class="y_img" src="images/o_img1.jpg"></div>
+                        <div class="imgBox"><img class="y_img" src="images/o_img2.jpg"></div>
+                        <div class="imgBox"><img class="y_img" src="images/o_img3.jpg"></div>
+                        <div class="imgBox"><img class="y_img" src="images/o_img4.jpg"></div>
+                        <div class="imgBox"><img class="y_img" src="images/o_img5.jpg"></div>
+                        <div class="imgBox"><img class="y_img" src="images/o_img6.jpg"></div>
                     </div>
                 </div>
             </div> <!-- end outOfOrdinary-->
