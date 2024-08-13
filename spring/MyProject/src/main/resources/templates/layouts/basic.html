@@ -18,6 +18,9 @@
     <th:block layout:fragment="mystyle"></th:block>
 
     <style>
+        .loginMessage { color: lightsalmon; }
+        .fixed-top > navbar { position: relative; }
+        .searchFormBox { position: absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:30%}
     </style>
 
 </head>
@@ -35,7 +38,7 @@
             <!-- sec:authorize 속성을 통해 특정 요소(태그)를 활성화, 비활성화 설정 -->
             <!-- 변경 전 sec:authorize ="hasAnyAuthority('ROLE_USER')" -->
             <!-- 변경 후 sec:authorize ="hasAnyAuthority('USER')" -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse d-flex" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/"
@@ -67,25 +70,6 @@
                            sec:authorize ="hasAnyAuthority('ROLE_USER')"
                            th:href="@{/orders}">구매이력</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/members/new"
-                           sec:authorize ="isAnonymous()"
-                           th:href="@{/members/new}">회원가입</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/members/login"
-                           sec:authorize ="isAnonymous()"
-                           th:href="@{/members/login}">로그인</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/members/logout"
-                           sec:authorize ="isAuthenticated()"
-                           th:href="@{/members/logout}">로그아웃</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/members/read"
-                           sec:authorize ="isAuthenticated()">회원정보수정</a>
-                    </li>
 
                     <!-- sec:authorize ="hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')" -->
                     <!-- sec:authorize access="hasAnyRole('ROLE_ADMIN','ROLE_MANAGER')" -->
@@ -109,15 +93,54 @@
                     </li>
                     -->
                 </ul>
-            <!-- 검색 창 -->
-                <form class="d-flex" role="search">
+
+
+                <!-- 회원 메뉴 -->
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/members/new"
+                           sec:authorize ="isAnonymous()"
+                           th:href="@{/members/new}">회원가입</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/members/login"
+                           sec:authorize ="isAnonymous()"
+                           th:href="@{/members/login}">로그인</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/members/logout"
+                           sec:authorize ="isAuthenticated()"
+                           th:href="@{/members/logout}">로그아웃</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/members/read"
+                           sec:authorize ="isAuthenticated()">회원정보수정</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"
+                           sec:authorize="isAuthenticated()">
+                            <div class="loginMessage">[[${#authentication.principal.name}]]님!😘</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- 검색 창 -->
+        <div class="searchFormBox">
+            <form role="search">
+                <div class="searchBox d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-secondary" type="submit">Search</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
+
     </nav>
+
 </div>
+
 <!-- start bootstrap simple sidebar -->
 <div class="d-flex" id="wrapper">
     <!-- Sidebar 왼쪽메뉴바 -->

@@ -62,6 +62,24 @@ public class RoleController {
         return "유저 또는 특정한 유저만 접근 가능한 페이지다옹~"+memberRepository.findByEmail(username);
     }
 
+
+    @GetMapping("/test1")
+    public @ResponseBody String test1 () {
+        return "permitAll() 권한 설정이다옹~";
+    }
+    @GetMapping("/test2")
+    public @ResponseBody String test2 () {
+        return "authenticated() 권한 설정이다옹~";
+    }
+    @GetMapping("/test3")
+    public @ResponseBody String test3 () {
+        return "hasRole('USER') 권한 설정이다옹~";
+    }
+    @GetMapping("/test4")
+    public @ResponseBody String test4 () {
+        return "hasRole('ADMIN') 권한 설정이다옹~";
+    }
+
 }
 
 /*

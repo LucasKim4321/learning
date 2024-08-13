@@ -13,10 +13,11 @@
 
         <!-- 게시글 리스트 -->
         <div class="card-body">
+            <!-- BoardDTO(bno, title, content, writer, email, regDate, modDate) -->
             <form>  <!-- action="/board/modify" th:action="@{/board/modify}" method="post" id="f1" -->
 
                 <div class="mb-3 row">
-                    <label for="title" class="col-form-label ps-4">bno</label>
+                    <label for="bno" class="col-form-label ps-4">bno</label>
                     <div class="col">
                         <input type="text" class="form-control" id="bno" name="bno"
                                th:value="${dto.bno}" readonly>
@@ -44,6 +45,15 @@
                     <div class="col">
                         <input type="text" class="form-control" id="writer" name="writer"
                                th:value="${dto.writer}" readonly>
+                    </div>
+                </div>
+
+                <!-- 현재 로그인 사용자와 게시글 작성자가 동일한지 판별하기 위한 항목 -->
+                <div class="mb-3 row" hidden>
+                    <label for="email" class="col-form-label ps-4">email</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="email" name="email" readonly
+                               th:value="${dto.email}">
                     </div>
                 </div>
 
@@ -178,14 +188,18 @@ document.querySelector('.confirmBtn').addEventListener('click', function(e) {
 
     // self .location= `board/modify?${link}`  // Get방식(수정페이지 요청)
 
-    formObj.action = `/board/modify?${link}`  // 전송할 링크 설정
-    formObj.method = 'post';  // 전송 방식 설정  // 설정 안하면 기본값 Get
+    //formObj.action = `/board/modify?${link}`  // 전송할 링크 설정
+    //formObj.method = 'post';  // 전송 방식 설정  // 설정 안하면 기본값 Get
+
+    formObj.action = `/board/modify2`  // 전송할 링크 설정
+    formObj.method = 'get';  // 전송 방식 설정  // 설정 안하면 기본값 Get
 
     //const modDateBox = document.querySelector('#modDateBox');
     //modDateBox.innerHTML = '<>';
 
     // submit() : 폼 전송 기능   reset() : 폼 리셋 기능
 
+    console.log([[${dto}]])
     formObj.submit();
 })
 </script>

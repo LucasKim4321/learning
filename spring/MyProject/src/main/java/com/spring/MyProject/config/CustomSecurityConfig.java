@@ -1,22 +1,26 @@
 package com.spring.MyProject.config;
 
+import com.spring.MyProject.security.Custom403Handler;
 import com.spring.MyProject.service.CustomUserDetailsService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
@@ -32,7 +36,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 //@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)  // 바뀌기전 어노테이션 (언제 사라질지 모름)
 //@EnableGlobalMethodSecurity가 @EnableMethodSecurity로 바뀜  Global만 빼면됨
-@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)  // 어노테이션 권한 설정
 // 사용자 지정 로그인 설정
 public class CustomSecurityConfig {
 
@@ -97,17 +101,53 @@ public class CustomSecurityConfig {
                             });
                 });
 
-        // SpringBoot 3v 변경된 코드 확인 authorizeRequests() → authorizeHttpRequests()
-        //http.authorizeRequests().anyRequest().authenticated(); -> http.authorizeHttpRequests().anyRequest().authenticated();
+        // 3. 접근 권한 설정
+        // SpringBoot 3v 변경된 코드 확인
+        // 변경전 : authorizeRequests() → 변경후 : authorizeHttpRequests()
+        // http.authorizeRequests().anyRequest().authenticated();
+        // -> http.authorizeHttpRequests().anyRequest().authenticated();
 
-        // 3. 로그아웃 관련 설정
+        // 정적 자원 경로 접근 제한되어 있는 static폴더가 인식안됨.
+        //  1. WebSecurityCustomizer Bean 등록 (아래부분)
+        //  2. WebMvcConfigurer 인터페이스를 구현한 config 폴더의 CustomServletConfig 클래스에서 경로를 재설정 시킴
+        // 설정 잘못하면 불러온 페이지가 권한을 무한히 요청 할 수도 있음. 로그인 페이지로 무한히 안내.
+        
+        http.authorizeHttpRequests( auth -> {
+            // 사용자 인증없이 접근할 수 있도록 설정
+            auth.requestMatchers("/","/members/**").permitAll();
+            // Role이 ADMIN 경우에만 접근
+            auth.requestMatchers("/board/**").hasAnyRole("ADMIN","USER");
+            // Role이 ADMIN 경우에만 접근
+            auth.requestMatchers("/admin/**").hasRole("ADMIN");
+            // 설정해준 경로를 제외한 나머지 경로들은 모두 인증을 요구하도록 설정
+            auth.anyRequest().authenticated();
+            // 설정해준 경로를 제외한 나머지 경로들은 모두 접근 할 수 있도록 설정
+            // auth.anyRequest().permitAll();
+        });
+        
+        /* RoleController 테스트 */   // 수정필요
+//        http.authorizeHttpRequests(  httpReq ->
+//            httpReq.requestMatchers("/role/test1").permitAll()
+//                  .requestMatchers("/role/test2").authenticated()
+//                  .requestMatchers("/role/test3").hasRole("USER")
+//                  .requestMatchers("/role/test4").hasRole("ADMIN")
+//                  .anyRequest().permitAll()
+//        );
+
+        // 4. 로그아웃 관련 설정
         // 로그아웃을 기본으로 설정 =>  url: "/logout" 로그아웃 수행
 //        http.logout(Customizer.withDefaults());
         http.logout(logout -> {
             logout.logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
                     .logoutSuccessUrl("/")
-                    .invalidateHttpSession(true); // 세션값 삭제
+                    .invalidateHttpSession(true); // 세션값 삭제로 로그아웃
         });
+
+        // 5 접근 권한에 맞지 않은 요청시 403에러 핸들러 처리  // 이것만 주석 처리시 에러 유도 가능
+        http.exceptionHandling(e-> {
+            e.accessDeniedHandler(accessDeniedHandler());
+        });
+
 
         return http.build();
 //        return null; // 권한 문제로 로그인 창이 뜨지만 로그인이 안됨
@@ -127,11 +167,31 @@ public class CustomSecurityConfig {
     // 4-3 자동 로그인: 토큰
     @Bean
     public PersistentTokenRepository persistentTokenRepository() {
+
         JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
         repo.setDataSource(dataSource);
 
         return repo;
     }
+
+    // 5-1 접근 권한에 맞지 않은 요청시 403에러 핸들러 처리
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new Custom403Handler();
+    }
+
+    // 정적 자원이 시큐리티에서 제외되었을 때
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        log.info("==> web configure: WebSecurityCustomizer");
+
+        return (web) -> web.ignoring()
+                .requestMatchers(
+                        PathRequest
+                                .toStaticResources()
+                                .atCommonLocations());
+
+    } // end WebSecurityCustomizer
 
 }
 

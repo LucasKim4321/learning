@@ -4,11 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 // Entity 정의 : 테이블에 적용될 구조설계 정의하여 테이블과 entity 1:1 맵핑
-@Table(name="Board")  // name을 따로 설정하지 않으면 자동으로 엔티티명과 동일한 이름의 테이블을 만듬
-@Entity
-@Getter
-@Setter
-@ToString
+@Entity@Table(name="Board")  // name을 따로 설정하지 않으면 자동으로 엔티티명과 동일한 이름의 테이블을 만듬
+@Getter@Setter@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,6 +20,8 @@ public class Board extends BaseEntity{  //extends BaseEntity 하면 BaseEntity�
     private String content;
     @Column(length = 50, nullable = false)
     private String writer;
+    // 현재 로그인 사용자와 게시글 작성자가 동일한지 판별하기 위한 항목
+    private String email;
 
     // 데이터 수정하는 메서드
     public void change(String title, String content) {

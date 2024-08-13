@@ -36,6 +36,15 @@
                     </div>
                 </div>
 
+                <!-- 현재 로그인 사용자와 게시글 작성자가 동일한지 판별하기 위한 항목 -->
+                <div class="mb-3 row" hidden>
+                    <label for="email" class="col-form-label ps-4">email</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="email" name="email" readonly
+                               th:value="${#authentication.principal.email}">
+                    </div>
+                </div>
+
                 <div class="mt-3 d-flex">
                     <a th:href="|@{/board/list?}${link}|" class="link-underline-none">
                         <button type="button" id="List" class="btn btn-outline-danger opacity-50 listBtn">List</button>

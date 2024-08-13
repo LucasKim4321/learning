@@ -28,6 +28,9 @@ public class BoardDTO {
     @NotEmpty
     private String writer;
 
+    @NotEmpty
+    private String email;
+
     private LocalDateTime regDate;
     private LocalDateTime modDate;
     

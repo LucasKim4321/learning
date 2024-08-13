@@ -102,12 +102,13 @@
                         <button type="button" id="List" class="btn btn-outline-danger opacity-50 listBtn">list</button>
                     </a>
 
-                    <th:block sec:authorize="${isAuthenticated()}" th:if="${dto.writer == #authentication.principal.name}">
-                        <button type="button" id="Remove" class="btn btn-outline-danger opacity-50 removeBtn ms-auto">remove</button>
+                    <!-- disabled 보이지만 동작 안됨  hidden 안보이고 동작도 안함  visibility=hidden 안보이지만 클릭 되고 동작도 함 -->
+                    <!--/*<th:block sec:authorize="${isAuthenticated()}" th:if="${dto.writer == #authentication.principal.name}">*/-->
+                        <button type="button" id="Remove" class="btn btn-outline-danger opacity-50 removeBtn ms-auto" hidden>remove</button>
                         <a th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="link-underline-none ms-1">
-                            <button type="button" id="Modify" class="btn btn-outline-danger opacity-50 modifyBtn">modify</button>
+                            <button type="button" id="Modify" class="btn btn-outline-danger opacity-50 modifyBtn" hidden>modify</button>
                         </a>
-                    </th:block>
+                    <!--/*</th:block>*/-->
 
                 </div>
             </form>
@@ -129,10 +130,12 @@
                         <span class="input-group-text">Reply Text</span>
                         <input type="text" class="input-control replyText">
                     </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">replyer </span>
-                        <input type="text" class="input-control replyer">
-                    </div>
+                    <th:block sec:authorize="isAuthenticated()">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">replyer </span>
+                            <input type="text" class="input-control replyer" th:value="${#authentication.principal.name}">
+                        </div>
+                    </th:block>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary registerBtn">Register</button>
@@ -186,6 +189,24 @@
     const reply_bno = [[${dto.bno}]];
     console.log('reply_bno: ',reply_bno);
 
+    const removeBtn = document.querySelector('.removeBtn');
+    const modifyBtn = document.querySelector('.modifyBtn');
+    const b_email = [[${dto.email}]]
+    //console.dir(removeBtn);
+
+    // authentication.principal.name 이렇게 바로 불러오면 비로그인 상태에서 값을 불러올 수 없을 때 에러 걸림
+    //-------------------------------------------------------------- //
+    //      현재 로그인 사용자와 댓글 작성자가 동일인 경우 수정 작업처리
+       const auth = [[${#authentication}]];
+       const currentUser = auth.principal.username;
+       let hasAuth = false;    // 댓글의 작성자와 currentUser의 일치 여부
+    //-------------------------------------------------------------- //
+
+    // 로그인시에만 삭제, 수정 버튼 활성화  태그에 타임리프 적용해서 안보이게 하면 권한 없을 시 스크립트 에러
+    if (currentUser!=null && currentUser == b_email) {  // 값이 undefined일 경우 눌 관련 처리만 가능함. length 이런 작업시 에러.
+        removeBtn.hidden = false;
+        modifyBtn.hidden = false;
+    }
 
     // -------------------------------------------------//
     // 특정 게시글에 대한 댓글 조회 : axios(비동기) 요청 테스트
@@ -231,21 +252,16 @@
     function printList(replyList) {
     let str='';
 
-        // 댓글이 1개 이상이면 처리
-        if(replyList && replyList.length > 0) {
+        for(const dto of replyList) {
+        str += `
+            <li class="list-group-item d-flex gap-4 replyItem">
+            <span class="">${dto.rno}</span>
+            <span class="col" data-rno="${dto.rno}">${dto.replyText}</span>
+            <span class="">${dto.replyer}</span>
+            <span class="">${dto.regDate}</span>
+            </li>`;
 
-            for(const dto of replyList) {
-            str += `
-                <li class="list-group-item d-flex gap-4 replyItem">
-                <span class="">${dto.rno}</span>
-                <span class="col" data-rno="${dto.rno}">${dto.replyText}</span>
-                <span class="">${dto.replyer}</span>
-                <span class="">${dto.regDate}</span>
-                </li>`;
-
-            } // endfor
-
-        } // end if
+        } // endfor
 
         console.log("list: ",str);
         replyBnoList.innerHTML = str;
@@ -255,15 +271,22 @@
     // 2. 게시글에 대한 댓글 서버에 요청해서 data받아오기
     function printReplies(page,size, goLast) {
 
+
         // 비동기 처리 함수 호출
         getList(reply_bno, page, size, goLast)
             .then(data=> {
                 // console.log("data.list: ",data.list, { params: {page, size} });
                 console.log("data.dtoList: ",data.dtoList, { params: {page, size} });
 
-                printList(data.dtoList);  // 댓글 목록 처리하는 함수 호출
-                printPages(data); // 페이징
+                // 댓글이 1개 이상이면 처리
+                if(data.dtoList && data.dtoList.length > 0) {
+                    printList(data.dtoList);  // 댓글 목록 처리하는 함수 호출
+                    printPages(data); // 페이징 함수 호출
+
+                } // end if
+
             }).catch();
+
     }
 
     // 1. 게시글에 대한 댓글을 요청하는 함수 실행(호출)
@@ -327,8 +350,14 @@
         e.preventDefault();  // 기본 이벤트 제거
         e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
 
+        if (currentUser==null) {  // 로그인한 사람만 등록 가능. 값이 undefined일 경우 눌 관련 처리만 가능함. length 이런 작업 안됨.
+            alert("로그인한 사람만 등록이 가능하다옹~");
+            return  // 함수 종료
+        }
+
         modalRegister.show();
     })
+
 
     // 모달 댓글 등록 버튼
     registerBtn.addEventListener('click', function(e) {
@@ -336,6 +365,11 @@
         e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
 
         console.log('register click');
+
+        if (currentUser==null) {  // 로그인한 사람만 등록 가능. 값이 undefined일 경우 눌 관련 처리만 가능함. length 이런 작업 안됨.
+            alert("로그인한 사람만 등록이 가능하다옹~");
+            return  // 함수 종료
+        }
 
         // 전송할 data를 JSON객체로 선언
         const replyObj = {
@@ -390,7 +424,7 @@
         e.preventDefault();
         e.stopPropagation();
 
-         const target = e.target;
+        const target = e.target;
         if (target.tagName != 'SPAN') {
             return;
         }
@@ -414,15 +448,26 @@
             console.log(modalModify);
             modalModify.show();  // 수정 모달창 표시
 
+            // 댓글 작성자와 현재로그인 동일 여부 판단
+            hasAuth = (currentUser === reply.replyer);
+
 
         }).catch(e=> alert('에러다옹!\n'+e));
 
     })
 
+
+
     // 댓글 수정 버튼
     modifyReplyBtn.addEventListener('click', function(e) {
         console.log("modify");
         const rnoNum = document.querySelector('.rnoNum');  // 모델창의 제목의 rno
+
+        if (!hasAuth) {  // 댓글 작성자와 현재 유저가 동일하지 않으면 처리
+            alert("댓글 작성자만 수정이 가능하다옹~");
+            modalModify.hide()
+            return  // 함수 종료
+        }
 
         const replyObj = {
             bno: reply_bno,                 // 댓글에 대한 게시글 번호
@@ -450,6 +495,12 @@
     removeReplyBtn.addEventListener('click', function(e) {
         console.log("remove");
         const rnoNum = document.querySelector('.rnoNum');  // 모델창의 제목의 rno
+
+        if (!hasAuth) {  // 댓글 작성자와 현재로그인 동일하지 않으면 처리
+            alert("댓글 작성자만 삭제 가능하다옹~");
+            modalModify.hide()
+            return  // 함수 종료
+        }
 
         let isOK = confirm("정말 삭제하겠나옹?");
         if (!isOK) return;
