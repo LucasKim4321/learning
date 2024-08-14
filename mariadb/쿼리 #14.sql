@@ -10,7 +10,7 @@ SELECT * FROM board;
 DELETE FROM board;
 DROP TABLE board;
 
-SHOW COLUMNS FROM reply;
+SHOW COLUMNS order_seqFROM reply;
 SELECT * FROM reply;
 DELETE FROM reply;
 DROP TABLE reply;
