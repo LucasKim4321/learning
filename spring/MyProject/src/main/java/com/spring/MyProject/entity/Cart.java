@@ -7,7 +7,8 @@ import lombok.ToString;
 
 @Entity
 @Table (name="cart")
-@Getter@Setter@ToString
+@Getter@Setter
+@ToString//(exclude = "member")
 public class Cart extends BaseEntity {  // 공통 멤버변수 상속
 
     @Id  // 기본키로 지정
@@ -46,6 +47,8 @@ public class Cart extends BaseEntity {  // 공통 멤버변수 상속
 cart:item (1:N)  item:cart (1:N)
 연관 관계가 서로 얽혀있을 경우 관계를 바로 쓸 수 없음 (애초에 말도 안됨)
 
+위 관계를 구현하기 위해 중계자(cartItem)를 사용.
+cartItem은 cart정보와 item정보 둘다 가지고 있음.
 cart:cartItem(1:N), cartItem:item(N:1)  =>  cart:cartItem:item (1:N:1)
 
 **

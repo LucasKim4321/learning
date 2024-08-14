@@ -12,9 +12,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -172,6 +174,57 @@ class BoardRepositoryTest {
         log.info("==> next: "+result.hasNext());
         log.info("===================");
         result.getContent().forEach(board-> log.info("==> board: "+board));
+
+    }
+
+    // Board와 BoardImage 연관 관계 테스트
+
+    @Test
+    @DisplayName("Board, BoardImage 영속성 정의 테스트")  // cascade 설정에 의한 상태전이 테스트
+    public void testInsertWithImage() {
+
+        // Board Entity 생성
+        Board board = Board.builder()
+                .title("image Test")
+                .content("첨부파일테스트")
+                .writer("tester")
+                .email("test@test.com")
+                .build();
+
+        IntStream.rangeClosed(1,3).forEach(i-> {
+            
+            // 부모객체 내에서 하위객체 생성
+            // board객체에서 BoardImage 객체를 생성
+            board.addImage(UUID.randomUUID().toString(), "file"+i+".jpg");
+        });
+
+        // board entity 저장(영속성 컨텍스트에 반영)
+        // board entity를 저장하면 board 속성중에 boardimage 객체를 보관하고 있는
+        // set객체 정보를 기반으로 boardimage 객체가 자동으로 save 동장이 발생됨.
+        // boardImageRepository.save(board); 묵시적으로 수행됨.
+        // BoardImageRepository 미생성 시 자동 구현 및 수행.
+        Board savedBoard = boardRepository.save(board);  // cascade 설정에 의해 BoardImage도 자동 저장(상태전이)
+        log.info("==> savedBoard: "+savedBoard);
+
+    }
+
+    @Test
+    @DisplayName("Boardd, BaordImage 영속성 전이 테스트2")
+    @Transactional
+    public void testReadWithImage() {
+
+        // 반드시 존재하는 bno로 확인
+        Optional<Board> result = boardRepository.findById(1L);
+        Board board = result.orElseThrow();
+
+        log.info("==> board.getImageSet(): "+board.getImageSet());
+
+        // 에러가 발생함.
+        // board 연결하여 출력한 후 select를 다시 실행하면 DB가 연결이 끝난 상태이므로
+        // 'proxy - no session' 에러 메시지가 발생
+        // @Transactional 사용시 작동
+
+        // @EntityGraph 사용 시
 
     }
 

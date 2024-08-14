@@ -3,9 +3,13 @@ package com.spring.MyProject.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 // Entity 정의 : 테이블에 적용될 구조설계 정의하여 테이블과 entity 1:1 맵핑
 @Entity@Table(name="Board")  // name을 따로 설정하지 않으면 자동으로 엔티티명과 동일한 이름의 테이블을 만듬
-@Getter@Setter@ToString
+@Getter@Setter
+@ToString//(exclude = "imageSet")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -30,6 +34,29 @@ public class Board extends BaseEntity{  //extends BaseEntity 하면 BaseEntity�
     }
 
     // 첨부파일
+    @OneToMany(mappedBy = "board",
+            cascade = {CascadeType.ALL},  // 두개 이상 설정 시 {}
+            fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<BoardImage> imageSet = new HashSet<>();
+
+    // Board 객체에서 BoardImage객체를 관리하도록 하기 위해
+    // addImage(), clearImage() 작성
+    public void addImage(String uuid, String fileName) {
+        BoardImage boardImage = BoardImage.builder()
+                .uuid(uuid)
+                .fileName(fileName)
+                .board(this)
+                .ord(imageSet.size())
+                .build();
+
+        // 첨부파일 생성하여 Set 추가
+        imageSet.add(boardImage);
+    }
+
+    public void clearImage() {
+        imageSet.forEach( boardImg -> boardImg.changeBoard(null));
+    }
 
 }
 
