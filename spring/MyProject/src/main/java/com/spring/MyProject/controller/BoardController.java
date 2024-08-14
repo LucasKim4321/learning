@@ -14,10 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -69,6 +66,7 @@ public class BoardController {
     // 로그인 상태에서만 가능
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/register")
+    // BoardDTO는 메서드가 호출 받았을 때 넘겨받은 파라미터 값이 BoardDTO의 필드명과 일치하면 자동 매핑 (일치하는 값만 불러옴)
     public String registerPost(@Valid BoardDTO boardDTO,  // @Valid 넘어온 데이터 BoardDTO의 에러 유무 체크
                                BindingResult bindingResult,  // 감지한 에러 데이터
                                RedirectAttributes redirectAttributes) {
@@ -153,7 +151,8 @@ public class BoardController {
 //    @PreAuthorize("isAuthenticated() and principal.email == #boardDTO.email")
     //@PreAuthorize("isAuthenticated()")
     @PostMapping("/modify")
-    public String modifypost(@Valid BoardDTO boardDTO,  // @Valid 넘어온 데이터 BoardDTO의 에러 유무 체크
+    // BoardDTO는 메서드가 호출 받았을 때 넘겨받은 파라미터 값이 BoardDTO의 필드명과 일치하면 자동 매핑 (일치하는 값만 불러옴)
+    public String modifypost(BoardDTO boardDTO,  // @Valid 넘어온 데이터 BoardDTO의 에러 유무 체크
                                BindingResult bindingResult,  // 감지한 에러 데이터
                                PageRequestDTO pageRequestDTO,
                                RedirectAttributes redirectAttributes) {
@@ -189,16 +188,12 @@ public class BoardController {
 
     }
 
-    @GetMapping("/modify2")
-    public @ResponseBody String modifypost2(BoardDTO boardDTO) {
-        return boardDTO.toString();
-    }
-
     // 5. 게시글 삭제
     // 현재 로그인 사용자 이메일과 게시글 작성자 이메일이 동일하면 게시글 삭제
 //    @PreAuthorize("isAuthenticated() and principal.email == #boardDTO.email")
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/remove")
+    // BoardDTO는 메서드가 호출 받았을 때 넘겨받은 파라미터 값이 BoardDTO의 필드명과 일치하면 자동 매핑 (일치하는 값만 불러옴)
     public String remove(BoardDTO boardDTO,
                          RedirectAttributes redirectAttributes){
 

@@ -18,8 +18,8 @@ import java.util.Set;
 @Builder
 public class Member {
 
-    @Id
-    @Column(name="member_id")
+    @Id  // 기본키로 지정
+    @Column(name="member_id")  // 테이블 이름(필드명) 사용자 지정  없으면 그냥 동일하게 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

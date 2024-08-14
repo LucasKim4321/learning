@@ -77,3 +77,22 @@ DROP TABLE students;
 
 -- db 삭제
 DROP database mydb;
+
+
+컬럼(column)과 필드(field) 무엇이 다를까?
+출처: https://hoyashu.tistory.com/6 [코딩수영장:티스토리]
+
+칼럼(column)과 필드(field)는 주로 행을 뜻하는 용어로, 백 엔더들은 주로 혼용해서 쓴다고 알고 있었다.
+정확한 차이가 무엇인지 구글링을 해보고 알게 되었다.
+레코드, 필드는 파일 시스템상에서 표현되는 용어라고 한다.
+실무에서는 어떤 걸 써도 크게 상관은 없을 것 같지만 차이는 알아두면 좋을 것 같다.
+
+파일 시스템 - 데이터베이스 모델링 - 관계형 데이터베이스
+
+파일(file) - 엔터티(Entity) - 테이블(table)
+
+레코드(record) - 튜플(Tuple) - 행(row)
+
+키(key) - 유일값(identifier) - 기본키(Primary key), unique
+
+필드(field) - 어트리뷰트(attribute) - 컬럼(column)

@@ -11,7 +11,7 @@ import lombok.*;
 @Builder
 public class Board extends BaseEntity{  //extends BaseEntity 하면 BaseEntity에 있는 변수 여기에 추가
 
-    @Id
+    @Id  // 기본키로 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bno;
     @Column(length = 500, nullable = false)

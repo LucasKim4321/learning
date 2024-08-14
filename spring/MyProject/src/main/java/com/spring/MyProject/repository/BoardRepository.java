@@ -4,7 +4,8 @@ import com.spring.MyProject.entity.Board;
 import com.spring.MyProject.repository.search.BoardSearch;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch {
+// Board에 대한 JpaRepository
+public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch {  // JpaRepository<엔티티명, 엔티티의 기본키명>
 
     // 메서드 상속 받음 (extends BoardSearch)
     // Page<Board> search(Pageable pageable);

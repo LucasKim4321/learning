@@ -4,7 +4,8 @@ import com.spring.MyProject.entity.Member;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MemberRepository extends JpaRepository<Member, Long> {
+// Member에 대한 JpaRepository
+public interface MemberRepository extends JpaRepository<Member, Long> {  // JpaRepository<엔티티명, 엔티티의 기본키명>
 
     // public 생략하면 기본값 default 패키지 내에서 공유
 //    Member findByEmail(String email);

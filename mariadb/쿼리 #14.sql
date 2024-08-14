@@ -30,6 +30,11 @@ SELECT * FROM persistent_logins;
 DELETE FROM persistent_logins;
 DROP TABLE persistent_logins;
 
+SHOW COLUMNS FROM cart;
+SELECT * FROM cart;
+DELETE FROM cart;
+DROP TABLE cart;
+
 CREATE TABLE persistent_logins (
 	username 	VARCHAR(64) NOT NULL,
 	series 		VARCHAR(64) PRIMARY KEY,

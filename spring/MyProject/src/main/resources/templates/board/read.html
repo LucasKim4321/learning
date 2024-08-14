@@ -11,6 +11,7 @@
         <div class="card-header">
             board read
         </div>
+        <div>[[${dto}]]</div>
 
         <!-- 게시글 리스트 -->
         <div class="card-body">
@@ -326,7 +327,7 @@
 
         let doubleChk = confirm('삭제하시겠습니까?');
         if (doubleChk) {
-            const formObj = document.querySelector('form');
+            const formObj = document.querySelector('#readForm');
             formObj.action = "/board/remove?"+[[${dto.bno}]];
             formObj.method = "post";
             formObj.submit();

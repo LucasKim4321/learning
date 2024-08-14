@@ -17,7 +17,7 @@ import lombok.*;
 //@ToString
 public class Reply extends BaseEntity {
 
-    @Id
+    @Id  // 기본키로 지정
     @GeneratedValue(strategy= GenerationType.IDENTITY)
 //    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long rno;

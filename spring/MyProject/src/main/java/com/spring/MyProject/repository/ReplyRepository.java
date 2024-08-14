@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ReplyRepository extends JpaRepository<Reply, Long> {
+// Reply에 대한 JpaRepository
+public interface ReplyRepository extends JpaRepository<Reply, Long> {  // JpaRepository<엔티티명, 엔티티의 기본키명>
 
     @Query ("select r from Reply r where r.board.bno = :bno")
     Page<Reply> listOfBoard(Long bno, Pageable pageable);
