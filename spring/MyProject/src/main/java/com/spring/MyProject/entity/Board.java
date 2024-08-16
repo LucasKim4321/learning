@@ -2,6 +2,7 @@ package com.spring.MyProject.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +25,7 @@ public class Board extends BaseEntity{  //extends BaseEntity 하면 BaseEntity�
     private String content;
     @Column(length = 50, nullable = false)
     private String writer;
+
     // 현재 로그인 사용자와 게시글 작성자가 동일한지 판별하기 위한 항목
     private String email;
 
@@ -34,15 +36,36 @@ public class Board extends BaseEntity{  //extends BaseEntity 하면 BaseEntity�
     }
 
     // 첨부파일
+    // 1. mappedBy속성, cascade:상위엔티티가 하위에티티를 관리,@OneToMany(생략시FetchType.LAZY설정됨)
+    //  - 외래키가 아닌 엔티티를 주인(주체)로 설정 할 경우 => Board Entity 멤버변수(속성)로 연관관계 설정이 아닌 경우
+    //  - 어떤 엔티티의 속성으로 매핑할 경우 => imageSet.order속성으로 연관관계 설정
+    //  -  @OneToMany => FetchType.LAZY 기본값으로 설정됨.
+
+    // 2. 고아객체
+    // => 부모엔티티와 연관관계가 끊어진 자식엔티티
+    // 고아객체 제거 : orphanRemoval 속성 이용
+    // @OneToOne, @OneToMany에 사용
+
+    // 3. 'N+1'로 실행되는 쿼리는 DB를 많이 사용하는 단점 => @BatchSize어노테이션 활용
+    // 'N번'에 해당하는 쿼리를 모아서 한번에 실행
+    // ~~ board_bno in (?,?,?,...) 형식으로
+    // 지정된 수만큼 BoardImage를 조회할 때 한번에 in조건으로 사용
     @OneToMany(mappedBy = "board",
             cascade = {CascadeType.ALL},  // 두개 이상 설정 시 {}
-            fetch = FetchType.LAZY)
+            fetch = FetchType.LAZY,  // LAZY속성 때문에 imageSet값을 읽어올때 에러남.
+            orphanRemoval = true)  // 고아객체 발생시 자동 삭제  // 옵션 넣기 전 기존의 고아 객체들한텐 발동안함
     @Builder.Default
+    @BatchSize(size=20)  // 20개를 한번에 검색
     private Set<BoardImage> imageSet = new HashSet<>();
+
+    // Board 객체에서 BoardImage 엔티티는 별도의 JPARepository를 생성하지 않아도
+    // 상위엔티티(Board)에서 하위엔티티(BoardImage)객체를 관리하는 기능 추가해서 사용.
 
     // Board 객체에서 BoardImage객체를 관리하도록 하기 위해
     // addImage(), clearImage() 작성
     public void addImage(String uuid, String fileName) {
+        
+        // 상위 엔티티에서 하위 엔티티 생성
         BoardImage boardImage = BoardImage.builder()
                 .uuid(uuid)
                 .fileName(fileName)
@@ -54,12 +77,13 @@ public class Board extends BaseEntity{  //extends BaseEntity 하면 BaseEntity�
         imageSet.add(boardImage);
     }
 
-    public void clearImage() {
+    // 삭제 처리 기능
+    public void clearImage(){
         imageSet.forEach( boardImg -> boardImg.changeBoard(null));
+        this.imageSet.clear(); // boardImage객체 데이터 삭제
     }
 
 }
-
 
 /*
  * 스프링 계층 구조
@@ -75,5 +99,4 @@ public class Board extends BaseEntity{  //extends BaseEntity 하면 BaseEntity�
  * 
  * 4. 데이터베이스 (database)
  *  - 엔티티와 1:1 맵핑된 테이블은 실제 DB작업을 반영
- *
  */

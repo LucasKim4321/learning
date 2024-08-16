@@ -1,9 +1,6 @@
 package com.spring.MyProject.service;
 
-import com.spring.MyProject.dto.BoardDTO;
-import com.spring.MyProject.dto.BoardListReplyCountDTO;
-import com.spring.MyProject.dto.PageRequestDTO;
-import com.spring.MyProject.dto.PageResponseDTO;
+import com.spring.MyProject.dto.*;
 import com.spring.MyProject.entity.Board;
 import com.spring.MyProject.entity.Reply;
 import com.spring.MyProject.repository.BoardRepository;
@@ -129,6 +126,12 @@ public class BoardServiceImpl implements BoardService {
                 .total((int)result.getTotalElements())
                 .build();
 
+    }
+    
+    // 게시글의 이미지와 댓글의 숫자 처리기능 구현
+    @Override
+    public PageResponseDTO<BoardListAllDTO> listWithAll(PageResponseDTO pageResponseDTO) {
+        return null;
     }
 
 }

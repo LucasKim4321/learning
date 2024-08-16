@@ -38,7 +38,7 @@ public class CartItem extends BaseEntity {
 하나의 상품은 여러장바구에 연결
 
 장바구니          장바구니상품          상품
-cart      1:N     cart_item     M:1  item
+cart      1:N     cart_item     N:1  item
 --------------------------------------------
 cart_id(PK)     cart_item_id(PK)    item_id(PK)
 member_id(FK)   cart_id(FK)         item_nm, price,....

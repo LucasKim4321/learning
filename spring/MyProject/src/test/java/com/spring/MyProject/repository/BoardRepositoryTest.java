@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,16 +27,39 @@ class BoardRepositoryTest {
 
     @Autowired
     private BoardRepository boardRepository;
+    @Autowired
+    private ReplyRepository replyRepository;
 
     @Test
     @DisplayName("board data 생성")
     public void testCreateBoard() {
-        IntStream.rangeClosed(1,50).forEach(i-> {
+        // 1. 더미 생성
+//        IntStream.rangeClosed(1,50).forEach(i-> {
+//            Board board = Board.builder()
+//                    .title("title"+i)
+//                    .content("content"+i)
+//                    .writer("user"+(i%10))
+//                    .build();
+//            Board result = boardRepository.save(board);
+//            log.info("==> Bno: "+result.getBno());
+//        });
+        
+        // 2. 이미지 포함 더미 생성
+        IntStream.rangeClosed(1,20).forEach(i-> {
             Board board = Board.builder()
                     .title("title"+i)
                     .content("content"+i)
                     .writer("user"+(i%10))
+                    .email("user"+(i%10)+"@gmail.com")
                     .build();
+
+            // 새로운 첨부파일 추가
+            IntStream.rangeClosed(1,3).forEach(j-> {
+                // 부모객체 내에서 하위객체 생성
+                // board객체에서 BoardImage 객체를 생성
+                board.addImage(UUID.randomUUID().toString(), "file"+i+"-"+j+".jpg");
+            });
+
             Board result = boardRepository.save(board);
             log.info("==> Bno: "+result.getBno());
         });
@@ -180,7 +204,7 @@ class BoardRepositoryTest {
     // Board와 BoardImage 연관 관계 테스트
 
     @Test
-    @DisplayName("Board, BoardImage 영속성 정의 테스트")  // cascade 설정에 의한 상태전이 테스트
+    @DisplayName("Board save 할 시, BoardImage 자동으로 save : 영속성 전이 테스트")  // cascade 설정에 의한 상태전이 테스트
     public void testInsertWithImage() {
 
         // Board Entity 생성
@@ -209,26 +233,103 @@ class BoardRepositoryTest {
     }
 
     @Test
-    @DisplayName("Boardd, BaordImage 영속성 전이 테스트2")
+    @DisplayName("Boardd, BaordImage(@Transactional) 영속성 전이 테스트2")
     @Transactional
     public void testReadWithImage() {
 
+        // @Transactional 사용시
         // 반드시 존재하는 bno로 확인
-        Optional<Board> result = boardRepository.findById(1L);
+        Optional<Board> result = boardRepository.findById(84L);
         Board board = result.orElseThrow();
-
         log.info("==> board.getImageSet(): "+board.getImageSet());
+        board.getImageSet().forEach(imgSet-> log.info("==> imgSet: "+imgSet));
 
-        // 에러가 발생함.
+        // @Transactional 미사용시 에러가 발생함.
         // board 연결하여 출력한 후 select를 다시 실행하면 DB가 연결이 끝난 상태이므로
         // 'proxy - no session' 에러 메시지가 발생
         // @Transactional 사용시 작동
 
-        // @EntityGraph 사용 시
+
+    } // end testReadWithImage()
+
+    @Test
+    @DisplayName("Boardd, BaordImage(@EntityGraph) 영속성 전이 테스트2")
+    public void testReadWithImage2() {
+
+        // @EntityGraph 사용 시 BoardRepository에 추가 설정
+        Optional<Board> result2 = boardRepository.findByIdWithImages(84L);
+        Board board2 = result2.orElseThrow();
+        log.info("==> board.getImageSet(): "+board2.getImageSet());
+        board2.getImageSet().forEach(imgSet-> log.info("==> imgSet: "+imgSet));
+
+    } // end testReadWithImage2()
+
+    @Test
+    @DisplayName("Board, BaordImage(orphanRemoval) 고아객체 테스트")
+    @Transactional@Commit
+    public void testImage() {
+
+        // 게시물 가져오기
+        Optional<Board> result = boardRepository.findByIdWithImages(83L);
+        Board board = result.orElseThrow();
+        log.info("==> board.getImageSet(): "+board.getImageSet());
+
+        // 기존 게시물에 첨부파일들 삭제:
+        // 1. orphanRemoval = true 설정하지 않을 경우: null 값으로 업데이트 기능 처리됨.
+        // 2. orphanRemoval = true 설정 경우: null값이 존재하는 고아객체 제거됨.
+        board.clearImage();
+
+        // 새로운 첨부파일 추가
+        IntStream.rangeClosed(28,29).forEach(i-> {
+            // 부모객체 내에서 하위객체 생성
+            // board객체에서 BoardImage 객체를 생성
+            board.addImage(UUID.randomUUID().toString(), "file"+i+".jpg");
+        });
+
+        Board savedBoard = boardRepository.save(board);  // cascade 설정에 의해 BoardImage도 자동 저장(상태전이)
+        log.info("==> savedBoard: "+savedBoard);
+
+        board.getImageSet().forEach(imgSet-> log.info("==> imgSet: "+imgSet));
 
     }
 
-}
+    // 고아객체 삭제 테스트
+//    @Test
+//    @DisplayName("Boardd, BaordImage 고아객체삭제")
+//    public void removeBoardImagesBoardIsNull() {
+//        boardRepository.deleteBoardImageIs(null);
+//    }
+
+
+    @Test
+    @DisplayName("특정 게시글에 대한 댓글 삭제 테스트")
+    @Transactional@Commit
+    public void testBoardReplyRemoveAll(){
+        Long bno = 83L;
+
+        // Reply 존재하는 경우 댓글 삭제 -> BoardImage 삭제(imageSet.clear())-> Board 삭제
+        // 2. 댓글 삭제
+        replyRepository.deleteByBoard_Bno(bno);
+
+        // 3. 게시글 삭제
+        boardRepository.deleteById(bno);
+
+    }
+
+    @Test
+    @DisplayName("특정 게시글에 대한 댓글 조회 테스트")
+    @Transactional@Commit
+    public void testSearchImageReplyCount() {
+
+        // 페이징 초기값 설정
+        Pageable pageable = PageRequest.of(0,10,Sort.by("bno").descending());
+        boardRepository.searchWithAll(null, null, pageable);
+
+    }
+
+
+
+}  // end Test Class
 
  /** Pageable설정 PageRequest
  Creates a new PageRequest with sort parameters applied.

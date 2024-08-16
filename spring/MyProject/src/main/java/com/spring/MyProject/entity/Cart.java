@@ -51,7 +51,7 @@ cart:item (1:N)  item:cart (1:N)
 cartItem은 cart정보와 item정보 둘다 가지고 있음.
 cart:cartItem(1:N), cartItem:item(N:1)  =>  cart:cartItem:item (1:N:1)
 
-**
+
  */
 /*
  * @OneToOne

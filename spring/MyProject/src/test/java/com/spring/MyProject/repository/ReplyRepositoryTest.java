@@ -42,7 +42,8 @@ class ReplyRepositoryTest {
 		});
 	}
 
-	@Test@DisplayName("Reply객체(댓글) 생성하기")
+	// 게시글에 댓글 생성하기
+	@Test@DisplayName("게시글에 Reply객체(댓글) 생성하기")
 	public void testInsertReply() {
 //		this.testCreateBoard();  // h2에서 테스트시 필요 // 전체 실행하면 필요 없음
 

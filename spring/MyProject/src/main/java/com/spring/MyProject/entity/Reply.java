@@ -32,6 +32,7 @@ public class Reply extends BaseEntity {
     
     private String replyText;
     private String replyer;
+    private String replyerEmail;
 
     // 수정 작업을 위한 메서드 정의
     public void changeText(String text) {

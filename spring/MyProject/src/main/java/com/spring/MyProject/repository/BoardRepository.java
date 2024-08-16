@@ -2,13 +2,30 @@ package com.spring.MyProject.repository;
 
 import com.spring.MyProject.entity.Board;
 import com.spring.MyProject.repository.search.BoardSearch;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.Optional;
 
 // Board에 대한 JpaRepository
 public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch {  // JpaRepository<엔티티명, 엔티티의 기본키명>
 
     // 메서드 상속 받음 (extends BoardSearch)
     // Page<Board> search(Pageable pageable);
+
+    // Board와 BoardImage 연관관계 : @OneToMany 설정시 => BoardImage는 지연 로딩 상태
+    // @OneToMany: 기본적으ㅡ로 지연로딩을 이용: fetch = FetchType.LAZY
+    // @EntityGraph: 지연로딩일지라도 한번에 조인 처리해서 select처리하도록 설정
+
+    @EntityGraph(attributePaths = {"imageSet"})
+    @Query("select b from Board b where b.bno = :bno")
+    Optional<Board> findByIdWithImages(Long bno);
+
+//    @EntityGraph(attributePaths = {"imageSet"})
+//    @Query("delete from board_image b where b.board_bno = :board")
+//    Optional<Board> deleteBoardImageIs(Long board);
+
 }
 
 /*

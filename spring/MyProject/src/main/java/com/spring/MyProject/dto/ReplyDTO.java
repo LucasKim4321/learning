@@ -30,6 +30,8 @@ public class ReplyDTO {
     private String replyText;
     @NotEmpty
     private String replyer;
+    @NotEmpty
+    private String replyerEmail;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime regDate;

@@ -2132,3 +2132,8 @@ isAnonymous() : 현재 사용자가 익명(비로그인)인 상태인 경우 tru
 isRememberMe() : 현재 사용자가 RememberMe 사용자라면 true
 isAuthenticated() : 현재 사용자가 익명이 아니라면 (로그인 상태라면) true
 isFullyAuthenticated() : 현재 사용자가 익명이거나 RememberMe 사용자가 아니라면 true
+
+1. Entity 의 개념
+Entity : 실체, 객체라는 의미로 실무적으론는 앤터티라고 부른다.
+즉 업무에 필요하고 유용한 정보를 저장하고 관리하기 위한 집합적인 것으로 설명할 수 있다. 
+예) 학생이라는 엔터티는 학번, 이름, 학점, 등록일자, 생일, 전공 등의 속성으로 특징지어질 수 있음 

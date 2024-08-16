@@ -10,7 +10,13 @@ SELECT * FROM board;
 DELETE FROM board;
 DROP TABLE board;
 
-SHOW COLUMNS order_seqFROM reply;
+SHOW COLUMNS FROM board_image;
+SELECT * FROM board_image;
+DELETE FROM board_image;
+DROP TABLE board_image;
+DELETE FROM board_image WHERE board_bno IS NULL;
+
+SHOW COLUMNS reply;
 SELECT * FROM reply;
 DELETE FROM reply;
 DROP TABLE reply;
