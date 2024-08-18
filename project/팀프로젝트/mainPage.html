@@ -13,7 +13,7 @@
         .myBox {
             margin: auto;
             width: 1900px;
-            height: 1000px;
+            height: 1100px;
             overflow: hidden;
         }
 
@@ -70,9 +70,6 @@
         .g_titleBox {text-align: center;}
         .g_title {font-size: 35px}
         .g_link { color: #54A3C4}
-        .g_imgBox {
-            height: 700px;
-        }
         .g_imgLine {
             overflow: hidden;
             display: flex;
@@ -95,8 +92,21 @@
             width: 100%; height: 100%;
         }
         .guide_imgBox {
-            width: 100%; height: 100%;
-            overflow: hidden;
+            position: relative;
+        }
+        .guide_text {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.553);
+            left: 50%;
+            height: 100%;
+            color: rgba(255, 255, 255, 0.544);
+            font-size: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 250px;
+            gap: 30px;
+            
         }
 
 
@@ -224,12 +234,14 @@
         <div class="myBox">
             <div class="guideMenu">
                 <!-- 이미지 position 셋팅 해서 가운데 꽉차게 -->
-                <div class="imgBox guide_imgBox"><img class="x_img" src="images/food.jpg"></div>
-                <!-- 이미지 위로 position 셋팅 -->
-                <div class="guide_text w-50">
-                    <div>restaurant</div>
-                    <div>festival</div>
-                    <div>guide</div>
+                <div class="imgBox guide_imgBox">
+                    <img class="y_img" src="images/food.jpg">
+                    <!-- 이미지 위로 position 셋팅 -->
+                    <div class="guide_text w-50">
+                        <div>restaurant</div>
+                        <div>festival</div>
+                        <div>guide</div>
+                    </div>
                 </div>
             </div>
         </div>
