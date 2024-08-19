@@ -16,7 +16,7 @@ DELETE FROM board_image;
 DROP TABLE board_image;
 DELETE FROM board_image WHERE board_bno IS NULL;
 SELECT * FROM board_image ORDER BY board_bno ASC;
-SELECT * FROM board_image ORDER BY board_bno desc;
+SELECT * FROM board_image ORDER BY board_bno DESC;
 
 SHOW COLUMNS reply;
 SELECT * FROM reply;
