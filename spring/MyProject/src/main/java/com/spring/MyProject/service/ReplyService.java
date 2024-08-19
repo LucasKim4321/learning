@@ -33,6 +33,7 @@ public interface ReplyService {
                 .rno(replyDTO.getRno())
                 .replyText(replyDTO.getReplyText())
                 .replyer(replyDTO.getReplyer())
+                .replyerEmail(replyDTO.getReplyerEmail())  // 이메일 추가
                 .board(board)
                 .build();
 
@@ -47,6 +48,7 @@ public interface ReplyService {
 
                 .replyText(reply.getReplyText())
                 .replyer(reply.getReplyer())
+                .replyerEmail(reply.getReplyerEmail())  // 이메일 추가
                 .bno(reply.getBoard().getBno())
 
                 .regDate(reply.getRegDate())

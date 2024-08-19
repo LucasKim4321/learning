@@ -28,7 +28,7 @@ async function getList(bno, page, size, goLast) {
     return result.data;
 }
 
-// 2. 게시글 등록
+// 2. 게시글에 대한 댓글 등록
 async function addReply(replyObj) {
     const response = await axios.post(`/replies/`, replyObj);
 

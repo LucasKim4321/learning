@@ -15,11 +15,15 @@ SELECT * FROM board_image;
 DELETE FROM board_image;
 DROP TABLE board_image;
 DELETE FROM board_image WHERE board_bno IS NULL;
+SELECT * FROM board_image ORDER BY board_bno ASC;
+SELECT * FROM board_image ORDER BY board_bno desc;
 
 SHOW COLUMNS reply;
 SELECT * FROM reply;
 DELETE FROM reply;
 DROP TABLE reply;
+SELECT COUNT(*) FROM reply WHERE board_bno = 1;
+SELECT COUNT(*) AS count FROM reply WHERE board_bno = 1;
 
 SHOW COLUMNS FROM member;
 SELECT * FROM member;

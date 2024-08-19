@@ -1,5 +1,6 @@
 package com.spring.MyProject.repository;
 
+import com.spring.MyProject.dto.BoardListAllDTO;
 import com.spring.MyProject.dto.BoardListReplyCountDTO;
 import com.spring.MyProject.entity.Board;
 import lombok.extern.log4j.Log4j2;
@@ -257,17 +258,22 @@ class BoardRepositoryTest {
     public void testReadWithImage2() {
 
         // @EntityGraph 사용 시 BoardRepository에 추가 설정
-        Optional<Board> result2 = boardRepository.findByIdWithImages(84L);
-        Board board2 = result2.orElseThrow();
-        log.info("==> board.getImageSet(): "+board2.getImageSet());
-        board2.getImageSet().forEach(imgSet-> log.info("==> imgSet: "+imgSet));
+        Optional<Board> result = boardRepository.findByIdWithImages(135L);
+        Board board = result.orElseThrow();
+        log.info("==> board.getImageSet(): "+board.getImageSet());
+
+        // @EntityGraph 사용시
+        // Lazy일지라도 boardImage를 즉시로딩이 가능함.
+        board.getImageSet().forEach(imgSet-> {
+            log.info("==> imgSet: "+imgSet);
+        });
 
     } // end testReadWithImage2()
 
     @Test
     @DisplayName("Board, BaordImage(orphanRemoval) 고아객체 테스트")
     @Transactional@Commit
-    public void testImage() {
+    public void testInsertImage() {
 
         // 게시물 가져오기
         Optional<Board> result = boardRepository.findByIdWithImages(83L);
@@ -286,6 +292,7 @@ class BoardRepositoryTest {
             board.addImage(UUID.randomUUID().toString(), "file"+i+".jpg");
         });
 
+        // **
         Board savedBoard = boardRepository.save(board);  // cascade 설정에 의해 BoardImage도 자동 저장(상태전이)
         log.info("==> savedBoard: "+savedBoard);
 
@@ -323,7 +330,38 @@ class BoardRepositoryTest {
 
         // 페이징 초기값 설정
         Pageable pageable = PageRequest.of(0,10,Sort.by("bno").descending());
+        
+        // 게시물 1개당 이미지 첨부파일 조회
         boardRepository.searchWithAll(null, null, pageable);
+
+    }
+
+    @Test
+    @DisplayName("특정 게시글에 대한 댓글 조회 테스트")
+    @Transactional@Commit
+    public void testSearchImageReplyCount2() {
+
+        // 페이징 초기값 설정
+        Pageable pageable = PageRequest.of(0,10,Sort.by("bno").descending());
+
+        // 1. 게시물 1개당 이미지 첨부파일 조회
+        // boardRepository.searchWithAll(null, null, pageable);
+
+        // 2. 게시물 조회 및 댓글 개수, 게시물 이미지 조회
+        Page<BoardListAllDTO> result = boardRepository.searchWithAll(null, null, pageable);
+
+        log.info("==> result.getTotalElements(): "+result.getTotalElements());
+        result.getContent()
+                .forEach(boardListAllDTO -> {
+//                    log.info("==> boardListAllDTO: "+boardListAllDTO);
+                    log.info("==> boardListAllDTO.getBno(): "+boardListAllDTO.getBno());
+                    log.info("==> boardListAllDTO.getReplyCount(): "+boardListAllDTO.getReplyCount());
+                    log.info("==> boardListAllDTO.getBoarImages(): ");
+                    boardListAllDTO.getBoarImages().forEach( boardImage -> {
+                        log.info("==> boardImage: "+boardImage);
+                    });
+
+                });
 
     }
 

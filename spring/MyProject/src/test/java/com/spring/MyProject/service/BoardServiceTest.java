@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import java.util.Arrays;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -27,13 +29,21 @@ public class BoardServiceTest {
         log.info("==> board register bno: "+boardService.getClass().getName());
 
         // 게시글 더미 데이터 생성
-        IntStream.rangeClosed(1,50).forEach(i-> {
+        IntStream.rangeClosed(1,5).forEach(i-> {
             BoardDTO boardDTO = BoardDTO.builder()
                     .title("sample title"+i)
                     .content("sample content"+i)
                     .writer("userVoid"+i)
                     .build();
 
+            // 첨부파일 추가
+            boardDTO.setFileName(
+                    Arrays.asList(
+                            UUID.randomUUID()+"_aaa.jpg",
+                            UUID.randomUUID()+"_bbb.jpg",
+                            UUID.randomUUID()+"_ccc.jpg"
+                    )
+            );
 
             Long bno = boardService.register(boardDTO);  // 정상 작동시 등록된 bno를 변수에 저장
 

@@ -1,6 +1,7 @@
 package com.spring.MyProject.repository.search;
 
 
+import com.spring.MyProject.dto.BoardListAllDTO;
 import com.spring.MyProject.dto.BoardListReplyCountDTO;
 import com.spring.MyProject.entity.Board;
 import org.springframework.data.domain.Page;
@@ -18,7 +19,7 @@ public interface BoardSearch {
     Page<BoardListReplyCountDTO> searchWithReplyCount(String[] types, String keyword, Pageable pageable);
 
     // 게시글 조건 검색 조회
-    Page<BoardListReplyCountDTO> searchWithAll (String[] types, String keyword, Pageable pageable);
+    Page<BoardListAllDTO> searchWithAll (String[] types, String keyword, Pageable pageable);
 
 
 }

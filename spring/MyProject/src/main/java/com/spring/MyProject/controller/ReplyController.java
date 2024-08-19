@@ -40,7 +40,7 @@ public class ReplyController {
 
         log.info("==> replyDTO: "+replyDTO);
         log.info("==> bindingResult: "+bindingResult.toString());
-        log.info("==> ReplyDTO.get: "+replyDTO.getRno()+","+replyDTO.getBno()+","+replyDTO.getReplyText()+","+replyDTO.getReplyer()+","+replyDTO.getRegDate()+","+replyDTO.getModDate());
+        log.info("==> ReplyDTO.get: "+replyDTO.getRno()+","+replyDTO.getBno()+","+replyDTO.getReplyText()+","+replyDTO.getReplyer()+","+replyDTO.getReplyerEmail()+","+replyDTO.getRegDate()+","+replyDTO.getModDate());
 
         if (bindingResult.hasErrors()) {  // 에러가 존재하면 bindingResult에서 값을 받아서 BindException으로 리턴
             throw new BindException(bindingResult);

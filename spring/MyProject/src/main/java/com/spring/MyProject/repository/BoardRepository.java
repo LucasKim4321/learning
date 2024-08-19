@@ -15,8 +15,8 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch
     // Page<Board> search(Pageable pageable);
 
     // Board와 BoardImage 연관관계 : @OneToMany 설정시 => BoardImage는 지연 로딩 상태
-    // @OneToMany: 기본적으ㅡ로 지연로딩을 이용: fetch = FetchType.LAZY
-    // @EntityGraph: 지연로딩일지라도 한번에 조인 처리해서 select처리하도록 설정
+    // @OneToMany: 기본적으로 지연로딩을 이용: fetch = FetchType.LAZY
+    // @EntityGraph: LAZY설정(지연로딩)일지라도 한번에 조인 처리해서 select처리하도록 설정(imageSet이 불려오면 읽어짐)
 
     @EntityGraph(attributePaths = {"imageSet"})
     @Query("select b from Board b where b.bno = :bno")

@@ -20,6 +20,8 @@ public class BoardListAllDTO {
     private String writer;
     private String email;
     private LocalDateTime regDate;
+
+    //SELECT COUNT(*) FROM reply WHERE board_bno = 1 (게시글번호)
     private Long replyCount;
 
     private List<BoardImageDTO> boarImages;

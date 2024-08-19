@@ -51,10 +51,12 @@ public class Board extends BaseEntity{  //extends BaseEntity 하면 BaseEntity�
     // ~~ board_bno in (?,?,?,...) 형식으로
     // 지정된 수만큼 BoardImage를 조회할 때 한번에 in조건으로 사용
     @OneToMany(mappedBy = "board",
-            cascade = {CascadeType.ALL},  // 두개 이상 설정 시 {}
-            fetch = FetchType.LAZY,  // LAZY속성 때문에 imageSet값을 읽어올때 에러남.
+            cascade = {CascadeType.ALL},  // cascade 영속성 전이(Board가 변화할 때 imageSet도 같이 변화) // 두개 이상 설정 시 {}
+            fetch = FetchType.LAZY,  // LAZY속성 때문에 imageSet값을 읽어올때 에러남. // Repository에서 @EntityGrap 설정.
             orphanRemoval = true)  // 고아객체 발생시 자동 삭제  // 옵션 넣기 전 기존의 고아 객체들한텐 발동안함
     @Builder.Default
+    // 'N+1' 쿼리문 실행, N: 게시물 마다 각각 실행되는 쿼리, 1은 목을 가져오는 쿼리
+    // BoardImage를 조회할 때 한번에 in 조건으로 사용
     @BatchSize(size=20)  // 20개를 한번에 검색
     private Set<BoardImage> imageSet = new HashSet<>();
 

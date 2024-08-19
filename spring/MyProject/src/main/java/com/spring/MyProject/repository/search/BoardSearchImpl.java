@@ -1,8 +1,11 @@
 package com.spring.MyProject.repository.search;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
+import com.spring.MyProject.dto.BoardImageDTO;
+import com.spring.MyProject.dto.BoardListAllDTO;
 import com.spring.MyProject.dto.BoardListReplyCountDTO;
 import com.spring.MyProject.entity.Board;
 import com.spring.MyProject.entity.BoardImage;
@@ -14,13 +17,18 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import org.springframework.util.Assert;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 // 구현 클래스 : 반드시 '인터페이스이름+impl" 표현해야 한다.
 public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardSearch{
 
     // 인자가 있을 경우
-    /* ** */
+    /*
+    public BoardSearchImpl(Class<?> domainClass) {
+    super(domainClass);
+    */
+
     public BoardSearchImpl() {
         super(Board.class);
     }
@@ -187,7 +195,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 
     // 게시물 조건 검색 조회 구현
     @Override
-    public Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
+    public Page<BoardListAllDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
 
         QBoard board = QBoard.board;
         QReply reply = QReply.reply;
@@ -195,23 +203,91 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         // 1. 쿼리문 작성 (댓글 기준으로 게시글 연결)
         JPQLQuery<Board> boardJPQLQuery = from(board);
         boardJPQLQuery.leftJoin(reply).on(reply.board.eq(board));  // left join => p댓글 기준으로 게시글 조인
-        
-        // 1.1 페이징 설정
+
+        // 5. 조건문 추가 : where 문 작성
+        if ( (types != null && types.length > 0) && keyword != null){// 검색 키워드가 있으면
+            //  BooleanBuilder: 조건문을 작성하는 클래스
+            BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+            for (String type : types){
+                switch (type){
+                    case "t":
+                        booleanBuilder.or(board.title.contains(keyword));break;
+                    case "c":
+                        booleanBuilder.or(board.content.contains(keyword));break;
+                    case "w":
+                        booleanBuilder.or(board.writer.contains(keyword));break;
+                }
+            } // end for
+
+            boardJPQLQuery.where(booleanBuilder);
+        }// end if
+
+        // 1.1 게시글번호를 기준으로 그룹핑 처리
+        boardJPQLQuery.groupBy(board);
+
+        // 1.2 페이징 설정
         getQuerydsl().applyPagination(pageable, boardJPQLQuery);  // paging 설정
 
-        // 2. 쿼리문 실행 결과
+        /** 테스트
+        // 2. 쿼리문 실행 : 결과값을 반환
         List<Board> boardList = boardJPQLQuery.fetch();
 
+        // 3. 쿼리문 결과 콘솔에 출력
         boardList.forEach(board1 -> {
             log.info("==> board.getBno(): "+board1.getBno());
             for (BoardImage boardImage : board1.getImageSet()) {
                 log.info("==> boardImage.getFileName(): "+boardImage.getFileName());
             }
         });
+        */
 
-        return null;
-    }
-}
+        // 4. 쿼리문 작성 : 댓글 개수 파악 => select 항목은 그룹핑된(board bno) 게시글정보, 게시글 번호 기준으로 카운트
+        // 게시글 번호를 그룹핑하여 board 엔티티와 reply 엔티티 개수 계산
+        // Tuple은 Map이랑 비슷
+        JPQLQuery<Tuple> tupleJPQLQuery = boardJPQLQuery.select(board, reply.countDistinct());
+
+        List<Tuple> tupleList = tupleJPQLQuery.fetch();
+
+        List<BoardListAllDTO> dtoList = tupleList.stream().map(tuple -> {
+//            Board board1 = (Board) tuple.get(board);  // 둘 다 됨
+            Board board1 = tuple.get(0, Board.class);
+
+            // 필드명 없는 관계로 컬럼의 위치 및 타입설정
+//            long replyCount = (Long) tuple.get(reply.countDistinct());  // 둘 다 됨
+            long replyCount = tuple.get(1, Long.class);
+
+            BoardListAllDTO dto = BoardListAllDTO.builder()
+                    .bno(board1.getBno())
+                    .title(board1.getTitle())
+                    .writer(board1.getWriter())
+                    .email(board1.getEmail())
+                    .regDate(board1.getRegDate())
+                    .replyCount(replyCount)
+                    .build();
+
+            // BoardImage -> BoardImageDTO
+            List<BoardImageDTO> imageDTOS = board1.getImageSet().stream().sorted()
+                    .map(boardImage -> BoardImageDTO.builder()
+                            .uuid(boardImage.getUuid())
+                            .fileName(boardImage.getFileName())
+                            .ord(boardImage.getOrd())
+                            .build()
+                    ).collect(Collectors.toList());
+
+            dto.setBoarImages(imageDTOS);
+            return dto;
+
+        }).collect(Collectors.toList());
+        // end dtoList
+
+        long totalCount = boardJPQLQuery.fetchCount();
+
+        return new PageImpl<>(dtoList, pageable, totalCount);
+
+    } // end searchWithAll()
+
+} // end class
 
 /** 페이징(Paging)은 데이터베이스나 리스트에서 대량의 데이터를 한 번에 처리하지 않고, 여러 페이지로 나누어 처리하는 방법입니다. 이렇게 하면 한 번에 다루는 데이터의 양을 줄여서 성능을 개선하고, 사용자가 데이터를 쉽게 탐색할 수 있게 됩니다. 페이징을 구현할 때 일반적으로 사용하는 요소들은 다음과 같습니다:
 

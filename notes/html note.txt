@@ -205,3 +205,18 @@ max-width, max-height을 둘다 100%로 줘도 여백은 마찬가지다.
         top: 0;
         left: 0;
         }
+
+
+
+
+특수문자
+
+참조1 https://taemssssss.tistory.com/23
+참조2 https://www.w3schools.com/html/html_entities.asp
+
+&lt;	< 	꺽쇠
+&gt;	>	꺽쇠
+&nbsp;	공백 ' ' (1칸 space)	공백
+&amp;	&	앰퍼센드
+&quot;	" 	큰따옴표
+더 있음

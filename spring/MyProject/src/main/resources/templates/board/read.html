@@ -12,6 +12,11 @@
             board read
         </div>
         <div>[[${dto}]]</div>
+        <th:block sec:authorize="isAuthenticated()">
+            <div>[[${#authentication.principal}]]</div>
+            <div>[[${#authentication.principal.name}]]</div>
+            <div>[[${#authentication.principal.email}]]</div>
+        </th:block>
 
         <!-- 게시글 리스트 -->
         <div class="card-body">
@@ -136,6 +141,9 @@
                             <span class="input-group-text">replyer </span>
                             <input type="text" class="input-control replyer" th:value="${#authentication.principal.name}">
                         </div>
+                        <div class="input-group mb-3" hidden>
+                            <input type="text" class="input-control replyerEmail" th:value="${#authentication.principal.email}">
+                        </div>
                     </th:block>
                 </div>
                 <div class="modal-footer">
@@ -200,6 +208,7 @@
     //      현재 로그인 사용자와 댓글 작성자가 동일인 경우 수정 작업처리
        const auth = [[${#authentication}]];
        const currentUser = auth.principal.username;
+       const currentUserName = auth.principal.name;
        let hasAuth = false;    // 댓글의 작성자와 currentUser의 일치 여부
     //-------------------------------------------------------------- //
 
@@ -259,6 +268,7 @@
             <span class="">${dto.rno}</span>
             <span class="col" data-rno="${dto.rno}">${dto.replyText}</span>
             <span class="">${dto.replyer}</span>
+            <span class="">${dto.replyerEmail}</span>
             <span class="">${dto.regDate}</span>
             </li>`;
 
@@ -345,6 +355,7 @@
 
     const replyText = document.querySelector('.replyText');
     const replyer = document.querySelector('.replyer');
+    const replyerEmail = document.querySelector('.replyerEmail');
 
     // 모달 창 띄우기
     document.querySelector('.addReplyBtn').addEventListener('click', function(e) {
@@ -355,6 +366,11 @@
             alert("로그인한 사람만 등록이 가능하다옹~");
             return  // 함수 종료
         }
+
+        console.log("currentUser: "+currentUser);
+        console.log("currentUserName: "+currentUserName);
+        replyer.value = currentUserName;
+        replyerEmail.value = currentUser;
 
         modalRegister.show();
     })
@@ -376,7 +392,8 @@
         const replyObj = {
             bno: reply_bno,                   // 댓글에 대한 게시글 번호
             replyText: replyText.value, // 댓글 내용
-            replyer: replyer.value      // 댓글 작성자
+            replyer: replyer.value,      // 댓글 작성자
+            replyerEmail: replyerEmail.value      // 댓글 작성자
         }
         console.log("전송할 JSON객체: ", replyObj);
 
@@ -389,6 +406,7 @@
             modalRegister.hide();   // 모달 창 닫기
             replyText.value='';     // 댓글 내용 clear
             replyer.value='';       // 댓글 작성자 clear
+            replyerEmail.value='';       // 댓글 작성자 clear
 
             // 댓글 등록한 후 댓글 List 호출
             printReplies(1, 10, true) // true를 설정하면 마지막 페이지를 불러옴
@@ -450,7 +468,7 @@
             modalModify.show();  // 수정 모달창 표시
 
             // 댓글 작성자와 현재로그인 동일 여부 판단
-            hasAuth = (currentUser === reply.replyer);
+            hasAuth = (currentUser === reply.replyerEmail);
 
 
         }).catch(e=> alert('에러다옹!\n'+e));
@@ -512,7 +530,7 @@
         // 비동기 처리 요청
         removeReply(rno)
         .then(result=> {
-            alert(result.rno+"댓글이 수정되었다옹~");
+            alert(result.rno+"댓글이 삭제되었다옹~");
 
             modalModify.hide();
             replyText.value = "";

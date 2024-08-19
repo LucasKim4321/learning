@@ -31,8 +31,12 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 등록
     @Override
     public long register(BoardDTO boardDTO) {
+        // 1. DTO -> Entity : 첨부파일이 없는 경우
         Board board = modelMapper.map(boardDTO, Board.class);  // boardDTO를 Board클래스에 1:1로 맵핑 시킴
         // 1:1 맵핑하는 작업을 수작업할 시 Board 변수에 일일이 넣어줘야함
+
+        // 2. DTO -> Entity : 첨부파일을 추가한 경우
+//        Board board = dtoToEntity(boardDTO);
 
         Long bno = boardRepository.save(board).getBno();  // 보드를 저장하고 정상적으로 작동하면 변수에 값 저장
 
@@ -44,9 +48,12 @@ public class BoardServiceImpl implements BoardService {
     public BoardDTO readOne(Long bno) {
         Optional<Board> result = boardRepository.findById(bno);
 
+        // optional -> entity
         Board board = result.orElseThrow();  // optional -> entity
 
+        // entity -> dto 맵핑
         BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
+//        BoardDTO boardDTO = entityToDTO(board);
 
         return boardDTO;
         
