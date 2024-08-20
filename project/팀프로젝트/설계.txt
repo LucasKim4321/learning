@@ -27,16 +27,15 @@ DTO(dto)
 
 
 Base - CustomRestController RootConfig PageRequestDTO PageResponseDTO
-security - CustomSecurityConfig CustomServletConfig Custom403Handler ...
-Role AuthMemberDTO
+security - CustomSecurityConfig CustomServletConfig Role AuthMemberDTO Custom403Handler ...
 
 upload - UploadFileDTO UploadRequestDTO UpDownController
 
 Member - Member(Entity) MemberDTO MemberRepository MemberService MemberContoller 
-Board - Entity DTO Repository Service Controller
-Reply - Entity DTO Repository Service Controller
-Alarm - Entity DTO Repository Service Controller
-Report - Entity DTO Repository Service Controller
+Board - Entity DTO Repository Service Controller Test
+Reply - Entity DTO Repository Service Controller Test
+Alarm - Entity DTO Repository Service Controller Test
+Report - Entity DTO Repository Service Controller Test
 
 templates
  - layouts : basic, adminBasic
@@ -47,7 +46,7 @@ templates
             - travelRecommend   :  list(All), create(Admin), read(All), modify(Admin)
             - travelGuide       :  list(All), create(Admin), read(All), modify(Admin)
             - festivalBoard     :  list(All), create(Admin), read(All), modify(Admin)
-            - userBoard         :  list(All), create(User), read(All), modify(User)
+            - userBoard         :  list(All), create(User),  read(All), modify(User)
  - admin : main, config, board, member 
 
 스타일 있는 게시판 구현(보류)

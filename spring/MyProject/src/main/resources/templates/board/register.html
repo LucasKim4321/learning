@@ -36,6 +36,14 @@
                     </div>
                 </div>
 
+                <div class="mb-3 row">
+                    <label for="addImageBtn" class="col-form-label ps-4">image</label>
+                    <div class="col d-flex">
+                        <input type="button" id="addImageBtn" class="btn btn-secondary opacity-50 addImageBtn" value="AddImage">
+                        <label for="addImageBtn" class="col-form-label col">첨부된 이미지</label>
+                    </div>
+                </div>
+
                 <!-- 현재 로그인 사용자와 게시글 작성자가 동일한지 판별하기 위한 항목 -->
                 <div class="mb-3 row" hidden>
                     <label for="email" class="col-form-label ps-4">email</label>
@@ -55,11 +63,51 @@
                     </div>
                 </div>
             </form>
-        </div>
 
+        </div> <!-- end card-body-->
+
+    </div> <!-- end card -->
+
+
+    <!-- 첨부파일 관련 UI -->
+
+    <!-- 1. 첨부파일 썸네일 view -->
+    <div class="row mt-3">
+        <div class="col">
+            <div class="container-fluid d-flex uploadResult" style=""></div>
+            result
+        </div>
     </div>
 
-</div>
+    <!-- Axios 라이브러리 연결 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/js/upload.js"></script>
+
+    <!-- 2. 첨부파일 추가를 위한 모달창 -->
+    <div class="modal modalUpload fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Upload Files</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="file" class="col-form-label ps-4">file</label>
+                        <div class="col">
+                            <input type="file" class="form-control" id="file" name="file" multiple>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary closeModalUpload" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary uploadBtn">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- end fragment="content"-->
 
 
 
@@ -76,8 +124,10 @@
 <!-- 현재 페이지에서만 사용하는 script 정의 -->
 <script layout:fragment="myscript" th:inline="javascript">
     const errors = [[${errors}]];
-    console.log('errors',errors);
-    console.log('errors.length',errors.length);
+    if(errors != null) {
+        console.log('errors',errors);
+        console.log('errors.length: ',errors.length);
+    }
 
     let errorMsg="";
 
@@ -89,11 +139,150 @@
     }
 
 
+    // 업로드 모달
+
+    const modalUpload = new bootstrap.Modal(document.querySelector('.modalUpload'));
+    const addImageBtn = document.querySelector('.addImageBtn');
+    const uploadBtn = document.querySelector('.uploadBtn');
+    const closeModalUpload = document.querySelector('.closeModalUpload');
+
+    // 1. 모달창 띄우기
+    addImageBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        modalUpload.show();  // 모달창 보이기
+
+    })
+
+    // 2. 업로드 모달에서 닫기 버튼 클릭
+    closeModalUpload.addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        modalUpload.hide();  // 모달창 숨기기
+    })
+
+    // 3. 업로드 모달에서 uploadBtn 버튼 클릭
+    uploadBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const formObj = new FormData();
+        const fileInput = document.querySelector("input[name='file']");
+        // console.log(fileInput.files)
+
+        const files = fileInput.files;
+        for (let i=0; i<files.length; i++) {
+            formObj.append("files", files[i]);
+        }
+
+        console.log('formObj: ', formObj);
+
+        // 업로드 처리하는 함수 호출: axios요청  **
+        uploadToServer(formObj)
+            .then( result => {
+                console.log(result);
+
+                // 업로드된 결과를 JSON파일로 view 함수 호출
+                for (let uploadResult of result) {
+                    showUploadFile(uploadResult);
+                }
+
+                modalUpload.hide() // 모달창 숨기기
+
+            }).catch( e => {
+                console.log("업로드 실패했다옹~ ",e);
+                modalUpload.hide();
+            });
+
+    }) // end function
+
+
+    // 업로드된 결과값을 view해서 보여줄 태그 요소 추출
+    const uploadResult = document.querySelector('.uploadResult');
+
+    // 업로드된 결과 view 함수 정의
+    function showUploadFile({uuid, fileName, img, link}) {  // link는 UploadResultDTO의 getLink()를 실행하여 결과값을 받아옴
+        // 서버에서 보내준 data => UploadResultDTO(UploadResultDTO.uuid, xxx.fileName, xxx.img, xxx.getLink())구조 객체 => JSON변환(객체.속성, ... 객체.메서드)
+        // 서버로부터 넘겨받은 객체.속성 : uuid, fileName, img
+        // 서버로부터 넘겨받은 객체.메서드 : 객체.Link() => Link 메서드 이름으로 데이터 보관된 상태이므로 함수명으로 데이터 읽기가능
+        console.log("fileName: ",fileName);
+        console.log("uuid: ",uuid);
+        console.log("link: ",link);
+        console.log("img: ",img);
+
+        const str =
+        `
+        <div class="card" style="width: 18rem;">
+            <div class="card-header">
+                <button class="btn btn-outline-danger opacity-50"
+                        onClick="javascript:removeFile('${uuid}', '${fileName}', this)" > x </button>
+            </div>
+            <div class="card-body">
+                <img src="/view/${link}" data-src="${uuid+"_"+fileName}" />
+            </div>
+        </div>
+        `;
+
+        console.log("str: ",str);
+        // 문자열 => DOM으로 변환 => '.uploadResult'요소 하위요소 입력
+        uploadResult.innerHTML += str;
+
+    } // end function
+
+
+    // 첨부파일 삭제
+    function removeFile(uuid, fileName, obj) {
+        console.log("uuid: ",uuid);
+        console.log("fileName: ",fileName);
+        console.log("obj: ",obj);
+
+        const targetDiv = obj.closet('.card');
+
+        // 파일 삭제 요청 : axios
+        removeFileToServer(uuid, fileName)
+        .then(data => {
+            targetDive.remove();
+
+        }).catch( e => {
+            console.log("오류다옹~ ",e);
+        });
+
+    } // end function
+
+
+    // 게시물 등록
+    document.querySelector('.submitBtn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const target = document.querySelector('.uploadHidden');
+        const uploadFiles = uploadResult.querySelectorAll('img');
+
+        let str = "";
+        for (let i=0; i<uploadFiles.length; i++) {
+            const uploadFile = uploadFiles[i];
+            const imgLink = uploadFile.getAttribute('src');
+
+            str += `<input type='hidden' name='fileNames' value="${imgLink}">`;
+
+        } // end for
+
+        target.innerHTML = str;
+
+        document.querySelector('#createBoardForm').submit();
+
+    }) // end Listener
+
+    console.log("test test 테스트 다옹~");
+
+    /*
     document.querySelector('.submitBtn').addEventListener('click', function(e) {
         e.preventDefault();  // 기본 이벤트 제거
         e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
 
-        const formObj = document.querySelector('form');
+        const formObj = document.querySelector('#createBoardForm');
         const title = document.querySelector('#title');
         const content = document.querySelector('#content');
         const writer = document.querySelector('#writer');
@@ -131,7 +320,7 @@
         formObj.submit();
 
     })
-
+    */
 
     document.querySelector('.clearBtn').addEventListener('click', function(e) {
         e.preventDefault();  // 기본 이벤트 제거
@@ -140,6 +329,9 @@
         location.href="/board/register";
     })
 
+
+
 </script>
+
 
 </html>
