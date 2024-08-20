@@ -253,20 +253,21 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
 //            Board board1 = (Board) tuple.get(board);  // 둘 다 됨
             Board board1 = tuple.get(0, Board.class);
 
-            // 필드명 없는 관계로 컬럼의 위치 및 타입설정
 //            long replyCount = (Long) tuple.get(reply.countDistinct());  // 둘 다 됨
-            long replyCount = tuple.get(1, Long.class);
+            long replyCount = tuple.get(1, Long.class);  // 필드명 없는 관계로 컬럼의 위치 및 타입설정
 
-            BoardListAllDTO dto = BoardListAllDTO.builder()
+            // boardListAllDTO 객체 생성하여 관련 entity 정보 저장
+            BoardListAllDTO boardListAllDTO = BoardListAllDTO.builder()
+                    // 1. board Entity -> board DTO
                     .bno(board1.getBno())
                     .title(board1.getTitle())
                     .writer(board1.getWriter())
                     .email(board1.getEmail())
                     .regDate(board1.getRegDate())
-                    .replyCount(replyCount)
+                    .replyCount(replyCount)  // 2. reply count -> replyCount DTO
                     .build();
 
-            // BoardImage -> BoardImageDTO
+            // 3. BoardImage -> BoardImageDTO
             List<BoardImageDTO> imageDTOS = board1.getImageSet().stream().sorted()
                     .map(boardImage -> BoardImageDTO.builder()
                             .uuid(boardImage.getUuid())
@@ -275,13 +276,15 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
                             .build()
                     ).collect(Collectors.toList());
 
-            dto.setBoarImages(imageDTOS);
-            return dto;
+            // 4. boardImageDTO -> boardListAllDTO
+            boardListAllDTO.setBoarImages(imageDTOS);
+
+            return boardListAllDTO;
 
         }).collect(Collectors.toList());
-        // end dtoList
+        // end dtoList = tupleList.stream().map()
 
-        long totalCount = boardJPQLQuery.fetchCount();
+        long totalCount = boardJPQLQuery.fetchCount();  // 게시글 전체 개수
 
         return new PageImpl<>(dtoList, pageable, totalCount);
 

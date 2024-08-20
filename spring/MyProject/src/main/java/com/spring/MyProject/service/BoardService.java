@@ -27,10 +27,12 @@ public interface BoardService {
     PageResponseDTO<BoardListReplyCountDTO> listWithReplyCount(PageRequestDTO pageRequestDTO);
 
     // 7. 게시글의 이미지와 댓글의 숫자 처리
-    PageResponseDTO<BoardListAllDTO> listWithAll(PageResponseDTO pageResponseDTO);
+    PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO);
 
-    // 8. List<String> fileName -> Board에서 Set<boardImage> 타입으로 변환
+    // 8. DTO -> Entity : List<String> fileName -> Board에서 Set<boardImage> 타입으로 변환
     default Board dtoToEntity(BoardDTO boardDTO) {
+        
+        // getter DTO -> setter Entity -> DB table 저장
         Board board = Board.builder()
                 .bno(boardDTO.getBno())
                 .title(boardDTO.getTitle())
@@ -40,10 +42,10 @@ public interface BoardService {
                 .build();
 
         // 첨부파일이 있을 경우
-        if (boardDTO.getFileName() != null) {
-            boardDTO.getFileName().forEach(fileName -> {
-                String[] arr = fileName.split("_");
-                board.addImage(arr[0], arr[1]);
+        if (boardDTO.getFileNames() != null) {
+            boardDTO.getFileNames().forEach(fileName -> {
+                String[] arr = fileName.split("_");  // 첨부파일 이름 구성 : "UUID값" + "_" + "파일이름.확장자"
+                board.addImage(arr[0], arr[1]);  // [0]UUID [1]파일이름
             });
         }
 
@@ -51,12 +53,15 @@ public interface BoardService {
 
     } // end dtoToEntity
 
-    // Entity -> DTO
+    // 9. Entity -> DTO : 조회 기능
     default BoardDTO entityToDTO (Board board) {
+
+        // getter Entity -> setter DTO
         BoardDTO boardDTO = BoardDTO.builder()
                 .bno(board.getBno())
                 .title(board.getTitle())
                 .content(board.getContent())
+                .email(board.getEmail())
                 .regDate(board.getRegDate())
                 .modDate(board.getModDate())
                 .build();
@@ -67,7 +72,9 @@ public interface BoardService {
                 .map(boardImage -> boardImage.getUuid()+"_"+boardImage.getFileName())
                 .collect(Collectors.toList());
 
-        return null;
+        boardDTO.setFileNames(fileNames);
+
+        return boardDTO;
 
     } // end entityToDTO
 

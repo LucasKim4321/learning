@@ -316,7 +316,7 @@ class BoardRepositoryTest {
 
         // Reply 존재하는 경우 댓글 삭제 -> BoardImage 삭제(imageSet.clear())-> Board 삭제
         // 2. 댓글 삭제
-        replyRepository.deleteByBoard_Bno(bno);
+        replyRepository.deleteByBoard_bno(bno);
 
         // 3. 게시글 삭제
         boardRepository.deleteById(bno);

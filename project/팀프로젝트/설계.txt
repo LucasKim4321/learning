@@ -19,6 +19,7 @@ DTO(dto)
 템플릿(templates)(pages)
  - layouts
  - fragments
+ - admin
  - member
  - board
 
@@ -42,7 +43,11 @@ templates
  - fragments : header, footer, alarm(modal), report(modal)
  - member : login, myPage
  - board : travelInfo, travelRecommend, travelGuide, festivalBoard, userBoard
-    
+            - travelInfo        :  list(All), create(Admin), read(All), modify(Admin)
+            - travelRecommend   :  list(All), create(Admin), read(All), modify(Admin)
+            - travelGuide       :  list(All), create(Admin), read(All), modify(Admin)
+            - festivalBoard     :  list(All), create(Admin), read(All), modify(Admin)
+            - userBoard         :  list(All), create(User), read(All), modify(User)
  - admin : main, config, board, member 
 
 스타일 있는 게시판 구현(보류)
@@ -87,3 +92,6 @@ BoardfileDTO
 ReplyDTO
 AlarmDTO
 ReportDTO
+
+엔티티와 DTO가 같으면 1:1 맵핑 가능
+다르면 dtoToEntity entityToDto 제작

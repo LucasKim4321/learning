@@ -28,18 +28,6 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch
 
 }
 
-/*
- * JpaRepository 지원하는 메서드 (기본적으로 들어있는 기능)
- * <S extends T> save(S entity) : 저장 및 수정
- * void delete(t entity) : 삭제
- * count() : 총 개수 반환
- * Iterable<T> findAll() : 모든 엔티티 조회
- *
- * find+(엔티티이름) +By + 변수(필드)명
- *
- *
- */
-
 /* 
  * JpaRepository 기본 기능 (by ChatGPT)
  *
@@ -57,7 +45,22 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch
  * deleteAll(Iterable<? extends T> entities)	주어진 엔티티 목록을 모두 삭제합니다.
  * deleteAll()	모든 엔티티를 삭제합니다.
  * 
+ * 기본기능 외엔 만들어야함.
+ * 1. 규칙 적용해서 쉽게 만들기 (만들면 자동 인식)
+ * 2. query 지정해서 만들기 (@Query 사용)
  * 
+ */
+
+/*
+ * JpaRepository 지원하는 메서드 (기본적으로 들어있는 기능)
+ * <S extends T> save(S entity) : 저장 및 수정
+ * void delete(t entity) : 삭제
+ * count() : 총 개수 반환
+ * Iterable<T> findAll() : 모든 엔티티 조회
+ *
+ * find+(엔티티이름) +By + 변수(필드)명
+ *
+ *
  */
 
 // JPA Query Method
@@ -86,4 +89,3 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardSearch
 // True	findByActiveTrue()	… where x.active = true
 // False	findByActiveFalse()	… where x.active = false
 // IgnoreCase	findByFirstnameIgnoreCase	… where UPPER(x.firstname) = UPPER(?1)
-

@@ -32,13 +32,15 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public long register(BoardDTO boardDTO) {
         // 1. DTO -> Entity : 첨부파일이 없는 경우
-        Board board = modelMapper.map(boardDTO, Board.class);  // boardDTO를 Board클래스에 1:1로 맵핑 시킴
+//        Board board = modelMapper.map(boardDTO, Board.class);  // boardDTO를 Board클래스에 1:1로 맵핑 시킴
         // 1:1 맵핑하는 작업을 수작업할 시 Board 변수에 일일이 넣어줘야함
 
         // 2. DTO -> Entity : 첨부파일을 추가한 경우
-//        Board board = dtoToEntity(boardDTO);
+        Board board = dtoToEntity(boardDTO);
 
+        // 3. board entity 저장
         Long bno = boardRepository.save(board).getBno();  // 보드를 저장하고 정상적으로 작동하면 변수에 값 저장
+        //Board savedBoard = boardRepository.save(board);
 
         return bno;
     }
@@ -46,14 +48,21 @@ public class BoardServiceImpl implements BoardService {
     // 게시글 조회
     @Override
     public BoardDTO readOne(Long bno) {
-        Optional<Board> result = boardRepository.findById(bno);
+        // 1. fetch = FetchType.LAZY 상태일 경우 boardImage 즉시 로딩 안됨
+        // Optional<Board> result = boardRepository.findById(bno);
 
+        // 2. fetch = FetchType.LAZY 상태일 경우에도 즉시 로딩 (@EntityGraph)
+        Optional<Board> result = boardRepository.findByIdWithImages(bno);
+        
         // optional -> entity
         Board board = result.orElseThrow();  // optional -> entity
+//        log.info("==> board: "+board);
 
-        // entity -> dto 맵핑
-        BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
-//        BoardDTO boardDTO = entityToDTO(board);
+        // 1. entity -> dto 맵핑 (entity와 dto 동일 구조일 경우)
+//        BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
+        // 2. 다를 경우
+        BoardDTO boardDTO = entityToDTO(board);
+//        log.info("==> boardDTO: "+boardDTO);
 
         return boardDTO;
         
@@ -69,6 +78,18 @@ public class BoardServiceImpl implements BoardService {
         
         // entity값을 dto값으로 변경
         board.change(boardDTO.getTitle(), boardDTO.getContent());
+
+        // ------------------------------------------------------- //
+        // 기존 첨부파일 있을 경우 처리 : 기존에 첨부파일 삭제 후 추가하는 방식
+        board.clearImage();
+        // 수정된 첨부파일이 있을 경우
+        if (boardDTO.getFileNames() != null) {
+            for (String fileName : boardDTO.getFileNames()) {
+                String[] arr = fileName.split("_");
+                board.addImage(arr[0],arr[1]);
+            }
+        }
+        // ------------------------------------------------------- //
         
         // 저장하기
         Board modifiedBoard = boardRepository.save(board);
@@ -81,9 +102,25 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void remove(Long bno) {
 
-//        replyRepository.listOfBoard2(bno);
-//        replyRepository.deleteAllById();
+        // 댓글이 있는 게시글 삭제
+        // 댓글(외래키(FK)) 때문에 삭제 안됨
+        // 댓글이 있는 경우 댓글 삭제 후 게시글을 삭제 해야함.
+
+        // 1. 댓글 그냥 삭제 (체크 안해도 상관없음)
+//        replyRepository.deleteByBoard_bno(bno);
+
+        // 2. 댓글이 있는지 체크 후 댓글 삭제
+        List<Reply> replies = replyRepository.findByBoard_bno(bno);
+        log.info("==> replies"+replies);
+
+        if(replies.size() > 0) {  // 댓글이 있으면 댓글 삭제
+            log.info("==> delete replies");
+            replyRepository.deleteByBoard_bno(bno);
+        }
+
+        // 댓글 삭제 후 게시글 삭제
         boardRepository.deleteById(bno);
+
 
     }
 
@@ -137,8 +174,21 @@ public class BoardServiceImpl implements BoardService {
     
     // 게시글의 이미지와 댓글의 숫자 처리기능 구현
     @Override
-    public PageResponseDTO<BoardListAllDTO> listWithAll(PageResponseDTO pageResponseDTO) {
-        return null;
+    public PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
+
+        String[] types = pageRequestDTO.getTypes();  // 검색 타입(글제목, 글내용, 작성자)
+        String keyword = pageRequestDTO.getKeyword(); // 검색 키워드
+        Pageable pageable = pageRequestDTO.getPageable("bno");
+
+        // BoardSearch 클래스로를 상속받은 boardRepository는 searchWithAll() 사용가능
+        Page<BoardListAllDTO> result = boardRepository.searchWithAll(types, keyword, pageable);
+
+        return PageResponseDTO.<BoardListAllDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(result.getContent())
+                .total((int)result.getTotalElements())  // 이거 잘 설정해줘야함. 잘못하면 계산 어긋남
+                .build();
+
     }
 
 }

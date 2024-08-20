@@ -33,7 +33,8 @@ public class Board extends BaseEntity{  //extends BaseEntity 하면 BaseEntity�
     public void change(String title, String content) {
         this.title = title;
         this.content = content;
-    }
+
+    } // end change
 
     // 첨부파일
     // 1. mappedBy속성, cascade:상위엔티티가 하위에티티를 관리,@OneToMany(생략시FetchType.LAZY설정됨)
@@ -71,21 +72,29 @@ public class Board extends BaseEntity{  //extends BaseEntity 하면 BaseEntity�
         BoardImage boardImage = BoardImage.builder()
                 .uuid(uuid)
                 .fileName(fileName)
-                .board(this)
-                .ord(imageSet.size())
+                .board(this)  // 현재 게시물 이미지와 게시물은 연관관계
+                .ord(imageSet.size())  // 0, 1, 2 ...
                 .build();
 
         // 첨부파일 생성하여 Set 추가
         imageSet.add(boardImage);
-    }
+
+    } // end addImage
 
     // 삭제 처리 기능
     public void clearImage(){
-        imageSet.forEach( boardImg -> boardImg.changeBoard(null));
-        this.imageSet.clear(); // boardImage객체 데이터 삭제
-    }
 
-}
+        // boardImage에 있는 boardBno에 연관관계를 무효화시킴. 고아 객체로 설정
+        // 고아 객체는 자동 삭제로 설정해놓음.
+        imageSet.forEach( boardImg -> boardImg.changeBoard(null));
+
+        // set객체를 clear()하면 set 객체를 비우면서
+        // boardImage 객체 데이터를 삭제함.(delete 명령어 수행)
+        this.imageSet.clear();
+
+    } // end clearImage
+
+} // end class
 
 /*
  * 스프링 계층 구조

@@ -197,7 +197,7 @@ public class BoardController {
     public String remove(BoardDTO boardDTO,
                          RedirectAttributes redirectAttributes){
 
-        log.info("==> boardDTO: "+boardDTO);  // 갑자기 값이 비어있음
+        log.info("==> boardDTO: "+boardDTO);  // 맵핑 제대로 안되면 값이 null // 보내는 파라미터 값이 동일한지 // html내부에서 값을 잘 보내주는지(query,변수,식 등등) 확인
 
         Long bno = boardDTO.getBno();
         log.info("remove bno: "+bno);
