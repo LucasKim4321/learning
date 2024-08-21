@@ -26,16 +26,16 @@ DTO(dto)
 테스트(test)
 
 
-Base - CustomRestController RootConfig PageRequestDTO PageResponseDTO
-security - CustomSecurityConfig CustomServletConfig Role AuthMemberDTO Custom403Handler ...
+Base - CustomRestController, RootConfig, PageRequestDTO, PageResponseDTO
+security - CustomSecurityConfig, CustomServletConfig, Role, AuthMemberDTO, Custom403Handler ...
 
-upload - UploadFileDTO UploadRequestDTO UpDownController
+upload - UploadFileDTO, UploadRequestDTO, UpDownController
 
-Member - Member(Entity) MemberDTO MemberRepository MemberService MemberContoller 
-Board - Entity DTO Repository Service Controller Test
-Reply - Entity DTO Repository Service Controller Test
-Alarm - Entity DTO Repository Service Controller Test
-Report - Entity DTO Repository Service Controller Test
+Member - Member(Entity), MemberDTO, MemberRepository, MemberService, MemberContoller 
+Board  - Entity, DTO, Repository, Service, Controller, Test
+Reply  - Entity, DTO, Repository, Service, Controller, Test
+Alarm  - Entity, DTO, Repository, Service, Controller, Test
+Report - Entity, DTO, Repository, Service, Controller, Test
 
 templates
  - layouts : basic, adminBasic
@@ -54,43 +54,67 @@ templates
 
 엔티티(Entity) 설계
 
+베이스엔티티 (BaseEntity)
+regDate, modDate
+
 회원 (Member)(id 또는 email을 유저 식별용으로 사용)
-Id password name email address profileImage roleSet
+Id, password, name, email, address, profileImage, roleSet
 
 프로필이미지 (profileImage)
-uuid fileName ord member
+uuid, fileName, ord, member
 
-게시물(Board)
-bno category title content boardFileSet<BoardFile> writerId writer regDate modDate viewCount likeCount
+게시물 (Board) extends BaseEntity
+bno, category, title, conten, boardFileSet(Set<BoardFile>), writer, email, regDate(from BaseEntity), modDate(from BaseEntity), viewCount, likeCount
 
 카테고리:
  - 관리자 게시판 : 축제행사, 공연전시,명소, 가이드
  - 유저 게시판 :  여행공유, 여행
 
 게시물파일 (BoardFile)
-uuid fileName ord board
+uuid, fileName, ord, board
 
 댓글 (Reply)
-rno content replier(member) regDate modDate likeCount
+rno, board, content, replier(member), replierEmail, regDate, modDate, likeCount
 
 알람 (Alarm)
-ano category(reply,post,warning,etc) content writerSet(?) regDate
+ano, category(reply,post,warning,etc), content, writerSet(?), regDate
 
 신고 (Report)
-no category(1,2,3,4...) content(자동입력, 기타 수동입력) reporterId reporter regDate
+no, category(1,2,3,4...), content(자동입력, 기타 수동입력), reporterId, reporter, regDate
 
 
 DTO 설계
+
 PageRequestDTO
+page, size, type, keyword, link
+
 PageResponseDTO
-AuthMemberDTO
+page, size, total, start, end, prev, next, dtoList
+
+AuthMemberDTO extends User (security)
+username, password, authorities, name, email, address 
+
 MemberDTO
+name, password, email, address, role
+
 ProfileImageDTO
+uuid, fileName, ord, member
+
 BoardDTO
+bno, category, title, content, fileNames(List<String>), writer, email, regDate, modDate
+
 BoardfileDTO
+uuid, fileName, ord
+
 ReplyDTO
+rno, bno, replyText, replier, replierEmail, regDate, modDate, likeCount
+
 AlarmDTO
+ano, category(reply,post,warning,etc), content, writerSet(?), regDate
+
 ReportDTO
+no, category(1,2,3,4...), content(자동입력, 기타 수동입력), reporterId, reporter, regDate
+
 
 엔티티와 DTO가 같으면 1:1 맵핑 가능
 다르면 dtoToEntity entityToDto 제작
