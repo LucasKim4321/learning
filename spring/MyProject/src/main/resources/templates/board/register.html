@@ -36,14 +36,6 @@
                     </div>
                 </div>
 
-                <div class="mb-3 row">
-                    <label for="addImageBtn" class="col-form-label ps-4">image</label>
-                    <div class="col d-flex">
-                        <input type="button" id="addImageBtn" class="btn btn-secondary opacity-50 addImageBtn" value="AddImage">
-                        <label for="addImageBtn" class="col-form-label col">첨부된 이미지</label>
-                    </div>
-                </div>
-
                 <!-- 현재 로그인 사용자와 게시글 작성자가 동일한지 판별하기 위한 항목 -->
                 <div class="mb-3 row" hidden>
                     <label for="email" class="col-form-label ps-4">email</label>
@@ -53,13 +45,24 @@
                     </div>
                 </div>
 
+                <!-- 첨부파일 등록 모달 버튼 -->
+                <div class="mb-3 row">
+                    <label for="addFilesBtn" class="col-form-label ps-4">image</label>
+                    <div class="col d-flex">
+                        <div><input type="button" id="addFilesBtn" class="btn btn-secondary opacity-50 addFilesBtn" value="AddImage"></div>
+                        <div class="col container-fluid d-flex uploadResult" style="flex-wrap:wrap"></div>
+                        <div class="uploadHidden"></div>
+                    </div>
+                </div>
+
                 <div class="mt-3 d-flex">
                     <a th:href="|@{/board/list?}${link}|" class="link-underline-none">
-                        <button type="button" id="List" class="btn btn-outline-danger opacity-50 listBtn">List</button>
+                        <button type="button" class="btn btn-outline-danger opacity-50 listBtn">List</button>
                     </a>
                     <div class="ms-auto">
-                        <button type="submit" id="submit" class="btn btn-outline-danger opacity-50 submitBtn">submit</button>
-                        <button type="reset" id="reset" class="btn btn-outline-danger opacity-50 clearBtn">clear</button>
+                        <!-- id 이름을 submit, reset 이런 기능있는 애들로 주면 해당 기능이 동작 안함 -->
+                        <button type="submit" class="btn btn-outline-danger opacity-50 submitBtn">submit</button>
+                        <button type="reset" class="btn btn-outline-danger opacity-50 clearBtn">clear</button>
                     </div>
                 </div>
             </form>
@@ -71,17 +74,13 @@
 
     <!-- 첨부파일 관련 UI -->
 
-    <!-- 1. 첨부파일 썸네일 view -->
-    <div class="row mt-3">
-        <div class="col">
-            <div class="container-fluid d-flex uploadResult" style=""></div>
-            result
-        </div>
-    </div>
-
-    <!-- Axios 라이브러리 연결 -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/js/upload.js"></script>
+    <!-- 1. 첨부파일 썸네일 view --> <!-- addFilesBtn 옆으로 옮김 -->
+<!--    <div class="row mt-3">-->
+<!--        <div class="col">-->
+<!--            <div class="container-fluid d-flex uploadResult" style="flex-wrap:wrap"></div>-->
+<!--            result-->
+<!--        </div>-->
+<!--    </div>-->
 
     <!-- 2. 첨부파일 추가를 위한 모달창 -->
     <div class="modal modalUpload fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -93,9 +92,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3 row">
-                        <label for="file" class="col-form-label ps-4">file</label>
+                        <label for="files" class="col-form-label ps-4">files</label>
                         <div class="col">
-                            <input type="file" class="form-control" id="file" name="file" multiple>
+                            <input type="file" class="form-control" id="files" name="files" multiple>
                         </div>
                     </div>
                 </div>
@@ -107,8 +106,12 @@
         </div>
     </div>
 
-</div> <!-- end fragment="content"-->
+    <!-- Axios 라이브러리 연결 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- file upload 처리하는 javascript 연결 -->
+    <script src="/js/upload.js"></script>
 
+</div> <!-- end fragment="content"-->
 
 
 <!-- 현재 페이지에서만 사용하는 css 정의 -->
@@ -123,6 +126,8 @@
 
 <!-- 현재 페이지에서만 사용하는 script 정의 -->
 <script layout:fragment="myscript" th:inline="javascript">
+    // 에러 메시지
+
     const errors = [[${errors}]];
     if(errors != null) {
         console.log('errors',errors);
@@ -139,15 +144,17 @@
     }
 
 
+    // --------- //
     // 업로드 모달
+    // --------- //
 
     const modalUpload = new bootstrap.Modal(document.querySelector('.modalUpload'));
-    const addImageBtn = document.querySelector('.addImageBtn');
+    const addFilesBtn = document.querySelector('.addFilesBtn');
     const uploadBtn = document.querySelector('.uploadBtn');
     const closeModalUpload = document.querySelector('.closeModalUpload');
 
-    // 1. 모달창 띄우기
-    addImageBtn.addEventListener('click', function(e) {
+    // 1. 업로드 모달창 띄우기
+    addFilesBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         e.preventDefault();
 
@@ -163,18 +170,20 @@
         modalUpload.hide();  // 모달창 숨기기
     })
 
-    // 3. 업로드 모달에서 uploadBtn 버튼 클릭
+    // 3. 업로드 모달에서 uploadBtn 버튼 클릭 : 선택한 파일을 서버에 업로드처리
     uploadBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         e.preventDefault();
 
+        // 자바스크립트 FormData 객체를 이용해서 전송할 파일을 저장(보관)
         const formObj = new FormData();
-        const fileInput = document.querySelector("input[name='file']");
-        // console.log(fileInput.files)
+        const fileInput = document.querySelector("input[name='files']");
+        // console.log(fileInput.files)  // 선택된 파일들은 배열 구조
 
         const files = fileInput.files;
         for (let i=0; i<files.length; i++) {
-            formObj.append("files", files[i]);
+            // 'files'키 이름은 서버에 받을 UploadFileDTO 객체의 files와 동일한 속성명이면 1:1 자동 맵핑
+            formObj.append("files", files[i]);  // javascript FormData객체를 이용해서 정보를 추가
         }
 
         console.log('formObj: ', formObj);
@@ -182,7 +191,8 @@
         // 업로드 처리하는 함수 호출: axios요청  **
         uploadToServer(formObj)
             .then( result => {
-                console.log(result);
+                console.log("result: ",result);
+                console.log("업로드 정상처리 응답결과: ",result.data);
 
                 // 업로드된 결과를 JSON파일로 view 함수 호출
                 for (let uploadResult of result) {
@@ -192,6 +202,7 @@
                 modalUpload.hide() // 모달창 숨기기
 
             }).catch( e => {
+                alert("업로드 실패했다옹~");
                 console.log("업로드 실패했다옹~ ",e);
                 modalUpload.hide();
             });
@@ -215,12 +226,13 @@
         const str =
         `
         <div class="card" style="width: 18rem;">
-            <div class="card-header">
-                <button class="btn btn-outline-danger opacity-50"
+            <div class="card-header d-flex justify-content-center">
+                <p>${fileName}</p>
+                <button type="button" class="btn btn-outline-danger opacity-50" style="margin-left:auto"
                         onClick="javascript:removeFile('${uuid}', '${fileName}', this)" > x </button>
             </div>
             <div class="card-body">
-                <img src="/view/${link}" data-src="${uuid+"_"+fileName}" />
+                <img src="/view/${link}" data-src="${uuid+"_"+fileName}" class="mx-auto"/>
             </div>
         </div>
         `;
@@ -232,52 +244,45 @@
     } // end function
 
 
+    // ----------- //
     // 첨부파일 삭제
+    // ----------- //
+
     function removeFile(uuid, fileName, obj) {
         console.log("uuid: ",uuid);
         console.log("fileName: ",fileName);
-        console.log("obj: ",obj);
+        console.log("obj: ",obj);  // 현재 버튼 요소를 지칭
 
-        const targetDiv = obj.closet('.card');
+        // 요소.closest('선택요소') : 요소기준으로 상위 요소중 가장 가까운 요소 선택
+        // 현재 요소에서 상위(부모)요소 찾을 경우 적용
+        const targetDiv = obj.closest('.card');
 
-        // 파일 삭제 요청 : axios
+        // 파일 삭제 요청 : axios()
         removeFileToServer(uuid, fileName)
-        .then(data => {
-            targetDive.remove();
+        .then(remove => {
+            // 서버로부터 받은 객체정보: 정상적으로 삭제되었으면 HashMap 형식으로 객체 전달
+            // HashMap('result': true)
+            console.log(remove);  // HashMap객체 => remove JSON객체로 받음
+            console.log(remove.result);
+
+            // 자바스크립트 요소제서: remove() removeChild()
+            // '.card' 요소제거: 썸네일 이미지 화면에서 삭제
+            if(remove.result) targetDiv.remove();  // 삭제 성공하면 썸네일 이미지 화면에서 삭제
 
         }).catch( e => {
+            alert("오류다옹~");
             console.log("오류다옹~ ",e);
         });
 
     } // end function
 
-
-    // 게시물 등록
-    document.querySelector('.submitBtn').addEventListener('click', function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        const target = document.querySelector('.uploadHidden');
-        const uploadFiles = uploadResult.querySelectorAll('img');
-
-        let str = "";
-        for (let i=0; i<uploadFiles.length; i++) {
-            const uploadFile = uploadFiles[i];
-            const imgLink = uploadFile.getAttribute('src');
-
-            str += `<input type='hidden' name='fileNames' value="${imgLink}">`;
-
-        } // end for
-
-        target.innerHTML = str;
-
-        document.querySelector('#createBoardForm').submit();
-
-    }) // end Listener
-
     console.log("test test 테스트 다옹~");
 
-    /*
+
+    // ------------------------------------------------ //
+    // 게시물 등록 : 게시글 정보, 첨부파일이름 DB에 저장 요청
+    // ------------------------------------------------ //
+
     document.querySelector('.submitBtn').addEventListener('click', function(e) {
         e.preventDefault();  // 기본 이벤트 제거
         e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
@@ -289,38 +294,66 @@
         console.log(title.value);
 
         if ((title.value.length < 1 || title.value == "")&&(content.value.length < 1 || content.value == "")) {
-            alert("제목과 내용이 비어있습니다!! 😡😡");
+            alert("제목과 내용이 비어있다옹!! 😡😡");
             return;
 
         } else if (title.value.length < 1 || title.value == "") {
-            alert("제목이 비어있습니다! 😡");
+            alert("제목이 비어있다옹! 😡");
             return;
 
         } else if (content.value.length < 1 || content.value == "") {
-            alert("내용이 비어있습니다! 😡");
+            alert("내용이 비어있다옹! 😡");
             return;
 
         }
 
         if (title.value.length < 3 || title.value.length > 100) {
-            alert("3자 이상 100자 이내에 제목을 써주세요 bitch :b");
+            alert("3자 이상 100자 이내에 제목을 써라옹~ :b");
             title.focus();
             return;
 
         }
 
         if (content.value.length < 3 || content.value.length > 1000) {
-            alert("3자 이상 1000자 이내에 글을 써주세요 bitch :b");
+            alert("3자 이상 1000자 이내에 글을 써라옹~ :b");
             content.focus();
             return;
 
         }
 
+        // ----------- //
+        // 첨부파일 등록
+        // ----------- //
+
+        const target = document.querySelector('.uploadHidden');
+        const uploadFiles = uploadResult.querySelectorAll('img');  // 불러온 업로드된 이미지들은 배열구조
+
+        let str = "";
+        for (let i=0; i<uploadFiles.length; i++) {
+            const uploadFile = uploadFiles[i];  // 배열에서 뽑은 img태그
+            // const imgLink = uploadFile.getAttribute('src');  // 이미지 링크  제약조건 때문에 안됨
+            const imgData = uploadFile.getAttribute('data-src');
+
+            // 이미지 파일 이름을 hidden input 요소에 저장
+            str += `<input type='hidden' name='fileNames' value="${imgData}">`;  // 전송할때 /(링크로 간주)가 들어가면 제약조건에 걸림(보안때문)
+
+        } // end for
+
+        target.innerHTML = str;
+
         // 값에 이상이 없으면 서버에 전송
+        console.log(formObj);
+
+        // html 태그의 id 이름을 submit, reset 이런 기능있는 애들로 주면 해당 기능이 동작 안함
+        // id="submit"으로 버튼에 ID를 설정하면, 기본적으로 document 객체에서 submit() 메서드를 덮어쓰게 됩니다. 이 때문에 submit() 메서드를 호출해도 해당 메서드가 아니라 버튼 요소를 참조하게 되어 폼이 제출되지 않습니다.
+
         formObj.submit();
 
+
     })
-    */
+
+
+    // 리셋 버튼
 
     document.querySelector('.clearBtn').addEventListener('click', function(e) {
         e.preventDefault();  // 기본 이벤트 제거

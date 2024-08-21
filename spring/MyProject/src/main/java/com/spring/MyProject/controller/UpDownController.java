@@ -11,10 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -112,11 +109,12 @@ public class UpDownController {
 
     // image remove: 첨부파일 삭제
     @Operation(summary="remove 파일", description="DELETE방식으로 첨부파일 삭제")
-    @GetMapping(value="/remove/{fileName}")
+//    @GetMapping(value="/remove/{fileName}")  // test용
+    @DeleteMapping(value="/remove/{fileName}")
     public Map<String, Boolean> removeFile(@PathVariable String fileName) {
 
         Resource resource = new FileSystemResource(uploadPath+ File.separator+fileName);
-        // "C:\\javaStudy\\upload"+"\\"+"a.jpg"
+        // "C:\\javaStudy\\upload"+"\\"+"a.jpg" **
         String resourcename = resource.getFilename();
 
         Map<String, Boolean> resultMap = new HashMap<>();
@@ -137,6 +135,7 @@ public class UpDownController {
             log.error(e.getMessage());
         }
 
+        // 삭제후 응답할 정보
         resultMap.put("result", removed);
         return resultMap;
     }

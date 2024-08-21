@@ -59,9 +59,19 @@
                     <th scope="row" th:text="${dto.bno}">1</th>
                     <td> <!-- href='/board/read?bno=11' + '&page=2&size=10...' -->
                         <a th:text="${dto.title}" href="#" th:href="|@{/board/read(bno=${dto.bno})}&${link}|" class="text-decoration-none opacity-75 link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Title</a>
+
+                        <!-- 2. 게시글에 대한 댓글 개수 출력 추가 -->
                         <sapn th:if="${dto.replyCount}>0">+[[${dto.replyCount}]]</sapn>
+
+                        <!-- 3. 게시글에 대한 이미지 첨부파일 -->
+                        <div class="py-2 thumbnail" th:if="${dto.boardImages != null && dto.boardImages.size() > 0 }">
+                            <!-- img-thumbnail 부트스트랩 -->
+                            <img style="width:100px" class="img-thumbnail"
+                                 th:each="boardImage: ${dto.boardImages}"
+                                 th:src="|/view/s_${boardImage.uuid}_${boardImage.fileName}|"/>
+                        </div>
                     </td>
-                    <!--/*<td>[[${dto.content}]]</td>*/-->
+
                     <td>[[${dto.writer}]]</td>
                     <td>[[ ${#temporals.format(dto.regDate, "yyyy-MM-dd") } ]]</td>
                 </tr>
@@ -139,6 +149,7 @@
 <style layout:fragment="mystyle" th:inline="css">
     .style_check{color:lightsalmon;}
     .table{color:lightsalmon;}
+    .thumbnail > img { margin-right: 0.3em;}
 </style>
 
 <!-- 현재 페이지에서만 사용하는 script 정의 -->

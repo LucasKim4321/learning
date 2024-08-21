@@ -277,7 +277,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
                     ).collect(Collectors.toList());
 
             // 4. boardImageDTO -> boardListAllDTO
-            boardListAllDTO.setBoarImages(imageDTOS);
+            boardListAllDTO.setBoardImages(imageDTOS);
 
             return boardListAllDTO;
 

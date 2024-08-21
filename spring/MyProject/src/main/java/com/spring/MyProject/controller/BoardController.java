@@ -1,9 +1,6 @@
 package com.spring.MyProject.controller;
 
-import com.spring.MyProject.dto.BoardDTO;
-import com.spring.MyProject.dto.BoardListReplyCountDTO;
-import com.spring.MyProject.dto.PageRequestDTO;
-import com.spring.MyProject.dto.PageResponseDTO;
+import com.spring.MyProject.dto.*;
 import com.spring.MyProject.entity.Board;
 import com.spring.MyProject.service.BoardService;
 import jakarta.validation.Valid;
@@ -42,11 +39,15 @@ public class BoardController {
                        Model model){
         // PageRequestDTO 객체 생성만 했을 경우 기본값 설정
 
-        // 1. 게시글 댓글 개수 없는 List 조회
+        // 1-1. 게시글 댓글 개수 없는 List 조회
 //        PageResponseDTO responseDTO = boardService.list(pageRequestDTO);
 
-        /// 1-2. 게시글 댓글 개수 있는 List 조회
-        PageResponseDTO<BoardListReplyCountDTO> responseDTO = boardService.listWithReplyCount(pageRequestDTO);
+        // 1-2. 게시글 댓글 개수 있는 List 조회
+//        PageResponseDTO<BoardListReplyCountDTO> responseDTO = boardService.listWithReplyCount(pageRequestDTO);
+//        log.info("=> "+responseDTO);
+
+        // 1-3. 게시글 댓글 개수 있는 List 조회
+        PageResponseDTO<BoardListAllDTO> responseDTO = boardService.listWithAll(pageRequestDTO);
         log.info("=> "+responseDTO);
 
         model.addAttribute("responseDTO", responseDTO);
@@ -122,6 +123,7 @@ public class BoardController {
         // 게시글 조회 서비스 요청
         BoardDTO boardDTO = boardService.readOne(bno);
         model.addAttribute("dto",boardDTO);
+
         /*
         반환값을 void로 할 경우
         return 생략하면 "board/read" 형태으로 자동 포워딩  (return "board/read";)

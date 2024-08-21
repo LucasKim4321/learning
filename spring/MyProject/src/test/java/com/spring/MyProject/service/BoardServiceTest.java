@@ -170,9 +170,9 @@ public class BoardServiceTest {
             log.info("==> boardListAllDTO.getTitle(): "+boardListAllDTO.getTitle());
 
             // 이미지가 있으면 처리
-            if (boardListAllDTO.getBoarImages() != null) {
+            if (boardListAllDTO.getBoardImages() != null) {
 
-                for (BoardImageDTO boardImageDTO : boardListAllDTO.getBoarImages()) {
+                for (BoardImageDTO boardImageDTO : boardListAllDTO.getBoardImages()) {
                     log.info("==> boardImageDTO: "+boardImageDTO);
 
                 }

@@ -10,7 +10,7 @@ async function uploadToServer(formObj) {
     // 서버쪽에 "/upload" 요청 받으면
     // UpDownController에서  RestAPI형식으로 요청한 url 분석하여 실제 업로드
     const response = await axios({
-        method: 'post',
+        method: 'post',  // 첨부파일은 반드시 post방식을 사용
         url: '/upload',
         data: formObj,
         headers: {
@@ -18,6 +18,7 @@ async function uploadToServer(formObj) {
         }
 
         /*
+        header(x) -> headers(o)
         'Content-Type': 'multipart/form-data' 설정:
         multipart/form-data는 파일 업로드 시 기본적으로 설정되는 타입입니다.
         axios가 FormData 객체를 감지하면, 자동으로 Content-Type을 설정해 줍니다.

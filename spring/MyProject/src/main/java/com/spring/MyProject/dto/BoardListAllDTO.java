@@ -24,6 +24,6 @@ public class BoardListAllDTO {
     //SELECT COUNT(*) FROM reply WHERE board_bno = 1 (게시글번호)
     private Long replyCount;
 
-    private List<BoardImageDTO> boarImages;
+    private List<BoardImageDTO> boardImages;
 
 }

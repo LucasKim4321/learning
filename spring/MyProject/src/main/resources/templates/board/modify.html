@@ -59,6 +59,36 @@
                     </div>
                 </div>
 
+                <!-- 첨부파일 등록 모달 버튼 -->
+                <div class="mb-3 row">
+                    <label for="addFilesBtn" class="col-form-label ps-4">image</label>
+                    <div class="col d-flex">
+                        <div><input type="button" id="addFilesBtn" class="btn btn-secondary opacity-50 addFilesBtn" value="AddImage"></div>
+                        <div class="col container-fluid d-flex uploadResult" style="flex-wrap:wrap">
+                            <!-- 이미지 첨부파일 -->
+                            <div class="col container-fluid d-flex gap-3 uploadResult" style="flex-wrap:wrap" th:if="${dto.fileNames != null && dto.fileNames.size() > 0 }">
+                                <th:block th:each="fileName: ${dto.fileNames}">
+                                <div class="card" style="width: 18rem;"
+                                     th:with="nameArr=${fileName.split('_')}">  <!-- nameArr [0]uuid [1]fileName -->
+                                    <div class="card-header d-flex justify-content-center">
+                                        <p>[[${nameArr[1]}]]</p>
+                                        <p hidden>${nameArr[1]}</p>  <!-- 그냥 텍스트로 인식 -->
+                                        <!--/* 이 버튼의 경우 [[${}]] ${} 둘 다 잘됨. th도 상관없음. 인자로 넘어간 후 스크립트에선 타임리프가 적용되서 그러나? */-->
+                                        <button type="button" class="btn btn-outline-danger opacity-50" style="margin-left:auto"
+                                                onClick="javascript:removeFile('[[${nameArr[0]}]]', '${nameArr[1]}', this)" > x </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <img style="" class="w-100" data-src="${fileName}"
+                                             th:src="|/view/${fileName}|" />
+                                    </div>
+                                </div>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="uploadHidden"></div>
+                    </div>
+                </div>
+
                 <!-- 4. 게시글 등록일, 수정일 -->
                 <div class="mb-3 row" id="regDateBox">
                     <label for="regDate" class="col-form-label ps-4">regDate</label>
@@ -91,6 +121,39 @@
         </div>
 
     </div>
+
+    <!-- 첨부파일 관련 UI -->
+
+    <!-- 1. 첨부파일 썸네일 view --> <!-- addFilesBtn 옆으로 옮김 -->
+
+    <!-- 2. 첨부파일 추가를 위한 모달창 -->
+    <div class="modal modalUpload fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Upload Files</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="files" class="col-form-label ps-4">files</label>
+                        <div class="col">
+                            <input type="file" class="form-control" id="files" name="files" multiple>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary closeModalUpload" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary uploadBtn">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Axios 라이브러리 연결 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- file upload 처리하는 javascript 연결 -->
+    <script src="/js/upload.js"></script>
 
 </div>
 
@@ -202,7 +265,62 @@ document.querySelector('.confirmBtn').addEventListener('click', function(e) {
 
     //console.log([[${dto}]]);
     formObj.submit();
-})
+
+    })
+
+
+    // -------------------------------------------------- //
+    // 게시글 수정 작업에서 첨부파일 삭제:
+    // 1. 이미지를 화면에 보이지 않도록 제거
+    // 2. 수정하기 버튼을 누르면 업로드된 파일 삭제
+    // -------------------------------------------------- //
+
+    // 1. 이미지를 화면에 보이지 않도록 제거
+
+    // 실제 수정작업 진행시 살제될 파일 목록 저장
+    const removeFileList = [] // 배열 객체 선언
+
+    function removeFile(uuid, fileName, obj) {  // obj는 this(이벤트가 발생한 태그)
+        console.log("uuid: ",uuid);
+        console.log("fileName: ",fileName);
+        console.log("obj: ",obj);  // 현재 버튼 요소를 지칭
+
+        if(!confirm("파일을 삭제하시겠습니까?")) {  // 취소를 누르면 return // 확인 누르면 삭제 진행
+            return;
+        }
+
+        // 삭제할 파일목록 저장
+        removeFileList.push({uuid, fileName});
+
+
+        // 요소.closest('선택요소') : 요소기준으로 상위 요소중 가장 가까운 요소 선택
+        // 현재 요소에서 상위(부모)요소 찾을 경우 적용
+
+        // 자바스크립트 요소제거 : remove() removeChild()
+        // '.card' 요소제거 : 이미지 화면에서 삭제
+        const targetDiv = obj.closest('.card');
+        targetDiv.remove()
+
+        /*
+        // 파일 삭제 요청 : axios()
+        removeFileToServer(uuid, fileName)
+        .then(remove => {
+            // 서버로부터 받은 객체정보: 정상적으로 삭제되었으면 HashMap 형식으로 객체 전달
+            // HashMap('result': true)
+            console.log(remove);  // HashMap객체 => remove JSON객체로 받음
+            console.log(remove.result);
+
+            // 자바스크립트 요소제서: remove() removeChild()
+            // '.card' 요소제거: 썸네일 이미지 화면에서 삭제
+            if(remove.result) targetDiv.remove();  // 삭제 성공하면 썸네일 이미지 화면에서 삭제
+
+        }).catch( e => {
+            alert("오류다옹~");
+            console.log("오류다옹~ ",e);
+        });
+        */
+
+    } // end function
 </script>
 
 </html>
