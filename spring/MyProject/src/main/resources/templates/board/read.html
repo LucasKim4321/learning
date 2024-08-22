@@ -119,14 +119,14 @@
                     <!-- 현 글번호에 대한 페이징 정보를 넘겨받아서 list요청시 페이징 정보와 같이 요청하면
                          현재 글번호가 해당되는 list페이지가 추출됨 -->
                     <a th:href="|@{/board/list?}${link}|" class="link-underline-none">
-                        <button type="button" id="List" class="btn btn-outline-danger opacity-50 listBtn">list</button>
+                        <button type="button" id="List" class="btn btn-outline-secondary opacity-50 listBtn">list</button>
                     </a>
 
                     <!-- disabled 보이지만 동작 안됨  hidden 안보이고 동작도 안함  visibility=hidden 안보이지만 클릭 되고 동작도 함 -->
                     <!--/*<th:block sec:authorize="${isAuthenticated()}" th:if="${dto.writer == #authentication.principal.name}">*/-->
                         <button type="button" id="Remove" class="btn btn-outline-danger opacity-50 removeBtn ms-auto" hidden>remove</button>
                         <a th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="link-underline-none ms-1">
-                            <button type="button" id="Modify" class="btn btn-outline-danger opacity-50 modifyBtn" hidden>modify</button>
+                            <button type="button" id="Modify" class="btn btn-outline-primary opacity-50 modifyBtn" hidden>modify</button>
                         </a>
                     <!--/*</th:block>*/-->
 
@@ -191,6 +191,10 @@
         </div>
     </div>
 
+    <!-- Axios 라이브러리 연결 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- file upload 처리하는 javascript 연결 -->
+    <script src="/js/upload.js"></script>
 
 </div>  <!-- end fragment="content"-->
 
@@ -343,16 +347,71 @@
 
     });
 
+
+    // ------------------------ //
+    // 서버 첨부파일 삭제 함수 정의
+    // ------------------------ //
+
+    function callRemoveFiles() {
+
+        // 삭제할 첨부파일 목록이 없으면 삭제 작업 중단
+        if (removeFileList.length == 0) return;
+
+        // removeFileList 구조 [{uuid, fileName}, {uuid, fileName}, ...]
+        console.log("removeFileList: ",removeFileList);
+        console.log("removeFileList[0].uuid: ",removeFileList[0].uuid);
+        console.log("removeFileList[0].fileName: ",removeFileList[0].fileName);
+
+        // 삭제할 첨부파일 목록: [{xx.xx},...]
+        removeFileList.forEach( ({uuid, fileName}) => {
+            // 업로드파일 삭제 요청: axios
+            removeFileToServer({uuid, fileName})
+                .then(response => {
+                    // 삭제후 서버로부터 응답
+                    console.log(response)
+
+                }).catch( e => {
+                    alert("오류다옹~");
+                    console.log("오류다옹~ ",e);
+                });
+
+        })
+
+    }
+
+    const removeFileList = [];
     document.querySelector('.removeBtn').addEventListener('click', function(e) {
         e.preventDefault();  // 기본 이벤트 제거
         e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
 
-        // **
-
-        let doubleChk = confirm('삭제하시겠습니까?');
+        let doubleChk = confirm('삭제하겠나옹?');
         if (doubleChk) {
+
+            // 첨부파일 이미지 목록속성만 추출하여 삭제목록에 저장 => 전역배열 => removeFileList
+            const delFiles = [[${dto.fileNames}]]
+            if (delFiles.length > 0) {
+                console.log('delFiles', delFiles,[[${dto.fileNames}]])
+
+                for (fName of delFiles){
+                  const arr = fName.split("_")
+                  const uuid = arr[0]
+                  const fileName = arr[1]
+
+                  //console.log(uuid, fileName)
+                  // 삭제할 첨부파일 목록에 저장된 => callRemoveFiles()메서드에서 삭제요청
+                  // 구조분해할당형식의 값전달 시: 보내쪽과 받는쪽의 매개변수가 동일해야 함.
+                  removeFileList.push({uuid,fileName})
+                }
+
+                //console.log("remove button :"+removeFileList)
+                //console.log("remove button :"+removeFileList[0])
+            }
+
+            callRemoveFiles();
+
             const formObj = document.querySelector('#readForm');
-            formObj.action = "/board/remove?"+[[${dto.bno}]];
+            //formObj.action = "/board/remove?"+[[${dto.bno}]];
+            formObj.action = `/board/remove`
             formObj.method = "post";
             formObj.submit();
         }

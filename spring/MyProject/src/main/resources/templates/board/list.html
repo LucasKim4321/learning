@@ -82,7 +82,7 @@
 
                 <div class="col-4">
                     <a th:href="|@{/board/list?}${link}|" class="link-underline-none">
-                        <button type="button" id="List" class="btn btn-outline-danger opacity-50 listBtn">List</button>
+                        <button type="button" class="btn btn-outline-secondary opacity-50 listBtn">List</button>
                     </a>
                 </div>
 
@@ -117,7 +117,7 @@
                 <!-- 로그인 상태에서만 활성화 -->
                 <div class="col-4 d-flex">
                     <a href="/board/register" th:href="@{/board/register}" class="ms-auto">
-                        <button id="write" class="btn btn-outline-danger opacity-50"
+                        <button class="btn btn-outline-primary opacity-50"
                                 sec:authorize ="isAuthenticated()">write</button>
                     </a>
                 </div>

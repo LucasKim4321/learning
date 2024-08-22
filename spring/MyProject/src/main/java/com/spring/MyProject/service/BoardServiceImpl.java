@@ -75,6 +75,7 @@ public class BoardServiceImpl implements BoardService {
         // 수정할 글번호 유무 체크
         Optional<Board> result = boardRepository.findById(boardDTO.getBno());
         Board board = result.orElseThrow();
+        log.info("==> from service board: "+board);
         
         // entity값을 dto값으로 변경
         board.change(boardDTO.getTitle(), boardDTO.getContent());
@@ -82,6 +83,9 @@ public class BoardServiceImpl implements BoardService {
         // ------------------------------------------------------- //
         // 기존 첨부파일 있을 경우 처리 : 기존에 첨부파일 삭제 후 추가하는 방식
         board.clearImage();
+        log.info("==> from service board: "+board);
+        log.info("==> from service board.getImageSet(): "+board.getImageSet());
+
         // 수정된 첨부파일이 있을 경우
         if (boardDTO.getFileNames() != null) {
             for (String fileName : boardDTO.getFileNames()) {

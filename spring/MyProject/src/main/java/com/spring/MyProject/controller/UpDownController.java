@@ -40,6 +40,7 @@ public class UpDownController {
             List<UploadResultDTO> list = new ArrayList();
             
             uploadFileDTO.getFiles().forEach(multipartFile-> {
+
                 String fileName = multipartFile.getOriginalFilename();
                 log.info("==> multipartFile  : "+fileName);
 

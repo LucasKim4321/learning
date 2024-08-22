@@ -180,13 +180,15 @@ public class BoardController {
         Board board = boardService.modify(boardDTO);
         log.info("==> bno123: "+board.getBno());
 
-        redirectAttributes.addFlashAttribute("bno", board.getBno());
+        // addFlashAttribute() => 1회용 정보유지 : redirect방식으로 요청시 정보관리하는 객체
         redirectAttributes.addFlashAttribute("result", "modified");
+        redirectAttributes.addFlashAttribute("bno", board.getBno());
 
-        // => return
+        // redirect방식에서 파라미터 추가 기능
         redirectAttributes.addAttribute("bno", board.getBno());
 
         return "redirect:/board/read?"+link;
+//        return "redirect:/board/read";
 
     }
 

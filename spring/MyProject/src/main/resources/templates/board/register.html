@@ -57,12 +57,12 @@
 
                 <div class="mt-3 d-flex">
                     <a th:href="|@{/board/list?}${link}|" class="link-underline-none">
-                        <button type="button" class="btn btn-outline-danger opacity-50 listBtn">List</button>
+                        <button type="button" class="btn btn-outline-secondary opacity-50 listBtn">List</button>
                     </a>
                     <div class="ms-auto">
                         <!-- id 이름을 submit, reset 이런 기능있는 애들로 주면 해당 기능이 동작 안함 -->
-                        <button type="submit" class="btn btn-outline-danger opacity-50 submitBtn">submit</button>
-                        <button type="reset" class="btn btn-outline-danger opacity-50 clearBtn">clear</button>
+                        <button type="reset" class="btn btn-outline-warning opacity-50 clearBtn">clear</button>
+                        <button type="submit" class="btn btn-outline-success opacity-50 submitBtn">submit</button>
                     </div>
                 </div>
             </form>
@@ -170,7 +170,10 @@
         modalUpload.hide();  // 모달창 숨기기
     })
 
+
     // 3. 업로드 모달에서 uploadBtn 버튼 클릭 : 선택한 파일을 서버에 업로드처리
+
+    let uploadedFileList = [];
     uploadBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         e.preventDefault();
@@ -193,10 +196,11 @@
             .then( result => {
                 console.log("result: ",result);
                 console.log("업로드 정상처리 응답결과: ",result.data);
+                uploadedFileList = result;
 
                 // 업로드된 결과를 JSON파일로 view 함수 호출
-                for (let uploadResult of result) {
-                    showUploadFile(uploadResult);
+                for (let data of result) {
+                    showUploadFile(data);
                 }
 
                 modalUpload.hide() // 모달창 숨기기
@@ -258,12 +262,12 @@
         const targetDiv = obj.closest('.card');
 
         // 파일 삭제 요청 : axios()
-        removeFileToServer(uuid, fileName)
+        removeFileToServer({uuid, fileName})
         .then(remove => {
             // 서버로부터 받은 객체정보: 정상적으로 삭제되었으면 HashMap 형식으로 객체 전달
             // HashMap('result': true)
-            console.log(remove);  // HashMap객체 => remove JSON객체로 받음
-            console.log(remove.result);
+            console.log("remove: ",remove);  // HashMap객체 => remove JSON객체로 받음
+            console.log("remove.result: ",remove.result);
 
             // 자바스크립트 요소제서: remove() removeChild()
             // '.card' 요소제거: 썸네일 이미지 화면에서 삭제
@@ -278,6 +282,33 @@
 
     console.log("test test 테스트 다옹~");
 
+    // ----------- //
+    // 첨부파일 등록
+    // ----------- //
+
+    function addFiles () {
+
+        // 파일이 없으면 등록안하고 종료 (이미지가 안찍히면 오류나기 때문)
+        console.log("uploadedFileList",uploadedFileList);
+        if (uploadedFileList.length == 0) return;
+
+        const target = document.querySelector('.uploadHidden');
+        const uploadFiles = uploadResult.querySelectorAll('img');  // 불러온 업로드된 이미지들은 배열구조
+
+        let str = "";
+        for (let i=0; i<uploadFiles.length; i++) {
+            const uploadFile = uploadFiles[i];  // 배열에서 뽑은 img태그
+            // const imgLink = uploadFile.getAttribute('src');  // 이미지 링크  제약조건 때문에 안됨
+            const imgData = uploadFile.getAttribute('data-src');
+
+            // 이미지 파일 이름을 hidden input 요소에 저장
+            str += `<input type='hidden' name='fileNames' value="${imgData}">`;  // 전송할때 /(링크로 간주)가 들어가면 제약조건에 걸림(보안때문)
+
+        } // end for
+
+        target.innerHTML = str;
+
+    }
 
     // ------------------------------------------------ //
     // 게시물 등록 : 게시글 정보, 첨부파일이름 DB에 저장 요청
@@ -321,25 +352,9 @@
 
         }
 
-        // ----------- //
         // 첨부파일 등록
-        // ----------- //
+        addFiles();
 
-        const target = document.querySelector('.uploadHidden');
-        const uploadFiles = uploadResult.querySelectorAll('img');  // 불러온 업로드된 이미지들은 배열구조
-
-        let str = "";
-        for (let i=0; i<uploadFiles.length; i++) {
-            const uploadFile = uploadFiles[i];  // 배열에서 뽑은 img태그
-            // const imgLink = uploadFile.getAttribute('src');  // 이미지 링크  제약조건 때문에 안됨
-            const imgData = uploadFile.getAttribute('data-src');
-
-            // 이미지 파일 이름을 hidden input 요소에 저장
-            str += `<input type='hidden' name='fileNames' value="${imgData}">`;  // 전송할때 /(링크로 간주)가 들어가면 제약조건에 걸림(보안때문)
-
-        } // end for
-
-        target.innerHTML = str;
 
         // 값에 이상이 없으면 서버에 전송
         console.log(formObj);

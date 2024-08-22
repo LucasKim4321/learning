@@ -118,3 +118,8 @@ no, category(1,2,3,4...), content(자동입력, 기타 수동입력), reporterId
 
 엔티티와 DTO가 같으면 1:1 맵핑 가능
 다르면 dtoToEntity entityToDto 제작
+
+
+첨부파일 등록
+1. 사용자가 파일 업로드 -> 서버에 파일 업로드 -> 화면출력 -> 등록하면 
+첨부

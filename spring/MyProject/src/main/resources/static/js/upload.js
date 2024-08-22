@@ -36,7 +36,7 @@ async function uploadToServer(formObj) {
 // server에 파일 upload 파일 삭제 처리 : axios(비동기) 요청 테스트
 // ----------------------------------------------- //
 
-async function removeFileToServer(uuid, fileName) {
+async function removeFileToServer({uuid, fileName}) {
     const response = await axios.delete(`/remove/${uuid}_${fileName}`)
 
     return response.data

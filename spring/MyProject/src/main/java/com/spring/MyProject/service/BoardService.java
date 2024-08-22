@@ -41,7 +41,7 @@ public interface BoardService {
                 .email(boardDTO.getEmail())
                 .build();
 
-        // 첨부파일이 있을 경우
+        // 첨부파일이 있을 경우  // imageSet에 추가
         if (boardDTO.getFileNames() != null) {
             boardDTO.getFileNames().forEach(fileName -> {
                 String[] arr = fileName.split("_");  // 첨부파일 이름 구성 : "UUID값" + "_" + "파일이름.확장자"
@@ -61,6 +61,7 @@ public interface BoardService {
                 .bno(board.getBno())
                 .title(board.getTitle())
                 .content(board.getContent())
+                .writer(board.getWriter())
                 .email(board.getEmail())
                 .regDate(board.getRegDate())
                 .modDate(board.getModDate())

@@ -204,7 +204,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">  <!-- 메시지를 전달하는 부분 -->
-                [[${result}]]번 글이 등록 되었습니다~ :b
+                메시지 전달
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -233,8 +233,10 @@
 
     // show modall창에 메시지 출력하기
     const modalMessage = new bootstrap.Modal(document.querySelector('.modalMessage'));
-    const modalBody = document.querySelector('.modal-body')  // 메시지를 출력하는 태그
+    // 추상적으로 대충 태그 찍으면 나중에 문제 생길 가능성 큼
+    const modalBody = document.querySelector('.modalMessage .modal-body')  // 메시지를 출력하는 태그
 
+    console.log("test1");
     let message = "";
     if (result) {
         if (result=="registered"){
@@ -251,7 +253,9 @@
 
         modalMessage.show();
 
+        console.log("test2");
     }
+    console.log("test3");
 
 </script>
 

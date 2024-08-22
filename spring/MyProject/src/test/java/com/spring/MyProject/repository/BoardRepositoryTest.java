@@ -357,7 +357,7 @@ class BoardRepositoryTest {
                     log.info("==> boardListAllDTO.getBno(): "+boardListAllDTO.getBno());
                     log.info("==> boardListAllDTO.getReplyCount(): "+boardListAllDTO.getReplyCount());
                     log.info("==> boardListAllDTO.getBoarImages(): ");
-                    boardListAllDTO.getBoarImages().forEach( boardImage -> {
+                    boardListAllDTO.getBoardImages().forEach( boardImage -> {
                         log.info("==> boardImage: "+boardImage);
                     });
 
