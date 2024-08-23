@@ -68,7 +68,7 @@ id, password, name, email, address, profileImage, roleSet
 uuid, fileName, ord, member
 
 게시물 (Board extends BaseEntity)
-bno, category, title, content, boardFileSet(Set<BoardFile>), writer, email, regDate(from BaseEntity), modDate(from BaseEntity), tags, viewCount, likeCount
+id, category, title, content, boardFileSet(Set<BoardFile>), writer, email, regDate(from BaseEntity), modDate(from BaseEntity), tags, viewCount, likeCount
 
 카테고리:
  - 관리자 게시판 : 축제행사, 공연전시,명소, 가이드
@@ -77,17 +77,17 @@ bno, category, title, content, boardFileSet(Set<BoardFile>), writer, email, regD
 게시물 파일 (BoardFile)
 uuid, fileName, ord, board(FK)
 
-게시물 좋아요 리스트 (boardLikeList)
+게시물 좋아요 (boardLike)
 id, board(FK), member(FK)
 
 댓글 (Reply)
-rno, board(FK), content, replier(유저이름), replierEmail regDate, modDate, likeCount
+id, board(FK), content, replier(유저이름), replierEmail regDate, modDate, likeCount
 
-댓글 좋아요 리스트 (ReplyLikeList)
+댓글 좋아요 (ReplyLike)
 id, reply(FK), member(FK)
 
 알람 (Alarm)
-ano, category(reply,post,warning,etc), content, writerSet(?), regDate
+id, category(reply,post,warning,etc), content, writerSet(?), regDate
 
 신고 (Report)
 id, category(1,2,3,4...), content(자동입력, 기타 수동입력), reporterId, reporter, regDate
@@ -121,13 +121,13 @@ bno, category, title, content, fileNames(List<String>), writer, email, regDate, 
 게시물 파일 (BoardfileDTO)
 uuid, fileName, ord
 
-게시물 좋아요 리스트 (boardLikeListDTO)
+게시물 좋아요 (boardLikeDTO)
 id, board, member
 
 댓글 (ReplyDTO)
-rno, bno, replyText, replier, replierEmail, regDate, modDate, likeCount
+id, bno, replyText, replier, replierEmail, regDate, modDate, likeCount
 
-댓글 좋아요 리스트 (ReplyLikeListDTO)
+댓글 좋아요 (ReplyLikeDTO)
 id, reply, member
 
 알람 (AlarmDTO)
