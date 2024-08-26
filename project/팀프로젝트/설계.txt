@@ -22,7 +22,7 @@ DTO(dto)
  - layouts
  - fragments
  - admin
- - member
+ - user
  - board
 
 테스트(test)
@@ -42,14 +42,14 @@ Report - Entity, DTO, Repository, Service, Controller, Test
 templates
  - layouts : basic, adminBasic
  - fragments : header, footer, alarm(modal), report(modal)
- - member : login, myPage
+ - user : login, signUp, modify, myPage
  - board : travelInfo, travelRecommend, travelGuide, festivalBoard, userBoard
             - travelInfo        :  list(All), create(Admin), read(All), modify(Admin)
             - travelRecommend   :  list(All), create(Admin), read(All), modify(Admin)
             - travelGuide       :  list(All), create(Admin), read(All), modify(Admin)
             - festivalBoard     :  list(All), create(Admin), read(All), modify(Admin)
             - userBoard         :  list(All), create(User),  read(All), modify(User)
- - admin : main, config, board, member 
+ - admin : main, config, report, board, member
 
 스타일 있는 게시판 구현(보류)
 
@@ -61,14 +61,14 @@ templates
 베이스 엔티티 (BaseEntity)
 regDate, modDate
 
-회원 (Member)(id 또는 email을 유저 식별용으로 사용)
-id, password, name, email, address, profileImage, roleSet
+회원 (Member extends BaseEntity)(id 또는 email을 유저 식별용으로 사용)
+id, userId, password, name, email, address, profileImage, roleSet
 
 프로필 이미지 (ProfileImage)
 uuid, fileName, ord, member
 
 게시물 (Board extends BaseEntity)
-id, category, title, content, boardFileSet(Set<BoardFile>), writer, email, regDate(from BaseEntity), modDate(from BaseEntity), tags, viewCount, likeCount
+id, category, title, content, boardFileSet(Set<BoardFile>), writer, email, tags, viewCount, likeCount
 
 카테고리:
  - 관리자 게시판 : 축제행사, 공연전시,명소, 가이드
@@ -77,20 +77,26 @@ id, category, title, content, boardFileSet(Set<BoardFile>), writer, email, regDa
 게시물 파일 (BoardFile)
 uuid, fileName, ord, board(FK)
 
-게시물 좋아요 (boardLike)
-id, board(FK), member(FK)
+댓글 (Reply extends BaseEntity)
+id, board(FK), replyText, replier(유저이름), replierEmail
 
-댓글 (Reply)
-id, board(FK), content, replier(유저이름), replierEmail regDate, modDate, likeCount
+대댓글 (SubReply extends BaseEntity)
+id, reply(FK), replyText, replier(유저이름), replierEmail
+
+게시물 좋아요 (boardLike)
+id, board(FK), member(FK), regDate
 
 댓글 좋아요 (ReplyLike)
-id, reply(FK), member(FK)
+id, reply(FK), member(FK), regDate
 
-알람 (Alarm)
-id, category(reply,post,warning,etc), content, writerSet(?), regDate
+대댓글 좋아요 (SubReplyLike)
+id, subReply(FK), member(FK), regDate
+
+경고 (Warning)
+id, member(FK), text, regDate
 
 신고 (Report)
-id, category(1,2,3,4...), content(자동입력, 기타 수동입력), reporterId, reporter, regDate
+id, category(1,2,3,4...), reportText(기타), reporter, reporterId, regDate
 
 
 /--------------/
@@ -116,25 +122,31 @@ name, password, email, address, role
 uuid, fileName, ord, member
 
 게시물 (BoardDTO)
-bno, category, title, content, fileNames(List<String>), writer, email, regDate, modDate, tags, viewCount, likeCount
+bno, category, title, content, fileNames(List<String>), writer, email, regDate, modDate, tags, viewCount
 
-게시물 파일 (BoardfileDTO)
+게시물 파일 (BoardFileDTO)
 uuid, fileName, ord
 
-게시물 좋아요 (boardLikeDTO)
-id, board, member
+게시물 좋아요 (BoardLikeDTO)
+id, board, member, regDate
 
 댓글 (ReplyDTO)
-id, bno, replyText, replier, replierEmail, regDate, modDate, likeCount
+id, board, replyText, replier, replierEmail, regDate, modDate
+
+대댓글 (SubReplyDTO)
+id, reply, replyText, replier, replierEmail regDate, modDate
 
 댓글 좋아요 (ReplyLikeDTO)
-id, reply, member
+id, reply, member, regDate
 
-알람 (AlarmDTO)
-id, category(reply,post,warning,etc), content, writerSet(?), regDate
+대댓글 좋아요 (SubReplyLikeDTO)
+id, subReply, member, regDate
+
+경고 (WarningDTO)
+id, member, text, regDate
 
 신고 (ReportDTO)
-id, category(1,2,3,4...), content(자동입력, 기타 수동입력), reporterId, reporter, regDate
+id, category(1,2,3,4...), reportText(자동입력, 기타 수동입력), reporter, reporterId, regDate
 
 
 /----------------/
