@@ -18,12 +18,12 @@ DTO(dto)
 서비스(service)
 컨트롤러(controller)
 
-템플릿(templates)(pages)
+템플릿(templates)
  - layouts
  - fragments
- - admin
- - user
- - board
+ - member
+ - boards
+ - adminPage
 
 테스트(test)
 
@@ -31,27 +31,30 @@ DTO(dto)
 Base - CustomRestController, RootConfig, PageRequestDTO, PageResponseDTO
 security - CustomSecurityConfig, CustomServletConfig, Role, AuthMemberDTO, Custom403Handler ...
 
-upload - UploadFileDTO, UploadRequestDTO, UpDownController
+upload  - UploadFileDTO, UploadRequestDTO, UpDownController
 
-Member - Member(Entity), MemberDTO, MemberRepository, MemberService, MemberContoller 
-Board  - Entity, DTO, Repository, Service, Controller, Test
-Reply  - Entity, DTO, Repository, Service, Controller, Test
-Alarm  - Entity, DTO, Repository, Service, Controller, Test
-Report - Entity, DTO, Repository, Service, Controller, Test
+Member  - Member(Entity), MemberDTO, MemberRepository, MemberService, MemberContoller 
+Board   - Entity, DTO, Repository, Service, Controller, Test
+Reply   - Entity, DTO, Repository, Service, Controller, Test
+Like    - Entity, DTO, Repository, Service, Contorller, Test
+Alarm   - Entity, DTO, Repository, Service, Controller, Test
+Report  - Entity, DTO, Repository, Service, Controller, Test
+Warning - Entity, DTO, Repository, Service, Controller, Test
 
 templates
  - layouts : basic, adminBasic
  - fragments : header, footer, alarm(modal), report(modal)
- - user : login, signUp, modify, myPage
- - board : travelInfo, travelRecommend, travelGuide, festivalBoard, userBoard
+ - member : login(All), signUp(All), modify(User, Admin), myPage(User, Admin)
+ - boards : travelInfo, travelRecommend, travelGuide, festivalBoard, userBoard
             - travelInfo        :  list(All), create(Admin), read(All), modify(Admin)
             - travelRecommend   :  list(All), create(Admin), read(All), modify(Admin)
-            - travelGuide       :  list(All), create(Admin), read(All), modify(Admin)
+            - travelGuide       :  list(All), create(Admin), read(All), modify(Admin), travelPreparation(All)
             - festivalBoard     :  list(All), create(Admin), read(All), modify(Admin)
             - userBoard         :  list(All), create(User),  read(All), modify(User)
- - admin : main, config, report, board, member
+ - adminPage(Admin) : main, config, report, board, member
 
-스타일 있는 게시판 구현(보류)
+
+스타일 있는 게시판 구현(보류)(어려움)
 
 
 /----------------------------------/
@@ -68,7 +71,7 @@ id, userId, password, name, email, address, profileImage, roleSet
 uuid, fileName, ord, member
 
 게시물 (Board extends BaseEntity)
-id, category, title, content, boardFileSet(Set<BoardFile>), writer, email, tags, viewCount, likeCount
+id, category, title, content, boardFileSet(Set<BoardFile>), writer, email, tags, viewCount, // likeCount
 
 카테고리:
  - 관리자 게시판 : 축제행사, 공연전시,명소, 가이드
@@ -91,6 +94,15 @@ id, reply(FK), member(FK), regDate
 
 대댓글 좋아요 (SubReplyLike)
 id, subReply(FK), member(FK), regDate
+
+// 좋아요 (Like)
+// id, board(FK), reply(FK), subReply(FK), member(FK), regDate
+
+알람 (Alarm)
+// id, member(FK), like(FK), regDate
+// id, member(FK), category, objectId, regDate
+id, member(FK)(알람받는 유저), Reply(FK), SubReply(FK), boardLike(FK), replyLike(FK), subReplyLike(FK), warning(FK), regDate
+
 
 경고 (Warning)
 id, member(FK), text, regDate
@@ -141,6 +153,9 @@ id, reply, member, regDate
 
 대댓글 좋아요 (SubReplyLikeDTO)
 id, subReply, member, regDate
+
+알람 (AlarmDTO)
+id, member(알람받는 유저), Reply, SubReply, boardLike, replyLike, subReplyLike, warning, regDate
 
 경고 (WarningDTO)
 id, member, text, regDate

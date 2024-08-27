@@ -17,6 +17,11 @@ DROP TABLE board_image;
 DELETE FROM board_image WHERE board_bno IS NULL;
 SELECT * FROM board_image ORDER BY board_bno ASC;
 SELECT * FROM board_image ORDER BY board_bno DESC;
+SELECT * FROM board_image WHERE board_bno = 245;
+SELECT * FROM board_image WHERE UUID = '8f6ff05e-585b-449b-9e72-39acf69c52d1';
+UPDATE board_image SET board_bno = NULL WHERE UUID = '8f6ff05e-585b-449b-9e72-39acf69c52d1';
+ALTER TABLE board_image ADD ano INT(11);
+ALTER TABLE board_image DROP ano;
 
 SHOW COLUMNS reply;
 SELECT * FROM reply;

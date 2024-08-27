@@ -114,7 +114,7 @@ public class CustomSecurityConfig {
         
         http.authorizeHttpRequests( auth -> {
             // 사용자 인증없이 접근할 수 있도록 설정
-            auth.requestMatchers("/", "/members/**").permitAll();
+            auth.requestMatchers("/", "/members/**", "/test/**").permitAll();
             // Role이 ADMIN 경우에만 접근
             auth.requestMatchers("/admin/**").hasRole("ADMIN");
             // Role이 ADMIN, USER 경우에만 접근
