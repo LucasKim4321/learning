@@ -124,6 +124,19 @@ public class CustomSecurityConfig {
             // 설정해준 경로를 제외한 나머지 경로들은 모두 접근 할 수 있도록 설정
             auth.anyRequest().permitAll();
         });
+
+        // ---------------------------------------------------------------------- //
+        // 2. h2설정 => H2 웹콘솔의 iframe이 정상적으로 작동하려면 Origin에 대해 허용하도록 설정
+        // ---------------------------------------------------------------------- //
+        /*
+          - Spring Security는 CsrfFilter를 기본적으로 Default Filter로 설정하고 있다.
+          - CsrfFilter가 H2 웹콘솔 관련 경로를 무시하도록 설정
+          - Spring Security는 기본적으로 HeaderWriterFilter를 활성화.
+            HeaderWriterFilter는 XFrameOptionsHeaderWriter를 이용해 설정에 따라
+            X-Frame-Options헤더에 DENY, SAMEORIGIN 등의 값을 설정
+        http.csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()))
+            .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
+        */
         
         /* RoleController 테스트 */   // 수정필요
 //        http.authorizeHttpRequests(  httpReq ->
@@ -134,7 +147,9 @@ public class CustomSecurityConfig {
 //                  .anyRequest().permitAll()
 //        );
 
+        //----------------------------------- //
         // 4. 로그아웃 관련 설정
+        //----------------------------------- //
         // 로그아웃을 기본으로 설정 =>  url: "/logout" 로그아웃 수행
 //        http.logout(Customizer.withDefaults());
         http.logout(logout -> {
@@ -192,6 +207,22 @@ public class CustomSecurityConfig {
                                 .atCommonLocations());
 
     } // end WebSecurityCustomizer
+
+    // ---------------------------------------------------------------------- //
+    // 3. h2설정 => Spring Security를 통과하지 않도록 하기
+    // ---------------------------------------------------------------------- //
+      /*
+        @ConditionalOnProperty를 통해 스프링 설정에 h2-console이 enable되어 있을때만 작동하도록 설정
+        H2 Console에 대한 요청은 시큐리티 필터를 지나지 않으므로 H2 Console을 자유롭게 이용
+        개발 환경이나 운영 환경에서는 spring.h2.console.enabled를 사용하지 않거나 false로 설정 할 겨우
+        해당 빈이 생성되지 않아 h2에 대한 흔적을 지울 수 있다.
+      @Bean
+      @ConditionalOnProperty(name = "spring.h2.console.enabled",havingValue = "true")
+      public WebSecurityCustomizer configureH2ConsoleEnable() {
+        return web -> web.ignoring()
+            .requestMatchers(PathRequest.toH2Console());
+      }
+       */
 
 }
 
