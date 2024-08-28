@@ -33,13 +33,14 @@ security - CustomSecurityConfig, CustomServletConfig, Role, AuthMemberDTO, Custo
 
 upload  - UploadFileDTO, UploadRequestDTO, UpDownController
 
-Member  - Member(Entity), MemberDTO, MemberRepository, MemberService, MemberContoller 
+Member  - Member(Entity), MemberDTO, MemberRepository, MemberService, MemberContoller
 Board   - Entity, DTO, Repository, Service, Controller, Test
 Reply   - Entity, DTO, Repository, Service, Controller, Test
 Like    - Entity, DTO, Repository, Service, Contorller, Test
 Alarm   - Entity, DTO, Repository, Service, Controller, Test
 Report  - Entity, DTO, Repository, Service, Controller, Test
 Warning - Entity, DTO, Repository, Service, Controller, Test
+AdminPageController
 
 templates
  - layouts : basic, adminBasic

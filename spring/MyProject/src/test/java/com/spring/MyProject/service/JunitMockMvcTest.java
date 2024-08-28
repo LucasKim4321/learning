@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // 테스트용 애플리케이션 컨텍스트 생성
 @SpringBootTest
 @Log4j2
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc // 테스트용 MVC환경에서 요청 및 전송,응답 기능을 제공, 컨트롤러 테스트 할 때 사용
 //@ExtendWith(MockitoExtension.class)
 @TestPropertySource(locations="classpath:application-test.properties")  // 환경설정파일 따로 지정
 public class JunitMockMvcTest {
@@ -59,6 +59,7 @@ public class JunitMockMvcTest {
         this.mockMvc =
                 MockMvcBuilders
                         .webAppContextSetup(context).build();
+        log.info("======");
     }
 
     // TestCase1 : getMembers()

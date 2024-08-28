@@ -22,8 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional //transaction begin, commit을 자동 수행해준다. 예외를 발생시키면, rollback 처리를 자동 수행해준다.
-//@Commit  // rollback 때문에 강제로 커밋
-@TestPropertySource(locations="classpath:application-test.properties")  // 환경설정파일 따로 지정
+//@Transactional(readOnly = false)
+@Commit  // rollback 때문에 강제로 커밋
+//@TestPropertySource(locations="classpath:application-test.properties")  // 환경설정파일 따로 지정
 @Log4j2
 public class MemberServiceTest {
 

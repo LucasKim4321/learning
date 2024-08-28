@@ -2,6 +2,9 @@ git cmd 명령어 정리
 
 출처: https://bacassf.tistory.com/28 [코딩하는 일용직 노동자:티스토리]
 
+git config --global user.name "LucasKim4321"
+git config --global user.email "xowls0131@naver.com"
+
 cd ~ : 자신의 home 디렉토리로 이동.
 mkdir [폴더명] : 디렉토리 생성.
 cd [폴더명] : 디렉토리 안으로 이동.
