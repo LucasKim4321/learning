@@ -95,6 +95,18 @@ public class JunitMockMvcTest {
         String content = gson.toJson(memberDTO);
         log.info("\n=> gson:"+content);
 
+
+        /*
+        perform(MockMvcRequestBuilders
+                        .post(url설정) : 요청을 전송하는 역할
+                        .accept() : 요청을 보낼 데이터 타입 => JSON, XML 등 타입
+                        .andExpect() : 응답을 검증 => OK(200)코드 반환(응답) => isOK통행 확인
+                        .jsonPath("$.필드(속성)이름) : JSON응답값의 값을 가져오는 역할
+                           ex) memberDTO 객체 형식 JSON객체 응답 => $.속성
+                               List<MemberDTO> memberList => JSON객체 응답 => $[인덱스번호].속성
+                               Board 객체네에 다른 객체를 포함 => $.상위객체.하위객체.속성
+                        );
+        */
         // @ModelAttribute: 다양한 소스의 데이터를 모델 특성으로 바인딩하는 데 사용
         // @RequestBody: HTTP request body를 메소드에 매핑하는데 사용(json,xml형식)
         // when
@@ -108,10 +120,10 @@ public class JunitMockMvcTest {
 
         // json응답 값을 가져올 속성(필드)
         result.andExpect(status().isCreated())
-                .andExpect(jsonPath("$.email").value(memberDTO.getEmail()))
-                .andExpect(jsonPath("$.name").value(memberDTO.getName()));
+              .andExpect(jsonPath("$.email").value(memberDTO.getEmail()))
+              .andExpect(jsonPath("$.name").value(memberDTO.getName()));
 
-    }
+    } // end test
 
 
     @DisplayName("getAllMember List구조 : json전송-json수신->json전송")
@@ -153,7 +165,7 @@ public class JunitMockMvcTest {
                 .andExpect(jsonPath("$[0].email").value(list.get(0).getEmail()))
                 .andExpect(jsonPath("$[0].name").value(list.get(0).getName()));
 
-    }
+    } // end test
 
 
 
@@ -176,8 +188,8 @@ public class JunitMockMvcTest {
         query_param.add("name", name);
 
 
-//    String content = gson.toJson(list);
-//    log.info("\n=> gson:"+content);
+//        String content = gson.toJson(list);
+//        log.info("\n=> gson:"+content);
 
         // @ModelAttribute: 다양한 소스의 데이터를 모델 특성으로 바인딩하는 데 사용
         // @RequestBody: HTTP request body를 메소드에 매핑하는데 사용(json,xml형식)
@@ -197,7 +209,7 @@ public class JunitMockMvcTest {
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.address").value(address));
 
-    }
+    } // end test
 
     @DisplayName("setMember: 회원 가입 테스트")
     @Test
@@ -239,7 +251,7 @@ public class JunitMockMvcTest {
 //        .andExpect(jsonPath("$.name").value(query_param.get("name")));
 
 
-    }
+    } // end test
 
 
     @BeforeEach
