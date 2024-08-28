@@ -31,7 +31,7 @@ public class JunitTest {
         //Assertions.assertThat(a+b).isEqualTo(sum);
         // 값이 다른지를 검사
         //Assertions.assertThat(a+b).isNotEqualTo(sum);
-        // 12
+        // 1
     }
 }
 
