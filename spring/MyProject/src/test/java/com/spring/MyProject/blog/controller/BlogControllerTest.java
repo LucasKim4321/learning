@@ -13,11 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
@@ -52,11 +54,11 @@ class BlogControllerTest {
     }
 
     @DisplayName("addArticle: 블로그 글 추가 테스트")
-    @Test
+    @Test@Transactional(readOnly = false)@Commit
     void addArticle() throws Exception {
         // given
         final String url        ="/api/articles";  // url 틀리면 404 에러남
-        final String title      = "title";
+        final String title      = "title000";
         final String content    = "content";
         // dto 객체 생성
         final AddArticleRequest userRequest = new AddArticleRequest(title, content);

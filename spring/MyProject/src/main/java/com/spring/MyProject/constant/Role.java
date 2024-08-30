@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @Getter
 public enum Role {
 
-    USER,   ADMIN;
+    USER, ADMIN; // 0,1
 
 //    USER, ADMIN  문제가 있음. 이렇게 쓰면 @Secured(value="ADMIN") authorize ="hasAnyAuthority('USER')"는 되는데
 //    @PreAuthorize("hasAnyRole('ADMIN')") @PreAuthorize("hasAnyRole('ROLE_ADMIN')")는 안먹힘

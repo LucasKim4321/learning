@@ -1,9 +1,9 @@
 // 프로젝트 복사시 라이브러리 설정만 넘어오고 라이브러리는 안넘어오기 때문에 다시 인식시켜 줘야함.
 // 주석 달고 저장 후 업뎃 주석 풀고 저장 후 업뎃
 
-// 쿼리 관련 설정  1. QueryDsl  2. QueryDsl 관련 라이브러리  3. QueryDsl
+// QueryDsl 설정  1.빌드스크립트 설정  2.관련 라이브러리 추가 및 설정  3.소스 설정 4.컴파일 설정
 
-// 1. QueryDsl
+// 1. QueryDsl 빌드스크립트 설정
 buildscript {
 	ext {
 		queryDslVersion = '5.0.0'
@@ -94,7 +94,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test:6.3.1'
 
 
-	// 2. QueryDsl 관련 라이브러리
+	// 2. QueryDsl 관련 라이브러리 추가 및 설정
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}:jakarta"
 	annotationProcessor(
 			"jakarta.persistence:jakarta.persistence-api",
@@ -108,7 +108,7 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-// 3. QueryDsl
+// 3. QueryDsl 소스 설정
 sourceSets {
 	main {
 		java {
@@ -116,6 +116,10 @@ sourceSets {
 		}
 	}
 }
+
+// 4. QueryDsl 컴파일 설정
+// 컴파일 하기전에 클린(빌드 파일을 지움)
+// QEntity가 존재하는 데 중복 생성하려고 해서 에러
 compileJava.dependsOn('clean')
 
 // 5. JPA queryDSL error => "Attempt to recreate a file" 도메인 중복 발생

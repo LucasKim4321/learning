@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultrag.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/basic}">
+
+
+<!-- 현재 페이지에서만 사용하는 컨텐츠(내용) 정의 -->
+<div layout:fragment="content">
+    <div class="card">
+        <div class="card-header">
+            board read
+        </div>
+        <div>[[${dto}]]</div>
+
+        <!-- 게시글 리스트 -->
+        <div class="card-body">
+            <form id="readForm">
+
+                <div class="mb-3 row">
+                    <label for="bno" class="col-form-label ps-4">bno</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="bno" name="bno"
+                               th:value="${dto.bno}" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="title" class="col-form-label ps-4">title</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="title" name="title"
+                               th:value="${dto.title}" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="content" class="col-form-label ps-4">content</label>
+                    <div class="col">
+                        <textarea class="form-control" id="content" name="content"
+                                  th:text="${dto.content}" readonly></textarea>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="writer" class="col-form-label ps-4">writer</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="writer" name="writer"
+                               th:value="${dto.writer}" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="writerId" class="col-form-label ps-4">ID</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="writerId" name="writerId"
+                               th:value="${dto.writerId}" readonly>
+                    </div>
+                </div>
+
+                <!-- 4. 게시글 등록일, 수정일 -->
+                <div class="mb-3 row">
+                    <label for="regDate" class="col-form-label ps-4">regDate</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="regDate" name="regDate"
+                               th:value="${dto.regDate}" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3 row">
+                    <label for="modDate" class="col-form-label ps-4">modDate</label>
+                    <div class="col">
+                        <input type="text" class="form-control" id="modDate" name="modDate"
+                               th:value="${dto.modDate}" readonly>
+                    </div>
+                </div>
+
+                <!-- 5. list, modify 버튼 -->
+                <div class="mt-3 d-flex" th:with="link=${pageRequestDTO.getLink()}">  <!-- class="float-end" 끝에 배치 -->
+                    <!-- 현 글번호에 대한 페이징 정보를 넘겨받아서 list요청시 페이징 정보와 같이 요청하면
+                         현재 글번호가 해당되는 list페이지가 추출됨 -->
+                    <a th:href="|@{/board/list?}${link}|" class="link-underline-none">
+                        <button type="button" id="List" class="btn btn-outline-secondary opacity-50 listBtn">list</button>
+                    </a>
+
+                    <!-- disabled 보이지만 동작 안됨  hidden 안보이고 동작도 안함  visibility=hidden 안보이지만 클릭 되고 동작도 함 -->
+                    <!--/*<th:block sec:authorize="${isAuthenticated()}" th:if="${dto.writer == #authentication.principal.name}">*/-->
+                        <button type="button" id="Remove" class="btn btn-outline-danger opacity-50 removeBtn ms-auto">remove</button>
+                        <a th:href="|@{/board/modify(bno=${dto.bno})}&${link}|" class="link-underline-none ms-1">
+                            <button type="button" id="Modify" class="btn btn-outline-primary opacity-50 modifyBtn">modify</button>
+                        </a>
+                    <!--/*</th:block>*/-->
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>  <!-- end fragment="content"-->
+
+
+
+<!-- 현재 페이지에서만 사용하는 css 정의 -->
+<style layout:fragment="mystyle" th:inline="css">
+    #content{
+        height:500px;
+    }
+    .col-form-label {
+        width:110px;
+    }
+</style>
+
+<!--/* 현재 페이지에서만 사용하는 script 정의 */-->
+<script layout:fragment="myscript" th:inline="javascript">
+
+    document.querySelector('.removeBtn').addEventListener('click', function(e) {
+        e.stopPropagation();
+        e.preventDefault(); // 기본 기능 제거
+
+        let doubleChk = confirm('삭제하시겠습니까?');
+        if (doubleChk) {
+
+            // javascript에서 action, method 속성 변경
+            const formObj = document.querySelector('#readForm');
+            formObj.action = `/board/remove`
+            formObj.method = 'post';
+            formObj.submit();
+
+        }
+
+    });
+</script>
+
+</html>

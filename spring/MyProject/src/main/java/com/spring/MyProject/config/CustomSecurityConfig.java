@@ -52,7 +52,7 @@ public class CustomSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // SecurityFilterChain의 filterChain() 모든 사용자가 모든 경로에 접근 할 수 있게 설정
 
         log.info("==> SecurityFilterChain() 호출");
@@ -62,18 +62,20 @@ public class CustomSecurityConfig {
 
         // 4-2 자동 로그인에 필요한 설정
 
-        http.rememberMe(rememberMe->
-                rememberMe
-                        .key("12345678")
-                        .tokenRepository(persistentTokenRepository())  // rememberMe 쿠키의 값을 인코딩하기 위한 키(key), 필요한 정보를 저장하는 tokenRepository를 지정
-                        .userDetailsService(customUserDetailsService)
+        http.rememberMe(rememberMe ->
+                        rememberMe
+                                .key("12345678")
+                                .tokenRepository(persistentTokenRepository())  // rememberMe 쿠키의 값을 인코딩하기 위한 키(key), 필요한 정보를 저장하는 tokenRepository를 지정
+                                .userDetailsService(customUserDetailsService)
 //                        .tokenValiditySeconds(10)  // 10초
-                        .tokenValiditySeconds(60*60*24*30)  // 30일 유효(초*분*시간*일)
+                                .tokenValiditySeconds(60 * 60 * 24 * 30)  // 30일 유효(초*분*시간*일)
 //                        .rememberMeParameter("remember")  // 생략시 기본파라미터 명은 "remember-me", <input type='checked' name='파라미터명'>
 //                        .alwaysRemember(true)  // 리멤버 미 기능이 활성화되지 않아도 항상 실행
         );
 
         // 2. 인증 과정 처리
+
+
 
         // 2.1 로그인 관련 설정 => UserDetailsService 인터페이스 구현 후 설정 할 것
         http.csrf(AbstractHttpConfigurer::disable)
@@ -90,11 +92,11 @@ public class CustomSecurityConfig {
                             .successHandler(new AuthenticationSuccessHandler() {
                                 @Override
                                 public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                                    log.info("==> authentication: "+authentication.getName());
+                                    log.info("==> authentication: " + authentication.getName());
                                     response.sendRedirect("/");
                                 }
                             })
-                            .failureHandler(new AuthenticationFailureHandler(){
+                            .failureHandler(new AuthenticationFailureHandler() {
                                 @Override
                                 public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
                                     log.info("==> exception: " + exception.getMessage());
@@ -102,6 +104,11 @@ public class CustomSecurityConfig {
                                 }
                             });
                 });
+                // h2 console을 사용할 때 csrf(AbstractHttpConfigurer::disable)를 했기 때문에 접근 설정 따로 안하고 이것만 해도 됨.
+//                }).headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
+
+
+
 
         // 3. 접근 권한 설정
         // SpringBoot 3v 변경된 코드 확인
@@ -116,7 +123,9 @@ public class CustomSecurityConfig {
         
         http.authorizeHttpRequests( auth -> {
             // 사용자 인증없이 접근할 수 있도록 설정
-            auth.requestMatchers("/", "/members/**", "/test/**", "/api/**", "/h2-console/**").permitAll();
+            auth.requestMatchers("/", "/members/**", "/test/**", "/api/**").permitAll();
+            // h2-console 관련 url 접근권한 모두 허용
+//            auth.requestMatchers(PathRequest.toH2Console()).permitAll();
             // Role이 ADMIN 경우에만 접근
             auth.requestMatchers("/admin/**").hasRole("ADMIN");
             // Role이 ADMIN, USER 경우에만 접근
@@ -127,21 +136,6 @@ public class CustomSecurityConfig {
             auth.anyRequest().permitAll();
         });
 
-        // ---------------------------------------------------------------------- //
-        // 2. h2설정 => H2 웹콘솔의 iframe이 정상적으로 작동하려면 Origin에 대해 허용하도록 설정
-        // ---------------------------------------------------------------------- //
-        /*
-          - Spring Security는 CsrfFilter를 기본적으로 Default Filter로 설정하고 있다.
-          - CsrfFilter가 H2 웹콘솔 관련 경로를 무시하도록 설정
-          - Spring Security는 기본적으로 HeaderWriterFilter를 활성화.
-            HeaderWriterFilter는 XFrameOptionsHeaderWriter를 이용해 설정에 따라
-            X-Frame-Options헤더에 DENY, SAMEORIGIN 등의 값을 설정
-        */
-//        http.csrf(csrf -> csrf
-//                    .ignoringRequestMatchers("/api/**","/members/**","/board/**")  // "/api/**" 경로의 CSRF 보호 비활성화
-//                    .ignoringRequestMatchers(PathRequest.toH2Console())  // H2 콘솔 경로의 CSRF 보호 비활성화
-//            )
-//            .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
 
 
 
@@ -224,12 +218,38 @@ public class CustomSecurityConfig {
     개발 환경이나 운영 환경에서는 spring.h2.console.enabled를 사용하지 않거나 false로 설정 할 겨우
     해당 빈이 생성되지 않아 h2에 대한 흔적을 지울 수 있다.
     */
+    // 이 설정만 하나만 하면 문제 없음 다른 방법으로는 관련 설정을 하나하나 설정
 //    @Bean
 //    @ConditionalOnProperty(name = "spring.h2.console.enabled",havingValue = "true")
 //    public WebSecurityCustomizer configureH2ConsoleEnable() {
 //        return web -> web.ignoring()
 //                .requestMatchers(PathRequest.toH2Console());
 //    }
+
+    // ---------------------------------------------------------------------- //
+    // 2. h2설정 => H2 웹콘솔의 iframe이 정상적으로 작동하려면 Origin에 대해 허용하도록 설정
+    // ---------------------------------------------------------------------- //
+    /*
+      - Spring Security는 CsrfFilter를 기본적으로 Default Filter로 설정하고 있다.
+      - CsrfFilter가 H2 웹콘솔 관련 경로를 무시하도록 설정
+      - Spring Security는 기본적으로 HeaderWriterFilter를 활성화.
+        HeaderWriterFilter는 XFrameOptionsHeaderWriter를 이용해 설정에 따라
+        X-Frame-Options헤더에 DENY, SAMEORIGIN 등의 값을 설정
+
+    // h2-console 관련 url 접근권한 모두 허용
+    http.authorizeHttpRequests( auth -> {
+            auth.requestMatchers(PathRequest.toH2Console()).permitAll();
+        });
+
+    // csrf 설정
+    http.csrf(csrf ->
+            csrf.ignoringRequestMatchers(PathRequest.toH2Console())  // H2 콘솔 경로의 CSRF 보호 비활성화
+        )
+        // X-Frame-Options 설정
+        .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
+
+    */
+
 
 }
 

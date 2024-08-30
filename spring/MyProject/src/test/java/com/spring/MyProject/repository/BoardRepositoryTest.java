@@ -98,8 +98,8 @@ class BoardRepositoryTest {
         board.change("updated"+board.getTitle(), "updated"+board.getContent());
 
         // 3. 저장
-        Board savedBaord = boardRepository.save(board);
-        log.info("==> update: "+savedBaord);
+        Board savedBoard = boardRepository.save(board);
+        log.info("==> update: "+savedBoard);
     }
 
 

@@ -72,23 +72,25 @@ id, userId, password, name, email, address, profileImage, roleSet
 uuid, fileName, ord, member
 
 게시물 (Board extends BaseEntity)
-id, category, title, content, boardFileSet(Set<BoardFile>), writer, email, tags, viewCount, // likeCount
-
-카테고리:
- - 관리자 게시판 : 축제행사, 공연전시,명소, 가이드
- - 유저 게시판 :  여행공유, 여행
+id, category, title, content, boardFileSet(Set<BoardFile>), writer, writerId, viewCount, // likeCount
+- 카테고리(Category):
+   - 관리자 게시판 : 축제행사(Festival), 공연전시(Performance), 명소(Place), 음식(Food), 숙박(Accommodation), 가이드(Guide), 여행준비(Preparation)
+   - 유저 게시판 :  여행정보(Infomation), 여행일정(Schedule), 후기(Review)
 
 게시물 파일 (BoardFile)
 uuid, fileName, ord, board(FK)
 
-댓글 (Reply extends BaseEntity)
-id, board(FK), replyText, replier(유저이름), replierEmail
-
-대댓글 (SubReply extends BaseEntity)
-id, reply(FK), replyText, replier(유저이름), replierEmail
-
 게시물 좋아요 (boardLike)
 id, board(FK), member(FK), regDate
+
+태그 (Tag)
+id, board(FK), tagName
+
+댓글 (Reply extends BaseEntity)
+id, board(FK), replyText, replier(유저이름), replierId
+
+대댓글 (SubReply extends BaseEntity)
+id, reply(FK), replyText, replier(유저이름), replierId
 
 댓글 좋아요 (ReplyLike)
 id, reply(FK), member(FK), regDate
@@ -135,7 +137,7 @@ name, password, email, address, role
 uuid, fileName, ord, member
 
 게시물 (BoardDTO)
-bno, category, title, content, fileNames(List<String>), writer, email, regDate, modDate, tags, viewCount
+bno, category, title, content, fileNames(List<String>), writer, writerId, regDate, modDate, tags, viewCount
 
 게시물 파일 (BoardFileDTO)
 uuid, fileName, ord
@@ -143,11 +145,14 @@ uuid, fileName, ord
 게시물 좋아요 (BoardLikeDTO)
 id, board, member, regDate
 
+태그 (TagDTO)
+id, board, tagName
+
 댓글 (ReplyDTO)
-id, board, replyText, replier, replierEmail, regDate, modDate
+id, board, replyText, replier, replierId, regDate, modDate
 
 대댓글 (SubReplyDTO)
-id, reply, replyText, replier, replierEmail regDate, modDate
+id, reply, replyText, replier, replierId regDate, modDate
 
 댓글 좋아요 (ReplyLikeDTO)
 id, reply, member, regDate
