@@ -220,3 +220,11 @@ max-width, max-height을 둘다 100%로 줘도 여백은 마찬가지다.
 &amp;	&	앰퍼센드
 &quot;	" 	큰따옴표
 더 있음
+
+
+
+    /* 줄바꿈하지 않고 말줄임을 표시하는 
+       방법에 필요한 CSS 속성들 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;

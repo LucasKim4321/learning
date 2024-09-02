@@ -73,9 +73,15 @@ uuid, fileName, ord, member
 
 게시물 (Board extends BaseEntity)
 id, category, title, content, boardFileSet(Set<BoardFile>), writer, writerId, viewCount, // likeCount
-- 카테고리(Category):
-   - 관리자 게시판 : 축제행사(Festival), 공연전시(Performance), 명소(Place), 음식(Food), 숙박(Accommodation), 가이드(Guide), 여행준비(Preparation)
-   - 유저 게시판 :  여행정보(Infomation), 여행일정(Schedule), 후기(Review)
+
+// 카테고리
+// 관리자 게시판 :
+//  - 여행정보게시판(travelInfo) : 명소(place), 음식(food), 숙박(accommodation)
+//  - 여행추천게시판(travelRecommend) : 일정여행(scheduledTravel), 테마여행(themeTravel)
+//  - 여행가이드게시판(travelGuide) : 가이드(guide), 여행준비(preparation)
+//  - 축제게시판(festivalBoard) : 축제행사(festival), 공연전시(performance)
+// 유저 게시판 :
+//  - 유저게시판(userBoard) : 여행정보(information), 여행일정(schedule), 후기(review)
 
 게시물 파일 (BoardFile)
 uuid, fileName, ord, board(FK)
