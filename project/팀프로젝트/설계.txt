@@ -66,7 +66,7 @@ templates
 regDate, modDate
 
 회원 (Member extends BaseEntity)(id 또는 email을 유저 식별용으로 사용)
-id, userId, password, name, email, address, profileImage, roleSet
+id, userId, password, name, email, address, memberText, profileImage, roleSet
 
 프로필 이미지 (ProfileImage)
 uuid, fileName, ord, member
@@ -87,7 +87,7 @@ id, category, title, content, boardFileSet(Set<BoardFile>), writer, writerId, vi
 uuid, fileName, ord, board(FK)
 
 게시물 좋아요 (boardLike)
-id, board(FK), member(FK), regDate
+id, board(FK), userId, regDate
 
 태그 (Tag)
 id, board(FK), tagName
@@ -99,10 +99,10 @@ id, board(FK), replyText, replier(유저이름), replierId
 id, reply(FK), replyText, replier(유저이름), replierId
 
 댓글 좋아요 (ReplyLike)
-id, reply(FK), member(FK), regDate
+id, reply(FK), memberId, regDate
 
 대댓글 좋아요 (SubReplyLike)
-id, subReply(FK), member(FK), regDate
+id, subReply(FK), memberId, regDate
 
 // 좋아요 (Like)
 // id, board(FK), reply(FK), subReply(FK), member(FK), regDate
@@ -128,7 +128,7 @@ id, category(1,2,3,4...), reportText(기타), reporter, reporterId, regDate
 다르면 dtoToEntity entityToDto 제작
 
 페이지 리퀘스트 (PageRequestDTO)
-page, size, type, keyword, link
+page, size, type, keyword, bCategory, link
 
 페이지 리스폰스 (PageResponseDTO)
 page, size, total, start, end, prev, next, dtoList
@@ -140,31 +140,31 @@ username, password, authorities, name, email, address
 name, password, email, address, role
 
 프로필 이미지 (ProfileImageDTO)
-uuid, fileName, ord, member
+uuid, fileName, ord, member_id
 
 게시물 (BoardDTO)
-bno, category, title, content, fileNames(List<String>), writer, writerId, regDate, modDate, tags, viewCount
+id, category, title, content, fileNames(List<String>), writer, writerId, regDate, modDate, viewCount, replyCount, boardLikeCount;
 
 게시물 파일 (BoardFileDTO)
 uuid, fileName, ord
 
 게시물 좋아요 (BoardLikeDTO)
-id, board, member, regDate
+id, board_id, userId, regDate
 
 태그 (TagDTO)
-id, board, tagName
+id, board_id, tagName
 
 댓글 (ReplyDTO)
-id, board, replyText, replier, replierId, regDate, modDate
+id, board_id, replyText, replier, replierId, regDate, modDate
 
 대댓글 (SubReplyDTO)
-id, reply, replyText, replier, replierId regDate, modDate
+id, reply_id, replyText, replier, replierId regDate, modDate
 
 댓글 좋아요 (ReplyLikeDTO)
-id, reply, member, regDate
+id, reply_id, memberId, regDate
 
 대댓글 좋아요 (SubReplyLikeDTO)
-id, subReply, member, regDate
+id, subReply_id, memberId, regDate
 
 알람 (AlarmDTO)
 id, member(알람받는 유저), Reply, SubReply, boardLike, replyLike, subReplyLike, warning, regDate

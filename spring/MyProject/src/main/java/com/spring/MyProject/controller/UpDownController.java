@@ -37,7 +37,7 @@ public class UpDownController {
         // 2.
         if(uploadFileDTO.getFiles() != null) {  // uploadFileDTO List 구조의 객체 첨부파일이 있으면
             
-            List<UploadResultDTO> list = new ArrayList();
+            List<UploadResultDTO> list = new ArrayList<>();
             
             uploadFileDTO.getFiles().forEach(multipartFile-> {
 
