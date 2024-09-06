@@ -69,7 +69,7 @@ regDate, modDate
 id, userId, password, name, email, address, memberText, profileImage, roleSet
 
 프로필 이미지 (ProfileImage)
-uuid, fileName, ord, member
+uuid, fileName, member
 
 게시물 (Board extends BaseEntity)
 id, category, title, content, boardFileSet(Set<BoardFile>), writer, writerId, viewCount, // likeCount
@@ -140,7 +140,7 @@ username, password, authorities, name, email, address
 name, password, email, address, role
 
 프로필 이미지 (ProfileImageDTO)
-uuid, fileName, ord, member_id
+uuid, fileName, member_id
 
 게시물 (BoardDTO)
 id, category, title, content, fileNames(List<String>), writer, writerId, regDate, modDate, viewCount, replyCount, boardLikeCount;
