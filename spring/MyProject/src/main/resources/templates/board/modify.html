@@ -183,6 +183,8 @@
         e.preventDefault();  // 기본 이벤트 제거
         e.stopPropagation();  // 버블링(현재 이벤트가 발생한 요소의 상위 요소들에 대해서 이벤트 감지되는 현상) 방지
 
+        callRemoveFiles();
+
         location.href ="/board/read?bno="+[[${dto.bno}]]+"&"+[[${pageRequestDTO.getLink()}]];
     })
 
