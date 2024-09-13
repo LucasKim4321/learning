@@ -547,3 +547,25 @@ extendCookie('test_cookie', 1); // 1시간 연장
 
 // 쿠키삭제
 deleteCookie('test_cookie');
+
+
+
+    const table = document.querySelector('.table');
+    const rows = table.getElementsByTagName('tr');
+
+    // 각 행에 클릭 이벤트 리스너 추가
+    for (let i = 1; i < rows.length; i++) { // 헤더를 제외하기 위해 i를 1로 시작
+      rows[i].addEventListener('click', function() {
+        // 클릭한 행의 정보를 가져옴
+        const cells = this.getElementsByTagName('td');
+        const rowData = [];
+        for (let j = 0; j < cells.length; j++) {
+          rowData.push(cells[j].innerText); // 각 셀의 값을 배열에 추가
+        }
+
+        console.log("클릭된 행 데이터: ", rowData);
+
+        // 다른 로직 추가 가능 (예: 해당 행 강조 표시 등)
+        this.style.backgroundColor = 'lightgray'; // 클릭된 행의 배경색 변경
+      });
+    }

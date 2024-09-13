@@ -1,3 +1,56 @@
+깃 클론 후 처음 시작 리드미도 없을 때
+echo "# test" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/LucasKim4321/test.git
+git push -u origin main
+
+
+깃 웹페이지에서 
+리파짓토리 내에 브랜치 검색해서 없는 브랜치면 검색하면 새 브랜치 생김
+코드 누르면 복사용 코드가 나옴
+git clone 코드 : 깃 리파짓토리 복사
+git status
+git log --pretty : 옵션을 추하하면 커밋한 로그를 더 보기 좋게 보여준다. 
+git log --pretty=옵션  예) git log --pretty=oneline
+옵션	oneline: 각 커밋을 한 줄로 간단하게 표시합니다.
+	short: 간단한 커밋 정보만 출력합니다.
+	medium: 기본 형식으로, 커밋 메시지와 관련 정보가 포함됩니다.
+	full: 커밋 작성자 정보, 커밋 시간 등의 자세한 정보를 모두 출력합니다.
+	format: 로그 출력 형식을 직접 정의할 수 있습니다. 예를 들어, git log --pretty=format:"%h - %an : %s"는 커밋 해시, 작성자 이름, 커밋 메시지를 출력합니다.
+​git branch -l : 로컬 브랜치 목록과 현재 포커스를 보여준다.
+​git branch -r : 리모트(원격) 브랜치 목록를 보여준다.
+git branch -a : 모든 브랜치 목록과 현재 포커스를 보여준다
+git branch -v : 모든 브랜치 목록과 커밋정보를 보여준다
+git remote update : 지역저장소를 원격저장소 상태로 업데이트. 브랜치를 새로만들면 현재 컴퓨터는 업데이트가 안된상태여서 해줘야함.
+git checkout -t [브랜치 경로] : 원격 저장소에 있는 브랜치를 로컬에 추적하는(tracking) 브랜치를 체크아웃(checkout)한다..
+git branch -t [브랜치명] : 원격 브랜치를 추적하는 로컬 브랜치를 생성한다.
+git checkout [브랜치명] : 해당 로컬 브렌치로 전환한다.
+git branch [브랜치명] : 로컬 브렌치 생성
+git push origin [브랜치명] : 원격 저장소에 로컬 브랜치를 저장
+git branch -d [브랜치명] : 해당 로컬 브랜치를 삭제
+git add .  : 브랜치명 대신 ' . ' 을 넣으면 모든 파일을 staging함.
+git commit -m "커밋명" : 커밋함.
+
+- 브랜치 병합
+새로운 작업 브랜치의 커밋 내역을 기준 브랜치에 반영하는 작업
+
+fast forward : 빨리감기 병합
+-main 브랜치 기준으로 작업 브랜치를 생성한 후, 작업을 완료하여 main 브랜치에 병합
+
+merge commit : 
+-
+
+git merge [브랜치명] : 해당 브랜치에 커밋된 걸 현재 포커스된 브랜치에 병합.
+
+
+사용자 지정 로그 명령어 생성 및 설정
+git config --global alias.lg "log --color --all --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+git lg : 직접 만든 로그 명령어. alias.lg로 설정.
+
+
 git cmd 명령어 정리
 
 출처: https://bacassf.tistory.com/28 [코딩하는 일용직 노동자:티스토리]
@@ -6,6 +59,8 @@ git config --global user.name "LucasKim4321"
 git config --global user.email "xowls0131@naver.com"
 
 cd ~ : 자신의 home 디렉토리로 이동.
+cd c:/ : C드라이브로 이동.
+cd 경로 : 경로로 이동
 mkdir [폴더명] : 디렉토리 생성.
 cd [폴더명] : 디렉토리 안으로 이동.
 ls -al : 디렉토리 내부의 모든 파일 리스트 보기. (숨김 파일도 다 보임)
@@ -18,6 +73,10 @@ i : vim 프로그램에서 입력모드로 전환.
 esc : vim 프로그램에서 입력모드 해제.
 :wq : vim 프로그램에서 저장하고 나가기.
 cat [파일명.확장자] : 파일 내용 표시​
+type [파일명.확장자] : 파일 내용 표시
+
+chcp : 현재 인코딩 표시. 기본 949
+chcp 65001 : utf-8로 인코딩.
 
 git init : git 저장소 만들기 (현재 디렉토리에서 버전관리를 진행하겠다고 git에게 알림)
            .git 디렉토리가 생성된다.​
@@ -28,14 +87,26 @@ git config --global user.email "자신의 이메일"
 git config --global core.editor "vim" : vim 이 아니라 다른 에디터가 실행될때 vim 으로 설정한다.
 
 git status : git 프로젝트 폴더의 상태 보기.
-git add [파일] : 파일을 stage로 상태 전환.
+git add [파일명.확장자] : 파일을 stage로 상태 전환.
 
 git commit : stage에 올려진 파일을 커밋한다.
 git commit -a : 파일을 stage에 올리고 커밋까지 한번에 처리한다.
 git commit -am "메세지" : 파일을 stage에 올리고 커밋메세지까지 한번에 처리한다.
 git commit --amend : 아직 push 하지 않은 상태의 마지막 커밋 메세지를 수정한다.즉, 지금 커밋하려는 내용이 바로 직전 커밋하는 내용을 덮어쓰기 한다.
 
+git rm [파일명.확장자] : 명령어를 사용하여 로컬 디렉토리와 git저장소 모두에서 파일을 삭제할 수 있다. 
+git rm --cached [파일명.확장자] : 명령어를 사용하여 로컬 디렉토리에서는 파일을 유지하고 저장소에서만 삭제할 수 있다.
+
+git commit -m "Delete [파일명.확장자]"
+
 git log : 커밋한 로그를 보여준다.
+git log --pretty : 옵션을 추하하면 커밋한 로그를 더 보기 좋게 보여준다. 
+git log --pretty=옵션  예) git log --pretty=oneline
+옵션	oneline: 각 커밋을 한 줄로 간단하게 표시합니다.
+	short: 간단한 커밋 정보만 출력합니다.
+	medium: 기본 형식으로, 커밋 메시지와 관련 정보가 포함됩니다.
+	full: 커밋 작성자 정보, 커밋 시간 등의 자세한 정보를 모두 출력합니다.
+	format: 로그 출력 형식을 직접 정의할 수 있습니다. 예를 들어, git log --pretty=format:"%h - %an : %s"는 커밋 해시, 작성자 이름, 커밋 메시지를 출력합니다.
 git log -p : 로그에서 출력되는 버전 간 차이점을 출력한다.
 git log [비교할 브랜치명1]..[비교할 브랜치명2] : 브랜치 간의 비교를 한다.
 git log --branches --graph --decorate --oneline : 로그에 모든 브랜치를 표시하고, 그래프로 표시하고, 브랜치명을 표시하고, 한줄로 표시한다.
@@ -54,6 +125,9 @@ git reset --hard HEAD : 가장 최신 커밋상태로 이동하고 그�
 ​git revert "버전id" : 커밋을 취소한 내용을 새로운 버전으로 만드는 명령.지워진 버전의 기록이 계속 남는다.원격 저장소에 푸쉬한 이후에도 그전 커밋 기록이 남고 새로운 버전으로 선언하기에revert 명령어로 되돌아간 버전이 최신버전으로 인식되게 하며다른 사용자로 하여금 업데이트를 받게 한다.
 
 ​git branch : 브랜치 목록을 보여준다.
+​git branch -l : 브랜치 목록을 보여준다.
+​git branch -r : 브랜치 상태를 보여준다.
+git branch -a : 브랜치 목록과 상태를 보여준다
 git branch [브랜치명] : 새로운 브랜치를 생성한다.
 git branch -d [브랜치명] : 브랜치를 삭제한다.
 git branch -D [브랜치명] : 병합하지 않은 브랜치를 강제 삭제한다.
@@ -78,6 +152,8 @@ git remote add origin /home/git/remote: /home/git/remote 의 경로를 o
 git remote add origin https://github.com/..../gifth.git: remote 를 url로 연결시키고 origin 이라는 별명을 사용한다.
 git remote -v : 현재 등록되어 있는 원격저장소를 보여준다.
 git remote remove origin : origin 이라는 별명을 가진 원격저장소를 삭제한다.
+git remote update : 리모트 업데이트. 브랜치를 새로만들면 현재 컴퓨터는 업데이트가 안된상태여서 해줘야함.
+
 git config --global push.default.simple : 원격 저장소의 push 방식을 simple 방식으로 사용하겠다는 설정.
 
 git clone https://github.com/git/git.git .: url의 git 프로젝트를 현재 디렉토리(.)에 clone 한다.
