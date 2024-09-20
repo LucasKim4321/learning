@@ -569,3 +569,396 @@ deleteCookie('test_cookie');
         this.style.backgroundColor = 'lightgray'; // 클릭된 행의 배경색 변경
       });
     }
+
+
+// Date() 날짜
+
+// https://sweets1327.tistory.com/63
+// https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Date
+// https://velog.io/@kmeeziv/JavaScript-자바스크립트로-달력-만들기
+
+1. Date 객체
+본 내용을 시작하기 전에 Date 객체에 대해서 먼저 정리하겠습니다.
+
+자바스크립트는 Date 객체를 사용해서 날짜와 시간을 표현한다.
+Date 객체는 반드시 '날짜'와 '시간'을 모두 포함하고, 날짜와 시간을 따로 저장하는 방식은 불가능하다.
+Date 형식은 [Thu May 19 2022 18:11:13 GMT+0900 (한국 표준시)](예시)이다.
+월은 [0 ~ 11] 인덱스 사용 : 0 = 1월 / 11 = 12월
+요일은 [0 ~ 6] 인덱스 사용 : 0 = 일요일 / 6은 토요일
+요일 데이터를 작성할 수 있는 방법은 없다. 해당 날짜 요일을 자동으로 출력한다.
+UTC는 1970년 1월 1일 00시 00분 00초이다.
+자바스크립트 타임스탬프는 밀리초가 기준이다.
+
+ 
+Date 객체는 new Date()를 사용해서 객체를 생성합니다.
+// 작성일은 2022년 5월 19일 기준입니다.
+
+let date1 = new Date();
+// -> Thu May 19 2022 18:11:13 GMT+0900 (한국 표준시)
+
+let date2 = new Date(2022, 5, 19, 21, 0, 50, 10); 
+// -> Sun Jun 19 2022 21:00:50 GMT+0900 (한국 표준시)
+
+let date3 = new Date('2022-05-20');
+// -> Fri May 20 2022 09:00:00 GMT+0900 (한국 표준시)
+
+let date4 = new Date('2022-05-20 10:30:20');
+// -> Fri May 20 2022 10:30:20 GMT+0900 (한국 표준시)
+
+let date5 = new Date('2022-5-20 10:30:20');
+// -> Fri May 20 2022 10:30:20 GMT+0900 (한국 표준시)
+
+let date6 = new Date('1 2022-05-20 10:30:20');
+// -> InValid Date
+
+let date7 = new Date('fdskjksdlfjklsdf 2022-05-20 10:30:20');
+// -> Fri May 20 2022 10:30:20 GMT+0900 (한국 표준시)
+
+let date8 = new Date('2022.05.20 10:30:20');
+// -> Fri May 20 2022 10:30:20 GMT+0900 (한국 표준시)
+
+let date9 = new Date('May 20, 2022 10:30:20');
+// -> Fri May 20 2022 10:30:20 GMT+0900 (한국 표준시)
+
+let date10 = new Date(1653091200000);
+// -> Sat May 21 2022 09:00:00 GMT+0900 (한국 표준시)
+
+
+
+변수명
+사용 방식(특이점만 따로 체크)
+결과값(GMT+0900 (한국 표준시)생략)
+추가 설명
+
+
+date1
+new Date()
+Thu May 19 2022 18:11:13
+TODAY
+
+
+date2
+new Date(2022, 5, 19, 21, 0, 50, 10); 
+Sun Jun 19 2022 21:00:50
+정상(+1월)
+
+
+date3
+new Date('2022-05-20');
+Fri May 20 2022 09:00:00
+한국 표준시
+
+
+date4
+new Date('2022-05-20 10:30:20');
+Fri May 20 2022 10:30:20
+정상
+
+
+date5
+new Date('2022-5-20 10:30:20');
+Fri May 20 2022 10:30:20
+정상
+
+
+date6
+new Date('1 2022-05-20 10:30:20');
+InValid Date
+ 
+
+
+date7
+new Date('fsf 2022-05-20 10:30:20');
+Fri May 20 2022 10:30:20
+정상
+
+
+date8
+new Date('2022.05.20 10:30:20');
+Fri May 20 2022 10:30:20
+정상(온점 사용)
+
+
+date9
+new Date('May 20, 2022 10:30:20');
+Fri May 20 2022 10:30:20
+정상
+
+
+date10
+new Date(1653091200000);
+Sat May 21 2022 09:00:00
+UTC VALUE 사용
+
+
+
+ 
+그래서 생각한 Date() 함수 규칙은 다음과 같습니다.
+
+매개변수 없음 : 지금 날짜와 시간 출력
+UTC 값 사용
+문자열 사용
+매개 변수 사용
+
+Date의 매개변수로 문자열을 사용한다면 다음과 같은 규칙을 따릅니다.
+ 
+new Date( ' 연도-월-일 [시:분:초] ' )
++ 관련 사항을 문서에서 찾지는 못했는데,
+문자열에서 하이픈(-) 대신에 [ 공백( ), 쉼표(,) ]를 사용해도 동일한 결과값을 볼 수 있습니다.
++ new Date(' 월(영어로) 일, 연도 [시:분:초] ' ) 형식도 가능 
+ 
+매개변수를 이용하는 경우에는 다음과 같은 규칙을 따릅니다.
+new Date( ' 연, 월(+1), 일, 시, 분, 초, 밀리초 ' )
++ 최소 조건은 '연, 월'
+2. Date 구성요소
+Date의 구성요소를 출력하기 위해 getter/setter 방식을 사용합니다.
+// 작성일 : 2022년 5월 19일 목요일 19시 4분 10초 1밀리초
+let date = new Date();
+
+//연도 : 2022
+date.getFullYear();
+
+//월 : 4
+date.getMonth();
+
+//일 : 19
+date.getDate();
+
+//요일 : 4
+date.getDay();
+
+//시 : 19
+date.getHours();
+
+//분 : 4
+date.getMinutes();
+
+//초 : 10
+date.getSeconds();
+
+//밀리초 : 1
+date.getMilliseconds();
+
+//UTC를 기준으로 부터의 간격(밀리초 단위)
+date.getTime();
+
+//현지 시간과 표준 시간 간격(분) -540
+date.getTimezoneOffset();
+
+//UTC도 getTime과 getTimezoneOffset을 제외하고는 동일한 형태의 함수를 가지고 있다.
+
+
+3. 날짜 계산
+날짜 계산 방식은 setter에 [날짜 구성요소 + 숫자]를 변수로 사용하면 됩니다.
+// 작성일은 2022년 5월 19일 기준입니다.
+
+let date = new Date(); 
+// -> Thu May 19 2022 18:11:13 GMT+0900 (한국 표준시)
+
+date.getDate() + 1
+// -> 20
+
+date.getMonth() + 1
+// -> 5
+
+setDate(date.getDate() + 1) // setDate(20)
+// -> Fri May 20 2022 18:11:13 GMT+0900 (한국 표준시)
+
+setMonth(date.getMonth() + 1) // setMonth(5)
+// -> Sun Jun 19 2022 18:11:13 GMT+0900 (한국 표준시)
+
+
+4. 날짜 포맷 변경하기
+getter를 이용해 원하는 날짜 구성요소와 포맷 형태를 같이 결합해주는 방식으로 포맷을 변경해야 합니다.
+
+2022년 5월 20일 목요일 오전 9시 20분 30초
+2022-05-20
+
+이 두 가지 방식으로 데이터를 변경할 수 있다면 다른 방법은 할 수 있을 거라고 생각합니다.
+
+// 한글을 사용하는 요일을 위해서는 추가적으로 배열을 만들어서 사용합니다.
+let day = ['일', '월', '화', '수', '목', '금', '토'];
+
+// 작성일은 2022년 5월 19일 기준입니다.
+let today = new Date();
+
+//1번 포맷
+let dateFormat1 = today.getFullYear() + '년 ' + (today.getMonth()+1) + '월 '
+	+ today.getDate() + '일 ' + day[today.getDay()] + '요일 '
+	+ today.getHours() + '시 ' + today.getMinutes() + '분 '
+	+ today.getSeconds() + '초'
+    
+//2번 포맷
+let dateFormat2 = today.getFullYear() +
+	'-' + ( (today.getMonth()+1) < 9 ? "0" + (today.getMonth()+1) : (today.getMonth()+1) )+
+	'-' + ( (today.getDate()) < 9 ? "0" + (today.getDate()) : (today.getDate()) );
+
+
+5. 관련 함수 만들어보기
+날짜 포맷을 변경하는 함수를 만들 수 있습니다.
+
+function dateFormat(date) {
+	let dateFormat2 = date.getFullYear() +
+		'-' + ( (date.getMonth()+1) < 9 ? "0" + (date.getMonth()+1) : (date.getMonth()+1) )+
+		'-' + ( (date.getDate()) < 9 ? "0" + (date.getDate()) : (date.getDate()) );
+	return dateFormat2;
+}
+
+let toDay = dateFormat(new Date('2022-5-21'));
+// -> 2022-05-21
+ 
+날짜 계산 함수도 만들 수 있습니다.
+function dateCalculator(date, n) {
+	return new Date(date.setDate(date.getDate() + n));
+}
+
+let today = new Date();
+// -> Thu May 19 2022 20:02:18 GMT+0900 (한국 표준시)
+
+let newToday = dateCalculator(today, 10);
+// -> Sun May 29 2022 20:02:18 GMT+0900 (한국 표준시)
+
+let date = new Date('2022-01-01');
+// -> Sat Jan 01 2022 09:00:00 GMT+0900 (한국 표준시)
+
+let aFewDaysAgo = dateCalculator(date, -30);
+// -> Thu Dec 02 2021 09:00:00 GMT+0900 (한국 표준시)
+ 
+마지막으로 자주 사용하는 YYYY-MM-DD 형식 문자열이 들어왔을 때 사용할 수 있는 계산 함수도 만들 수 있습니다.
+
+// Date(YYYY-MM-DD) + n일
+function StringToDate(date, n) {
+	let yyyy = date.substring(0, 4);
+	let mm = date.substring(5, 7);
+	let dd = date.substring(8, 10);
+	mm = Number(mm) - 1;
+    
+	let stringNewDate = new Date(yyyy, mm, dd);
+	stringNewDate.setDate(stringNewDate.getDate() + n);
+    
+	return stringNewDate.getFullYear() +
+		"-" + ((stringNewDate.getMonth() + 1) > 9 ? (stringNewDate.getMonth() + 1).toString() : "0" + (stringNewDate.getMonth() + 1)) +
+		"-" + (stringNewDate.getDate() > 9 ? stringNewDate.getDate().toString() : "0" + stringNewDate.getDate().toString());
+}
+
+let stringDate = '2022-05-19'
+
+StringToDate(stringDate, 5);
+// -> 2022-05-24
+ 
+
+6. 마무리
+마지막으로 정리를 하자면 다음과 같습니다.
+
+
+
+함수명(utc 동일)
+의미
+추가 설명
+
+
+getFullYear()
+setFullYear()
+연도
+ 
+
+
+getMonth()
+setMonth()
+월
+0 ~ 11 / 1월 ~ 12월 
+
+
+getDate()
+setDate()
+일
+ 
+
+
+getDay()
+setDay()
+요일
+0 ~6 / 일 ~ 토
+
+
+getHours()
+setHours()
+시
+ 
+
+
+getMinutes()
+setMinutes()
+분
+ 
+
+
+getSeconds()
+setSeconds()
+초
+ 
+
+
+getMilliseconds()
+setMilliseconds()
+밀리초
+ 
+
+
+utc는 없는 함수
+
+
+getTime()
+setTime()
+utc 와의 간격
+ 
+
+
+getTimezoneOffset()
+ 
+표준시 간격
+한국은 + 9시
+
+
+
+자바스크립트의 Date 함수를 사용하는 방식은 다음과 같습니다.
+
+new Date()를 이용해서 날짜 포맷으로 만들기
+getter와 setter를 이용해서 원하는 날짜로 데이터 변경하기
+원하는 포맷이 있다면 직접 변경하기
+
+
+// JavaScript에서 월은 0부터 색인화됩니다(1월은 0, 2월은 1 등),
+// 하지만 일로 0을 사용하면 이전 달의 마지막 날이 나옵니다.
+// 따라서 월 번호로 1을 전달하면 마지막 날이 반환됩니다.
+// of January, not February
+function daysInMonth (month, year) {
+    return new Date(year, month, 0).getDate();
+}
+
+// July
+daysInMonth(7,2009); // 31
+// February
+daysInMonth(2,2009); // 28
+daysInMonth(2,2008); // 29
+
+
+부모태그 찾기
+e.target.parentElement.parentElement
+
+//checkbox 체크시, 해당 row 배경 색상 노랑으로 변경 이벤트 할당! [수정본]
+tbody.addEventListener('click',e=>{
+    //체크 박스 선택
+    if(e.target.className == 'checkbox-class'){
+        //부모 태그 찾기
+        var parentTrTag = e.target;
+        //부모 태그 명이 TR이 나올때까지 자동순회
+        for(;parentTrTag.nodeName != 'TR' ; parentTrTag=parentTrTag.parentElement);
+
+        //순회 종료 후 배경 색상 변경
+        if(parentTrTag.style.backgroundColor != 'yellow')
+            parentTrTag.style.backgroundColor = 'yellow';
+        else
+            parentTrTag.style.backgroundColor = 'transparent';
+    }
+});

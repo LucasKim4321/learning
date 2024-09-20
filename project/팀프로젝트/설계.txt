@@ -83,6 +83,9 @@ id, category, title, content, boardFileSet(Set<BoardFile>), writer, writerId, vi
 // 유저 게시판 :
 //  - 유저게시판(userBoard) : 여행정보(information), 여행일정(schedule), 후기(review)
 
+축제기간 (FestivalDate)
+id, board(FK), startDate, endDate
+
 게시물 파일 (BoardFile)
 uuid, fileName, ord, board(FK)
 
@@ -144,6 +147,9 @@ uuid, fileName, member_id
 
 게시물 (BoardDTO)
 id, category, title, content, fileNames(List<String>), writer, writerId, regDate, modDate, viewCount, replyCount, boardLikeCount;
+
+축제기간 (FestivalDateDTO)
+id, board_id, startDate, endDate
 
 게시물 파일 (BoardFileDTO)
 uuid, fileName, ord
