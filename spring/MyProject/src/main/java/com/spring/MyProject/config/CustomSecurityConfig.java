@@ -1,6 +1,7 @@
 package com.spring.MyProject.config;
 
 import com.spring.MyProject.security.Custom403Handler;
+//import com.spring.MyProject.service.CustomOAuth2UserService;
 import com.spring.MyProject.service.CustomUserDetailsService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,6 +47,7 @@ public class CustomSecurityConfig {
     // 4-1 자동 로그인에 필요한 객체 설정
     private final DataSource dataSource;
     private final CustomUserDetailsService customUserDetailsService;
+//    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -163,6 +166,15 @@ public class CustomSecurityConfig {
         http.exceptionHandling(e-> {
             e.accessDeniedHandler(accessDeniedHandler());
         });
+
+        // OAuth2 로그인 기능에 대한 여러 설정
+//        http.oauth2Login(Customizer.withDefaults()); // 아래 코드와 동일한 결과
+//        http.oauth2Login(
+//                (oauth) ->
+//                    oauth.userInfoEndpoint(
+//                            (endpoint) -> endpoint.userService(customOAuth2UserService)
+//                    )
+//        );
 
 
         return http.build();

@@ -1,5 +1,7 @@
 spring boot 3 google log-in
 
 참조
+https://velog.io/@99mon/Spring-스프링-시큐리티-구글-로그인
+https://smpark1020.tistory.com/204
 https://blogan99.tistory.com/90
-
+https://mjoo1106.tistory.com/entry/Spring-Google-Login-API-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0

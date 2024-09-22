@@ -74,6 +74,15 @@ public class Member {
 
         return member;
     }
+    public Member update(String name) {
+        this.name = name;
+//        this.picture = picture;
 
+        return this;
+    }
+
+    public String getRoleKey() {
+        return this.roleSet.toString();
+    }
 
 }
