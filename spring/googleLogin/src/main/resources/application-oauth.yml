@@ -5,7 +5,7 @@ spring:
         registration:
           # 구글 로그인 추가
           google:
-            client-id: 305133775599-c3vd2d2m98vs4gbnekqts6qmbkuf62lf.apps.googleusercontent.com
+            client-id:
             client-secret:
             scope:
               - email
