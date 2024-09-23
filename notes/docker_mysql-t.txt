@@ -1,0 +1,37 @@
+
+-- MySQL DB생성하기 연습
+/* 8.xxx이후 버전 작동안됨 ?
+docker run --name mysql_ex12 -dit --net=wordpress_net1 -p 8095:3306 -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=mydb -e MYSQL_USER=user -e MYSQL_PASSWORD=1234 mysql  --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+*/
+
+-- 5.xx 버전 작동됨.
+docker run --name mysql_ex11 -dit --net=wordpress_net1 -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=mydb -e MYSQL_USER=user -e MYSQL_PASSWORD=1234 mysql:5  --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci 
+
+-- Maria DB
+docker run --name mariadb_ex1 -dit --net=wordpress_net1 -p 8096:3306 -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=mydb -e MYSQL_USER=user -e MYSQL_PASSWORD=1234 mariadb --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+
+
+
+-- 워드프레스
+docker run --name wordpress_ex11 -dit  --net=wordpress_net1 -p 8085:80 -e WORDPRESS_DB_HOST=mysql_ex11 -e WORDPRESS_DB_NAME=mydb -e WORDPRESS_DB_USER=user -e WORDPRESS_DB_PASSWORD=1234 wordpress 
+-- 레드마인
+docker run --name redmine_ex11 -dit  --net=redmine_net1   -p 8086:3000 -e WORDPRESS_DB_HOST=mysql_ex11 -e WORDPRESS_DB_NAME=mydb -e WORDPRESS_DB_USER=user -e WORDPRESS_DB_PASSWORD=1234 redmine
+
+
+/* 가상 네트워크 연결없이  db컨테이너 생성(버전에 영향받지 않음) */
+
+1. db 생성
+docker run -it -d --name mysql2 -e MYSQL_ROOT_PASSWORD=1234 -p 8095:3306 MYSQL
+
+1-1. HeidiSQL편집툴
+id=root, password=1234, db port = 8095 설정후 접속하기
+
+
+1-2. bash쉘에서 DB 접속하기
+1-2-1. db bash쉘 
+docker exec -it mysql2 bash
+1-2-2. db 접속
+mysql -u root -p1234
+
+
+

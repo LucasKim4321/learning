@@ -1,0 +1,120 @@
+https://khj93.tistory.com/entry/Docker-Docker-%EA%B0%9C%EB%85%90#google_vignette
+https://www.lainyzine.com/ko/article/a-complete-guide-to-how-to-install-docker-desktop-on-windows-10/
+https://www.docker.com/
+https://hub.docker.com/
+
+
+docker network ls
+
+docker network create wordpress_net1  가상 네트워크 구축
+
+docker run --name mysql_ex1 -dit
+ 옵션 -d -i : bashshell   -t => -dit
+
+docker run --name mysql_ex1 -dit -p 8085:3306 --net=wordpress_net1 -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=mydb -e MYSQL_USER=user -e MYSQL_PASSWORD=1234 mysql:5 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+docker run --name wordpress_ex1 --net=wordpress_net1 -dit -p 8095:80 -e WORDPRESS_DB_HOST=mysql_ex1 -e WORDPRESS_DB_NAME=mydb -e WORDPRESS_DB_USER=user -e WORDPRESS_DB_PASSWORD=1234 wordpress
+
+docker run -dit --name mysql_ex2 -e MYSQL_ROOT_PASSWORD=1234 -p 8086:3306 mysql
+
+docker exec -it mysql_ex2 bash
+
+ls
+ls -la
+
+mysql -uroot -p1234
+
+docker stop mysql_ex2
+
+docker network create redmine_net1
+
+docker run --name mariadb_ex11 -dit -p 8087:3306 --net=redmine_net1 -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=mydb -e MYSQL_USER=user -e MYSQL_PASSWORD=1234 mariadb --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+
+docker run --name redmine_ex11 -dit --net=redmine_net1 -p 8096:3000 -e WORDPRESS_DB_HOST=mysql_ex2 -e WORDPRESS_DB_NAME=mydb -e WORDPRESS_DB_USER=user -e WORDPRESS_DB_PASSWORD=1234 redmine
+
+docker run --name apache_ex1 -d -p 8097:80 httpd
+
+복사하기
+경로에 들어가 있는 상태에서 복사
+docker cp index.html apache_ex1:/usr/local/apache2/htdocs/
+그냥 복사 경로 지정해줘야함
+C:/경로에 있는걸 컨테이너 경로로 복사
+docker cp C:/javaStudy/test/mount_folder/index.html apache_ex1:/usr/local/apache2/htdocs/
+컨테이너 경로에 있는걸 C:/경로로 복사
+docker cp apache_ex1:/usr/local/apache2/htdocs/ C:/javaStudy/test/mount_folder/
+
+docker run --name apach_ex2_mount -d -p 8098:80 -v C:\javaStudy\test\mount_folder:/usr/local/apache2/htdocs httpd
+
+docker volume create apache_vol1
+
+docker volume ls
+
+docker run --name apache_ex3_volume -d -p 8099:80 -v apache_vol1:/usr/local/apache2/htdocs httpd
+
+docker volume inspect apache_vol1
+
+docker container inspect apache_ex3_volume
+
+docker image ls
+
+docker run --name apache_ex4 -d -p 8055:80 httpd
+docker cp C:/javaStudy/test/mount_folder/index.html apache_ex4:/usr/local/apache2/htdocs/
+
+docker ps
+이미지 생성
+docker commit apache_ex4 exr_original1   
+docker image ls
+생성한 이미지로 컨테이너 생성  같은 index.html를 가지고 있음
+docker run --name apache_ex5 -d -p 8056:80 exr_original1
+
+dockerfile *
+
+이미지 설치파일 같은거
+컨테이너 설치된거
+
+윈도우 기능 켜기 -> 리눅스용 하위 시스템 체크 -> 재부팅
+
+wsl 설치
+wsl --install
+wsl --set-default-version 2
+재부팅
+wsl -l -v
+
+도커 설치 
+
+도커 - 데이터 또는 프로그램을 격리시키는 기능
+
+docker version
+docker -ls
+docker ps -a 모든 컨테이너 표시
+docker ps 현재 실행 중인 컨테이너 표시
+docker run (docker container run) 하위 3가지 기능 실행
+  - pull(이미지내려받기), create(컨테이너 생성), start(컨테이너 실행)
+  옵션 -d, -p, -e, -dit 등등
+
+실행 중지
+docker stop apach01
+
+컨테이너 삭제
+docker rm apach01
+
+이미지 삭제
+docker image rm mysql:5
+
+도커 허브
+실행 및 설치
+httpd
+docker run --name apach01 -d httpd
+nginx
+docker run --name nginx_ex1 -d -p 8084:80 nginx
+mysql
+docker run --name mysqlex1 -dit -e MYSQL_ROOT_PASSWORD=root mysql:5
+penguin
+ubuntu
+
+usr -> local -> apache2 -> htdocs -> index.html
+
+
+nginx (apache같은것)
+https://nginx.org/en/
+https://jammdev.tistory.com/217
