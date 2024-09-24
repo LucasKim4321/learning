@@ -1,0 +1,26 @@
+# open jdk 17 버전의 환경을 구성한다.
+FROM openjdk:17-alpine
+
+# build가 될 때 JAR_FILE이라는 변수 명에 build/libs/*.jar 선언
+# build/libs - gradle로 빌드했을 때 jar 파일이 생성되는 경로임
+ARG JAR_FILE=build/libs/*.jar
+
+# JAR_FILE을 agaproject.jar로 복사 (이 부분(.jar)은 개발환경에 따라 다름)
+COPY ${JAR_FILE} agagroup.jar
+
+# 운영 및 개발에서 사용되는 환경 설정을 분리한다.
+ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod", "/agagroup.jar"]
+
+# -----------------------------------------------------------------------------------  #
+# springboot docker 이미지생성 -> 컨테이터 -> 실행
+# 우측에 Gradle패널 -> clean -> bootJar -> 왼쪽에 창 build-> libs생성됨.
+
+# format
+#$ docker build -t <컨테이너 이미지 이름> .
+#
+# 컨테이너 이미지 생성
+#$ docker build -t simple-spring-boot-app .
+#$ docker run -d --name <컨테이너 이름> -p 8080:8080 <실행할 이미지 이름>
+# 컨테이너 생성 및 실행
+#$ docker run -d --name simple-spring-boot-app -p 8080:8080 simple-spring-boot-app
+# -----------------------------------------------------------------------------------  #

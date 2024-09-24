@@ -1,0 +1,55 @@
+2024.9.23
+
+참조 https://12bme.tistory.com/588
+
+홈경로
+cd %userprofile%
+바탕화면
+cd %userprofile%\desktop
+
+cd C:\javaStudy\learning\docker\test\mount_folder
+
+docker run --name apache22 -d -p 8092:80 httpd
+
+ // 복사
+docker cp index.html apache22:/usr/local/apache2/htdocs/index.html
+
+// apache22를 ex22_original1이름으로 이미지 생성
+docker commit apache22 ex22_original1
+
+// ex22_original1 이미지를 사용해서 apache22_1이름의 컨테이너 생성
+docker run --name apache22_1 -d -p 8080:80 ex22_original1
+
+// 현재 경로의 dockerfile을 사용하여 이미지 생성
+docker build -t ex22_original2 .  
+
+// 생성한 이미지로 컨테이너 생성
+docker run --name apache33 -d  -p 8094:80 ex22_original2
+
+---------------------------
+스프링 프로젝트 springboot_docker 생성
+
+프로젝트 내에 dockerfile 생성
+
+docker build -t simplespringboot-app1 .
+
+docker run --name spring_boot_api_test -d -p 8082:8080 simplespringboot-app1
+
+웹페이지에 http://localhost:8082/api/v1/test/hello 입력하면 됨.
+---------------------------
+
+도커 허브 리파짓토리 haribolu/testproject
+
+simplespringboot-app1를 태그한 haribolu/testproject 이미지 생성 simplespringboot-app1랑 같음
+docker tag simplespringboot-app1 haribolu/testproject
+docker push haribolu/testproject
+docker pull haribolu/testproject
+
+docker tag simplespringboot-app1 haribolu/testproject:1.0
+docker push haribolu/testproject:1.0
+
+docker run --name springboot-api-app -d -p 8083:8080 haribolu/testproject:1.0
+docker run --name springboot-api-app2 -d -p 8084:8080 haribolu/testproject:latest
+
+도커 컴포즈
+docker-compose -v

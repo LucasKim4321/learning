@@ -3,6 +3,7 @@ https://www.lainyzine.com/ko/article/a-complete-guide-to-how-to-install-docker-d
 https://www.docker.com/
 https://hub.docker.com/
 
+
 윈도우 기능 켜기 -> 리눅스용 하위 시스템 체크 -> 재부팅
 
 wsl 설치
