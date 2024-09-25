@@ -50,3 +50,33 @@ usr -> local -> apache2 -> htdocs -> index.html
 nginx (apache같은것)
 https://nginx.org/en/
 https://jammdev.tistory.com/217
+
+
+docker-compose 주요 커맨드 목록
+
+up      컨테이이너를 생성하고 실행
+down    컨테이너와 네트워크를 종료하고 삭제
+stop    컨테이너 종료
+start   컨테이너 시작
+kill    컨테이너 강제 종료
+exec    명령어 실행
+run     컨테이너 실행
+ps      컨테이너 목록
+config  컴포즈 파일 확인하고 내용 출력
+port    포트 설정
+logs    컨테이너를 출력한 내용 출력
+
+등등
+
+
+도커 엔진 -> 컨테이너1, 컨테이너2, ...
+
+도커엔진을 통한 명령
+- 도커 엔진의 시작 또는 종료
+- 컨테이너의 시작 및 종료
+- 컨테이너 안팍의 파일을 복사하기
+컨테이너 내부에서  실행하는 명령
+- 소프트웨어 설치
+- 소프트웨어 실행, 종료
+- 소프트웨어 설정 변경
+- 파일 작업

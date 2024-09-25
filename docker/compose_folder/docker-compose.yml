@@ -1,0 +1,35 @@
+version: "3"
+services:
+  mysql_compose_ex1:
+    image: mysql:5.7
+    networks:
+      - compose_net2
+    volumes:
+      - mysql_vol:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: 1234
+  wordpress_compose_ex1:
+    depends_on:
+      - mysql_compose_ex1
+    image: wordpress
+    networks:
+      - compose_net2
+    volumes:
+      - wordpress_vol:/var/www/html
+    ports:
+      - 8085:80
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: mysql_compose_ex1
+      WORDPRESS_DB_NAME: mydb
+      WORDPRESS_DB_USER: user1
+      WORDPRESS_DB_PASSWORD: 1234
+networks:
+  compose_net2:
+volumes:
+  mysql_vol:
+  wordpress_vol:

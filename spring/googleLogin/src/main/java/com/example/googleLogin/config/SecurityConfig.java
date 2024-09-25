@@ -32,9 +32,9 @@ public class SecurityConfig {
                         //.loginProcessingUrl("/members/login")   // 웹 로그인창의 form action값 설정
                         .failureUrl("/");  // 로그인 실패시 url 설정
                 })
-                            .headers(
+                .headers(
                         (headerConfig) -> headerConfig.frameOptions(
-                                frameOptionsConfig -> frameOptionsConfig.disable()
+                        frameOptionsConfig -> frameOptionsConfig.disable()
                         )
                 )
                 .authorizeHttpRequests((authorizeRequest) -> authorizeRequest

@@ -962,3 +962,9 @@ tbody.addEventListener('click',e=>{
             parentTrTag.style.backgroundColor = 'transparent';
     }
 });
+
+
+textarea 크기 자동 조정
+    const content = document.querySelector('.content');
+    //content.style.height = 'auto';  //height 초기화
+    content.style.height = content.scrollHeight+5+'px';

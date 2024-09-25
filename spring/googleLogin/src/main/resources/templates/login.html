@@ -60,10 +60,11 @@
             </div>
 
             <div>
-                <a th:href="@{/oauth2/authorization/google}" class="btn btn-primary me-2 active" role="button">Google Login</a>
                 <div><button type="submit" class="btn btn-outline-success opacity-50 w-100 mb-3">Login</button></div>
                 <div><button type="button" class="btn btn-outline-primary opacity-50 w-100 mb-3">SignUp</button></div>
-                <div><button type="button" class="btn btn-outline-danger opacity-50 w-100 mb-3">Cancel</button></div>
+                <div><button type="button" class="btn btn-outline-danger opacity-50 w-100 mb-5">Cancel</button></div>
+                <a class="btn btn-outline-primary opacity-50 w-100 mb-3" role="button"
+                   th:href="@{/oauth2/authorization/google}" >Google Login</a>
             </div>
         </form>
     </div>

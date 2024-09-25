@@ -1,0 +1,92 @@
+2024.9.25
+
+참조 https://12bme.tistory.com/588
+
+홈경로
+cd %userprofile%
+바탕화면
+cd %userprofile%\desktop
+compose_folder폴더
+cd C:\javaStudy\learning\docker\compose_folder
+
+워드프레스 폴더 /var/www/html
+index.html 폴더 /usr/local/apache2/htdocs/
+
+
+컴포즈 파일 (정의파일)
+확장자.yml => docker-compose.yml
+
+version: "3" 버전 기재
+services: 컨테이너 관련 정보
+  컨테이너 이름: # 하위 항목 2칸 들여쓰기
+  image: 이미지 이름 # 하위 항목 2칸 들여쓰기
+networks: 네트워크 관련 정보
+volumes: 볼륨 관련 정보
+
+# ------------------------------ #
+-- properties 형식
+spring.log = debug, info
+
+-- yaml 형식
+spring:
+  log: debug
+
+spring:
+  log:
+    - debug
+    - info
+# ------------------------------ #
+
+docker-compse.yml 생성
+
+
+-- cmd
+
+docker-compose 주요 커맨드 목록
+
+up      컨테이이너를 생성하고 실행
+down    컨테이너와 네트워크를 종료하고 삭제
+stop    컨테이너 종료
+start   컨테이너 시작
+kill    컨테이너 강제 종료
+exec    명령어 실행
+run     컨테이너 실행
+ps      컨테이너 목록
+config  컴포즈 파일 확인하고 내용 출력
+port    포트 설정
+logs    컨테이너를 출력한 내용 출력
+
+등등
+
+docker network COMMAND
+docker network create compose_net2
+
+파일 경로에서
+docker-compose -f docker-compose.yml up -d
+docker-compose -f docker-compose.yml down
+
+
+도커 엔진 -> 컨테이너1, 컨테이너2, ...
+
+도커엔진을 통한 명령
+- 도커 엔진의 시작 또는 종료
+- 컨테이너의 시작 및 종료
+- 컨테이너 안팍의 파일을 복사하기
+컨테이너 내부에서  실행하는 명령
+- 소프트웨어 설치
+- 소프트웨어 실행, 종료
+- 소프트웨어 설정 변경
+- 파일 작업
+
+docker start apache22
+
+docker stop apache22
+
+컨테이너 실행 후
+docker start apache22
+컨테이너 접속
+docker exec -it apache22 /bin/bash
+hello 출력
+echo "hello"
+나가기
+exit

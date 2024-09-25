@@ -1,4 +1,4 @@
-2024.9.23
+2024.9.24
 
 참조 https://12bme.tistory.com/588
 
@@ -30,6 +30,8 @@ docker run --name apache33 -d  -p 8094:80 ex22_original2
 스프링 프로젝트 springboot_docker 생성
 
 프로젝트 내에 dockerfile 생성
+
+gradle -> build -> bootjar 실행
 
 docker build -t simplespringboot-app1 .
 
