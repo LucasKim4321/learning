@@ -970,6 +970,29 @@ textarea 크기 자동 조정
     content.style.height = content.scrollHeight+5+'px';
 
 
+    const content = document.querySelector('.content');
+    const rowCountDisplay = document.getElementById("rowCount");
+
+    function handleResizeHeight() {}
+    content.addEventListener("input", function(e) {
+        content.style.height = 'auto';
+        content.style.height = content.scrollHeight + 'px';
+
+        const style = window.getComputedStyle(content);
+        const lineHeight = parseFloat(style.lineHeight); // 줄 높이
+        const scrollHeight = content.scrollHeight; // 실제 높이
+        
+        // 총 행 수 = 총 높이 / 줄 높이
+        const lineCount = Math.round(scrollHeight / lineHeight)-1;
+        rowCountDisplay.textContent = lineCount;
+    })    
+
+    // 엔터만 인식
+    // content.addEventListener("input", function() {
+    //     const rows = content.value.split("\n").length;
+    //     rowCountDisplay.textContent = rows;
+    // });
+
 on 이벤트 종류
 
 참조 https://mywebproject.tistory.com/285

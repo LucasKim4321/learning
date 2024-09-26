@@ -300,7 +300,7 @@
         console.log("uploadedFileList",uploadedFileList);
         if (uploadedFileList.length == 0) {  // 업로드된 파일이 없으면
             console.log([[${dto.fileNames}]]);
-            if ([[${dto.fileNames}]]==0) return;  // 기존 파일이 없으면 리턴
+            if ([[${dto.fileNames.length}]]==0) return;  // 기존 파일이 없으면 리턴
         }
 
         const target = document.querySelector('.uploadHidden');
