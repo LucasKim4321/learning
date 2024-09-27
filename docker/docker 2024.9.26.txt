@@ -1,0 +1,25 @@
+2024.9.25
+
+참조 https://12bme.tistory.com/588
+
+홈경로
+cd %userprofile%
+바탕화면
+cd %userprofile%\desktop
+compose_folder폴더
+cd C:\javaStudy\learning\docker\compose_folder
+
+워드프레스 폴더 /var/www/html
+index.html 폴더 /usr/local/apache2/htdocs/
+
+aws
+
+$ chmod 400 kth-aws-key.pem
+$ ssh -i kth-aws-key.pem ubuntu@ec2-3-220-202-14.compute-1.amazonaws.com
+yes
+pwd
+java -version
+ls
+java -jar 파일명
+
+버추얼박스 리눅스 윈도우 맥 
