@@ -164,4 +164,27 @@ git push --set-upstream origin master : 현재 브랜치에서 push 명
 git push -u origin master : 현재 브랜치를 origin 의 master 브랜치로 푸쉬한다.이때 -u 는 처음에 딱 한번만 사용하면 된다. 현재 로컬저장소의 브랜치와 origin의 master 브랜치를 연결시켜서 다음부터는 git push 만 하면자동으로 푸쉬가 되도록 하는 옵션이다.
 git push --force : 강제로 푸쉬한다. 원격저장소의 내용을 덮어씌운다.​
 
-git pull : 원격저장소의 내용을 로컬저장소르 내려받는다.
+git pull : 원격저장소의 내용을 로컬저장소르 내려받는다.\
+
+git clone --mirror [복사 할 리파짓토리 주소]
+cd [리파짓토리 이름].git
+git remote set-url --push origin [새 리파짓토리 주소]
+git push --mirror
+
+
+깃으로 웹사이트 불러오기
+
+1. 기본
+해당 리파짓토리 폴더 내 최상단에 index.html을 만듬.
+
+2. 리액트
+package.json에 다음 문구 추가
+  "homepage": "https://<GitHub-사용자명>.github.io/<저장소-이름>",
+
+라우터 설정했으면
+라우터에 basename="/<저장소-이름>" 추가
+
+커맨드라인에 입력
+npm run build
+
+생성된 build폴더의 내용물만 리파짓토리 폴더 최상단에 복사

@@ -1,7 +1,7 @@
 package chap21;
 
 import mysql_goods.MySqlGoods;
-import oracle_goods.OracleGoods;
+//import oracle_goods.OracleGoods;
 
 public class E11ModuleTest {
 

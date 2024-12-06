@@ -29,3 +29,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 npm i react-router-dom  // 라우터 설치  i(install)
 npm install react-router-dom  // 이렇게도 가능
+
+
+깃으로 웹페이지 불러올 때
+package.json에 다음 문구 추가
+  "homepage": "https://<GitHub-사용자명>.github.io/<저장소-이름>",
+
+라우터 설정했으면
+라우터에 basename="/<저장소-이름>" 추가
+
+커맨드라인에 입력
+npm run build
+
+생성된 build폴더의 내용물만 리파짓토리 폴더 최상단에 복사

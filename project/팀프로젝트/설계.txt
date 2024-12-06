@@ -3,8 +3,8 @@
 /---------------------/
 
 기본설정(application.properties, build.gradle)
-설정같은거(advice)
 설정(config)
+예외처리(advice)
 시큐리티(security)
 컨스턴트(constant)
 
@@ -17,7 +17,13 @@ DTO(dto)
  - 검색(search)
 서비스(service)
 컨트롤러(controller)
+ - adminPage
 
+정적 리소스 (static)
+ - css
+ - js
+ - fonts
+ - images
 템플릿(templates)
  - layouts
  - fragments
@@ -29,30 +35,40 @@ DTO(dto)
 
 
 Base - CustomRestController, RootConfig, PageRequestDTO, PageResponseDTO
-security - CustomSecurityConfig, CustomServletConfig, Role, AuthMemberDTO, Custom403Handler ...
+Security - CustomSecurityConfig, Role, AuthMemberDTO, CustomUserDetailService, Custom403Handler ...
+Swagger - SwaggerConfig, CustomServletConfig, Controller
 
 upload  - UploadFileDTO, UploadRequestDTO, UpDownController
 
-Member  - Member(Entity), MemberDTO, MemberRepository, MemberService, MemberContoller
+Member  - Entity, DTO, Repository, Service, Contoller, Test
 Board   - Entity, DTO, Repository, Service, Controller, Test
+festivalInfo - Entity, DTO, Repository, Test
+BoardFile - Entity, DTO, Repository, Test
+BoardLike - Entity, DTO, Repository, Service, Controller, Test
+ProfileImage - Entity, DTO, Repository, Service, Controller, Test
 Reply   - Entity, DTO, Repository, Service, Controller, Test
 Like    - Entity, DTO, Repository, Service, Contorller, Test
 Alarm   - Entity, DTO, Repository, Service, Controller, Test
 Report  - Entity, DTO, Repository, Service, Controller, Test
 Warning - Entity, DTO, Repository, Service, Controller, Test
-AdminPageController
+AdminPageController - AdminStart, BoardManagement, MemberManagement, ReportManagement
+
 
 templates
- - layouts : basic, adminBasic
- - fragments : header, footer, alarm(modal), report(modal)
+ - layouts : base, adminBase
+ - fragments : header, footer, alarm(modal), report(modal), adminHeader
  - member : login(All), signUp(All), modify(User, Admin), myPage(User, Admin)
  - boards : travelInfo, travelRecommend, travelGuide, festivalBoard, userBoard
-            - travelInfo        :  list(All), create(Admin), read(All), modify(Admin)
-            - travelRecommend   :  list(All), create(Admin), read(All), modify(Admin)
-            - travelGuide       :  list(All), create(Admin), read(All), modify(Admin), travelPreparation(All)
-            - festivalBoard     :  list(All), create(Admin), read(All), modify(Admin)
-            - userBoard         :  list(All), create(User),  read(All), modify(User)
+            - travelInfo        :  list(All), read(All), create(Admin), modify(Admin)
+            - travelRecommend   :  list(All), read(All), create(Admin), modify(Admin)
+            - travelGuide       :  list(All), read(All), create(Admin), modify(Admin), travelPreparation(All)
+            - festivalBoard     :  list(All), read(All), create(Admin), modify(Admin)
+            - userBoard         :  list(All), read(All), create(User) , modify(User)
  - adminPage(Admin) : main, config, report, board, member
+            - board  : list, read, create, modify
+            - member : list
+            - report : list
+            - config
 
 
 스타일 있는 게시판 구현(보류)(어려움)
@@ -69,7 +85,7 @@ regDate, modDate
 id, userId, password, name, email, address, memberText, profileImage, roleSet
 
 프로필 이미지 (ProfileImage)
-uuid, fileName, member
+uuid, fileName, member(FK)
 
 게시물 (Board extends BaseEntity)
 id, category, title, content, boardFileSet(Set<BoardFile>), writer, writerId, viewCount, // likeCount
@@ -83,7 +99,7 @@ id, category, title, content, boardFileSet(Set<BoardFile>), writer, writerId, vi
 // 유저 게시판 :
 //  - 유저게시판(userBoard) : 여행정보(information), 여행일정(schedule), 후기(review)
 
-축제기간 (FestivalInfo)
+축제정보 (FestivalInfo)
 id, board(FK), contactNum, place, host, supervision, homepage, startDate, endDate
 
 게시물 파일 (BoardFile)
@@ -149,7 +165,7 @@ uuid, fileName, member_id
 id, category, title, content, fileNames(List<String>), writer, writerId, regDate, modDate, viewCount, replyCount, boardLikeCount,
 이벤트 정보용 contactNum, place, host, supervision, homepage, startDate, endDate
 
-축제기간 (FestivalInfoDTO)
+축제정보 (FestivalInfoDTO)
 id, board_id, contactNum, place, host, supervision, homepage, startDate, endDate
 
 게시물 파일 (BoardFileDTO)
@@ -235,9 +251,6 @@ main페이지 : 모든 사용자 조회 및 클릭 가능
 마이페이지 : 유저, 관리자만 조회 가능
 
 관리자 페이지 : 관리자만 조회 가능, 관리자 임명(최고관리자)
-
-
-
 
 
 첨부파일 등록
