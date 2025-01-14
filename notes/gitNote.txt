@@ -1,9 +1,9 @@
 깃 클론 후 처음 시작 리드미도 없을 때
-echo "# test" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
+echo "# test" >> README.md  리드미 생성
+git init  깃이 관리하는 폴더로 설정
+git add README.md  리드미 스테이징
+git commit -m "first commit"  커밋
+git branch -M main   기존 브랜치 이름(예: master)을 main으로 바꾸고 싶을 때, Git에서 현재 브랜치의 이름을 main으로 변경하거나, 이미 존재하는 main 브랜치를 강제로 덮어쓰는 역할을 합니다.
 git remote add origin https://github.com/LucasKim4321/test.git
 git push -u origin main
 
@@ -57,6 +57,9 @@ git cmd 명령어 정리
 
 git config --global user.name "LucasKim4321"
 git config --global user.email "xowls0131@naver.com"
+
+git config --global --unset user.name
+git config --global --unset user.email
 
 cd ~ : 자신의 home 디렉토리로 이동.
 cd c:/ : C드라이브로 이동.
@@ -188,3 +191,4 @@ package.json에 다음 문구 추가
 npm run build
 
 생성된 build폴더의 내용물만 리파짓토리 폴더 최상단에 복사
+
