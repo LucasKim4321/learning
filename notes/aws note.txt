@@ -331,7 +331,7 @@ df -h
 # SWAP 메모리 추가 (가상메모리 사용)  #
 ###################################
 
-# 2GB 스왑 메모리 생성
+# 2GB 스왑 메모리 생성  swap파일 생성
 sudo dd if=/dev/zero of=/swapMem bs=128M count=16
 sudo dd if=/dev/zero of=/swapMem bs=1M count=2048   gpt 추천
 메모리가 부족한 상태에서 128M 블록씩 메모리를 생성하면 실패 할 수 있다고 하고 1M가 가장 보편적인 설정이라함. gpt피셜. gpt
@@ -339,7 +339,7 @@ sudo dd if=/dev/zero of=/swapMem bs=1M count=2048   gpt 추천
 # 권한 부여
 sudo chmod 600 /swapMem
 
-# SWAP 메모리를 SWAP파일로 포맷
+# SWAP 메모리를 SWAP파일로 포맷 (스왑영역으로 설정)
 sudo mkswap /swapMem
 
 # SWAP 메모리 활성화
@@ -351,19 +351,23 @@ sudo swapon -s
 # SWAP 메모리 자동 활성화
 
 # 간단하게 추가
-echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+echo '/swapMem none swap sw 0 0' | sudo tee -a /etc/fstab
+
+# 잘못생성한 자동활성화 삭제
+sudo sed -i '/\/파일이름 none swap sw 0 0/d' /etc/fstab
+sudo sed -i '/\/swapMem none swap sw 0 0/d' /etc/fstab
 
 # vi로 추가
 sudo vi /etc/fstab
 I 눌러서 입력모드 전환
-마지막 줄에 입력  /swapfile none swap sw 0 0
+마지막 줄에 입력  /swapMem none swap sw 0 0
 esc 눌러서 명령모드 전환
 :wq 저장 후 종료
 :q! 저장하지 않고 나가기
 
 # nano로 추가
 sudo nano /etc/fstab
-마지막 줄에 입력  /swapfile none swap sw 0 0
+마지막 줄에 입력  /swapMem none swap sw 0 0
 
 
 # 메모리 삭제
@@ -377,3 +381,7 @@ sudo swapoff -a
 
 # 메모리 상태 확인
 free -m
+
+# 전체 디스크 용량 확인
+df -h
+
